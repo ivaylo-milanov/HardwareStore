@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>aspnet-HardwareStore-4f06ed49-54fd-4484-bc28-3872578c14d6</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HardwareStore.Core\HardwareStore.Core.csproj" />
+    <ProjectReference Include="..\HardwareStore.Infrastructure\HardwareStore.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Views\User\" />
+  </ItemGroup>
+
+</Project>
