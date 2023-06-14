@@ -39,6 +39,9 @@
         [MaxLength(GlobalConstants.ProductDescriptionMaxLength)]
         public string? Description { get; set; }
 
+        [Comment("product add date")]
+        public DateTime AddDate { get; set; }
+
         [Comment("product warranty")]
         [Required]
         public int Warranty { get; set; }
@@ -48,7 +51,7 @@
         public int? ManufacturerId { get; set; }
 
         [Comment("product manufacturer")]
-        public virtual Manufacturer? Manufacturer { get; set; }
+        public Manufacturer? Manufacturer { get; set; }
 
         [Comment("product model")]
         [MaxLength(GlobalConstants.ProductModelMaxLength)]
@@ -66,14 +69,16 @@
         public int CategoryId { get; set; }
 
         [Comment("product category")]
-        public virtual Category Category { get; set; } = null!;
+        public Category Category { get; set; } = null!;
 
+        [InverseProperty(nameof(ComputerPart.Part))]
         public virtual ICollection<ComputerPart> PartComputers { get; set; }
 
+        [InverseProperty(nameof(ComputerPart.Computer))]
         public virtual ICollection<ComputerPart> ComputerParts { get; set; }
 
-        public virtual ICollection<ProductAttribute> ProductAttributes { get; set; }
+        public ICollection<ProductAttribute> ProductAttributes { get; set; }
 
-        public virtual ICollection<ProductOrder> ProductsOrders { get; set; } = null!;
+        public ICollection<ProductOrder> ProductsOrders { get; set; } = null!;
     }
 }

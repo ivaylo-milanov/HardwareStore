@@ -1,13 +1,21 @@
 ﻿namespace HardwareStore.Controllers
 {
-    using HardwareStore.Infrastructure.Data;
+    using HardwareStore.Core.Services.Contracts;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.EntityFrameworkCore;
 
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly IHomeService homeService;
+
+        public HomeController(IHomeService homeService)
         {
+            this.homeService = homeService;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            var newProducts = await this.homeService.GetNewProducts();
+
             return View();
         }
     }

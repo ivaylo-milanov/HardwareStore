@@ -11,15 +11,15 @@
             builder.HasKey(e => new { e.PartId, e.ComputerId });
 
             builder
-                .HasOne(cp => cp.Computer)
-                .WithMany(p => p.ComputerParts)
-                .HasForeignKey(cp => cp.ComputerId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            builder
                 .HasOne(cp => cp.Part)
                 .WithMany(p => p.PartComputers)
                 .HasForeignKey(cp => cp.PartId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .HasOne(cp => cp.Computer)
+                .WithMany(p => p.ComputerParts)
+                .HasForeignKey(cp => cp.ComputerId)
                 .OnDelete(DeleteBehavior.Restrict);
         }
     }

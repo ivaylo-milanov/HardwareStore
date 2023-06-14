@@ -1,6 +1,39 @@
 ﻿namespace HardwareStore.Infrastructure.Common
 {
+    using HardwareStore.Infrastructure.Data;
+    using Microsoft.EntityFrameworkCore;
+    using System;
+    using System.Linq;
+    using System.Linq.Expressions;
+
     public class Repository : IRepository
     {
+        private readonly HardwareStoreDbContext context;
+
+        public Repository(HardwareStoreDbContext context)
+        {
+            this.context = context;
+        }
+
+        public IQueryable<T> AddReadonly<T>() where T : class
+            => this
+                .Set<T>()
+                .AsQueryable()
+                .AsNoTracking();
+
+        public IQueryable<T> All<T>() where T : class
+            => this
+                .Set<T>()
+                .AsQueryable();
+
+        public IQueryable<T> All<T>(Expression<Func<T, bool>> search) where T : class
+            => this
+                .Set<T>()
+                .Where(search)
+                .AsQueryable();
+
+        public DbSet<T> Set<T>() where T : class
+            => this.context
+                .Set<T>();
     }
 }

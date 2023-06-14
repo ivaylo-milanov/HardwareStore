@@ -1,9 +1,6 @@
 namespace HardwareStore
 {
-    using HardwareStore.Common;
-    using HardwareStore.Infrastructure.Data;
-    using HardwareStore.Infrastructure.Models;
-    using Microsoft.EntityFrameworkCore;
+    using HardwareStore.Extensions;
 
     public class Program
     {
@@ -12,18 +9,12 @@ namespace HardwareStore
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-            builder.Services.AddDbContext<HardwareStoreDbContext>(options =>
-                options.UseSqlServer(connectionString));
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-
-            builder.Services.AddDefaultIdentity<Customer>(options =>
-            {
-                options.SignIn.RequireConfirmedAccount = false;
-                options.Password.RequiredLength = GlobalConstants.CustomerPasswordMinLength;
-            })
-                .AddEntityFrameworkStores<HardwareStoreDbContext>();
             builder.Services.AddControllersWithViews();
+
+            builder.Services.ConfigurateDbContext(builder.Configuration);
+            builder.Services.ConfigurateIdentity();
+            builder.Services.AddServices();
 
             var app = builder.Build();
 
