@@ -14,16 +14,16 @@
             switch (order)
             {
                 case "Highest price":
-                    products.OrderByDescending(m => m.Price);
+                    products = products.OrderByDescending(m => m.Price);
                     break;
                 case "Lowest price":
-                    products.OrderBy(m => m.Price);
+                    products = products.OrderBy(m => m.Price);
                     break;
                 case "Oldest":
-                    products.OrderBy(m => m.AddDate);
+                    products = products.OrderBy(m => m.AddDate);
                     break;
                 case "Newest":
-                    products.OrderByDescending(m => m.AddDate);
+                    products = products.OrderByDescending(m => m.AddDate);
                     break;
             }
 
