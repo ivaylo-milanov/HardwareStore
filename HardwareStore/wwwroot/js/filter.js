@@ -61,21 +61,28 @@ function getData() {
 
 window.onpopstate = onPopState;
 
+function getDefaultData() {
+    let formData = new FormData(document.querySelector('form'));
+    let data = {};
+
+    formData.forEach(function (value, key) {
+        let val = "All";
+
+        if (key == "Order") {
+            val = "Default";
+        }
+
+        data[key] = [val];
+    });
+
+    return data;
+}
+
 function onPopState(ev) {
     let data = ev.state;
 
     if (!data) {
-        data = {
-            Manufacturer: ['All'],
-            Price: ['All'],
-            Sensitivity: ['All'],
-            Sensor: ['All'],
-            Connectivity: ['All'],
-            Interface: ['All'],
-            Color: ['All'],
-            NumberOfKeys: ['All'],
-            Order: ['Default']
-        };
+        data = getDefaultData();
     }
 
     returnFilterState(data);
