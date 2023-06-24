@@ -1,0 +1,207 @@
+﻿@model IEnumerable<MouseViewModel>
+
+<div>
+    <div class="filter">
+        <form method="get" asp-controller="Mouses" asp-action="Index" data-url="@Url.Action("FilterMouses", "Mouses")" data-container="#mouses">
+            <div class="filter-category">
+                <label>Manufacturer:</label>
+                <ul>
+                    <li>
+                        <label> 
+                            <input class="all" type="checkbox" name="Manufacturer" value="All" checked/> All
+                        </label>
+                    </li>
+                    @foreach (var manufacturer in Model.Select(b => b.Manufacturer).Distinct())
+                    {
+                        <li>
+                            <label> 
+                                <input type="checkbox" name="Manufacturer" value="@manufacturer"/> @manufacturer
+                            </label>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div class="filter-category">
+                <label>Connectivity:</label>
+                <ul>
+                    <li>
+                        <label> 
+                            <input class="all" type="checkbox" name="Connectivity" value="All" checked/> All
+                        </label>
+                    </li>
+                    @foreach (var connectivity in Model.Select(b => b.Connectivity).Distinct())
+                    {
+                        <li>
+                            <label>
+                                <input type="checkbox" name="Connectivity" value="@connectivity"/> @connectivity
+                            </label>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div class="filter-category">
+                <label>Color:</label>
+                <ul>
+                    <li>
+                        <label> 
+                            <input class="all" type="checkbox" name="Color" value="All" checked/> All
+                        </label>
+                    </li>
+                    @foreach (var color in Model.Select(b => b.Color).Distinct())
+                    {
+                        <li>
+                            <label>
+                                <input type="checkbox" name="Color" value="@color"/> @color
+                            </label>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div class="filter-category">
+                <label>Interface:</label>
+                <ul>
+                    <li>
+                        <label> 
+                            <input class="all" type="checkbox" name="Interface" value="All" checked/> All
+                        </label>
+                    </li>
+                    @foreach (var _interface in Model.Select(b => b.Interface).Distinct())
+                    {
+                        <li>
+                            <label>
+                                <input type="checkbox" name="Interface" value="@_interface"/> @_interface
+                            </label>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div class="filter-category">
+                <label>Sensor:</label>
+                <ul>
+                    <li>
+                        <label> 
+                            <input class="all" type="checkbox" name="Sensor" value="All" checked/> All
+                        </label>
+                    </li>
+                    @foreach (var sensor in Model.Select(b => b.Sensor).Distinct())
+                    {
+                        <li>
+                            <label>
+                                <input type="checkbox" name="Sensor" value="@sensor"/> @sensor
+                            </label>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div class="filter-category">
+                <label>Number of keys:</label>
+                <ul>
+                    <li>
+                        <label> 
+                            <input class="all" type="checkbox" name="NumberOfKeys" value="All" checked/> All
+                        </label>
+                    </li>
+                    @foreach (var numOfKeys in Model.Select(b => b.NumberOfKeys).Distinct())
+                    {
+                        <li>
+                            <label>
+                                <input type="checkbox" name="NumberOfKeys" value="@numOfKeys"/> @numOfKeys
+                            </label>
+                        </li>
+                    }
+                </ul>
+            </div>
+            <div class="filter-category">
+                <label>Sensitivity:</label>
+                <ul>
+                    <li>
+                        <label> 
+                            <input class="all" type="checkbox" name="Sensitivity" value="All" checked/> All
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox" name="Sensitivity" value="1"/> From 800 dpi
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox" name="Sensitivity" value="2"/> From 801 dpi to 1200 dpi
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox" name="Sensitivity" value="3"/> From 1201 dpi to 2000 dpi
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox" name="Sensitivity" value="4"/> From 2001 dpi to 3000 dpi
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox" name="Sensitivity" value="5"/> From 3001 dpi to 4000 dpi
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox" name="Sensitivity" value="6"/> From 4001 dpi to 9999 dpi
+                        </label>
+                    </li>
+                    <li>
+                        <label>
+                            <input type="checkbox" name="Sensitivity" value="7"/> Over 10000 dpi
+                        </label>
+                    </li>
+                </ul>
+            </div>
+            <div class="filter-category">
+                <label>Price:</label>
+                 <ul>
+                     <li>
+                         <label> 
+                            <input class="all" type="checkbox" name="Price" value="All" checked/> All
+                         </label>
+                     </li>
+                     <li>
+                         <label>
+                             <input type="checkbox" name="Price" value="1"/> 0.00lv - 100.00lv
+                         </label>
+                     </li>
+                     <li>
+                         <label>
+                             <input type="checkbox" name="Price" value="2"/> 100.00lv - 200.00lv
+                         </label>
+                     </li>
+                     <li>
+                         <label>
+                             <input type="checkbox" name="Price" value="3"/> 200.00lv - 300.00lv
+                         </label>
+                     </li>
+                     <li>
+                         <label>
+                             <input type="checkbox" name="Price" value="4"/> 300.00lv - 400.00lv
+                         </label>
+                     </li>
+                    </ul>
+            </div>
+            <div class="filter-category">
+                <select name="Order">
+                    <option value="Default">Default</option>
+                    <option value="Lowest price">Lowest price</option>
+                    <option value="Highest price">Highest price</option>
+                    <option value="Oldest">Oldest</option>
+                    <option value="Newest">Newest</option>
+                </select>
+            </div>
+        </form>
+    </div>
+    <div id="mouses">
+        <partial name="_MousesPartialView" model="@Model"/>
+    </div>
+</div>
+
+@section Scripts {
+   <script src="~/js/filter.js"></script>
+}

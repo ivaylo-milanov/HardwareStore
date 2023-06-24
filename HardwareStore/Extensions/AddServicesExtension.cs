@@ -10,6 +10,9 @@
         {
             services.AddScoped<IRepository, Repository>();
             services.AddScoped<IHomeService, HomeService>();
+            services.AddScoped<IMouseService, MouseService>();
+
+            services.AddControllers().AddNewtonsoftJson();
 
             return services;
         }

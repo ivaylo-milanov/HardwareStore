@@ -13,6 +13,7 @@ namespace HardwareStore
             builder.Services.AddControllersWithViews();
 
             builder.Services.ConfigurateDbContext(builder.Configuration);
+            builder.Services.AddDropboxService(builder.Configuration);
             builder.Services.ConfigurateIdentity();
             builder.Services.AddServices();
 

@@ -1,0 +1,10 @@
+﻿@model IEnumerable<MouseViewModel>
+
+<ul class="mouses">
+    @foreach (var mouse in Model)
+    {
+                <li>
+            @mouse.Name, @mouse.Price лв
+                </li>
+    }
+</ul>

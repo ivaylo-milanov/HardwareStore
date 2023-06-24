@@ -11,6 +11,8 @@
 
         IQueryable<T> All<T>(Expression<Func<T, bool>> search) where T : class;
 
-        IQueryable<T> AddReadonly<T>() where T : class;
+        IQueryable<T> AllReadonly<T>() where T : class;
+
+        IQueryable<T> AllReadonly<T>(Expression<Func<T, bool>> search) where T : class;
     }
 }

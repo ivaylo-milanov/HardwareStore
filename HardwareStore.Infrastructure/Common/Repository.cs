@@ -15,7 +15,7 @@
             this.context = context;
         }
 
-        public IQueryable<T> AddReadonly<T>() where T : class
+        public IQueryable<T> AllReadonly<T>() where T : class
             => this
                 .Set<T>()
                 .AsQueryable()
@@ -35,5 +35,12 @@
         public DbSet<T> Set<T>() where T : class
             => this.context
                 .Set<T>();
+
+        public IQueryable<T> AllReadonly<T>(Expression<Func<T, bool>> search) where T : class
+            => this
+                .Set<T>()
+                .Where(search)
+                .AsQueryable()
+                .AsNoTracking();
     }
 }
