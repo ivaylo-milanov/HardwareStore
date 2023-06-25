@@ -18,13 +18,10 @@
 
         public async Task<IActionResult> Index()
         {
-            if (!this.memoryCache.TryGetValue("Mouses", out IEnumerable<MouseViewModel> mouses))
-            {
-                mouses = await this.mouseService.GetAllMouses();
-                this.memoryCache.Set("Mouses", mouses);
-            }
+            MousesViewModel model = await this.mouseService.GetModel();
+            this.memoryCache.Set("Mouses", model.Mouses);
 
-            return View(mouses);
+            return View(model);
         }
 
         [HttpPost]
@@ -35,7 +32,12 @@
                 return BadRequest("Mouses data not found.");
             }
 
-            IEnumerable<MouseViewModel> filtered = this.mouseService.GetFilteredMouses(mouses, filter);
+            IEnumerable<MouseViewModel> filtered = mouses;
+            if (filter != null)
+            {
+                filtered = this.mouseService.GetFilteredMouses(mouses, filter);
+            }
+
             return PartialView("_MousesPartialView", filtered);
         }
     }

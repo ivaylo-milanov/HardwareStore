@@ -1,4 +1,13 @@
-﻿document.querySelector('form').addEventListener('change', onFormChange);
+﻿let form = document.querySelector('form');
+let allInputs = document.querySelectorAll('input[value=All]');
+let order = document.querySelector('select');
+let categories = document.querySelectorAll('.filter-category');
+let url = 'https://localhost:7213';
+let defaultData;
+
+setInitialData();
+
+form.addEventListener('change', onFormChange);
 
 async function onFormChange(ev) {
     ev.preventDefault();
@@ -6,12 +15,11 @@ async function onFormChange(ev) {
 
     let url = buildQueryString(data);
     window.history.pushState(data, null, url);
-    await sendData(data, document.querySelector('form'));
+
+    await sendData(data);
 }
 
-async function sendData(data, form) {
-    let url = 'https://localhost:7213';
-
+async function sendData(data) {
     let requestOptions = {
         method: 'POST',
         headers: {
@@ -20,11 +28,11 @@ async function sendData(data, form) {
         body: JSON.stringify(data)
     };
 
-    url += form.dataset.url;
+    let subUrl = form.dataset.url;
     let container = form.dataset.container;
 
     try {
-        let response = await fetch(url, requestOptions);
+        let response = await fetch(url + subUrl, requestOptions);
         let html = await response.text();
 
         document.querySelector(container).innerHTML = html;
@@ -45,7 +53,7 @@ function buildQueryString(data) {
 }
 
 function getData() {
-    let formData = new FormData(document.querySelector('form'));
+    let formData = new FormData(form);
     let data = {};
 
     formData.forEach(function (value, key) {
@@ -62,71 +70,89 @@ function getData() {
 window.onpopstate = onPopState;
 
 function getDefaultData() {
-    let formData = new FormData(document.querySelector('form'));
     let data = {};
 
-    formData.forEach(function (value, key) {
-        let val = "All";
-
-        if (key == "Order") {
-            val = "Default";
-        }
-
-        data[key] = [val];
+    allInputs.forEach(function (input) {
+        data[input.name] = input.value;
     });
+
+    data["Order"] = ["Default"];
 
     return data;
 }
 
 function onPopState(ev) {
-    let data = ev.state;
+    let data = ev.state
 
     if (!data) {
-        data = getDefaultData();
+        data = defaultData;
     }
 
     returnFilterState(data);
 
     (async function () {
-        await sendData(data, document.querySelector('form'));
+        await sendData(data);
     })();
 }
 
 function returnFilterState(data) {
     for (const [key, values] of Object.entries(data)) {
-        var checkboxes = document.querySelectorAll(`input[name="${key}"]`);
-        checkboxes.forEach(function (checkbox) {
-            checkbox.checked = values.includes(checkbox.value);
-        });
+        if (key == "Order") {
+            order.value = values[0];
+        } else {
+            var checkboxes = document.querySelectorAll(`input[name="${key}"]`);
+            checkboxes.forEach(function (checkbox) {
+                checkbox.checked = values.includes(checkbox.value);
+            });
+        }
     }
 }
 
-$(document).ready(function () {
-    document.title = 'Mouses - HardwareStore';
-    if (!history.state) {
-        let data = getData();
-        let url = buildQueryString(data);
-        history.replaceState(null, null, url);
-    }
+function setInitialData() {
+    defaultData = getDefaultData();
+    let url = buildQueryString(defaultData);
+    history.replaceState(null, null, url);
 
-    $('.filter-category').on('change', ':input', function () {
-        var categoryInputs = $(this).closest('.filter-category');
-        var allCheckbox = categoryInputs.find('.all');
-        var otherCheckboxes = categoryInputs.find(':input').not(allCheckbox);
+    allInputs.forEach(input => {
+        input.checked = true;
+        input.className = 'all';
+    });
+}
 
-        if (otherCheckboxes.is(':checked')) {
-            allCheckbox.prop('checked', false);
-        } else {
-            allCheckbox.prop('checked', true);
-        }
+document.addEventListener('DOMContentLoaded', onLoad);
+
+function onLoad() {
+    categories.forEach(function (category) {
+        category.addEventListener('change', function (event) {
+            let categoryInputs = event.target.closest('.filter-category');
+            let allCheckbox = categoryInputs.querySelector('.all');
+            let otherCheckboxes = categoryInputs.querySelectorAll('input:not(.all)');
+
+            let checkedCount = 0;
+            otherCheckboxes.forEach(function (checkbox) {
+                if (checkbox.checked) {
+                    checkedCount++;
+                }
+            });
+
+            if (checkedCount > 0) {
+                allCheckbox.checked = false;
+            } else {
+                allCheckbox.checked = true;
+            }
+        });
     });
 
-    $('.all').on('change', function () {
-        var categoryInputs = $(this).closest('.filter-category');
-        var otherCheckboxes = categoryInputs.find(':input').not('.all');
+    allInputs.forEach(function (allCheckbox) {
+        allCheckbox.addEventListener('change', function (event) {
+            let categoryInputs = event.target.closest('.filter-category');
+            let otherCheckboxes = categoryInputs.querySelectorAll('input:not(.all)');
 
-        if ($(this).is(':checked')) {
-            otherCheckboxes.prop('checked', false);
-        }
+            if (event.target.checked) {
+                otherCheckboxes.forEach(function (checkbox) {
+                    checkbox.checked = false;
+                });
+            }
+        });
     });
-});
+}

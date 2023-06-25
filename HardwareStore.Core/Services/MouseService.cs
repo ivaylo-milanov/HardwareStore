@@ -2,6 +2,7 @@
 {
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Mouse;
+    using HardwareStore.Core.ViewModels.Product;
     using HardwareStore.Extensions;
     using HardwareStore.Infrastructure.Common;
     using HardwareStore.Infrastructure.Models;
@@ -97,25 +98,19 @@
                 switch (sens)
                 {
                     case 1:
-                        filteredMouses.AddRange(mouses.Where(m => m.Sensitivity <= 800));
+                        filteredMouses.AddRange(mouses.Where(m => m.Sensitivity >= 500 && m.Sensitivity < 6000));
                         break;
                     case 2:
-                        filteredMouses.AddRange(mouses.Where(m => m.Sensitivity > 800 && m.Sensitivity <= 1200));
+                        filteredMouses.AddRange(mouses.Where(m => m.Sensitivity >= 6000 && m.Sensitivity < 11000));
                         break;
                     case 3:
-                        filteredMouses.AddRange(mouses.Where(m => m.Sensitivity > 1200 && m.Sensitivity <= 2000));
+                        filteredMouses.AddRange(mouses.Where(m => m.Sensitivity >= 11000 && m.Sensitivity < 16000));
                         break;
                     case 4:
-                        filteredMouses.AddRange(mouses.Where(m => m.Sensitivity > 2000 && m.Sensitivity <= 3000));
+                        filteredMouses.AddRange(mouses.Where(m => m.Sensitivity >= 16000 && m.Sensitivity < 21000));
                         break;
                     case 5:
-                        filteredMouses.AddRange(mouses.Where(m => m.Sensitivity > 3000 && m.Sensitivity <= 4000));
-                        break;
-                    case 6:
-                        filteredMouses.AddRange(mouses.Where(m => m.Sensitivity > 4000 && m.Sensitivity < 10000));
-                        break;
-                    case 7:
-                        filteredMouses.AddRange(mouses.Where(m => m.Sensitivity >= 10000));
+                        filteredMouses.AddRange(mouses.Where(m => m.Sensitivity >= 21000 && m.Sensitivity <= 25001));
                         break;
                 }
             }
@@ -153,5 +148,90 @@
 
             return filteredMouses;
         }
+
+        public async Task<MousesViewModel> GetModel()
+        {
+            MousesViewModel model = new MousesViewModel();
+            IEnumerable<MouseViewModel> mouses = await this.GetAllMouses();
+
+            model.Sensitivity = GetSensitivity();
+            model.Prices = GetPrice();
+
+            model.Manufacturer.AddRange(mouses.GetDistinctValues("Manufacturer"));
+            model.Color.AddRange(mouses.GetDistinctValues("Color"));
+            model.Connectivity.AddRange(mouses.GetDistinctValues("Connectivity"));
+            model.Interface.AddRange(mouses.GetDistinctValues("Interface"));
+            model.Sensor.AddRange(mouses.GetDistinctValues("Sensor"));
+            model.NumberOfKeys.AddRange(mouses.GetDistinctValues("NumberOfKeys"));
+            model.Mouses = mouses;
+
+            return model;
+        }
+
+        private List<ProductNameValueModel> GetSensitivity()
+            => new List<ProductNameValueModel>()
+            {
+                new ProductNameValueModel
+                {
+                    Name = "All",
+                    Value = "All"
+                },
+                new ProductNameValueModel
+                {
+                    Name = "500 - 5999 DPI",
+                    Value = "1"
+                },
+                new ProductNameValueModel
+                {
+                    Name = "6000 - 10999 DPI",
+                    Value = "2"
+                },
+                new ProductNameValueModel
+                {
+                    Name = "11000 - 15999 DPI",
+                    Value = "3"
+                },
+                new ProductNameValueModel
+                {
+                    Name = "16000 - 20999 DPI",
+                    Value = "4"
+                },
+                new ProductNameValueModel
+                {
+                    Name = "21000 - 25001 DPI",
+                    Value = "5"
+                }
+            };
+
+
+        private List<ProductNameValueModel> GetPrice()
+            => new List<ProductNameValueModel>()
+            {
+                new ProductNameValueModel
+                {
+                    Name = "All",
+                    Value = "All"
+                },
+                new ProductNameValueModel
+                {
+                    Name = "0.00 - 100.00 lv",
+                    Value = "1"
+                },
+                new ProductNameValueModel
+                {
+                    Name = "100.00 - 200.00 lv",
+                    Value = "2"
+                },
+                new ProductNameValueModel
+                {
+                    Name = "200.00 - 300.00 lv",
+                    Value = "3"
+                },
+                new ProductNameValueModel
+                {
+                    Name = "300.00 - 400.00 lv",
+                    Value = "4"
+                }
+            };
     }
 }

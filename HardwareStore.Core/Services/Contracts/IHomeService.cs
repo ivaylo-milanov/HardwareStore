@@ -5,5 +5,7 @@
     public interface IHomeService
     {
         Task<IEnumerable<NewProductViewModel>> GetNewProducts();
+
+
     }
 }
