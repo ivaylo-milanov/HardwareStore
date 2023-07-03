@@ -2,12 +2,7 @@
 {
     using HardwareStore.Core.ViewModels.Mouse;
 
-    public interface IMouseService
+    public interface IMouseService : IProductService<MouseViewModel>
     {
-        Task<IEnumerable<MouseViewModel>> GetAllMouses();
-
-        Task<MousesViewModel> GetModel();
-
-        IEnumerable<MouseViewModel> GetFilteredMouses(IEnumerable<MouseViewModel> mouses, MouseFilterOptions filter);
     }
 }

@@ -11,6 +11,8 @@
             services.AddScoped<IRepository, Repository>();
             services.AddScoped<IHomeService, HomeService>();
             services.AddScoped<IMouseService, MouseService>();
+            services.AddScoped<IKeyboardService, KeyboardService>();
+            services.AddScoped<IHeadsetService, HeadsetService>();
 
             services.AddControllers().AddNewtonsoftJson();
 

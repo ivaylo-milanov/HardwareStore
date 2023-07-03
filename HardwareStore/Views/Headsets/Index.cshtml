@@ -1,8 +1,8 @@
-﻿@model IEnumerable<MouseViewModel>
+﻿@model IEnumerable<HeadsetViewModel>
 
 <div>
     <div class="filter">
-        <form method="get" data-url="@Url.Action("FilterMouses", "Mouses")" data-container="#mouses">
+        <form method="get" data-url="@Url.Action("FilterHeadsets", "Headsets")" data-container="#headsets">
             <div class="filter-categories">
                 @Html.Partial("_FilterCategoryPartialView", new FilterCategoryModel {
                     Values = Model.Select(m => m.Manufacturer).Distinct(),
@@ -10,18 +10,28 @@
                 })
 
                 @Html.Partial("_FilterCategoryPartialView", new FilterCategoryModel {
-                    Values = Model.Select(m => m.Connectivity).Distinct(),
-                    Name = "Connectivity"
+                    Values = Model.Select(m => m.Form).Distinct(),
+                    Name = "Form"
                 })
 
                 @Html.Partial("_FilterCategoryPartialView", new FilterCategoryModel {
                     Values = Model.Select(m => m.Interface).Distinct(),
                     Name = "Interface"
                 })
-                
+
                 @Html.Partial("_FilterCategoryPartialView", new FilterCategoryModel {
-                    Values = Model.Select(m => m.Sensor).Distinct(),
-                    Name = "Sensor"
+                    Values = Model.Select(m => m.NoiseIsolation).Distinct(),
+                    Name = "NoiseIsolation"
+                })
+
+                @Html.Partial("_FilterCategoryPartialView", new FilterCategoryModel {
+                    Values = Model.Select(m => m.Type).Distinct(),
+                    Name = "Type"
+                })
+
+                @Html.Partial("_FilterCategoryPartialView", new FilterCategoryModel {
+                    Values = Model.Select(m => m.Compatibility).Distinct(),
+                    Name = "Compatibility"
                 })
 
                 @Html.Partial("_FilterCategoryPartialView", new FilterCategoryModel {
@@ -29,21 +39,17 @@
                     Name = "Color"
                 })
 
-                @Html.Partial("_FilterCategoryPartialView", new FilterCategoryModel {
-                    Values = Model.Select(m => m.NumberOfKeys).Distinct(),
-                    Name = "NumberOfKeys"
-                })
             </div>
             <div class="order">
                 <partial name="_OrderPartialView"/>
             </div>
         </form>
     </div>
-    <div id="mouses">
+    <div id="headsets">
         <partial name="_ProductsPartialView" model="@Model"/>
     </div>
 </div>
 
 @section Scripts {
-    <script src="~/js/filter.js"></script>
+   <script src="~/js/filter.js"></script>
 }

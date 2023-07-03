@@ -1,0 +1,21 @@
+﻿@model IEnumerable<KeyboardViewModel>
+
+<div>
+    <div class="filter">
+        <form method="get" data-url="@Url.Action("FilterKeyboards", "Keyboards")" data-container="#keyboards">
+            <div class="filter-categories">
+                
+            </div>
+            <div class="order">
+                <partial name="_OrderPartialView" />
+            </div>
+        </form>
+    </div>
+    <div id="keyboards">
+        <partial name="_ProductsPartialView" model="@Model"/>
+    </div>
+</div>
+
+@section Scripts {
+   <script src="~/js/filter.js"></script>
+}

@@ -12,10 +12,8 @@
     {
         public Product()
         {
-            this.ComputerParts = new HashSet<ComputerPart>();
             this.ProductAttributes = new HashSet<ProductAttribute>();
             this.ProductsOrders = new HashSet<ProductOrder>();
-            this.ComputerParts = new HashSet<ComputerPart>();
         }
 
         [Comment("product id")]
@@ -70,12 +68,6 @@
 
         [Comment("product category")]
         public Category Category { get; set; } = null!;
-
-        [InverseProperty(nameof(ComputerPart.Part))]
-        public virtual ICollection<ComputerPart> PartComputers { get; set; }
-
-        [InverseProperty(nameof(ComputerPart.Computer))]
-        public virtual ICollection<ComputerPart> ComputerParts { get; set; }
 
         public ICollection<ProductAttribute> ProductAttributes { get; set; }
 

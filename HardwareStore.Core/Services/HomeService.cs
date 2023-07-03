@@ -17,19 +17,27 @@
             this.repository = repository;
         }
 
+        public async Task<IEnumerable<MostBoughtProductViewModel>> GetMostBoughtProducts()
+            => await this.repository.All<Product>(p => p.ProductsOrders.Count > 3)
+                .Select(p => new MostBoughtProductViewModel
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price
+                })
+                
+                .ToListAsync();
+
         public async Task<IEnumerable<NewProductViewModel>> GetNewProducts()
-            => await this.repository.All<Product>(p => p.AddDate == GetLatestDateTime())
+            => await this.repository.All<Product>()
+                .OrderByDescending(p => p.AddDate)
                 .Select(p => new NewProductViewModel
                 {
                     Id = p.Id,
                     Name = p.Name,
                     Price= p.Price
                 })
+                .Take(7)
                 .ToListAsync();
-
-        private DateTime GetLatestDateTime()
-            => this.repository.All<Product>()
-                .Select(p => p.AddDate)
-                .Max();
     }
 }

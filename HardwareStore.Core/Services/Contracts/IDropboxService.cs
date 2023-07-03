@@ -2,6 +2,8 @@
 {
     public interface IDropboxService
     {
-        Task<IEnumerable<byte[]>> GetProductImages(string productId);
+        Task<string> GetProductFirstImageAsync(int productId);
+
+        Task<IEnumerable<string>> GetAllProductImagesAsync(int productId);
     }
 }

@@ -1,158 +1,138 @@
-﻿let form = document.querySelector('form');
-let allInputs = document.querySelectorAll('input[value=All]');
-let order = document.querySelector('select');
-let categories = document.querySelectorAll('.filter-category');
-let url = 'https://localhost:7213';
-let defaultData;
-
-setInitialData();
+﻿const form = document.querySelector('form');
+const select = document.querySelector('select');
+const initialUrl = 'https://localhost:7213';
 
 form.addEventListener('change', onFormChange);
+
+const defaultData = {
+    "Order": "Default"
+};
+
+setInitialData();
 
 async function onFormChange(ev) {
     ev.preventDefault();
     let data = getData();
 
-    let url = buildQueryString(data);
+    let url = window.location.pathname + buildQueryString(data);
     window.history.pushState(data, null, url);
 
-    await sendData(data);
+
+
+    await request(data);
 }
 
-async function sendData(data) {
-    let requestOptions = {
+async function request(data) {
+    let subUrl = form.dataset.url;
+    let container = form.dataset.container;
+
+    const options = {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
-    };
-
-    let subUrl = form.dataset.url;
-    let container = form.dataset.container;
+    }
 
     try {
-        let response = await fetch(url + subUrl, requestOptions);
-        let html = await response.text();
+        const response = await fetch(initialUrl + subUrl, options);
+
+        const html = await response.text();
 
         document.querySelector(container).innerHTML = html;
-
     } catch (e) {
         console.error(e);
     }
 }
 
 function buildQueryString(data) {
-    var currentUrl = new URL(window.location.href);
+    const searchParams = new URLSearchParams();
 
     for (let [key, value] of Object.entries(data)) {
-        currentUrl.searchParams.set(key, value);
+        if (Array.isArray(value)) {
+            searchParams.set(key, value.join(','))
+        } else {
+            searchParams.set(key, value);
+        }
     }
 
-    return currentUrl.href;
+    const queryString = searchParams.toString();
+    return queryString ? '?' + queryString : '';
 }
 
 function getData() {
-    let formData = new FormData(form);
     let data = {};
 
-    formData.forEach(function (value, key) {
-        if (data[key]) {
-            data[key].push(value);
-        } else {
-            data[key] = [value];
+    const checkboxes = form.querySelectorAll('input[type="checkbox"]:checked');
+    checkboxes.forEach(checkbox => {
+        const key = checkbox.name.replace('Filter.', '');
+        const value = checkbox.value;
+
+        if (!data.hasOwnProperty(key)) {
+            data[key] = [];
         }
+
+        data[key].push(value);
     });
+
+    const order = select.value;
+    data["Order"] = order;
 
     return data;
 }
 
-window.onpopstate = onPopState;
+window.onpopstate = async (ev) => {
+    let data = ev.state;
 
-function getDefaultData() {
-    let data = {};
-
-    allInputs.forEach(function (input) {
-        data[input.name] = input.value;
-    });
-
-    data["Order"] = ["Default"];
-
-    return data;
-}
-
-function onPopState(ev) {
-    let data = ev.state
-
-    if (!data) {
-        data = defaultData;
+    if (data === null) {
+        data = getSavedData();
     }
 
     returnFilterState(data);
 
-    (async function () {
-        await sendData(data);
-    })();
-}
+    await request(data);
+};
 
 function returnFilterState(data) {
-    for (const [key, values] of Object.entries(data)) {
-        if (key == "Order") {
-            order.value = values[0];
+    const distinctNames = [];
+    const checkboxes = document.querySelectorAll('input[type=checkbox]');
+
+    checkboxes.forEach((checkbox) => {
+        if (!distinctNames.includes(checkbox.name)) {
+            distinctNames.push(checkbox.name);
+        }
+    });
+
+    select.value = data["Order"];
+
+    for (const key of distinctNames) {
+        var nameCheckboxes = Array.from(checkboxes).filter(ch => ch.name === key);
+
+        if (!data.hasOwnProperty(key)) {
+            nameCheckboxes.forEach(function (checkbox) {
+                checkbox.checked = false;
+            });
         } else {
-            var checkboxes = document.querySelectorAll(`input[name="${key}"]`);
-            checkboxes.forEach(function (checkbox) {
-                checkbox.checked = values.includes(checkbox.value);
+            nameCheckboxes.forEach(function (checkbox) {
+                checkbox.checked = data[key].includes(checkbox.value);
             });
         }
     }
 }
 
 function setInitialData() {
-    defaultData = getDefaultData();
-    let url = buildQueryString(defaultData);
-    history.replaceState(null, null, url);
+    const savedData = localStorage.getItem('filterData');
+    const initialData = savedData ? JSON.parse(savedData) : {};
 
-    allInputs.forEach(input => {
-        input.checked = true;
-        input.className = 'all';
-    });
+    let queryString = window.location.pathname + buildQueryString(initialData);
+    history.replaceState(null, null, initialUrl + queryString);
+
+    if (Object.keys(savedData).length === 0) {
+        localStorage.setItem('filterData', JSON.stringify(initialData));
+    }
 }
 
-document.addEventListener('DOMContentLoaded', onLoad);
-
-function onLoad() {
-    categories.forEach(function (category) {
-        category.addEventListener('change', function (event) {
-            let categoryInputs = event.target.closest('.filter-category');
-            let allCheckbox = categoryInputs.querySelector('.all');
-            let otherCheckboxes = categoryInputs.querySelectorAll('input:not(.all)');
-
-            let checkedCount = 0;
-            otherCheckboxes.forEach(function (checkbox) {
-                if (checkbox.checked) {
-                    checkedCount++;
-                }
-            });
-
-            if (checkedCount > 0) {
-                allCheckbox.checked = false;
-            } else {
-                allCheckbox.checked = true;
-            }
-        });
-    });
-
-    allInputs.forEach(function (allCheckbox) {
-        allCheckbox.addEventListener('change', function (event) {
-            let categoryInputs = event.target.closest('.filter-category');
-            let otherCheckboxes = categoryInputs.querySelectorAll('input:not(.all)');
-
-            if (event.target.checked) {
-                otherCheckboxes.forEach(function (checkbox) {
-                    checkbox.checked = false;
-                });
-            }
-        });
-    });
+function getSavedData() {
+    const savedData = localStorage.getItem('filterData');
+    return savedData ? JSON.parse(savedData) : defaultData;
 }

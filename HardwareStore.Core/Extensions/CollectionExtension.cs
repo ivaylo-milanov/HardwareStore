@@ -1,14 +1,8 @@
-﻿namespace HardwareStore.Extensions
+﻿namespace HardwareStore.Core.Extensions
 {
-    using Dropbox.Api.Users;
     using HardwareStore.Core.ViewModels.Product;
     using HardwareStore.Infrastructure.Models;
-    using Microsoft.EntityFrameworkCore.Metadata.Internal;
-    using Newtonsoft.Json.Linq;
     using System;
-    using System.Numerics;
-    using static Dropbox.Api.Files.SearchMatchType;
-    using System.Reflection;
 
     public static class CollectionExtension
     {
@@ -36,31 +30,31 @@
             return products;
         }
 
-        public static IEnumerable<ProductNameValueModel> GetDistinctValues<T>(this IEnumerable<T> products,string propertyName) where T : ProductViewModel
+        public static IEnumerable<TModel> GetFilteredProducts<TModel, TFilter>(this IEnumerable<TModel> products, TFilter filter)
+            where TModel : ProductViewModel
+            where TFilter : ProductFilterOptions
         {
-            PropertyInfo propertyInfo = typeof(T).GetProperty(propertyName);
+            var properties = filter.GetType().GetProperties();
 
-            if (propertyInfo != null)
+            foreach (var property in properties)
             {
-                var collection = products
-                    .Select(m => new ProductNameValueModel
-                    {
-                        Name = propertyInfo.GetValue(m)?.ToString(),
-                        Value = propertyInfo.GetValue(m)?.ToString()
-                    })
-                    .DistinctBy(m => m.Name)
-                    .ToList();
+                var filterValue = property.GetValue(filter);
 
-                collection.Insert(0, new ProductNameValueModel
+                if (filterValue != null)
                 {
-                    Name = "All",
-                    Value = "All"
-                });
+                    if (!(filterValue is IEnumerable<object> filterList))
+                    {
+                        continue;
+                    }
 
-                return collection;
+                    if (filterList.Any())
+                    {
+                        products = products.Where(p => filterList.Contains(p.GetType().GetProperty(property.Name).GetValue(p)));
+                    }
+                }
             }
 
-            return Enumerable.Empty<ProductNameValueModel>();
+            return products;
         }
     }
 }

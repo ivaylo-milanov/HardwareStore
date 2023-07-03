@@ -1,7 +1,10 @@
 ﻿namespace HardwareStore.Core.Services
 {
     using Dropbox.Api;
+    using Dropbox.Api.Files;
     using HardwareStore.Core.Services.Contracts;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
 
     public class DropboxService : IDropboxService
     {
@@ -12,38 +15,37 @@
             dropboxClient = new DropboxClient(accessToken);
         }
 
-        public async Task<IEnumerable<byte[]>> GetProductImages(string productId)
+        public async Task<IEnumerable<string>> GetAllProductImagesAsync(int productId)
         {
-            var folderPath = $"/products/{productId}";
+            var searchResult = await dropboxClient.Files.SearchAsync(string.Empty, productId.ToString());
 
-            var images = new List<byte[]>();
+            var imageUrls = new List<string>();
 
-            try
+            foreach (var match in searchResult.Matches)
             {
-                var listFolderResult = await dropboxClient.Files.ListFolderAsync(folderPath);
-
-                foreach (var entry in listFolderResult.Entries)
+                if (match.Metadata.IsFile)
                 {
-                    if (entry.IsFile && IsImageFile(entry.Name))
-                    {
-                        var downloadResponse = await dropboxClient.Files.DownloadAsync(entry.PathLower);
-                        var imageData = await downloadResponse.GetContentAsByteArrayAsync();
-                        images.Add(imageData);
-                    }
+                    var fileMetadata = match.Metadata as FileMetadata;
+                    var linkResult = await dropboxClient.Files.GetTemporaryLinkAsync(fileMetadata.PathLower);
+                    imageUrls.Add(linkResult.Link);
                 }
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error retrieving product images: {ex.Message}");
-            }
 
-            return images;
+            return imageUrls;
         }
 
-        private bool IsImageFile(string fileName)
+        public async Task<string> GetProductFirstImageAsync(int productId)
         {
-            var extension = Path.GetExtension(fileName)?.ToLower();
-            return extension == ".jpg" || extension == ".jpeg" || extension == ".png" || extension == ".gif";
+            var searchResult = await dropboxClient.Files.SearchAsync(string.Empty, productId.ToString());
+            var fileMetadata = searchResult.Matches.FirstOrDefault(m => m.Metadata.IsFile);
+
+            if (fileMetadata != null)
+            {
+                var linkResult = await dropboxClient.Files.GetTemporaryLinkAsync(fileMetadata.Metadata.PathLower);
+                return linkResult.Link;
+            }
+
+            return null;
         }
     }
 }

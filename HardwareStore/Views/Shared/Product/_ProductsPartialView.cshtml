@@ -1,0 +1,19 @@
+﻿@model IEnumerable<ProductViewModel>
+
+<ul class="products">
+    @foreach (var product in Model)
+    {
+        <li>
+            <div>
+                <img src="@product.ImageUrl"/>
+            </div>
+            <div>
+                <p>@product.Name</p>
+            </div>
+            <div>
+                <span>@product.Price</span>
+                <button>Buy</button>
+            </div>
+        </li>
+    }
+</ul>

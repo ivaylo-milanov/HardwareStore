@@ -25,12 +25,9 @@
 
         public DbSet<Manufacturer> Manufacturers { get; set; } = null!;
 
-        public DbSet<ComputerPart> ComputerParts { get; set; } = null!;
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new ProductOrderConfiguration());
-            builder.ApplyConfiguration(new ComputerPartConfiguration());
             builder.ApplyConfiguration(new CustomerConfiguration());
             builder.ApplyConfiguration(new CategoryConfiguration());
             

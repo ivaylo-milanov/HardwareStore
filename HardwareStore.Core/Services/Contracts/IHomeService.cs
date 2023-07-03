@@ -6,6 +6,6 @@
     {
         Task<IEnumerable<NewProductViewModel>> GetNewProducts();
 
-
+        Task<IEnumerable<MostBoughtProductViewModel>> GetMostBoughtProducts();
     }
 }
