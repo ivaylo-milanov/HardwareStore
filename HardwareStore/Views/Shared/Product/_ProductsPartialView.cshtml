@@ -4,13 +4,13 @@
     @foreach (var product in Model)
     {
         <li>
-            <div>
+            <div class="product-card-image">
                 <img src="@product.ImageUrl"/>
             </div>
-            <div>
+            <div class="product-card-header">
                 <p>@product.Name</p>
             </div>
-            <div>
+            <div class="product-card-buy">
                 <span>@product.Price</span>
                 <button>Buy</button>
             </div>
