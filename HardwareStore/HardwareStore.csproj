@@ -24,12 +24,4 @@
     <ProjectReference Include="..\HardwareStore.Infrastructure\HardwareStore.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\User\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Views\Shared\Product\_OrderPartialView.cshtml" />
-  </ItemGroup>
-
 </Project>

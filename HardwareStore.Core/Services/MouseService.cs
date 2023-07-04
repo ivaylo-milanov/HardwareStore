@@ -21,7 +21,7 @@
 
         public async Task<IEnumerable<MouseViewModel>> GetAllProducts()
             => await this.repository
-                .AllReadonly<Product>(b => b.Category.Name == "Mouse")
+                .AllReadonly<Product>(b => b.Category.Name == "Mouses")
                 .Select(b => new MouseViewModel
                 {
                     Id = b.Id,

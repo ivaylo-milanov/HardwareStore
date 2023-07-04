@@ -17,8 +17,6 @@ async function onFormChange(ev) {
     let url = window.location.pathname + buildQueryString(data);
     window.history.pushState(data, null, url);
 
-
-
     await request(data);
 }
 

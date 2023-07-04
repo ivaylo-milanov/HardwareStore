@@ -1,6 +1,5 @@
 ﻿namespace HardwareStore.Controllers
 {
-    using HardwareStore.Core.Extensions;
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Headset;
     using Microsoft.AspNetCore.Mvc;
@@ -10,11 +9,13 @@
     {
         private readonly IHeadsetService headsetService;
         private readonly IMemoryCache memoryCache;
+        private readonly IFilterService filterService;
 
-        public HeadsetsController(IHeadsetService headsetService, IMemoryCache memoryCache)
+        public HeadsetsController(IHeadsetService headsetService, IMemoryCache memoryCache, IFilterService filterService)
         {
             this.headsetService = headsetService;
             this.memoryCache = memoryCache;
+            this.filterService = filterService;
         }
 
         public async Task<IActionResult> Index()
@@ -29,16 +30,15 @@
         {
             if (!this.memoryCache.TryGetValue("Headsets", out IEnumerable<HeadsetViewModel> headsets))
             {
-                return BadRequest("Keyboards data not found.");
+                return BadRequest("Headsets data not found.");
             }
 
-            IEnumerable<HeadsetViewModel> filtered = headsets;
-            if (filter != null)
-            {
-                filtered = filtered.GetFilteredProducts(filter);
-            }
+            IEnumerable<HeadsetViewModel> filtered;
 
-            return PartialView("_ProductPartialView", filtered);
+            filtered = this.filterService.OrderProducts(headsets, filter.Order);
+            filtered = this.filterService.FilterProducts(filtered, filter);
+
+            return ViewComponent("ProductComponent", filtered);
         }
     }
 }

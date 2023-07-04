@@ -4,43 +4,43 @@
     <div class="filter">
         <form method="get" data-url="@Url.Action("FilterMouses", "Mouses")" data-container="#mouses">
             <div class="filter-categories">
-                @Html.Partial("_FilterCategoryPartialView", new FilterCategoryModel {
-                    Values = Model.Select(m => m.Manufacturer).Distinct(),
-                    Name = "Manufacturer"
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = "Manufacturer",
+                    values = Model.Select(m => m.Manufacturer).Distinct()
                 })
 
-                @Html.Partial("_FilterCategoryPartialView", new FilterCategoryModel {
-                    Values = Model.Select(m => m.Connectivity).Distinct(),
-                    Name = "Connectivity"
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = "Connectivity",
+                    values = Model.Select(m => m.Connectivity).Distinct()
                 })
 
-                @Html.Partial("_FilterCategoryPartialView", new FilterCategoryModel {
-                    Values = Model.Select(m => m.Interface).Distinct(),
-                    Name = "Interface"
-                })
-                
-                @Html.Partial("_FilterCategoryPartialView", new FilterCategoryModel {
-                    Values = Model.Select(m => m.Sensor).Distinct(),
-                    Name = "Sensor"
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = "Interface",
+                    values = Model.Select(m => m.Interface).Distinct()
                 })
 
-                @Html.Partial("_FilterCategoryPartialView", new FilterCategoryModel {
-                    Values = Model.Select(m => m.Color).Distinct(),
-                    Name = "Color"
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = "Sensor",
+                    values = Model.Select(m => m.Sensor).Distinct()
                 })
 
-                @Html.Partial("_FilterCategoryPartialView", new FilterCategoryModel {
-                    Values = Model.Select(m => m.NumberOfKeys).Distinct(),
-                    Name = "NumberOfKeys"
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = "NumberOfKeys",
+                    values = Model.Select(m => m.NumberOfKeys.ToString()).Distinct()
+                })
+
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = "Color",
+                    values = Model.Select(m => m.Color).Distinct()
                 })
             </div>
             <div class="additional-filters">
-                <partial name="_OrderPartialView"/>
+                @await Component.InvokeAsync("OrderComponent")
             </div>
         </form>
     </div>
     <div id="mouses">
-        <partial name="_ProductsPartialView" model="@Model"/>
+        @await Component.InvokeAsync("ProductsComponent", new { models = Model })
     </div>
 </div>
 

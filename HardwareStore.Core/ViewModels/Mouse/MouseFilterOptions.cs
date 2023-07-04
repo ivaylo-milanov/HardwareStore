@@ -4,14 +4,14 @@
 
     public class MouseFilterOptions : ProductFilterOptions
     {
-        public List<string> Connectivity { get; set; } = new List<string>();
+        public IEnumerable<string> Connectivity { get; set; } = null!;
 
-        public List<string> Color { get; set; } = new List<string>();
+        public IEnumerable<string> Color { get; set; } = null!;
 
-        public List<string> Interface { get; set; } = new List<string>();
+        public IEnumerable<string> Interface { get; set; } = null!; 
 
-        public List<string> Sensor { get; set; } = new List<string>();
+        public IEnumerable<string> Sensor { get; set; } = null!;
 
-        public List<string> NumberOfKeys { get; set; } = new List<string>();
+        public IEnumerable<string> NumberOfKeys { get; set; } = null!;
     }
 }

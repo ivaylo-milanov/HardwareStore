@@ -4,49 +4,48 @@
     <div class="filter">
         <form method="get" data-url="@Url.Action("FilterHeadsets", "Headsets")" data-container="#headsets">
             <div class="filter-categories">
-                @Html.Partial("_FilterCategoryPartialView", new FilterCategoryModel {
-                    Values = Model.Select(m => m.Manufacturer).Distinct(),
-                    Name = "Manufacturer"
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = "Manufacturer",
+                    values = Model.Select(m => m.Manufacturer).Distinct()
                 })
 
-                @Html.Partial("_FilterCategoryPartialView", new FilterCategoryModel {
-                    Values = Model.Select(m => m.Form).Distinct(),
-                    Name = "Form"
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = "Form",
+                    values = Model.Select(m => m.Form).Distinct()
                 })
 
-                @Html.Partial("_FilterCategoryPartialView", new FilterCategoryModel {
-                    Values = Model.Select(m => m.Interface).Distinct(),
-                    Name = "Interface"
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = "Interface",
+                    values = Model.Select(m => m.Interface).Distinct()
                 })
 
-                @Html.Partial("_FilterCategoryPartialView", new FilterCategoryModel {
-                    Values = Model.Select(m => m.NoiseIsolation).Distinct(),
-                    Name = "NoiseIsolation"
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = "NoiseIsolation",
+                    values = Model.Select(m => m.NoiseIsolation).Distinct()
                 })
 
-                @Html.Partial("_FilterCategoryPartialView", new FilterCategoryModel {
-                    Values = Model.Select(m => m.Type).Distinct(),
-                    Name = "Type"
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = "Type",
+                    values = Model.Select(m => m.Type).Distinct()
                 })
 
-                @Html.Partial("_FilterCategoryPartialView", new FilterCategoryModel {
-                    Values = Model.Select(m => m.Compatibility).Distinct(),
-                    Name = "Compatibility"
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = "Compatibility",
+                    values = Model.Select(m => m.Compatibility).Distinct()
                 })
 
-                @Html.Partial("_FilterCategoryPartialView", new FilterCategoryModel {
-                    Values = Model.Select(m => m.Color).Distinct(),
-                    Name = "Color"
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = "Color",
+                    values = Model.Select(m => m.Color).Distinct()
                 })
-
             </div>
             <div class="additional-filters">
-                <partial name="_OrderPartialView"/>
+                @await Component.InvokeAsync("OrderComponent")
             </div>
         </form>
     </div>
     <div id="headsets">
-        <partial name="_ProductsPartialView" model="@Model"/>
+        @await Component.InvokeAsync("ProductsComponent", new { models = Model })
     </div>
 </div>
 

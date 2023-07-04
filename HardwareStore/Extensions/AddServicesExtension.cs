@@ -13,6 +13,7 @@
             services.AddScoped<IMouseService, MouseService>();
             services.AddScoped<IKeyboardService, KeyboardService>();
             services.AddScoped<IHeadsetService, HeadsetService>();
+            services.AddScoped<IFilterService, FilterService>();
 
             services.AddControllers().AddNewtonsoftJson();
 

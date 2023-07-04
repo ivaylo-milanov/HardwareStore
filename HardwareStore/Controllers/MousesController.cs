@@ -1,6 +1,5 @@
 ﻿namespace HardwareStore.Controllers
 {
-    using HardwareStore.Core.Extensions;
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Mouse;
     using Microsoft.AspNetCore.Mvc;
@@ -10,11 +9,13 @@
     {
         private readonly IMouseService mouseService;
         private readonly IMemoryCache memoryCache;
+        private readonly IFilterService filterService;
 
-        public MousesController(IMouseService mouseService, IMemoryCache memoryCache)
+        public MousesController(IMouseService mouseService, IMemoryCache memoryCache, IFilterService filterService)
         {
             this.mouseService = mouseService;
             this.memoryCache = memoryCache;
+            this.filterService = filterService;
         }
 
         public async Task<IActionResult> Index()
@@ -32,13 +33,12 @@
                 return BadRequest("Mouses data not found.");
             }
 
-            IEnumerable<MouseViewModel> filtered = mouses;
-            if (filter != null)
-            {
-                filtered = filtered.GetFilteredProducts(filter);
-            }
+            IEnumerable<MouseViewModel> filtered;
 
-            return PartialView("_ProductsPartialView", filtered);
+            filtered = this.filterService.OrderProducts(mouses, filter.Order);
+            filtered = this.filterService.FilterProducts(filtered, filter);
+
+            return ViewComponent("ProductsComponent", filtered);
         }
     }
 }

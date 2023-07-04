@@ -4,16 +4,16 @@
 
     public class HeadsetFilterOptions : ProductFilterOptions
     {
-        public List<string> Form { get; set; } = new List<string>();
+        public IEnumerable<string> Form { get; set; } = null!;
 
-        public List<string> Interface { get; set; } = new List<string>();
+        public IEnumerable<string> Interface { get; set; } = null!;
 
-        public List<string> NoiseIsolation { get; set; } = new List<string>();
+        public IEnumerable<string> NoiseIsolation { get; set; } = null!;
 
-        public List<string> Type { get; set; } = new List<string>();
+        public IEnumerable<string> Type { get; set; } = null!;
 
-        public List<string> Compatibility { get; set; } = new List<string>();
+        public IEnumerable<string> Compatibility { get; set; } = null!;
 
-        public List<string> Color { get; set; } = new List<string>(); 
+        public IEnumerable<string> Color { get; set; } = null!; 
     }
 }

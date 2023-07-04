@@ -29,32 +29,5 @@
 
             return products;
         }
-
-        public static IEnumerable<TModel> GetFilteredProducts<TModel, TFilter>(this IEnumerable<TModel> products, TFilter filter)
-            where TModel : ProductViewModel
-            where TFilter : ProductFilterOptions
-        {
-            var properties = filter.GetType().GetProperties();
-
-            foreach (var property in properties)
-            {
-                var filterValue = property.GetValue(filter);
-
-                if (filterValue != null)
-                {
-                    if (!(filterValue is IEnumerable<object> filterList))
-                    {
-                        continue;
-                    }
-
-                    if (filterList.Any())
-                    {
-                        products = products.Where(p => filterList.Contains(p.GetType().GetProperty(property.Name).GetValue(p)));
-                    }
-                }
-            }
-
-            return products;
-        }
     }
 }

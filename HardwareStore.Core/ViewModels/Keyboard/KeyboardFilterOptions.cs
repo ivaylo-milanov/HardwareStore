@@ -4,30 +4,30 @@
 
     public class KeyboardFilterOptions : ProductFilterOptions
     {
-        public List<string> Connectivity { get; set; } = new List<string>();
+        public IEnumerable<string> Connectivity { get; set; } = null!;
 
-        public List<string> Color { get; set; } = new List<string>();
+        public IEnumerable<string> Color { get; set; } = null!;
 
-        public List<string> Interface { get; set; } = new List<string>();
+        public IEnumerable<string> Interface { get; set; } = null!;
 
-        public List<string> Type { get; set; } = new List<string>();
+        public IEnumerable<string> Type { get; set; } = null!;
 
-        public List<string> Form { get; set; } = new List<string>();
+        public IEnumerable<string> Form { get; set; } = null!;
 
-        public List<string> Backlight { get; set; } = new List<string>();
+        public IEnumerable<string> Backlight { get; set; } = null!;
 
-        public List<string> Cyrillicization { get; set; } = new List<string>();
+        public IEnumerable<string> Cyrillicization { get; set; } = null!;
 
-        public List<string> ButtonType { get; set; } = new List<string>();
+        public IEnumerable<string> ButtonType { get; set; } = null!;
 
-        public List<string> MacroButtons { get; set; } = new List<string>();
+        public IEnumerable<string> MacroButtons { get; set; } = null!;
 
-        public List<string> MultiMediaButtons { get; set; } = new List<string>();
+        public IEnumerable<string> MultiMediaButtons { get; set; } = null!;
 
-        public List<string> Switch { get; set; } = new List<string>();
+        public IEnumerable<string> Switch { get; set; } = null!;
 
-        public List<string> Layout { get; set; } = new List<string>();
+        public IEnumerable<string> Layout { get; set; } = null!;
 
-        public List<string> HotSwappable { get; set; } = new List<string>();
+        public IEnumerable<string> HotSwappable { get; set; } = null!;
     }
 }

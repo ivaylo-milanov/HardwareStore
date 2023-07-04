@@ -15,6 +15,7 @@
         public async Task<IActionResult> Index()
         {
             var newProducts = await this.homeService.GetNewProducts();
+            var mostBoughtProducts = await this.homeService.GetMostBoughtProducts();
 
             return View();
         }

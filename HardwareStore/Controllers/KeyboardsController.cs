@@ -1,6 +1,5 @@
 ﻿namespace HardwareStore.Controllers
 {
-    using HardwareStore.Core.Extensions;
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Keyboard;
     using HardwareStore.Core.ViewModels.Mouse;
@@ -11,11 +10,13 @@
     {
         private readonly IKeyboardService keyboardService;
         private readonly IMemoryCache memoryCache;
+        private readonly IFilterService filterService;
 
-        public KeyboardsController(IKeyboardService keyboardService, IMemoryCache memoryCache)
+        public KeyboardsController(IKeyboardService keyboardService, IMemoryCache memoryCache, IFilterService filterService)
         {
             this.keyboardService = keyboardService;
             this.memoryCache = memoryCache;
+            this.filterService = filterService;
         }
 
         public async Task<IActionResult> Index()
@@ -33,13 +34,12 @@
                 return BadRequest("Keyboards data not found.");
             }
 
-            IEnumerable<KeyboardViewModel> filtered = keyboards;
-            if (filter != null)
-            {
-                filtered = filtered.GetFilteredProducts(filter);
-            }
+            IEnumerable<KeyboardViewModel> filtered;
 
-            return PartialView("_ProductsPartialView", filtered);
+            filtered = this.filterService.OrderProducts(keyboards, filter.Order);
+            filtered = this.filterService.FilterProducts(filtered, filter);
+
+            return ViewComponent("ProductsComponent", filtered);
         }
     }
 }
