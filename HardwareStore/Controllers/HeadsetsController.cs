@@ -11,7 +11,10 @@
         private readonly IMemoryCache memoryCache;
         private readonly IFilterService filterService;
 
-        public HeadsetsController(IHeadsetService headsetService, IMemoryCache memoryCache, IFilterService filterService)
+        public HeadsetsController(
+            IHeadsetService headsetService,
+            IMemoryCache memoryCache,
+            IFilterService filterService)
         {
             this.headsetService = headsetService;
             this.memoryCache = memoryCache;

@@ -7,12 +7,12 @@
                 
             </div>
             <div class="additional-filters">
-                <partial name="_OrderPartialView" />
+                @await Component.InvokeAsync("OrderComponent")
             </div>
         </form>
     </div>
     <div id="keyboards">
-        <partial name="_ProductsPartialView" model="@Model"/>
+        @await Component.InvokeAsync("ProductsComponent", new { models = Model })
     </div>
 </div>
 

@@ -12,7 +12,10 @@
         private readonly IMemoryCache memoryCache;
         private readonly IFilterService filterService;
 
-        public KeyboardsController(IKeyboardService keyboardService, IMemoryCache memoryCache, IFilterService filterService)
+        public KeyboardsController(
+            IKeyboardService keyboardService,
+            IMemoryCache memoryCache,
+            IFilterService filterService)
         {
             this.keyboardService = keyboardService;
             this.memoryCache = memoryCache;

@@ -11,7 +11,10 @@
         private readonly IMemoryCache memoryCache;
         private readonly IFilterService filterService;
 
-        public MousesController(IMouseService mouseService, IMemoryCache memoryCache, IFilterService filterService)
+        public MousesController(
+            IMouseService mouseService,
+            IMemoryCache memoryCache, 
+            IFilterService filterService)
         {
             this.mouseService = mouseService;
             this.memoryCache = memoryCache;
