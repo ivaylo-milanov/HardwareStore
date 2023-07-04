@@ -35,8 +35,8 @@
 
             IEnumerable<HeadsetViewModel> filtered;
 
-            filtered = this.filterService.OrderProducts(headsets, filter.Order);
-            filtered = this.filterService.FilterProducts(filtered, filter);
+            filtered = this.filterService.FilterProducts(headsets, filter);
+            filtered = this.filterService.OrderProducts(filtered, filter.Order);
 
             return ViewComponent("ProductComponent", filtered);
         }

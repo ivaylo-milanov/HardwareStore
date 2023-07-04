@@ -35,8 +35,8 @@
 
             IEnumerable<MouseViewModel> filtered;
 
-            filtered = this.filterService.OrderProducts(mouses, filter.Order);
-            filtered = this.filterService.FilterProducts(filtered, filter);
+            filtered = this.filterService.FilterProducts(mouses, filter);
+            filtered = this.filterService.OrderProducts(filtered, filter.Order);
 
             return ViewComponent("ProductsComponent", filtered);
         }

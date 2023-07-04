@@ -36,8 +36,8 @@
 
             IEnumerable<KeyboardViewModel> filtered;
 
-            filtered = this.filterService.OrderProducts(keyboards, filter.Order);
-            filtered = this.filterService.FilterProducts(filtered, filter);
+            filtered = this.filterService.FilterProducts(keyboards, filter);
+            filtered = this.filterService.OrderProducts(filtered, filter.Order);
 
             return ViewComponent("ProductsComponent", filtered);
         }
