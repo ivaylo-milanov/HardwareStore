@@ -21,8 +21,6 @@
 
         public DbSet<Order> Orders { get; set; } = null!;
 
-        public DbSet<ProductOrder> ProductsOrders { get; set; } = null!;
-
         public DbSet<Manufacturer> Manufacturers { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
