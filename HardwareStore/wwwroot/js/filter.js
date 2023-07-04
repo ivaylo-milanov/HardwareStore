@@ -46,13 +46,13 @@ async function request(data) {
 function buildQueryString(data) {
     const searchParams = new URLSearchParams();
 
-    for (let [key, value] of Object.entries(data)) {
-        if (Array.isArray(value)) {
-            searchParams.set(key, value.join(','))
-        } else {
-            searchParams.set(key, value);
-        }
-    }
+    var arrayEntries = Object.entries(data).filter(p => Array.isArray(p.value));
+
+    arrayEntries.forEach(([key, value]) => searchParams.set(key, value.join(',')));
+
+    var [orderKey, orderValue] = Object.entries(data).filter(p => !Array.isArray(p.value))[0];
+
+    searchParams.set(orderKey, orderValue);
 
     const queryString = searchParams.toString();
     return queryString ? '?' + queryString : '';
@@ -74,7 +74,7 @@ function getData() {
     });
 
     const order = select.value;
-    data["Order"] = order;
+    data.Order = order;
 
     return data;
 }
@@ -101,7 +101,7 @@ function returnFilterState(data) {
         }
     });
 
-    select.value = data["Order"];
+    select.value = data.Order;
 
     for (const key of distinctNames) {
         var nameCheckboxes = Array.from(checkboxes).filter(ch => ch.name === key);
