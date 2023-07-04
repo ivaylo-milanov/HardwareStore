@@ -5,27 +5,27 @@
         <form method="get" data-url="@Url.Action("FilterMousePads", "MousePads")" data-container="#mousePads">
             <div class="filter-categories">
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = "Manufacturer",
+                    name = nameof(MousePadViewModel.Manufacturer),
                     values = Model.Select(m => m.Manufacturer).Distinct()
                 })
 
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = "Surface",
+                    name = nameof(MousePadViewModel.Surface),
                     values = Model.Select(m => m.Surface).Distinct()
                 })
 
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = "Cover",
+                    name = nameof(MousePadViewModel.Cover),
                     values = Model.Select(m => m.Cover).Distinct()
                 })
 
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = "Backlight",
+                    name = nameof(MousePadViewModel.Backlight),
                     values = Model.Select(m => m.Backlight).Distinct()
                 })
 
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = "Color",
+                    name = nameof(MousePadViewModel.Color),
                     values = Model.Select(m => m.Color).Distinct()
                 })
             </div>

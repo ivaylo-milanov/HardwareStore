@@ -27,95 +27,20 @@
                     Price = k.Price,
                     AddDate = k.AddDate,
                     Manufacturer = k.Manufacturer!.Name,
-                    Connectivity = k.ProductAttributes.GetAttributeValue("Connectivity"),
-                    Color = k.ProductAttributes.GetAttributeValue("Color"),
-                    Interface = k.ProductAttributes.GetAttributeValue("Interface"),
-                    Type = k.ProductAttributes.GetAttributeValue("Type"),
-                    Form = k.ProductAttributes.GetAttributeValue("Form"),
-                    Backlight = k.ProductAttributes.GetAttributeValue("Backlight"),
-                    Cyrillicization = k.ProductAttributes.GetAttributeValue("Cyrillicization"),
-                    ButtonType = k.ProductAttributes.GetAttributeValue("ButtonType"),
-                    MacroButtons = k.ProductAttributes.GetAttributeValue("MacroButtons"),
-                    MultiMediaButtons = k.ProductAttributes.GetAttributeValue("MultiMediaNuttons"),
-                    Switch = k.ProductAttributes.GetAttributeValue("Switch"),
-                    Layout = k.ProductAttributes.GetAttributeValue("Layout"),
-                    HotSwappable = k.ProductAttributes.GetAttributeValue("HotSwappable")
+                    Connectivity = k.ProductAttributes.GetAttributeValue(nameof(KeyboardViewModel.Connectivity)),
+                    Color = k.ProductAttributes.GetAttributeValue(nameof(KeyboardViewModel.Color)),
+                    Interface = k.ProductAttributes.GetAttributeValue(nameof(KeyboardViewModel.Interface)),
+                    Type = k.ProductAttributes.GetAttributeValue(nameof(KeyboardViewModel.Type)),
+                    Form = k.ProductAttributes.GetAttributeValue(nameof(KeyboardViewModel.Form)),
+                    Backlight = k.ProductAttributes.GetAttributeValue(nameof(KeyboardViewModel.Backlight)),
+                    Cyrillicization = k.ProductAttributes.GetAttributeValue(nameof(KeyboardViewModel.Connectivity)),
+                    ButtonType = k.ProductAttributes.GetAttributeValue(nameof(KeyboardViewModel.ButtonType)),
+                    MacroButtons = k.ProductAttributes.GetAttributeValue(nameof(KeyboardViewModel.MacroButtons)),
+                    MultiMediaButtons = k.ProductAttributes.GetAttributeValue(nameof(KeyboardViewModel.MultiMediaButtons)),
+                    Switch = k.ProductAttributes.GetAttributeValue(nameof(KeyboardViewModel.Switch)),
+                    Layout = k.ProductAttributes.GetAttributeValue(nameof(KeyboardViewModel.Layout)),
+                    HotSwappable = k.ProductAttributes.GetAttributeValue(nameof(KeyboardViewModel.HotSwappable))
                 })
                 .ToListAsync();
-
-        //public IEnumerable<KeyboardViewModel> GetFilteredProducts(IEnumerable<KeyboardViewModel> products, KeyboardFilterOptions filter)
-        //{
-        //    if (filter.Manufacturer.Count > 0)
-        //    {
-        //        products = products.Where(p => filter.Manufacturer.Contains(p.Manufacturer));
-        //    }
-
-        //    if (filter.Connectivity.Count > 0)
-        //    {
-        //        products = products.Where(p => filter.Connectivity.Contains(p.Connectivity));
-        //    }
-
-        //    if (filter.Color.Count > 0)
-        //    {
-        //        products = products.Where(p => filter.Color.Contains(p.Color));
-        //    }
-
-        //    if (filter.Type.Count > 0)
-        //    {
-        //        products = products.Where(p => filter.Type.Contains(p.Type));
-        //    }
-
-        //    if (filter.Form.Count > 0)
-        //    {
-        //        products = products.Where(p => filter.Form.Contains(p.Form));
-        //    }
-
-        //    if (filter.Backlight.Count > 0)
-        //    {
-        //        products = products.Where(p => filter.Backlight.Contains(p.Backlight));
-        //    }
-
-        //    if (filter.Cyrillicization.Count > 0)
-        //    {
-        //        products = products.Where(p => filter.Cyrillicization.Contains(p.Cyrillicization));
-        //    }
-
-        //    if (filter.ButtonType.Count > 0)
-        //    {
-        //        products = products.Where(p => filter.ButtonType.Contains(p.ButtonType));
-        //    }
-
-        //    if (filter.MacroButtons.Count > 0)
-        //    {
-        //        products = products.Where(p => filter.MacroButtons.Contains(p.MacroButtons));
-        //    }
-
-        //    if (filter.MultiMediaButtons.Count > 0)
-        //    {
-        //        products = products.Where(p => filter.MultiMediaButtons.Contains(p.MultiMediaButtons));
-        //    }
-
-        //    if (filter.Switch.Count > 0)
-        //    {
-        //        products = products.Where(p => filter.Switch.Contains(p.Switch));
-        //    }
-
-        //    if (filter.Layout.Count > 0)
-        //    {
-        //        products = products.Where(p => filter.Layout.Contains(p.Layout));
-        //    }
-
-        //    if (filter.HotSwappable.Count > 0)
-        //    {
-        //        products = products.Where(p => filter.HotSwappable.Contains(p.HotSwappable));
-        //    }
-
-        //    if (filter.Order != null)
-        //    {
-        //        products = products.OrderProducts(filter.Order);
-        //    }
-
-        //    return products;
-        //}
     }
 }

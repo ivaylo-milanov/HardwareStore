@@ -11,12 +11,10 @@
     public class MouseService : IMouseService
     {
         private readonly IRepository repository;
-        private readonly IDropboxService dropboxService;
 
-        public MouseService(IRepository repository, IDropboxService dropboxService)
+        public MouseService(IRepository repositor)
         {
             this.repository = repository;
-            this.dropboxService = dropboxService;
         }
 
         public async Task<IEnumerable<MouseViewModel>> GetAllProducts()
@@ -29,12 +27,11 @@
                     Price = b.Price,
                     Manufacturer = b.Manufacturer!.Name,
                     AddDate = b.AddDate,
-                    //ImageUrl = dropboxService.GetProductFirstImageAsync(b.Id),
-                    Color = b.ProductAttributes.GetAttributeValue("Color"),
-                    Connectivity = b.ProductAttributes.GetAttributeValue("Connectivity"),
-                    Interface = b.ProductAttributes.GetAttributeValue("Interface"),
-                    Sensor = b.ProductAttributes.GetAttributeValue("Sensor"),
-                    NumberOfKeys = int.Parse(b.ProductAttributes.GetAttributeValue("NumberOfKeys"))
+                    Color = b.ProductAttributes.GetAttributeValue(nameof(MouseViewModel.Color)),
+                    Connectivity = b.ProductAttributes.GetAttributeValue(nameof(MouseViewModel.Connectivity)),
+                    Interface = b.ProductAttributes.GetAttributeValue(nameof(MouseViewModel.Interface)),
+                    Sensor = b.ProductAttributes.GetAttributeValue(nameof(MouseViewModel.Sensor)),
+                    NumberOfKeys = int.Parse(b.ProductAttributes.GetAttributeValue(nameof(MouseViewModel.NumberOfKeys)))
                 })
                 .ToListAsync();
     }

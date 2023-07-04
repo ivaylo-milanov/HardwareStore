@@ -5,37 +5,37 @@
         <form method="get" data-url="@Url.Action("FilterHeadsets", "Headsets")" data-container="#headsets">
             <div class="filter-categories">
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = "Manufacturer",
+                    name = nameof(HeadsetViewModel.Manufacturer),
                     values = Model.Select(m => m.Manufacturer).Distinct()
                 })
 
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = "Form",
+                    name = nameof(HeadsetViewModel.Form),
                     values = Model.Select(m => m.Form).Distinct()
                 })
 
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = "Interface",
+                    name = nameof(HeadsetViewModel.Interface),
                     values = Model.Select(m => m.Interface).Distinct()
                 })
 
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = "NoiseIsolation",
+                    name = nameof(HeadsetViewModel.NoiseIsolation),
                     values = Model.Select(m => m.NoiseIsolation).Distinct()
                 })
 
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = "Type",
+                    name = nameof(HeadsetViewModel.Type),
                     values = Model.Select(m => m.Type).Distinct()
                 })
 
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = "Compatibility",
+                    name = nameof(HeadsetViewModel.Compatibility),
                     values = Model.Select(m => m.Compatibility).Distinct()
                 })
 
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = "Color",
+                    name = nameof(HeadsetViewModel.Color),
                     values = Model.Select(m => m.Color).Distinct()
                 })
             </div>

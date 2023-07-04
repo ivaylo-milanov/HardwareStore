@@ -5,67 +5,67 @@
         <form method="get" data-url="@Url.Action("FilterKeyboards", "Keyboards")" data-container="#keyboards">
             <div class="filter-categories">
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = "Manufacturer",
+                    name = nameof(KeyboardViewModel.Manufacturer),
                     values = Model.Select(p => p.Manufacturer).Distinct()
                 })
 
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = "Connectivity",
+                    name = nameof(KeyboardViewModel.Connectivity),
                     values = Model.Select(p => p.Connectivity).Distinct()
                 })
 
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = "Type",
+                    name = nameof(KeyboardViewModel.Type),
                     values = Model.Select(p => p.Type).Distinct()
                 })
 
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = "Form",
+                    name = nameof(KeyboardViewModel.Form),
                     values = Model.Select(p => p.Form).Distinct()
                 })
 
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = "Backlight",
+                    name = nameof(KeyboardViewModel.Backlight),
                     values = Model.Select(p => p.Backlight).Distinct()
                 })
 
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = "Cyrillicization",
+                    name = nameof(KeyboardViewModel.Cyrillicization),
                     values = Model.Select(p => p.Cyrillicization).Distinct()
                 })
 
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = "ButtonType",
+                    name = nameof(KeyboardViewModel.ButtonType),
                     values = Model.Select(p => p.ButtonType).Distinct()
                 })
 
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = "MacroButtons",
+                    name = nameof(KeyboardViewModel.MacroButtons),
                     values = Model.Select(p => p.MacroButtons).Distinct()
                 })
 
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = "MultiMediaButtons",
+                    name = nameof(KeyboardViewModel.MultiMediaButtons),
                     values = Model.Select(p => p.MultiMediaButtons).Distinct()
                 })
 
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = "Switch",
+                    name = nameof(KeyboardViewModel.Switch),
                     values = Model.Select(p => p.Switch).Distinct()
                 })
 
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = "Layout",
+                    name = nameof(KeyboardViewModel.Layout),
                     values = Model.Select(p => p.Layout).Distinct()
                 })
 
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = "HotSwappable",
+                    name = nameof(KeyboardViewModel.HotSwappable),
                     values = Model.Select(p => p.HotSwappable).Distinct()
                 })
 
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = "Color",
+                    name = nameof(KeyboardViewModel.Color),
                     values = Model.Select(p => p.Color).Distinct()
                 })
             </div>

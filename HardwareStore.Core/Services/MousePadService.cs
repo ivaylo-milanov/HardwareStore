@@ -27,10 +27,10 @@
                     Price = mp.Price,
                     AddDate = mp.AddDate,
                     Manufacturer = mp.Manufacturer!.Name,
-                    Surface = mp.ProductAttributes.GetAttributeValue("Surface"),
-                    Cover = mp.ProductAttributes.GetAttributeValue("Cover"),
-                    Backlight = mp.ProductAttributes.GetAttributeValue("Backlight"),
-                    Color = mp.ProductAttributes.GetAttributeValue("Color")
+                    Surface = mp.ProductAttributes.GetAttributeValue(nameof(MousePadViewModel.Surface)),
+                    Cover = mp.ProductAttributes.GetAttributeValue(nameof(MousePadViewModel.Cover)),
+                    Backlight = mp.ProductAttributes.GetAttributeValue(nameof(MousePadViewModel.Backlight)),
+                    Color = mp.ProductAttributes.GetAttributeValue(nameof(MousePadViewModel.Color))
                 })
                 .ToListAsync();
     }

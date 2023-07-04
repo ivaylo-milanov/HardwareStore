@@ -5,32 +5,32 @@
         <form method="get" data-url="@Url.Action("FilterMouses", "Mouses")" data-container="#mouses">
             <div class="filter-categories">
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = "Manufacturer",
+                    name = nameof(MouseViewModel.Manufacturer),
                     values = Model.Select(m => m.Manufacturer).Distinct()
                 })
 
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = "Connectivity",
+                    name = nameof(MouseViewModel.Connectivity),
                     values = Model.Select(m => m.Connectivity).Distinct()
                 })
 
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = "Interface",
+                    name = nameof(MouseViewModel.Interface),
                     values = Model.Select(m => m.Interface).Distinct()
                 })
 
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = "Sensor",
+                    name = nameof(MouseViewModel.Sensor),
                     values = Model.Select(m => m.Sensor).Distinct()
                 })
 
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = "NumberOfKeys",
+                    name = nameof(MouseViewModel.NumberOfKeys),
                     values = Model.Select(m => m.NumberOfKeys.ToString()).Distinct()
                 })
 
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = "Color",
+                    name = nameof(MouseViewModel.Color),
                     values = Model.Select(m => m.Color).Distinct()
                 })
             </div>

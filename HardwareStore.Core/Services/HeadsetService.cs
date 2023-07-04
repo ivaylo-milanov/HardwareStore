@@ -27,12 +27,12 @@
                     AddDate = p.AddDate,
                     Price = p.Price,
                     Manufacturer = p.Manufacturer!.Name,
-                    Form = p.ProductAttributes.GetAttributeValue("Form"),
-                    Interface = p.ProductAttributes.GetAttributeValue("Interface"),
-                    NoiseIsolation = p.ProductAttributes.GetAttributeValue("NoiseIsolation"),
-                    Type = p.ProductAttributes.GetAttributeValue("Type"),
-                    Compatibility = p.ProductAttributes.GetAttributeValue("Compatibility"),
-                    Color = p.ProductAttributes.GetAttributeValue("Color")
+                    Form = p.ProductAttributes.GetAttributeValue(nameof(HeadsetViewModel.Form)),
+                    Interface = p.ProductAttributes.GetAttributeValue(nameof(HeadsetViewModel.Interface)),
+                    NoiseIsolation = p.ProductAttributes.GetAttributeValue(nameof(HeadsetViewModel.NoiseIsolation)),
+                    Type = p.ProductAttributes.GetAttributeValue(nameof(HeadsetViewModel.Type)),
+                    Compatibility = p.ProductAttributes.GetAttributeValue(nameof(HeadsetViewModel.Compatibility)),
+                    Color = p.ProductAttributes.GetAttributeValue(nameof(HeadsetViewModel.Color))
                 })
                 .ToListAsync();
     }
