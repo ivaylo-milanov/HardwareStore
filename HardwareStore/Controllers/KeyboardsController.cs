@@ -2,7 +2,6 @@
 {
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Keyboard;
-    using HardwareStore.Core.ViewModels.Mouse;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Caching.Memory;
 

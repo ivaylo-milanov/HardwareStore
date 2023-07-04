@@ -1,0 +1,44 @@
+﻿@model IEnumerable<MousePadViewModel>
+
+<div>
+    <div class="filter">
+        <form method="get" data-url="@Url.Action("FilterMousePads", "MousePads")" data-container="#mousePads">
+            <div class="filter-categories">
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = "Manufacturer",
+                    values = Model.Select(m => m.Manufacturer).Distinct()
+                })
+
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = "Surface",
+                    values = Model.Select(m => m.Surface).Distinct()
+                })
+
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = "Cover",
+                    values = Model.Select(m => m.Cover).Distinct()
+                })
+
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = "Backlight",
+                    values = Model.Select(m => m.Backlight).Distinct()
+                })
+
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = "Color",
+                    values = Model.Select(m => m.Color).Distinct()
+                })
+            </div>
+            <div class="additional-filters">
+                @await Component.InvokeAsync("OrderComponent")
+            </div>
+        </form>
+    </div>
+    <div id="mousePads">
+        @await Component.InvokeAsync("ProductsComponent", new { models = Model })
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/filter.js"></script>
+}

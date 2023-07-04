@@ -4,7 +4,70 @@
     <div class="filter">
         <form method="get" data-url="@Url.Action("FilterKeyboards", "Keyboards")" data-container="#keyboards">
             <div class="filter-categories">
-                
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = "Manufacturer",
+                    values = Model.Select(p => p.Manufacturer).Distinct()
+                })
+
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = "Connectivity",
+                    values = Model.Select(p => p.Connectivity).Distinct()
+                })
+
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = "Type",
+                    values = Model.Select(p => p.Type).Distinct()
+                })
+
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = "Form",
+                    values = Model.Select(p => p.Form).Distinct()
+                })
+
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = "Backlight",
+                    values = Model.Select(p => p.Backlight).Distinct()
+                })
+
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = "Cyrillicization",
+                    values = Model.Select(p => p.Cyrillicization).Distinct()
+                })
+
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = "ButtonType",
+                    values = Model.Select(p => p.ButtonType).Distinct()
+                })
+
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = "MacroButtons",
+                    values = Model.Select(p => p.MacroButtons).Distinct()
+                })
+
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = "MultiMediaButtons",
+                    values = Model.Select(p => p.MultiMediaButtons).Distinct()
+                })
+
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = "Switch",
+                    values = Model.Select(p => p.Switch).Distinct()
+                })
+
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = "Layout",
+                    values = Model.Select(p => p.Layout).Distinct()
+                })
+
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = "HotSwappable",
+                    values = Model.Select(p => p.HotSwappable).Distinct()
+                })
+
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = "Color",
+                    values = Model.Select(p => p.Color).Distinct()
+                })
             </div>
             <div class="additional-filters">
                 @await Component.InvokeAsync("OrderComponent")
