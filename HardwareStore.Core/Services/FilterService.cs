@@ -22,10 +22,12 @@
                 products = products.Where(p => list.Contains(p.GetType().GetProperty(property.Name).GetValue(p)));
             }
 
+            products = this.OrderProducts(products, filter.Order);
+
             return products;
         }
 
-        public IEnumerable<T> OrderProducts<T>(IEnumerable<T> products, string order) where T : ProductViewModel
+        private IEnumerable<TModel> OrderProducts<TModel>(IEnumerable<TModel> products, string order) where TModel : ProductViewModel
         {
             switch (order)
             {

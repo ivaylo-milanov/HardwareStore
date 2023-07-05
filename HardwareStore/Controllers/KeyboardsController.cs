@@ -36,10 +36,7 @@
                 return BadRequest("Keyboards data not found.");
             }
 
-            IEnumerable<KeyboardViewModel> filtered;
-
-            filtered = this.filterService.FilterProducts(keyboards, filter);
-            filtered = this.filterService.OrderProducts(filtered, filter.Order);
+            IEnumerable<KeyboardViewModel> filtered = this.filterService.FilterProducts(keyboards, filter);
 
             return ViewComponent("ProductsComponent", filtered);
         }

@@ -36,10 +36,7 @@
                 return BadRequest("Monitors data not found.");
             }
 
-            IEnumerable<MonitorViewModel> filtered;
-
-            filtered = this.filterService.FilterProducts(monitors, filter);
-            filtered = this.filterService.OrderProducts(filtered, filter.Order);
+            IEnumerable<MonitorViewModel> filtered = this.filterService.FilterProducts(monitors, filter);
 
             return ViewComponent("ProductsComponent", filtered);
         }

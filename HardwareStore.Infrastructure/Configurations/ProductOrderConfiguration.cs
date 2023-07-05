@@ -8,6 +8,7 @@
     {
         public void Configure(EntityTypeBuilder<ProductOrder> builder)
         {
+            builder.ToTable("ProductsOrders");
             builder.HasKey(e => new { e.OrderId, e.ProductId });
         }
     }

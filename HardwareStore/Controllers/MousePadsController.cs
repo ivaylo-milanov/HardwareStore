@@ -1,6 +1,7 @@
 ﻿namespace HardwareStore.Controllers
 {
     using HardwareStore.Core.Services.Contracts;
+    using HardwareStore.Core.ViewModels.Headset;
     using HardwareStore.Core.ViewModels.MousePad;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Caching.Memory;
@@ -36,10 +37,7 @@
                 return BadRequest("Mouse pads data not found.");
             }
 
-            IEnumerable<MousePadViewModel> filtered;
-
-            filtered = this.filterService.FilterProducts(mousePads, filter);
-            filtered = this.filterService.OrderProducts(filtered, filter.Order);
+            IEnumerable<MousePadViewModel> filtered = this.filterService.FilterProducts(mousePads, filter);
 
             return ViewComponent("ProductsComponent", filtered);
         }

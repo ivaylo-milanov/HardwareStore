@@ -36,10 +36,7 @@
                 return BadRequest("Mouses data not found.");
             }
 
-            IEnumerable<MouseViewModel> filtered;
-
-            filtered = this.filterService.FilterProducts(mouses, filter);
-            filtered = this.filterService.OrderProducts(filtered, filter.Order);
+            IEnumerable<MouseViewModel> filtered = this.filterService.FilterProducts(mouses, filter);
 
             return ViewComponent("ProductsComponent", filtered);
         }

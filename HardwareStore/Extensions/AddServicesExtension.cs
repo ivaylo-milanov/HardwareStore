@@ -15,6 +15,7 @@
             services.AddScoped<IHeadsetService, HeadsetService>();
             services.AddScoped<IFilterService, FilterService>();
             services.AddScoped<IMousePadService, MousePadService>();
+            services.AddScoped<IMonitorService, MonitorService>();
 
             services.AddControllers().AddNewtonsoftJson();
 

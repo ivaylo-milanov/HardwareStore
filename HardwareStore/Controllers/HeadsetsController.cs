@@ -36,10 +36,7 @@
                 return BadRequest("Headsets data not found.");
             }
 
-            IEnumerable<HeadsetViewModel> filtered;
-
-            filtered = this.filterService.FilterProducts(headsets, filter);
-            filtered = this.filterService.OrderProducts(filtered, filter.Order);
+            IEnumerable<HeadsetViewModel> filtered = this.filterService.FilterProducts(headsets, filter);
 
             return ViewComponent("ProductComponent", filtered);
         }
