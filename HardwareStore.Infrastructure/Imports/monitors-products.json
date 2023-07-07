@@ -1,0 +1,926 @@
+[
+  {
+    "name": "BENQ GL2480",
+    "price": 259.85,
+    "quantity": 10,
+    "description": "With 1ms GTG response time, 75Hz refresh rate, dynamic ratio and HDMI connectivity, BenQ's GL2480 LED gaming monitor brings you every detail of the image with the best viewing quality.",
+    "warranty": 36,
+    "manufacturer": "BenQ",
+    "model": "GL2480",
+    "referenceNumber": "BENQ-GL2480",
+    "category": "Monitor",
+    "characteristics": [
+      {
+        "name": "Screen size",
+        "value": "24"
+      },
+      {
+        "name": "Resolution",
+        "value": "1920 x 1080"
+      },
+      {
+        "name": "Matrix",
+        "value": "TN"
+      },
+      {
+        "name": "Refresh rate",
+        "value": "75"
+      },
+      {
+        "name": "Reaction time",
+        "value": "1"
+      },
+      {
+        "name": "Color",
+        "value": "Black"
+      },
+      {
+        "name": "Ports",
+        "value": "HDMI"
+      },
+      {
+        "name": "Posture adjustment",
+        "value": "No"
+      },
+      {
+        "name": "Touch screen",
+        "value": "No"
+      },
+      {
+        "name": "VESA",
+        "value": "Yes"
+      },
+      {
+        "name": "Brightness",
+        "value": "250"
+      }
+    ]
+  },
+  {
+    "name": "ASUS TUF GAMING VG246H1A",
+    "price": 309.00,
+    "quantity": 10,
+    "description": "Monitor ASUS TUF GAMING VG246H1A 23.8 IPS Full HD 1920 x 1080, Frameless, 0.5 ms MPRT, 100Hz FreeSync, ELMB",
+    "warranty": 36,
+    "manufacturer": "ASUS",
+    "model": "",
+    "referenceNumber": "ASUS-TUF-GAMING-VG246H1A",
+    "category": "Monitor",
+    "characteristics": [
+      {
+        "name": "Screen size",
+        "value": "23.8"
+      },
+      {
+        "name": "Resolution",
+        "value": "1920 x 1080"
+      },
+      {
+        "name": "Matrix",
+        "value": "IPS"
+      },
+      {
+        "name": "Refresh rate",
+        "value": "100"
+      },
+      {
+        "name": "Reaction time",
+        "value": "1"
+      },
+      {
+        "name": "Color",
+        "value": "Black"
+      },
+      {
+        "name": "Ports",
+        "value": "HDMI"
+      },
+      {
+        "name": "Technology",
+        "value": "FreeSync"
+      },
+      {
+        "name": "Posture adjustment",
+        "value": "No"
+      },
+      {
+        "name": "Touch screen",
+        "value": "No"
+      },
+      {
+        "name": "VESA",
+        "value": "Yes"
+      },
+      {
+        "name": "Brightness",
+        "value": "300"
+      }
+    ]
+  },
+  {
+    "name": "SAMSUNG S31C 27\"",
+    "price": 319.00,
+    "quantity": 10,
+    "description": "Minimalist design for maximum concentration. The frameless display on 3 sides gives a modern and uncluttered aesthetic touch to any work environment.",
+    "warranty": 36,
+    "manufacturer": "Samsung",
+    "model": "S31C",
+    "referenceNumber": "SAMSUNG-S31C-27",
+    "category": "Monitor",
+    "characteristics": [
+      {
+        "name": "Screen size",
+        "value": "27"
+      },
+      {
+        "name": "Resolution",
+        "value": "1920 x 1080"
+      },
+      {
+        "name": "Matrix",
+        "value": "IPS"
+      },
+      {
+        "name": "Refresh rate",
+        "value": "75"
+      },
+      {
+        "name": "Reaction time",
+        "value": "5"
+      },
+      {
+        "name": "Color",
+        "value": "Black"
+      },
+      {
+        "name": "Ports",
+        "value": "HDMI"
+      },
+      {
+        "name": "Technology",
+        "value": "FreeSync"
+      },
+      {
+        "name": "Posture adjustment",
+        "value": "No"
+      },
+      {
+        "name": "Touch screen",
+        "value": "No"
+      },
+      {
+        "name": "VESA",
+        "value": "Yes"
+      },
+      {
+        "name": "Brightness",
+        "value": "250"
+      }
+    ]
+  },
+  {
+    "name": "SAMSUNG 24AG320 ODYSSEY G3",
+    "price": 388.99,
+    "quantity": 10,
+    "description": "Monitor 24\" Samsung 24AG320 Odyssey - LS24AG320NUXEN",
+    "warranty": 36,
+    "manufacturer": "Samsung",
+    "model": "24AG320 ODYSSEY G3",
+    "referenceNumber": "SAMSING-24AG320-ODYSSEY-G3",
+    "category": "Monitor",
+    "characteristics": [
+      {
+        "name": "Screen size",
+        "value": "24"
+      },
+      {
+        "name": "Resolution",
+        "value": "1920 x 1080"
+      },
+      {
+        "name": "Matrix",
+        "value": "VA"
+      },
+      {
+        "name": "Refresh rate",
+        "value": "165"
+      },
+      {
+        "name": "Reaction time",
+        "value": "1"
+      },
+      {
+        "name": "Color",
+        "value": "Black"
+      },
+      {
+        "name": "Ports",
+        "value": "Display Port"
+      },
+      {
+        "name": "Technology",
+        "value": "FreeSync"
+      },
+      {
+        "name": "Posture adjustment",
+        "value": "Yes"
+      },
+      {
+        "name": "Touch screen",
+        "value": "No"
+      },
+      {
+        "name": "VESA",
+        "value": "Yes"
+      },
+      {
+        "name": "Brightness",
+        "value": "250"
+      }
+    ]
+  },
+  {
+    "name": "",
+    "price": 0,
+    "quantity": 0,
+    "description": "",
+    "warranty": 0,
+    "manufacturer": "",
+    "model": "",
+    "referenceNumber": "",
+    "category": "",
+    "characteristics": [
+      {
+        "name": "Screen size",
+        "value": ""
+      },
+      {
+        "name": "Resolution",
+        "value": ""
+      },
+      {
+        "name": "Matrix",
+        "value": ""
+      },
+      {
+        "name": "Refresh rate",
+        "value": ""
+      },
+      {
+        "name": "Reaction time",
+        "value": ""
+      },
+      {
+        "name": "Color",
+        "value": ""
+      },
+      {
+        "name": "Ports",
+        "value": ""
+      },
+      {
+        "name": "Posture adjustment",
+        "value": ""
+      },
+      {
+        "name": "Touch screen",
+        "value": ""
+      },
+      {
+        "name": "VESA",
+        "value": ""
+      },
+      {
+        "name": "Brightness",
+        "value": ""
+      }
+    ]
+  },
+  {
+    "name": "",
+    "price": 0,
+    "quantity": 0,
+    "description": "",
+    "warranty": 0,
+    "manufacturer": "",
+    "model": "",
+    "referenceNumber": "",
+    "category": "",
+    "characteristics": [
+      {
+        "name": "Screen size",
+        "value": ""
+      },
+      {
+        "name": "Resolution",
+        "value": ""
+      },
+      {
+        "name": "Matrix",
+        "value": ""
+      },
+      {
+        "name": "Refresh rate",
+        "value": ""
+      },
+      {
+        "name": "Reaction time",
+        "value": ""
+      },
+      {
+        "name": "Color",
+        "value": ""
+      },
+      {
+        "name": "Ports",
+        "value": ""
+      },
+      {
+        "name": "Posture adjustment",
+        "value": ""
+      },
+      {
+        "name": "Touch screen",
+        "value": ""
+      },
+      {
+        "name": "VESA",
+        "value": ""
+      },
+      {
+        "name": "Brightness",
+        "value": ""
+      }
+    ]
+  },
+  {
+    "name": "",
+    "price": 0,
+    "quantity": 0,
+    "description": "",
+    "warranty": 0,
+    "manufacturer": "",
+    "model": "",
+    "referenceNumber": "",
+    "category": "",
+    "characteristics": [
+      {
+        "name": "Screen size",
+        "value": ""
+      },
+      {
+        "name": "Resolution",
+        "value": ""
+      },
+      {
+        "name": "Matrix",
+        "value": ""
+      },
+      {
+        "name": "Refresh rate",
+        "value": ""
+      },
+      {
+        "name": "Reaction time",
+        "value": ""
+      },
+      {
+        "name": "Color",
+        "value": ""
+      },
+      {
+        "name": "Ports",
+        "value": ""
+      },
+      {
+        "name": "Posture adjustment",
+        "value": ""
+      },
+      {
+        "name": "Touch screen",
+        "value": ""
+      },
+      {
+        "name": "VESA",
+        "value": ""
+      },
+      {
+        "name": "Brightness",
+        "value": ""
+      }
+    ]
+  },
+  {
+    "name": "",
+    "price": 0,
+    "quantity": 0,
+    "description": "",
+    "warranty": 0,
+    "manufacturer": "",
+    "model": "",
+    "referenceNumber": "",
+    "category": "",
+    "characteristics": [
+      {
+        "name": "Screen size",
+        "value": ""
+      },
+      {
+        "name": "Resolution",
+        "value": ""
+      },
+      {
+        "name": "Matrix",
+        "value": ""
+      },
+      {
+        "name": "Refresh rate",
+        "value": ""
+      },
+      {
+        "name": "Reaction time",
+        "value": ""
+      },
+      {
+        "name": "Color",
+        "value": ""
+      },
+      {
+        "name": "Ports",
+        "value": ""
+      },
+      {
+        "name": "Posture adjustment",
+        "value": ""
+      },
+      {
+        "name": "Touch screen",
+        "value": ""
+      },
+      {
+        "name": "VESA",
+        "value": ""
+      },
+      {
+        "name": "Brightness",
+        "value": ""
+      }
+    ]
+  },
+  {
+    "name": "",
+    "price": 0,
+    "quantity": 0,
+    "description": "",
+    "warranty": 0,
+    "manufacturer": "",
+    "model": "",
+    "referenceNumber": "",
+    "category": "",
+    "characteristics": [
+      {
+        "name": "Screen size",
+        "value": ""
+      },
+      {
+        "name": "Resolution",
+        "value": ""
+      },
+      {
+        "name": "Matrix",
+        "value": ""
+      },
+      {
+        "name": "Refresh rate",
+        "value": ""
+      },
+      {
+        "name": "Reaction time",
+        "value": ""
+      },
+      {
+        "name": "Color",
+        "value": ""
+      },
+      {
+        "name": "Ports",
+        "value": ""
+      },
+      {
+        "name": "Posture adjustment",
+        "value": ""
+      },
+      {
+        "name": "Touch screen",
+        "value": ""
+      },
+      {
+        "name": "VESA",
+        "value": ""
+      },
+      {
+        "name": "Brightness",
+        "value": ""
+      }
+    ]
+  },
+  {
+    "name": "",
+    "price": 0,
+    "quantity": 0,
+    "description": "",
+    "warranty": 0,
+    "manufacturer": "",
+    "model": "",
+    "referenceNumber": "",
+    "category": "",
+    "characteristics": [
+      {
+        "name": "Screen size",
+        "value": ""
+      },
+      {
+        "name": "Resolution",
+        "value": ""
+      },
+      {
+        "name": "Matrix",
+        "value": ""
+      },
+      {
+        "name": "Refresh rate",
+        "value": ""
+      },
+      {
+        "name": "Reaction time",
+        "value": ""
+      },
+      {
+        "name": "Color",
+        "value": ""
+      },
+      {
+        "name": "Ports",
+        "value": ""
+      },
+      {
+        "name": "Posture adjustment",
+        "value": ""
+      },
+      {
+        "name": "Touch screen",
+        "value": ""
+      },
+      {
+        "name": "VESA",
+        "value": ""
+      },
+      {
+        "name": "Brightness",
+        "value": ""
+      }
+    ]
+  },
+  {
+    "name": "",
+    "price": 0,
+    "quantity": 0,
+    "description": "",
+    "warranty": 0,
+    "manufacturer": "",
+    "model": "",
+    "referenceNumber": "",
+    "category": "",
+    "characteristics": [
+      {
+        "name": "Screen size",
+        "value": ""
+      },
+      {
+        "name": "Resolution",
+        "value": ""
+      },
+      {
+        "name": "Matrix",
+        "value": ""
+      },
+      {
+        "name": "Refresh rate",
+        "value": ""
+      },
+      {
+        "name": "Reaction time",
+        "value": ""
+      },
+      {
+        "name": "Color",
+        "value": ""
+      },
+      {
+        "name": "Ports",
+        "value": ""
+      },
+      {
+        "name": "Posture adjustment",
+        "value": ""
+      },
+      {
+        "name": "Touch screen",
+        "value": ""
+      },
+      {
+        "name": "VESA",
+        "value": ""
+      },
+      {
+        "name": "Brightness",
+        "value": ""
+      }
+    ]
+  },
+  {
+    "name": "",
+    "price": 0,
+    "quantity": 0,
+    "description": "",
+    "warranty": 0,
+    "manufacturer": "",
+    "model": "",
+    "referenceNumber": "",
+    "category": "",
+    "characteristics": [
+      {
+        "name": "Screen size",
+        "value": ""
+      },
+      {
+        "name": "Resolution",
+        "value": ""
+      },
+      {
+        "name": "Matrix",
+        "value": ""
+      },
+      {
+        "name": "Refresh rate",
+        "value": ""
+      },
+      {
+        "name": "Reaction time",
+        "value": ""
+      },
+      {
+        "name": "Color",
+        "value": ""
+      },
+      {
+        "name": "Ports",
+        "value": ""
+      },
+      {
+        "name": "Posture adjustment",
+        "value": ""
+      },
+      {
+        "name": "Touch screen",
+        "value": ""
+      },
+      {
+        "name": "VESA",
+        "value": ""
+      },
+      {
+        "name": "Brightness",
+        "value": ""
+      }
+    ]
+  },
+  {
+    "name": "",
+    "price": 0,
+    "quantity": 0,
+    "description": "",
+    "warranty": 0,
+    "manufacturer": "",
+    "model": "",
+    "referenceNumber": "",
+    "category": "",
+    "characteristics": [
+      {
+        "name": "Screen size",
+        "value": ""
+      },
+      {
+        "name": "Resolution",
+        "value": ""
+      },
+      {
+        "name": "Matrix",
+        "value": ""
+      },
+      {
+        "name": "Refresh rate",
+        "value": ""
+      },
+      {
+        "name": "Reaction time",
+        "value": ""
+      },
+      {
+        "name": "Color",
+        "value": ""
+      },
+      {
+        "name": "Ports",
+        "value": ""
+      },
+      {
+        "name": "Posture adjustment",
+        "value": ""
+      },
+      {
+        "name": "Touch screen",
+        "value": ""
+      },
+      {
+        "name": "VESA",
+        "value": ""
+      },
+      {
+        "name": "Brightness",
+        "value": ""
+      }
+    ]
+  },
+  {
+    "name": "",
+    "price": 0,
+    "quantity": 0,
+    "description": "",
+    "warranty": 0,
+    "manufacturer": "",
+    "model": "",
+    "referenceNumber": "",
+    "category": "",
+    "characteristics": [
+      {
+        "name": "Screen size",
+        "value": ""
+      },
+      {
+        "name": "Resolution",
+        "value": ""
+      },
+      {
+        "name": "Matrix",
+        "value": ""
+      },
+      {
+        "name": "Refresh rate",
+        "value": ""
+      },
+      {
+        "name": "Reaction time",
+        "value": ""
+      },
+      {
+        "name": "Color",
+        "value": ""
+      },
+      {
+        "name": "Ports",
+        "value": ""
+      },
+      {
+        "name": "Posture adjustment",
+        "value": ""
+      },
+      {
+        "name": "Touch screen",
+        "value": ""
+      },
+      {
+        "name": "VESA",
+        "value": ""
+      },
+      {
+        "name": "Brightness",
+        "value": ""
+      }
+    ]
+  },
+  {
+    "name": "",
+    "price": 0,
+    "quantity": 0,
+    "description": "",
+    "warranty": 0,
+    "manufacturer": "",
+    "model": "",
+    "referenceNumber": "",
+    "category": "",
+    "characteristics": [
+      {
+        "name": "Screen size",
+        "value": ""
+      },
+      {
+        "name": "Resolution",
+        "value": ""
+      },
+      {
+        "name": "Matrix",
+        "value": ""
+      },
+      {
+        "name": "Refresh rate",
+        "value": ""
+      },
+      {
+        "name": "Reaction time",
+        "value": ""
+      },
+      {
+        "name": "Color",
+        "value": ""
+      },
+      {
+        "name": "Ports",
+        "value": ""
+      },
+      {
+        "name": "Posture adjustment",
+        "value": ""
+      },
+      {
+        "name": "Touch screen",
+        "value": ""
+      },
+      {
+        "name": "VESA",
+        "value": ""
+      },
+      {
+        "name": "Brightness",
+        "value": ""
+      }
+    ]
+  },
+  {
+    "name": "",
+    "price": 0,
+    "quantity": 0,
+    "description": "",
+    "warranty": 0,
+    "manufacturer": "",
+    "model": "",
+    "referenceNumber": "",
+    "category": "",
+    "characteristics": [
+      {
+        "name": "Screen size",
+        "value": ""
+      },
+      {
+        "name": "Resolution",
+        "value": ""
+      },
+      {
+        "name": "Matrix",
+        "value": ""
+      },
+      {
+        "name": "Refresh rate",
+        "value": ""
+      },
+      {
+        "name": "Reaction time",
+        "value": ""
+      },
+      {
+        "name": "Color",
+        "value": ""
+      },
+      {
+        "name": "Ports",
+        "value": ""
+      },
+      {
+        "name": "Posture adjustment",
+        "value": ""
+      },
+      {
+        "name": "Touch screen",
+        "value": ""
+      },
+      {
+        "name": "VESA",
+        "value": ""
+      },
+      {
+        "name": "Brightness",
+        "value": ""
+      }
+    ]
+  }
+]

@@ -4,7 +4,7 @@
 
 namespace HardwareStore.Infrastructure.Data.Migrations
 {
-    public partial class RemovedProductOrdersProperty : Migration
+    public partial class AddedOnDeleteRestrictionsProductOrder : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,39 +16,19 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                 name: "FK_ProductsOrders_Products_ProductId",
                 table: "ProductsOrders");
 
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_ProductsOrders",
-                table: "ProductsOrders");
-
-            migrationBuilder.RenameTable(
-                name: "ProductsOrders",
-                newName: "ProductsOrders");
-
-            migrationBuilder.RenameIndex(
-                name: "IX_ProductsOrders_ProductId",
-                table: "ProductsOrders",
-                newName: "IX_ProductOrder_ProductId");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_ProductsOrders",
-                table: "ProductsOrders",
-                columns: new[] { "OrderId", "ProductId" });
-
             migrationBuilder.AddForeignKey(
                 name: "FK_ProductsOrders_Orders_OrderId",
                 table: "ProductsOrders",
                 column: "OrderId",
                 principalTable: "Orders",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                principalColumn: "Id");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_ProductOrder_Products_ProductId",
+                name: "FK_ProductsOrders_Products_ProductId",
                 table: "ProductsOrders",
                 column: "ProductId",
                 principalTable: "Products",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                principalColumn: "Id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -60,24 +40,6 @@ namespace HardwareStore.Infrastructure.Data.Migrations
             migrationBuilder.DropForeignKey(
                 name: "FK_ProductsOrders_Products_ProductId",
                 table: "ProductsOrders");
-
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_ProductsOrders",
-                table: "ProductsOrders");
-
-            migrationBuilder.RenameTable(
-                name: "ProductsOrders",
-                newName: "ProductsOrders");
-
-            migrationBuilder.RenameIndex(
-                name: "IX_ProductsOrders_ProductId",
-                table: "ProductsOrders",
-                newName: "IX_ProductsOrders_ProductId");
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_ProductsOrders",
-                table: "ProductsOrders",
-                columns: new[] { "OrderId", "ProductId" });
 
             migrationBuilder.AddForeignKey(
                 name: "FK_ProductsOrders_Orders_OrderId",

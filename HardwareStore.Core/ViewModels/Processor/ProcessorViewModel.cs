@@ -1,12 +1,15 @@
 ﻿namespace HardwareStore.Core.ViewModels.Processor
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using HardwareStore.Core.ViewModels.Product;
 
-    internal class ProcessorViewModel
+    public class ProcessorViewModel : ProductViewModel
     {
+        public string Series { get; set; } = null!;
+
+        public string Generation { get; set; } = null!;
+
+        public string Socket { get; set; } = null!;
+
+        public string BoxCooler { get; set; } = null!;
     }
 }

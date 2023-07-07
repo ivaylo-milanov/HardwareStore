@@ -1,12 +1,9 @@
 ﻿namespace HardwareStore.Core.Services.Contracts
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using HardwareStore.Core.ViewModels.Search;
 
-    internal interface ISearchService
+    public interface ISearchService
     {
+        Task<IEnumerable<SearchViewModel>> GetProductsByKeyword(string keyword); 
     }
 }

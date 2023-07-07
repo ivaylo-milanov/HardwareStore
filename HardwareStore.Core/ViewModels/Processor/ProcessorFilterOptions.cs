@@ -1,12 +1,15 @@
 ﻿namespace HardwareStore.Core.ViewModels.Processor
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using HardwareStore.Core.ViewModels.Product;
 
-    internal class ProcessorFilterOptions
+    public class ProcessorFilterOptions : ProductFilterOptions
     {
+        public IEnumerable<string> Series { get; set; } = null!;
+
+        public IEnumerable<string> Generation { get; set; } = null!;
+
+        public IEnumerable<string> Socket { get; set; } = null!;
+
+        public IEnumerable<string> BoxCooler { get; set; } = null!;
     }
 }

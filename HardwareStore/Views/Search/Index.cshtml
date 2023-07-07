@@ -1,5 +1,24 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@model IEnumerable<SearchViewModel>
+
+<div>
+    <div class="filter">
+        <form method="get" data-url="@Url.Action("FilterSearchedProducts", "Search")" data-container="#products">
+            <div class="filter-categories">
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = nameof(SearchViewModel.Manufacturer),
+                    values = Model.Select(p => p.Manufacturer).Distinct()
+                })
+            </div>
+            <div class="additional-filters">
+                @await Component.InvokeAsync("OrderComponent")
+            </div>
+        </form>
+    </div>
+    <div id="products">
+        @await Component.InvokeAsync("ProductsComponent", new { models = Model })
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/filter.js"></script>
 }

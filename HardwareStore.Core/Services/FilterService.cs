@@ -19,7 +19,7 @@
                 var value = property.GetValue(filter);
                 var list = value as IEnumerable<string>;
 
-                products = products.Where(p => list.Contains(p.GetType().GetProperty(property.Name).GetValue(p)));
+                products = products.Where(p => list!.Contains(p.GetType().GetProperty(property.Name).GetValue(p)));
             }
 
             products = this.OrderProducts(products, filter.Order);

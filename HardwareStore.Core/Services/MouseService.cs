@@ -12,7 +12,7 @@
     {
         private readonly IRepository repository;
 
-        public MouseService(IRepository repositor)
+        public MouseService(IRepository repository)
         {
             this.repository = repository;
         }

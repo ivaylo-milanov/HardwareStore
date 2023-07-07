@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HardwareStore.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(HardwareStoreDbContext))]
-    [Migration("20230704163338_AddedProductOrderTable")]
-    partial class AddedProductOrderTable
+    [Migration("20230707154454_AddedProductsOrders")]
+    partial class AddedProductsOrders
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

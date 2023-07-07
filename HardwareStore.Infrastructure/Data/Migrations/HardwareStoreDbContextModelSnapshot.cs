@@ -553,13 +553,13 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                     b.HasOne("HardwareStore.Infrastructure.Models.Order", "Order")
                         .WithMany("ProductsOrders")
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("HardwareStore.Infrastructure.Models.Product", "Product")
                         .WithMany("ProductsOrders")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Order");

@@ -1,5 +1,44 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@model IEnumerable<ProcessorViewModel>
+
+<div>
+    <div class="filter">
+        <form method="get" data-url="@Url.Action("FilterProcessors", "Processors")" data-container="#processors">
+            <div class="filter-categories">
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = nameof(ProcessorViewModel.Manufacturer),
+                    values = Model.Select(p => p.Manufacturer).Distinct()
+                })
+
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = nameof(ProcessorViewModel.Series),
+                    values = Model.Select(p => p.Series).Distinct()
+                })
+
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = nameof(ProcessorViewModel.Generation),
+                    values = Model.Select(p => p.Generation).Distinct()
+                })
+
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = nameof(ProcessorViewModel.Socket),
+                    values = Model.Select(p => p.Socket).Distinct()
+                })
+
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = nameof(ProcessorViewModel.BoxCooler),
+                    values = Model.Select(p => p.BoxCooler).Distinct()
+                })
+            </div>
+            <div class="additional-filters">
+                @await Component.InvokeAsync("OrderComponent")
+            </div>
+        </form>
+    </div>
+    <div id="processors">
+        @await Component.InvokeAsync("ProductsComponent", new { models = Model })
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/filter.js"></script>
 }

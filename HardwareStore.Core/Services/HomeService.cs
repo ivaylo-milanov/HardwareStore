@@ -18,7 +18,7 @@
         }
 
         public async Task<IEnumerable<MostBoughtProductViewModel>> GetMostBoughtProducts()
-            => await this.repository.All<Product>(p => p.ProductsOrders.Count > 3)
+            => await this.repository.All<Product>(/*p => p.ProductsOrders.Count > 3*/)
                 .Select(p => new MostBoughtProductViewModel
                 {
                     Id = p.Id,

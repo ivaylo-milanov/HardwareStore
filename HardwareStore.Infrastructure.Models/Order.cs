@@ -56,6 +56,6 @@
         [Comment("order customer")]
         public virtual Customer Customer { get; set; } = null!;
 
-        public virtual ICollection<ProductOrder> ProductsOrders { get; set; } = null!; 
+        public virtual ICollection<ProductOrder> ProductsOrders { get; set; } = null!;
     }
 }

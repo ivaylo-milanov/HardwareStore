@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HardwareStore.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(HardwareStoreDbContext))]
-    [Migration("20230704151800_RemovedProductOrdersProperty")]
-    partial class RemovedProductOrdersProperty
+    [Migration("20230707154722_AddedOnDeleteRestrictionsProductOrder")]
+    partial class AddedOnDeleteRestrictionsProductOrder
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -365,7 +365,7 @@ namespace HardwareStore.Infrastructure.Data.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductOrder");
+                    b.ToTable("ProductsOrders", (string)null);
 
                     b.HasComment("product order table");
                 });
@@ -555,13 +555,13 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                     b.HasOne("HardwareStore.Infrastructure.Models.Order", "Order")
                         .WithMany("ProductsOrders")
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("HardwareStore.Infrastructure.Models.Product", "Product")
                         .WithMany("ProductsOrders")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Order");

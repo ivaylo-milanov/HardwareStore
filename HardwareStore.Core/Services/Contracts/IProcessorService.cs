@@ -1,12 +1,8 @@
 ﻿namespace HardwareStore.Core.Services.Contracts
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using HardwareStore.Core.ViewModels.Processor;
 
-    internal interface IProcessorService
+    public interface IProcessorService : IProductService<ProcessorViewModel>
     {
     }
 }

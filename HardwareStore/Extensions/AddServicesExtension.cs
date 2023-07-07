@@ -16,6 +16,8 @@
             services.AddScoped<IFilterService, FilterService>();
             services.AddScoped<IMousePadService, MousePadService>();
             services.AddScoped<IMonitorService, MonitorService>();
+            services.AddScoped<IProcessorService, ProcessorService>();
+            services.AddScoped<ISearchService, SeachService>();
 
             services.AddControllers().AddNewtonsoftJson();
 

@@ -1,12 +1,8 @@
 ﻿namespace HardwareStore.Core.ViewModels.Search
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using HardwareStore.Core.ViewModels.Product;
 
-    internal class SearchFilterOptions
+    public class SearchFilterOptions : ProductFilterOptions
     {
     }
 }
