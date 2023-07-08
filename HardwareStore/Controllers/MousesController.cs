@@ -7,23 +7,18 @@
 
     public class MousesController : Controller
     {
-        private readonly IMouseService mouseService;
+        private readonly IProductService productService;
         private readonly IMemoryCache memoryCache;
-        private readonly IFilterService filterService;
 
-        public MousesController(
-            IMouseService mouseService,
-            IMemoryCache memoryCache, 
-            IFilterService filterService)
+        public MousesController(IProductService productService, IMemoryCache memoryCache)
         {
-            this.mouseService = mouseService;
+            this.productService = productService;
             this.memoryCache = memoryCache;
-            this.filterService = filterService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var mouses = await this.mouseService.GetAllProducts();
+            var mouses = await this.productService.GetProductsAsync<MouseViewModel>();
             this.memoryCache.Set("Mouses", mouses);
 
             return View(mouses);
@@ -36,9 +31,9 @@
                 return BadRequest("Mouses data not found.");
             }
 
-            IEnumerable<MouseViewModel> filtered = this.filterService.FilterProducts(mouses, filter);
+            IEnumerable<MouseViewModel> filtered = this.productService.FilterProducts(mouses, filter);
 
-            return ViewComponent("ProductsComponent", filtered);
+            return PartialView("_ProductsPartialView", filtered);
         }
     }
 }

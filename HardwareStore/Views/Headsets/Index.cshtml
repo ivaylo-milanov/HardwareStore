@@ -20,8 +20,8 @@
                 })
 
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(HeadsetViewModel.NoiseIsolation),
-                    values = Model.Select(m => m.NoiseIsolation).Distinct()
+                    name = nameof(HeadsetViewModel.Soundproofing),
+                    values = Model.Select(m => m.Soundproofing).Distinct()
                 })
 
                 @await Component.InvokeAsync("FilterComponent", new {
@@ -40,12 +40,12 @@
                 })
             </div>
             <div class="additional-filters">
-                @await Component.InvokeAsync("OrderComponent")
+                <partial name="_OrderPartialView"/>
             </div>
         </form>
     </div>
     <div id="headsets">
-        @await Component.InvokeAsync("ProductsComponent", new { models = Model })
+        <partial name="_ProductsPartialView" model="Model"/>
     </div>
 </div>
 

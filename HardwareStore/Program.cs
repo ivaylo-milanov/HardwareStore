@@ -16,6 +16,7 @@ namespace HardwareStore
             builder.Services.AddDropboxService(builder.Configuration);
             builder.Services.ConfigurateIdentity();
             builder.Services.AddServices();
+            builder.Services.AddSearchPaths();
 
             var app = builder.Build();
 

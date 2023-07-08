@@ -1,30 +1,24 @@
 ﻿namespace HardwareStore.Controllers
 {
     using HardwareStore.Core.Services.Contracts;
-    using HardwareStore.Core.ViewModels.Headset;
     using HardwareStore.Core.ViewModels.MousePad;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Caching.Memory;
 
     public class MousePadsController : Controller
     {
-        private readonly IMousePadService mousePadService;
-        private readonly IFilterService filterService;
+        private readonly IProductService productService;
         private readonly IMemoryCache memoryCache;
 
-        public MousePadsController(
-            IMousePadService mousePadService,
-            IFilterService filterService,
-            IMemoryCache memoryCache)
+        public MousePadsController(IProductService productService, IMemoryCache memoryCache)
         {
-            this.mousePadService = mousePadService;
-            this.filterService = filterService;
+            this.productService = productService;
             this.memoryCache = memoryCache;
         }
 
         public async Task<IActionResult> Index()
         {
-            var mousePads = await this.mousePadService.GetAllProducts();
+            var mousePads = await this.productService.GetProductsAsync<MousePadViewModel>();
             this.memoryCache.Set("MousePads", mousePads);
 
             return View(mousePads);
@@ -37,9 +31,9 @@
                 return BadRequest("Mouse pads data not found.");
             }
 
-            IEnumerable<MousePadViewModel> filtered = this.filterService.FilterProducts(mousePads, filter);
+            IEnumerable<MousePadViewModel> filtered = this.productService.FilterProducts(mousePads, filter);
 
-            return ViewComponent("ProductsComponent", filtered);
+            return PartialView("_ProductsPartialView", filtered);
         }
     }
 }

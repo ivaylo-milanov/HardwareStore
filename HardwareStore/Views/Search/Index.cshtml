@@ -1,21 +1,21 @@
-﻿@model IEnumerable<SearchViewModel>
+﻿@model IEnumerable<ProductViewModel>
 
 <div>
     <div class="filter">
         <form method="get" data-url="@Url.Action("FilterSearchedProducts", "Search")" data-container="#products">
             <div class="filter-categories">
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(SearchViewModel.Manufacturer),
+                    name = nameof(ProductViewModel.Manufacturer),
                     values = Model.Select(p => p.Manufacturer).Distinct()
                 })
             </div>
             <div class="additional-filters">
-                @await Component.InvokeAsync("OrderComponent")
+                <partial name="_OrderPartialView"/>
             </div>
         </form>
     </div>
     <div id="products">
-        @await Component.InvokeAsync("ProductsComponent", new { models = Model })
+        <partial name="_ProductsPartialView" model="Model"/>
     </div>
 </div>
 

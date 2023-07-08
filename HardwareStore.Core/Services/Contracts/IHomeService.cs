@@ -1,11 +1,11 @@
 ﻿namespace HardwareStore.Core.Services.Contracts
 {
-    using HardwareStore.Core.ViewModels.Home;
+    using HardwareStore.Core.ViewModels.Product;
 
     public interface IHomeService
     {
-        Task<IEnumerable<NewProductViewModel>> GetNewProducts();
+        Task<IEnumerable<ProductViewModel>> GetNewProducts();
 
-        Task<IEnumerable<MostBoughtProductViewModel>> GetMostBoughtProducts();
+        Task<IEnumerable<ProductViewModel>> GetMostBoughtProducts(); 
     }
 }

@@ -12,6 +12,6 @@
 
         public IEnumerable<string> Sensor { get; set; } = null!;
 
-        public IEnumerable<string> NumberOfKeys { get; set; } = null!;
+        public IEnumerable<string> ProgrammableButtons { get; set; } = null!;
     }
 }

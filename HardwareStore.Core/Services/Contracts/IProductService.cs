@@ -2,9 +2,15 @@
 {
     using HardwareStore.Core.ViewModels.Product;
 
-    public interface IProductService<TModel> 
-        where TModel : ProductViewModel
+    public interface IProductService
     {
-        Task<IEnumerable<TModel>> GetAllProducts();
+        Task<IEnumerable<TModel>> GetProductsAsync<TModel>() where TModel : ProductViewModel;
+
+        IEnumerable<TModel> FilterProducts<TModel, TFilter>(IEnumerable<TModel> products, TFilter filter)
+            where TFilter : ProductFilterOptions
+            where TModel : ProductViewModel;
+
+        Task<IEnumerable<ProductViewModel>> GetProductsByKeyword(string keyword);
     }
+
 }

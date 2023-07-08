@@ -1,7 +1,7 @@
 ﻿namespace HardwareStore.Core.Services
 {
     using Contracts;
-    using HardwareStore.Core.ViewModels.Home;
+    using HardwareStore.Core.ViewModels.Product;
     using HardwareStore.Infrastructure.Common;
     using HardwareStore.Infrastructure.Models;
     using Microsoft.EntityFrameworkCore;
@@ -17,21 +17,20 @@
             this.repository = repository;
         }
 
-        public async Task<IEnumerable<MostBoughtProductViewModel>> GetMostBoughtProducts()
-            => await this.repository.All<Product>(/*p => p.ProductsOrders.Count > 3*/)
-                .Select(p => new MostBoughtProductViewModel
+        public async Task<IEnumerable<ProductViewModel>> GetMostBoughtProducts()
+            => await this.repository.All<Product>(p => p.ProductsOrders.Count > 3)
+                .Select(p => new ProductViewModel
                 {
                     Id = p.Id,
                     Name = p.Name,
                     Price = p.Price
                 })
-                
                 .ToListAsync();
 
-        public async Task<IEnumerable<NewProductViewModel>> GetNewProducts()
+        public async Task<IEnumerable<ProductViewModel>> GetNewProducts()
             => await this.repository.All<Product>()
                 .OrderByDescending(p => p.AddDate)
-                .Select(p => new NewProductViewModel
+                .Select(p => new ProductViewModel
                 {
                     Id = p.Id,
                     Name = p.Name,

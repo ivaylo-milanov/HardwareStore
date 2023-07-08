@@ -1,5 +1,7 @@
 ﻿namespace HardwareStore.Core.ViewModels.Product
 {
+    using HardwareStore.Core.Attributes;
+
     public class ProductViewModel
     {
         public int Id { get; set; }

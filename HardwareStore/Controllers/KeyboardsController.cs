@@ -7,23 +7,18 @@
 
     public class KeyboardsController : Controller
     {
-        private readonly IKeyboardService keyboardService;
         private readonly IMemoryCache memoryCache;
-        private readonly IFilterService filterService;
+        private readonly IProductService productService;
 
-        public KeyboardsController(
-            IKeyboardService keyboardService,
-            IMemoryCache memoryCache,
-            IFilterService filterService)
+        public KeyboardsController(IProductService productService, IMemoryCache memoryCache)
         {
-            this.keyboardService = keyboardService;
+            this.productService = productService;
             this.memoryCache = memoryCache;
-            this.filterService = filterService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var keyboards = await this.keyboardService.GetAllProducts();
+            var keyboards = await this.productService.GetProductsAsync<KeyboardViewModel>();
             this.memoryCache.Set("Keyboards", keyboards);
 
             return View(keyboards);
@@ -36,9 +31,9 @@
                 return BadRequest("Keyboards data not found.");
             }
 
-            IEnumerable<KeyboardViewModel> filtered = this.filterService.FilterProducts(keyboards, filter);
+            IEnumerable<KeyboardViewModel> filtered = this.productService.FilterProducts(keyboards, filter);
 
-            return ViewComponent("ProductsComponent", filtered);
+            return PartialView("_ProductsPartialView", filtered);
         }
     }
 }

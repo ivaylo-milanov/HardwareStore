@@ -7,23 +7,18 @@
 
     public class HeadsetsController : Controller
     {
-        private readonly IHeadsetService headsetService;
         private readonly IMemoryCache memoryCache;
-        private readonly IFilterService filterService;
+        private readonly IProductService productService;
 
-        public HeadsetsController(
-            IHeadsetService headsetService,
-            IMemoryCache memoryCache,
-            IFilterService filterService)
+        public HeadsetsController(IProductService productService, IMemoryCache memoryCache)
         {
-            this.headsetService = headsetService;
             this.memoryCache = memoryCache;
-            this.filterService = filterService;
+            this.productService = productService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var headsets = await this.headsetService.GetAllProducts();
+            var headsets = await this.productService.GetProductsAsync<HeadsetViewModel>();
             this.memoryCache.Set("Headsets", headsets);
 
             return View(headsets);
@@ -36,9 +31,9 @@
                 return BadRequest("Headsets data not found.");
             }
 
-            IEnumerable<HeadsetViewModel> filtered = this.filterService.FilterProducts(headsets, filter);
+            IEnumerable<HeadsetViewModel> filtered = this.productService.FilterProducts(headsets, filter);
 
-            return ViewComponent("ProductComponent", filtered);
+            return PartialView("_ProductsPartialView", filtered);
         }
     }
 }

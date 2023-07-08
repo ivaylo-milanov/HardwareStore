@@ -7,23 +7,18 @@
 
     public class MonitorsController : Controller
     {
-        private readonly IMonitorService monitorService;
         private readonly IMemoryCache memoryCache;
-        private readonly IFilterService filterService;
+        private readonly IProductService productService;
 
-        public MonitorsController(
-            IMonitorService monitorService,
-            IMemoryCache memoryCache,
-            IFilterService filterService)
+        public MonitorsController(IMemoryCache memoryCache, IProductService productService)
         {
-            this.monitorService = monitorService;
             this.memoryCache = memoryCache;
-            this.filterService = filterService;
+            this.productService = productService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var monitors = await this.monitorService.GetAllProducts();
+            var monitors = await this.productService.GetProductsAsync<MonitorViewModel>();
             this.memoryCache.Set("Monitors", monitors);
 
             return View(monitors);
@@ -36,9 +31,9 @@
                 return BadRequest("Monitors data not found.");
             }
 
-            IEnumerable<MonitorViewModel> filtered = this.filterService.FilterProducts(monitors, filter);
+            IEnumerable<MonitorViewModel> filtered = this.productService.FilterProducts(monitors, filter);
 
-            return ViewComponent("ProductsComponent", filtered);
+            return PartialView("_ProductsPartialView", filtered);
         }
     }
 }

@@ -7,23 +7,18 @@
 
     public class ProcessorsController : Controller
     {
-        private readonly IProcessorService processorService;
+        private readonly IProductService productService;
         private readonly IMemoryCache memoryCache;
-        private readonly IFilterService filterService;
 
-        public ProcessorsController(
-            IProcessorService processorService,
-            IMemoryCache memoryCache,
-            IFilterService filterService)
+        public ProcessorsController(IProductService productService, IMemoryCache memoryCache)
         {
-            this.processorService = processorService;
+            this.productService = productService;
             this.memoryCache = memoryCache;
-            this.filterService = filterService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var processors = await this.processorService.GetAllProducts();
+            var processors = await this.productService.GetProductsAsync<ProcessorViewModel>();
             this.memoryCache.Set("Processors", processors);
 
             return View(processors);
@@ -36,9 +31,9 @@
                 return BadRequest("Processors data not found.");
             }
 
-            IEnumerable<ProcessorViewModel> filtered = this.filterService.FilterProducts(processors, filter);
+            IEnumerable<ProcessorViewModel> filtered = this.productService.FilterProducts(processors, filter);
 
-            return ViewComponent("ProductsComponent", filtered);
+            return PartialView("_ProductsPartialView", filtered);
         }
     }
 }

@@ -1,19 +1,19 @@
 ﻿@model FilterCategoryModel
 
 <div class="filter-category">
-    <div class="filter-header">
-        <label>@Model.Name:</label>
-    </div>
-    <div class="filter-values">
-        <ul>
+        <div class="filter-header">
+                <label>@Model.Name:</label>
+        </div>
+        <div class="filter-values">
+            <ul>
             @foreach (var value in Model.Values)
             {
-                <li>
-                    <label>
-                        <input type="checkbox" name="@Model.Name" value="@value"/> @value
-                    </label>
-                </li>
+                        <li>
+                            <label>
+                                <input type="checkbox" name="@Model.Name" value="@value"/> @value
+                            </label>
+                        </li>
             }
-        </ul>
+            </ul>
+        </div>
     </div>
-</div>

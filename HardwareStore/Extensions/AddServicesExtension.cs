@@ -10,14 +10,7 @@
         {
             services.AddScoped<IRepository, Repository>();
             services.AddScoped<IHomeService, HomeService>();
-            services.AddScoped<IMouseService, MouseService>();
-            services.AddScoped<IKeyboardService, KeyboardService>();
-            services.AddScoped<IHeadsetService, HeadsetService>();
-            services.AddScoped<IFilterService, FilterService>();
-            services.AddScoped<IMousePadService, MousePadService>();
-            services.AddScoped<IMonitorService, MonitorService>();
-            services.AddScoped<IProcessorService, ProcessorService>();
-            services.AddScoped<ISearchService, SeachService>();
+            services.AddScoped<IProductService, ProductService>();
 
             services.AddControllers().AddNewtonsoftJson();
 

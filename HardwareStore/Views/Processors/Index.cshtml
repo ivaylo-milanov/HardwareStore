@@ -30,12 +30,12 @@
                 })
             </div>
             <div class="additional-filters">
-                @await Component.InvokeAsync("OrderComponent")
+                <partial name="_OrderPartialView"/>
             </div>
         </form>
     </div>
     <div id="processors">
-        @await Component.InvokeAsync("ProductsComponent", new { models = Model })
+        <partial name="_ProductsPartialView" model="Model"/>
     </div>
 </div>
 
