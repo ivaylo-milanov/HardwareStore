@@ -1,0 +1,49 @@
+﻿@model IEnumerable<RamViewModel>
+
+<div>
+    <div class="filter">
+        <form method="get" data-url="@Url.Action("FilterRam", "Ram")" data-container="#ram">
+            <div class="filter-categories">
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = nameof(RamViewModel.Manufacturer),
+                    values = Model.Select(p => p.Manufacturer).Distinct()
+                })
+
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = nameof(RamViewModel.Type),
+                    values = Model.Select(p => p.Type).Distinct()
+                })
+
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = nameof(RamViewModel.Heatsink),
+                    values = Model.Select(p => p.Heatsink).Distinct()
+                })
+
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = nameof(RamViewModel.Kit),
+                    values = Model.Select(p => p.Kit).Distinct()
+                })
+
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = nameof(RamViewModel.Backlight),
+                    values = Model.Select(p => p.Backlight).Distinct()
+                })
+
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = nameof(RamViewModel.Color),
+                    values = Model.Select(p => p.Color).Distinct()
+                })
+            </div>
+            <div class="additional-filters">
+                <partial name="_OrderPartialView"/>
+            </div>
+        </form>
+    </div>
+    <div id="ram">
+        <partial name="_ProductsPartialView" model="Model"/>
+    </div>
+</div>
+
+@section Scripts {
+        <script src="~/js/filter.js"></script>
+}

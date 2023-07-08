@@ -3,17 +3,17 @@
 <ul class="products">
     @foreach (var product in Model)
     {
-            <li>
-                <div class="product-card-image">
-                    <img src="@product.ImageUrl"/>
-                </div>
-                <div class="product-card-header">
-                    <p>@product.Name</p>
-                </div>
-                <div class="product-card-buy">
-                    <span>@product.Price</span>
-                    <button>Buy</button>
-                </div>
-            </li>
+        <li>
+            <div class="product-card-image">
+                <img src="@product.ImageUrl"/>
+            </div>
+            <div class="product-card-header">
+                <p>@product.Name</p>
+            </div>
+            <div class="product-card-buy">
+                <span>@product.Price</span>
+                <button>Buy</button>
+            </div>
+        </li>
     }
 </ul>
