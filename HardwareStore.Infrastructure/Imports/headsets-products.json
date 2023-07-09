@@ -1,1041 +1,1001 @@
 [
   {
-    "name": "",
-    "price": 0,
-    "quantity": 0,
-    "description": "",
-    "warranty": 0,
-    "manufacturer": "",
-    "model": "",
-    "referenceNumber": "",
-    "category": "",
+    "name": "HAMA GAMING HEADSET FOR PLAYSTATION 5",
+    "price": 34.69,
+    "quantity": 10,
+    "description": "Hama Gaming Headset, For PlayStation 5, Microphone, 3.5mm Jack, White/Black",
+    "warranty": 24,
+    "manufacturer": "Hama",
+    "model": null,
+    "referenceNumber": "HAMA-PLAYSTATION5-WHITE",
+    "category": "Headset",
     "characteristics": [
       {
         "name": "Form",
-        "value": ""
+        "value": "Over-ear"
       },
       {
         "name": "Interface",
-        "value": ""
+        "value": "3.5mm Audio jack"
       },
       {
         "name": "Microphone",
-        "value": ""
-      },
-      {
-        "name": "Size of speakers",
-        "value": ""
+        "value": "Yes"
       },
       {
         "name": "Frequency range",
-        "value": ""
-      },
-      {
-        "name": "Sensitivity",
-        "value": ""
+        "value": "20 Hz - 20 kHz"
       },
       {
         "name": "Resistance",
-        "value": ""
+        "value": "32"
       },
       {
         "name": "Waterproof",
-        "value": ""
+        "value": "No"
       },
       {
         "name": "Soundproofing",
-        "value": ""
+        "value": "No"
       },
       {
         "name": "Type",
-        "value": ""
+        "value": "Stereo"
       },
       {
         "name": "Compatibility",
-        "value": ""
-      },
-      {
-        "name": "Cable length",
-        "value": ""
+        "value": "PlayStation 5"
       },
       {
         "name": "Color",
-        "value": ""
+        "value": "White"
       }
     ]
   },
   {
-    "name": "",
-    "price": 0,
-    "quantity": 0,
-    "description": "",
-    "warranty": 0,
-    "manufacturer": "",
-    "model": "",
-    "referenceNumber": "",
-    "category": "",
+    "name": "BLOODY G521",
+    "price": 43.76,
+    "quantity": 10,
+    "description": "Made of high-quality materials for maximum comfort even after hours of computer adventures. Even the most demanding gamers will be impressed by the elegant design. The large earcups cover the entire ear, eliminate all noise and provide comfort even during long hours of listening. Omni-Directional microphone to suppress background noise LED lighting in 7 colors emphasize the atmosphere of the game",
+    "warranty": 24,
+    "manufacturer": "A4tech",
+    "model": "Bllody G521",
+    "referenceNumber": "A4TECH-BLOODY-G521-BLACK",
+    "category": "Headset",
     "characteristics": [
       {
         "name": "Form",
-        "value": ""
+        "value": "Over-ear"
       },
       {
         "name": "Interface",
-        "value": ""
+        "value": "USB"
       },
       {
         "name": "Microphone",
-        "value": ""
+        "value": "Yes"
       },
       {
         "name": "Size of speakers",
-        "value": ""
+        "value": "50"
       },
       {
         "name": "Frequency range",
-        "value": ""
+        "value": "20 Hz - 20 kHz"
       },
       {
         "name": "Sensitivity",
-        "value": ""
+        "value": "105"
       },
       {
         "name": "Resistance",
-        "value": ""
+        "value": "16"
       },
       {
         "name": "Waterproof",
-        "value": ""
+        "value": "No"
       },
       {
         "name": "Soundproofing",
-        "value": ""
+        "value": "No"
       },
       {
         "name": "Type",
-        "value": ""
+        "value": "Stereo"
       },
       {
         "name": "Compatibility",
-        "value": ""
+        "value": "PC"
       },
       {
         "name": "Cable length",
-        "value": ""
+        "value": "2"
       },
       {
         "name": "Color",
-        "value": ""
+        "value": "Black"
       }
     ]
   },
   {
-    "name": "",
-    "price": 0,
-    "quantity": 0,
-    "description": "",
-    "warranty": 0,
-    "manufacturer": "",
-    "model": "",
-    "referenceNumber": "",
-    "category": "",
+    "name": "PLANTRONICS RIG 300",
+    "price": 49.99,
+    "quantity": 10,
+    "description": "Boost your productivity with the Plantronics RIG 300 PC headset. SoundGuard technology protects you from audio distortion, and the ventilated earcups and lightweight frame provide a comfortable, ultra-stable shape.",
+    "warranty": 24,
+    "manufacturer": "Plantronics",
+    "model": "RIG 300",
+    "referenceNumber": "PLANTRONICS-RIG-300-BLACK",
+    "category": "Headset",
     "characteristics": [
       {
         "name": "Form",
-        "value": ""
+        "value": "Over-ear"
       },
       {
         "name": "Interface",
-        "value": ""
+        "value": "3.5mm Audio jack"
       },
       {
         "name": "Microphone",
-        "value": ""
+        "value": "Yes"
       },
       {
         "name": "Size of speakers",
-        "value": ""
+        "value": "40"
       },
       {
         "name": "Frequency range",
-        "value": ""
+        "value": "20 Hz - 20 kHz"
       },
       {
         "name": "Sensitivity",
-        "value": ""
+        "value": "111"
       },
       {
         "name": "Resistance",
-        "value": ""
+        "value": "32"
       },
       {
         "name": "Waterproof",
-        "value": ""
+        "value": "No"
       },
       {
         "name": "Soundproofing",
-        "value": ""
+        "value": "No"
       },
       {
         "name": "Type",
-        "value": ""
+        "value": "Stereo"
       },
       {
         "name": "Compatibility",
-        "value": ""
-      },
-      {
-        "name": "Cable length",
-        "value": ""
+        "value": "Xbox, PC/Mac, PlayStation, Mobile, Nintendo Switch"
       },
       {
         "name": "Color",
-        "value": ""
+        "value": "Black"
       }
     ]
   },
   {
-    "name": "",
-    "price": 0,
-    "quantity": 0,
-    "description": "",
-    "warranty": 0,
-    "manufacturer": "",
-    "model": "",
-    "referenceNumber": "",
-    "category": "",
+    "name": "JBL QUANTUM 100",
+    "price": 68.46,
+    "quantity": 10,
+    "description": "From the quietest footstep to the loudest explosion, JBL QuantumSound makes every scene more epic and every gamer more competitive. Thanks to the comfortable memory foam and lightweight design, you will be able to enjoy even longer gaming sessions.",
+    "warranty": 24,
+    "manufacturer": "JBL",
+    "model": "Quantum 100",
+    "referenceNumber": "JBL-QUANTUM-100-WHITE",
+    "category": "Headset",
     "characteristics": [
       {
         "name": "Form",
-        "value": ""
+        "value": "Over-ear"
       },
       {
         "name": "Interface",
-        "value": ""
+        "value": "3.5mm Audio jack"
       },
       {
         "name": "Microphone",
-        "value": ""
+        "value": "Yes"
       },
       {
         "name": "Size of speakers",
-        "value": ""
+        "value": "40"
       },
       {
         "name": "Frequency range",
-        "value": ""
+        "value": "20 Hz - 20 kHz"
       },
       {
         "name": "Sensitivity",
-        "value": ""
+        "value": "96"
       },
       {
         "name": "Resistance",
-        "value": ""
+        "value": "32"
       },
       {
         "name": "Waterproof",
-        "value": ""
+        "value": "No"
       },
       {
         "name": "Soundproofing",
-        "value": ""
+        "value": "No"
       },
       {
         "name": "Type",
-        "value": ""
+        "value": "Stereo"
       },
       {
         "name": "Compatibility",
-        "value": ""
+        "value": "Mobile, PC, PlayStation 4, Xbox One"
       },
       {
         "name": "Cable length",
-        "value": ""
+        "value": "1.2"
       },
       {
         "name": "Color",
-        "value": ""
+        "value": "White"
       }
     ]
   },
   {
-    "name": "",
-    "price": 0,
-    "quantity": 0,
-    "description": "",
-    "warranty": 0,
-    "manufacturer": "",
-    "model": "",
-    "referenceNumber": "",
-    "category": "",
+    "name": "HYPERX CLOUD STINGER CORE",
+    "price": 79.00,
+    "quantity": 10,
+    "description": "Gaming headset HyperX Cloud Stinger Core (PC) 3.5mm jack with Microphone, Black",
+    "warranty": 24,
+    "manufacturer": "HyperX",
+    "model": "Cloud Stinger Core",
+    "referenceNumber": "HYPERX-CLOUD-STRINGER-CORE-BLACK",
+    "category": "Headset",
     "characteristics": [
       {
         "name": "Form",
-        "value": ""
+        "value": "Over-ear"
       },
       {
         "name": "Interface",
-        "value": ""
+        "value": "3.5mm Audio jack, 2x3.5mm Audio jack"
       },
       {
         "name": "Microphone",
-        "value": ""
+        "value": "Yes"
       },
       {
         "name": "Size of speakers",
-        "value": ""
+        "value": "40"
       },
       {
         "name": "Frequency range",
-        "value": ""
+        "value": "20 Hz - 20 kHz"
       },
       {
         "name": "Sensitivity",
-        "value": ""
+        "value": "16"
       },
       {
         "name": "Resistance",
-        "value": ""
+        "value": "99"
       },
       {
         "name": "Waterproof",
-        "value": ""
+        "value": "No"
       },
       {
         "name": "Soundproofing",
-        "value": ""
+        "value": "No"
       },
       {
         "name": "Type",
-        "value": ""
+        "value": "Stereo"
       },
       {
         "name": "Compatibility",
-        "value": ""
+        "value": "PC"
       },
       {
         "name": "Cable length",
-        "value": ""
+        "value": "3"
       },
       {
         "name": "Color",
-        "value": ""
+        "value": "Black"
       }
     ]
   },
   {
-    "name": "",
-    "price": 0,
-    "quantity": 0,
-    "description": "",
-    "warranty": 0,
-    "manufacturer": "",
-    "model": "",
-    "referenceNumber": "",
-    "category": "",
+    "name": "LOGITECH G335",
+    "price": 139.00,
+    "quantity": 10,
+    "description": "Lightweight and cool. G335 is where color and comfort combine. Featuring a suspension headband design with adjustable strap so you can choose your most comfortable fit. Easy plug-and-play and built-in controls let you quickly connect and jump into the game. Just pick your favorite color to match your awesome style. The suspension headband design distributes weight and relieves pressure points. Soft, breathable memory ear cups and sports mesh material surround the ear and provide just the right amount of force to stay firmly in place. At only 240 grams, G335 is a smaller and lighter version of the award-winning G733 LIGHTSPEED wireless headset. Easily get into the game using a simple 3.5 mm audio jack. G335 works with Xbox®, PlayStation®, Nintendo Switch™ as well as most PCs, laptops, or mobile devices. The soft elastic headband conforms to your head and can be adjusted for the perfect fit. Slide the ear cups up and down to make them feel just right. Use the volume roller on the ear cup to turn up your game or music. Flip up the mic to instantly mute and move it out of the way.",
+    "warranty": 24,
+    "manufacturer": "Logitech",
+    "model": "G335",
+    "referenceNumber": "LOGITECH-G335-BLACK",
+    "category": "Headset",
     "characteristics": [
       {
         "name": "Form",
-        "value": ""
+        "value": "Over-ear"
       },
       {
         "name": "Interface",
-        "value": ""
+        "value": "3.5mm Audio jack, 2x3.5mm Audio jack"
       },
       {
         "name": "Microphone",
-        "value": ""
+        "value": "Yes"
       },
       {
         "name": "Size of speakers",
-        "value": ""
+        "value": "40"
       },
       {
         "name": "Frequency range",
-        "value": ""
+        "value": "20 Hz - 20 kHz"
       },
       {
         "name": "Sensitivity",
-        "value": ""
+        "value": "87.5"
       },
       {
         "name": "Resistance",
-        "value": ""
+        "value": "36"
       },
       {
         "name": "Waterproof",
-        "value": ""
+        "value": "No"
       },
       {
         "name": "Soundproofing",
-        "value": ""
+        "value": "No"
       },
       {
         "name": "Type",
-        "value": ""
+        "value": "Stereo"
       },
       {
         "name": "Compatibility",
-        "value": ""
+        "value": "Xbox, PlayStation, Mobile, Nintendo Switch, PC"
       },
       {
         "name": "Cable length",
-        "value": ""
+        "value": "2"
       },
       {
         "name": "Color",
-        "value": ""
+        "value": "Black"
       }
     ]
   },
   {
-    "name": "",
-    "price": 0,
-    "quantity": 0,
-    "description": "",
-    "warranty": 0,
-    "manufacturer": "",
-    "model": "",
-    "referenceNumber": "",
-    "category": "",
+    "name": "HYPERX CLOUD CORE",
+    "price": 159.00,
+    "quantity": 10,
+    "description": "HyperX Cloud Core Gaming Headset",
+    "warranty": 24,
+    "manufacturer": "HyperX",
+    "model": "Cloud Code",
+    "referenceNumber": "HYPERX-CLOUD-CORE-BLACK",
+    "category": "Headset",
     "characteristics": [
       {
         "name": "Form",
-        "value": ""
+        "value": "Over-ear"
       },
       {
         "name": "Interface",
-        "value": ""
+        "value": "3.5mm Audio jack, USB"
       },
       {
         "name": "Microphone",
-        "value": ""
+        "value": "Yes"
       },
       {
         "name": "Size of speakers",
-        "value": ""
+        "value": "53"
       },
       {
         "name": "Frequency range",
-        "value": ""
+        "value": "15 Hz - 25 kHz"
       },
       {
         "name": "Sensitivity",
-        "value": ""
+        "value": "98"
       },
       {
         "name": "Resistance",
-        "value": ""
+        "value": "60"
       },
       {
         "name": "Waterproof",
-        "value": ""
+        "value": "No"
       },
       {
         "name": "Soundproofing",
-        "value": ""
+        "value": "No"
       },
       {
         "name": "Type",
-        "value": ""
+        "value": "3D Audio"
       },
       {
         "name": "Compatibility",
-        "value": ""
+        "value": "Xbox, PC/Mac, PlayStation, Mobile, Nintendo Switch"
       },
       {
         "name": "Cable length",
-        "value": ""
+        "value": "3"
       },
       {
         "name": "Color",
-        "value": ""
+        "value": "Black"
       }
     ]
   },
   {
-    "name": "",
-    "price": 0,
-    "quantity": 0,
-    "description": "",
-    "warranty": 0,
-    "manufacturer": "",
-    "model": "",
-    "referenceNumber": "",
-    "category": "",
+    "name": "PLANTRONICS RIG 700HS",
+    "price": 173.83,
+    "quantity": 10,
+    "description": "All-day wireless comfort, zero lag and Windows Sonic surround sound to ensure you're never vulnerable on the battlefield. Victory has never been sweeter.",
+    "warranty": 24,
+    "manufacturer": "Plantronics",
+    "model": "RIG 700HS",
+    "referenceNumber": "PLANTRONICS-RIG-700HS-CAMOUFLAGE",
+    "category": "Headset",
     "characteristics": [
       {
         "name": "Form",
-        "value": ""
+        "value": "Over-ear"
       },
       {
         "name": "Interface",
-        "value": ""
+        "value": "Wireless"
       },
       {
         "name": "Microphone",
-        "value": ""
+        "value": "Yes"
       },
       {
         "name": "Size of speakers",
-        "value": ""
+        "value": "40"
       },
       {
         "name": "Frequency range",
-        "value": ""
+        "value": "20 Hz - 20 kHz"
       },
       {
         "name": "Sensitivity",
-        "value": ""
+        "value": "111"
       },
       {
         "name": "Resistance",
-        "value": ""
+        "value": "32"
       },
       {
         "name": "Waterproof",
-        "value": ""
+        "value": "No"
       },
       {
         "name": "Soundproofing",
-        "value": ""
+        "value": "No"
       },
       {
         "name": "Type",
-        "value": ""
+        "value": "Stereo"
       },
       {
         "name": "Compatibility",
-        "value": ""
-      },
-      {
-        "name": "Cable length",
-        "value": ""
+        "value": "PlayStation 4"
       },
       {
         "name": "Color",
-        "value": ""
+        "value": "Camouflage"
       }
     ]
   },
   {
-    "name": "",
-    "price": 0,
-    "quantity": 0,
-    "description": "",
-    "warranty": 0,
-    "manufacturer": "",
-    "model": "",
-    "referenceNumber": "",
-    "category": "",
+    "name": "LOGITECH G PRO X",
+    "price": 208.99,
+    "quantity": 10,
+    "description": "Logitech PRO X Gaming Headset",
+    "warranty": 24,
+    "manufacturer": "lOGITECH",
+    "model": "G PRO X",
+    "referenceNumber": "LOGITECH-G-PRO-X-BLACK",
+    "category": "Headset",
     "characteristics": [
       {
         "name": "Form",
-        "value": ""
+        "value": "Over-ear"
       },
       {
         "name": "Interface",
-        "value": ""
+        "value": "3.5mm Audio jack, USB, 2x3.5mm Audio jack"
       },
       {
         "name": "Microphone",
-        "value": ""
+        "value": "Yes"
       },
       {
         "name": "Size of speakers",
-        "value": ""
+        "value": "50"
       },
       {
         "name": "Frequency range",
-        "value": ""
+        "value": "20 Hz - 20 kHz"
       },
       {
         "name": "Sensitivity",
-        "value": ""
+        "value": "91.7"
       },
       {
         "name": "Resistance",
-        "value": ""
+        "value": "35"
       },
       {
         "name": "Waterproof",
-        "value": ""
+        "value": "No"
       },
       {
         "name": "Soundproofing",
-        "value": ""
+        "value": "No"
       },
       {
         "name": "Type",
-        "value": ""
+        "value": "7.1 Virtual surround"
       },
       {
         "name": "Compatibility",
-        "value": ""
+        "value": "Xbox, PC/Mac, PlayStation, Mobile, Nintendo Switch"
       },
       {
         "name": "Cable length",
-        "value": ""
+        "value": "2"
       },
       {
         "name": "Color",
-        "value": ""
+        "value": "Black"
       }
     ]
   },
   {
-    "name": "",
-    "price": 0,
-    "quantity": 0,
-    "description": "",
-    "warranty": 0,
-    "manufacturer": "",
-    "model": "",
-    "referenceNumber": "",
-    "category": "",
+    "name": "CREATIVE SXFI GAMER",
+    "price": 248.50,
+    "quantity": 10,
+    "description": "CREATIVE SXFI Gamer Headphones, Black",
+    "warranty": 24,
+    "manufacturer": "Creative",
+    "model": "SXFI Gamer",
+    "referenceNumber": "CREATIVE-SFXI-GAMER-BLACK",
+    "category": "Headset",
     "characteristics": [
       {
         "name": "Form",
-        "value": ""
+        "value": "Over-ear"
       },
       {
         "name": "Interface",
-        "value": ""
+        "value": "3.5mm Audio jack, USB-C"
       },
       {
         "name": "Microphone",
-        "value": ""
+        "value": "Yes"
       },
       {
         "name": "Size of speakers",
-        "value": ""
+        "value": "50"
       },
       {
         "name": "Frequency range",
-        "value": ""
-      },
-      {
-        "name": "Sensitivity",
-        "value": ""
-      },
-      {
-        "name": "Resistance",
-        "value": ""
+        "value": "20 Hz - 20 kHz"
       },
       {
         "name": "Waterproof",
-        "value": ""
+        "value": "No"
       },
       {
         "name": "Soundproofing",
-        "value": ""
+        "value": "No"
       },
       {
         "name": "Type",
-        "value": ""
+        "value": "Stereo"
       },
       {
         "name": "Compatibility",
-        "value": ""
-      },
-      {
-        "name": "Cable length",
-        "value": ""
+        "value": "PC"
       },
       {
         "name": "Color",
-        "value": ""
+        "value": "Black"
       }
     ]
   },
   {
-    "name": "",
-    "price": 0,
-    "quantity": 0,
-    "description": "",
-    "warranty": 0,
-    "manufacturer": "",
-    "model": "",
-    "referenceNumber": "",
-    "category": "",
+    "name": "LOGITECH G733 LIGHTSPEED WIRELESS RGB",
+    "price": 289.00,
+    "quantity": 10,
+    "description": "Finally, headphones as expressive as you! The G733 are wireless and designed to be comfortable and lightweight. At your disposal are surround, filters for the microphone and of course RGB backlighting.",
+    "warranty": 24,
+    "manufacturer": "Logitech",
+    "model": "G733 Lightspeed Wireless RGB",
+    "referenceNumber": "LOGITECH-G733-LIGHTSPEED-WIRELESS-RGB-WHITE",
+    "category": "Headset",
     "characteristics": [
       {
         "name": "Form",
-        "value": ""
+        "value": "Over-ear"
       },
       {
         "name": "Interface",
-        "value": ""
+        "value": "Wireless"
       },
       {
         "name": "Microphone",
-        "value": ""
+        "value": "Yes"
       },
       {
         "name": "Size of speakers",
-        "value": ""
+        "value": "40"
       },
       {
         "name": "Frequency range",
-        "value": ""
+        "value": "20 Hz - 20 kHz"
       },
       {
         "name": "Sensitivity",
-        "value": ""
+        "value": "87.5"
       },
       {
         "name": "Resistance",
-        "value": ""
+        "value": "39"
       },
       {
         "name": "Waterproof",
-        "value": ""
+        "value": "No"
       },
       {
         "name": "Soundproofing",
-        "value": ""
+        "value": "No"
       },
       {
         "name": "Type",
-        "value": ""
+        "value": "7.1 Virtual surround"
       },
       {
         "name": "Compatibility",
-        "value": ""
-      },
-      {
-        "name": "Cable length",
-        "value": ""
+        "value": "PC, PlayStation 4"
       },
       {
         "name": "Color",
-        "value": ""
+        "value": "White"
       }
     ]
   },
   {
-    "name": "",
-    "price": 0,
-    "quantity": 0,
-    "description": "",
-    "warranty": 0,
-    "manufacturer": "",
-    "model": "",
-    "referenceNumber": "",
-    "category": "",
+    "name": "STEELSERIES ARCTIS NOVA 7",
+    "price": 388.99,
+    "quantity": 10,
+    "description": "Go beyond the mundane to Almighty Audio - a superior combination of hardware and software. The Nova Acoustic system features custom audio drivers, immersive 360° audio surround, and 10-band parametric EQ from Sonar software. Listen to two audio streams simultaneously with 2.4GHz and Bluetooth, easily switching between PC, Mac, PlayStation and Switch with USB-C. Stay powered up with a 38-hour battery and a quick charge feature that delivers 6 hours of use in just 15 minutes. Enjoy noise-free communications as AI algorithms guide the 2nd generation ClearCast microphone to clear incoming and outgoing team chat audio. The ComfortMax system offers 4 adjustment points and breathable AirWeave memory foam cushions.",
+    "warranty": 24,
+    "manufacturer": "SteelSeries",
+    "model": "Arctis Nova 7",
+    "referenceNumber": "STEELSERIES-ARCTIS-NOVA-7-BLACK",
+    "category": "Headset",
     "characteristics": [
       {
         "name": "Form",
-        "value": ""
+        "value": "Over-ear"
       },
       {
         "name": "Interface",
-        "value": ""
+        "value": "Bluetooth, USB, Wireless, USB-C"
       },
       {
         "name": "Microphone",
-        "value": ""
+        "value": "Yes"
       },
       {
         "name": "Size of speakers",
-        "value": ""
+        "value": "40"
       },
       {
         "name": "Frequency range",
-        "value": ""
+        "value": "20 Hz - 22 kHz"
       },
       {
         "name": "Sensitivity",
-        "value": ""
+        "value": "93"
       },
       {
         "name": "Resistance",
-        "value": ""
+        "value": "36"
       },
       {
         "name": "Waterproof",
-        "value": ""
+        "value": "No"
       },
       {
         "name": "Soundproofing",
-        "value": ""
+        "value": "No"
       },
       {
         "name": "Type",
-        "value": ""
+        "value": "3D Audio"
       },
       {
         "name": "Compatibility",
-        "value": ""
+        "value": "PC/Mac, Mobile, Nintendo Switch, PlayStation 4, PlayStation 5, Oculus Quest 2"
       },
       {
         "name": "Cable length",
-        "value": ""
+        "value": "1.2"
       },
       {
         "name": "Color",
-        "value": ""
+        "value": "Black"
       }
     ]
   },
   {
-    "name": "",
-    "price": 0,
-    "quantity": 0,
-    "description": "",
-    "warranty": 0,
-    "manufacturer": "",
-    "model": "",
-    "referenceNumber": "",
-    "category": "",
+    "name": "JBL QUANTUM 910 WIRELESS",
+    "price": 459.00,
+    "quantity": 10,
+    "description": "The Quantum 910 Wireless Gaming Headset offers high-resolution dual surround audio. Low-latency wireless means zero lag when talking to the team. Active noise cancellation - you can play even in the noisiest places without distraction. A built-in battery offers up to 39 hours of life and can even be charged while playing. A built-in head movement sensor will also be at your disposal.",
+    "warranty": 24,
+    "manufacturer": "JBL",
+    "model": "Quantum 910",
+    "referenceNumber": "JBL-QUANTUM-910-WIRELESS-BLACK",
+    "category": "Headset",
     "characteristics": [
       {
         "name": "Form",
-        "value": ""
+        "value": "Over-ear"
       },
       {
         "name": "Interface",
-        "value": ""
+        "value": "Bluetooth, Wireless"
       },
       {
         "name": "Microphone",
-        "value": ""
+        "value": "Yes"
       },
       {
         "name": "Size of speakers",
-        "value": ""
+        "value": "50"
       },
       {
         "name": "Frequency range",
-        "value": ""
+        "value": "20 Hz - 20 kHz"
       },
       {
         "name": "Sensitivity",
-        "value": ""
+        "value": "111"
       },
       {
         "name": "Resistance",
-        "value": ""
+        "value": "32"
       },
       {
         "name": "Waterproof",
-        "value": ""
+        "value": "No"
       },
       {
         "name": "Soundproofing",
-        "value": ""
+        "value": "Yes"
       },
       {
         "name": "Type",
-        "value": ""
+        "value": "Stereo, 3D Audio"
       },
       {
         "name": "Compatibility",
-        "value": ""
+        "value": "PC"
       },
       {
         "name": "Cable length",
-        "value": ""
+        "value": "1.2"
       },
       {
         "name": "Color",
-        "value": ""
+        "value": "Black"
       }
     ]
   },
   {
-    "name": "",
-    "price": 0,
-    "quantity": 0,
-    "description": "",
-    "warranty": 0,
-    "manufacturer": "",
-    "model": "",
-    "referenceNumber": "",
-    "category": "",
+    "name": "LOGITECH PRO X 2 LIGHTSPEED",
+    "price": 499.00,
+    "quantity": 10,
+    "description": "Logitech PRO X 2 LIGHTSPEED wireless gaming headset",
+    "warranty": 24,
+    "manufacturer": " Logitech",
+    "model": "PRO X 2 Lightspeed",
+    "referenceNumber": "LOGITECH-PRO-X-2-LIGHTSPEED-WHITE",
+    "category": "Headset",
     "characteristics": [
       {
         "name": "Form",
-        "value": ""
+        "value": "Over-ear"
       },
       {
         "name": "Interface",
-        "value": ""
+        "value": "3.5mm Audio jack, Bluetooth, USB, Wireless"
       },
       {
         "name": "Microphone",
-        "value": ""
+        "value": "Yes"
       },
       {
         "name": "Size of speakers",
-        "value": ""
+        "value": "50"
       },
       {
         "name": "Frequency range",
-        "value": ""
+        "value": "20 Hz - 20 kHz"
       },
       {
         "name": "Sensitivity",
-        "value": ""
+        "value": "87.8"
       },
       {
         "name": "Resistance",
-        "value": ""
+        "value": "38"
       },
       {
         "name": "Waterproof",
-        "value": ""
+        "value": "No"
       },
       {
         "name": "Soundproofing",
-        "value": ""
+        "value": "No"
       },
       {
         "name": "Type",
-        "value": ""
+        "value": "7.1 Virtual surround"
       },
       {
         "name": "Compatibility",
-        "value": ""
+        "value": "PC/Mac, Mobile, Nintendo Switch, PlayStation 4, PlayStation 5, Xbox Series S/X"
       },
       {
         "name": "Cable length",
-        "value": ""
+        "value": "1.8"
       },
       {
         "name": "Color",
-        "value": ""
+        "value": "White"
       }
     ]
   },
   {
-    "name": "",
-    "price": 0,
-    "quantity": 0,
-    "description": "",
-    "warranty": 0,
-    "manufacturer": "",
-    "model": "",
-    "referenceNumber": "",
-    "category": "",
+    "name": "STEELSERIES ARCTIS NOVA PRO",
+    "price": 549.00,
+    "quantity": 10,
+    "description": "Arctis Nova Pro delivers legendary sound quality with the Nova Pro speaker system and premium speakers of the highest quality. Every detail surrounds you, as the 360° audio space will transport you to a different world with the second-generation Sonar GameDAC software that powers the sound with High-Res audio, ESS Saber quad-DAC and amplifier. The Arctit Nova Pro also functions as a base station for quick switching between multiple systems (Xbox, PC, PlayStation, Nintendo Switch). AI noise-isolating microphone keeps communication crystal clear. Easily get the most comfortable fit with the ComfortMAX system. Try Almighty Audio to hear sound like never before.",
+    "warranty": 24,
+    "manufacturer": "SteelSeries",
+    "model": "Arctis Nova Pro",
+    "referenceNumber": "STEELSERIES-ARCTIS-NOVA-PRO-BLACK",
+    "category": "Headset",
     "characteristics": [
       {
         "name": "Form",
-        "value": ""
+        "value": "Over-ear"
       },
       {
         "name": "Interface",
-        "value": ""
+        "value": "3.5mm Audio jack, USB, USB-C"
       },
       {
         "name": "Microphone",
-        "value": ""
+        "value": "Yes"
       },
       {
         "name": "Size of speakers",
-        "value": ""
+        "value": "40"
       },
       {
         "name": "Frequency range",
-        "value": ""
+        "value": "10 Hz - 40 kHz"
       },
       {
         "name": "Sensitivity",
-        "value": ""
+        "value": "93"
       },
       {
         "name": "Resistance",
-        "value": ""
+        "value": "38"
       },
       {
         "name": "Waterproof",
-        "value": ""
+        "value": "No"
       },
       {
         "name": "Soundproofing",
-        "value": ""
+        "value": "No"
       },
       {
         "name": "Type",
-        "value": ""
+        "value": "Stereo"
       },
       {
         "name": "Compatibility",
-        "value": ""
+        "value": "PC/Mac, Nintendo Switch, PlayStation 4, PlayStation 5"
       },
       {
         "name": "Cable length",
-        "value": ""
+        "value": "1.2"
       },
       {
         "name": "Color",
-        "value": ""
+        "value": "Black"
       }
     ]
   },
   {
-    "name": "",
-    "price": 0,
-    "quantity": 0,
-    "description": "",
-    "warranty": 0,
-    "manufacturer": "",
-    "model": "",
-    "referenceNumber": "",
-    "category": "",
+    "name": "ASUS TUF GAMING H3",
+    "price": 88.80,
+    "quantity": 10,
+    "description": "The new TUF Gaming H3 gaming headset is designed to provide incredible comfort and durability to gamers who play or stream for extended periods of time. With its lightweight construction, fast-cooling ASUS ear cushions, stainless steel headband, 50mm ASUS Essence drivers and sealed chamber design, the TUF Gaming H3 headset enhances your in-game audio experience with rich and immersive sound.",
+    "warranty": 24,
+    "manufacturer": "ASUS",
+    "model": "Gaming headphones ASUS TUF Gaming H3 Blue, 7.1 Virtual Surround Sound",
+    "referenceNumber": "ASUS-TUF-GAMING-H3-BLACK-BLUE",
+    "category": "Headset",
     "characteristics": [
       {
         "name": "Form",
-        "value": ""
+        "value": "Over-ear"
       },
       {
         "name": "Interface",
-        "value": ""
+        "value": "3.5mm Audio jack"
       },
       {
         "name": "Microphone",
-        "value": ""
+        "value": "Yes"
       },
       {
         "name": "Size of speakers",
-        "value": ""
+        "value": "50"
       },
       {
         "name": "Frequency range",
-        "value": ""
-      },
-      {
-        "name": "Sensitivity",
-        "value": ""
+        "value": "20 Hz - 20 kHz"
       },
       {
         "name": "Resistance",
-        "value": ""
+        "value": "32"
       },
       {
         "name": "Waterproof",
-        "value": ""
+        "value": "No"
       },
       {
         "name": "Soundproofing",
-        "value": ""
+        "value": "No"
       },
       {
         "name": "Type",
-        "value": ""
+        "value": "7.1 Virtual surround"
       },
       {
         "name": "Compatibility",
-        "value": ""
+        "value": "PC/Mac, Nintendo Switch, PlayStation 4, Xbox One, PlayStation 5, Xbox Series S/X"
       },
       {
         "name": "Cable length",
-        "value": ""
+        "value": "1.3"
       },
       {
         "name": "Color",
-        "value": ""
+        "value": "Black, Blue"
       }
     ]
   }
