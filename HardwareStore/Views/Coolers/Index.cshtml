@@ -1,32 +1,32 @@
-﻿@model IEnumerable<MousePadViewModel>
+﻿@model IEnumerable<CoolerViewModel>
 
 <div>
     <div class="filter">
-        <form method="get" data-url="@Url.Action("FilterMousePads", "MousePads")" data-container="#mouse-pads">
+        <form method="get" data-url="@Url.Action("FilterCoolers", "Coolers")" data-container="#coolers">
             <div class="filter-categories">
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(MousePadViewModel.Manufacturer),
+                    name = nameof(CoolerViewModel.Manufacturer),
                     values = Model.Select(m => m.Manufacturer).Distinct()
                 })
 
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(MousePadViewModel.Surface),
-                    values = Model.Select(m => m.Surface).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(MousePadViewModel.Cover),
-                    values = Model.Select(m => m.Cover).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(MousePadViewModel.Backlight),
+                    name = nameof(CoolerViewModel.Backlight),
                     values = Model.Select(m => m.Backlight).Distinct()
                 })
 
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(MousePadViewModel.Color),
-                    values = Model.Select(m => m.Color).Distinct()
+                    name = nameof(CoolerViewModel.Type),
+                    values = Model.Select(m => m.Type).Distinct()
+                })
+
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = nameof(CoolerViewModel.Socket),
+                    values = Model.Select(m => m.Socket).Distinct()
+                })
+
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = nameof(CoolerViewModel.FanSize),
+                    values = Model.Select(m => m.FanSize).Distinct()
                 })
             </div>
             <div class="additional-filters">
@@ -34,11 +34,11 @@
             </div>
         </form>
     </div>
-    <div id="mouse-pads">
+    <div id="coolers">
         <partial name="_ProductsPartialView" model="Model"/>
     </div>
 </div>
 
 @section Scripts {
-    <script src="~/js/filter.js"></script>
+       <script src="~/js/filter.js"></script>
 }

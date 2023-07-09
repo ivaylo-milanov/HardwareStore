@@ -1,32 +1,32 @@
-﻿@model IEnumerable<MousePadViewModel>
+﻿@model IEnumerable<VideoCardViewModel>
 
 <div>
     <div class="filter">
-        <form method="get" data-url="@Url.Action("FilterMousePads", "MousePads")" data-container="#mouse-pads">
+        <form method="get" data-url="@Url.Action("FilterVideoCards", "VideoCards")" data-container="#video-cards">
             <div class="filter-categories">
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(MousePadViewModel.Manufacturer),
+                    name = nameof(VideoCardViewModel.Manufacturer),
                     values = Model.Select(m => m.Manufacturer).Distinct()
                 })
 
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(MousePadViewModel.Surface),
-                    values = Model.Select(m => m.Surface).Distinct()
+                    name = nameof(VideoCardViewModel.Series),
+                    values = Model.Select(m => m.Series).Distinct()
                 })
 
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(MousePadViewModel.Cover),
-                    values = Model.Select(m => m.Cover).Distinct()
+                    name = nameof(VideoCardViewModel.Memory),
+                    values = Model.Select(m => m.Memory.ToString()).Distinct()
                 })
 
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(MousePadViewModel.Backlight),
-                    values = Model.Select(m => m.Backlight).Distinct()
+                    name = nameof(VideoCardViewModel.Outputs),
+                    values = Model.Select(m => m.Outputs).Distinct()
                 })
 
                 @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(MousePadViewModel.Color),
-                    values = Model.Select(m => m.Color).Distinct()
+                    name = nameof(VideoCardViewModel.MemoryType),
+                    values = Model.Select(m => m.MemoryType).Distinct()
                 })
             </div>
             <div class="additional-filters">
@@ -34,11 +34,11 @@
             </div>
         </form>
     </div>
-    <div id="mouse-pads">
+    <div id="video-cards">
         <partial name="_ProductsPartialView" model="Model"/>
     </div>
 </div>
 
 @section Scripts {
-    <script src="~/js/filter.js"></script>
+       <script src="~/js/filter.js"></script>
 }

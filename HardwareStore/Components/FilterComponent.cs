@@ -9,9 +9,14 @@
     {
         public async Task<IViewComponentResult> InvokeAsync(string name, IEnumerable<string> values) 
         {
+            var filterValues = string.Join(", ", values)
+                .Split(", ")
+                .Select(v => v.Trim())
+                .Distinct();
+
             FilterCategoryModel model = new FilterCategoryModel
             {
-                Values = values,
+                Values = filterValues,
                 Name = name
             };
 

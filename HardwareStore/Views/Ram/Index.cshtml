@@ -15,6 +15,11 @@
                 })
 
                 @await Component.InvokeAsync("FilterComponent", new {
+                    name = nameof(RamViewModel.Purpose),
+                    values = Model.Select(p => p.Purpose).Distinct()
+                })
+
+                @await Component.InvokeAsync("FilterComponent", new {
                     name = nameof(RamViewModel.Heatsink),
                     values = Model.Select(p => p.Heatsink).Distinct()
                 })

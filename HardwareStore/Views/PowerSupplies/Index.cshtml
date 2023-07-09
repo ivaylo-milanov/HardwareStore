@@ -1,0 +1,64 @@
+﻿@model IEnumerable<PowerSupplyViewModel>
+
+<div>
+    <div class="filter">
+        <form method="get" data-url="@Url.Action("FilterPowerSupplies", "PowerSupplies")" data-container="#power-supplies">
+            <div class="filter-categories">
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = nameof(PowerSupplyViewModel.Manufacturer),
+                    values = Model.Select(m => m.Manufacturer).Distinct()
+                })
+
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = nameof(PowerSupplyViewModel.Power),
+                    values = Model.Select(m => m.Power.ToString()).Distinct()
+                })
+
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = nameof(PowerSupplyViewModel.Certificate),
+                    values = Model.Select(m => m.Certificate).Distinct()
+                })
+
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = nameof(PowerSupplyViewModel.Type),
+                    values = Model.Select(m => m.Type).Distinct()
+                })
+
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = nameof(PowerSupplyViewModel.FormFactor),
+                    values = Model.Select(m => m.FormFactor).Distinct()
+                })
+
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = nameof(PowerSupplyViewModel.Specification),
+                    values = Model.Select(m => m.Specification).Distinct()
+                })
+
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = nameof(PowerSupplyViewModel.PCIeGen5),
+                    values = Model.Select(m => m.PCIeGen5).Distinct()
+                })
+
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = nameof(PowerSupplyViewModel.Backlight),
+                    values = Model.Select(m => m.Backlight).Distinct()
+                })
+
+                @await Component.InvokeAsync("FilterComponent", new {
+                    name = nameof(PowerSupplyViewModel.Color),
+                    values = Model.Select(m => m.Color).Distinct()
+                })
+            </div>
+            <div class="additional-filters">
+                <partial name="_OrderPartialView"/>
+            </div>
+        </form>
+    </div>
+    <div id="power-supplies">
+        <partial name="_ProductsPartialView" model="Model"/>
+    </div>
+</div>
+
+@section Scripts {
+        <script src="~/js/filter.js"></script>
+}

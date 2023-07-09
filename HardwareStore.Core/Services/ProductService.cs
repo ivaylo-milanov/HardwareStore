@@ -31,12 +31,33 @@
                 var value = property.GetValue(filter);
                 var list = value as IEnumerable<string>;
 
-                products = products.Where(p => list!.Contains(p.GetType().GetProperty(property.Name).GetValue(p)));
+                products = products.Where(p => IsValid(list, p.GetType().GetProperty(property.Name).GetValue(p)));
             }
 
             products = this.OrderProducts(products, filter.Order);
 
             return products;
+        }
+
+        private bool IsValid(IEnumerable<string> list, object value)
+        {
+            bool isValid = false;
+
+            if (value == null)
+            {
+                return false;
+            }
+
+            foreach (var item in list)
+            {
+                if (value.ToString().Contains(item))
+                {
+                    isValid = true;
+                    break;
+                }
+            }
+
+            return isValid;
         }
 
         private IEnumerable<TModel> OrderProducts<TModel>(IEnumerable<TModel> products, string order) where TModel : ProductViewModel

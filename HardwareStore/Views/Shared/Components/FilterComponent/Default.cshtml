@@ -6,13 +6,16 @@
         </div>
         <div class="filter-values">
             <ul>
-            @foreach (var value in Model.Values)
+            @if (!Model.Values.Contains(""))
             {
-                        <li>
-                            <label>
-                                <input type="checkbox" name="@Model.Name" value="@value"/> @value
-                            </label>
-                        </li>
+                @foreach (var value in Model.Values)
+                {
+                    <li>
+                        <label>
+                            <input type="checkbox" name="@Model.Name" value="@value"/> @value
+                        </label>
+                    </li>
+                }
             }
             </ul>
         </div>

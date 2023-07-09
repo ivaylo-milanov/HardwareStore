@@ -9,6 +9,9 @@
         public string Type { get; set; } = null!;
 
         [Characteristic]
+        public string Purpose { get; set; } = null!;
+
+        [Characteristic]
         public string Heatsink { get; set; } = null!;
 
         [Characteristic]
