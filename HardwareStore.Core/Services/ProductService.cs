@@ -95,10 +95,10 @@
                     Name = p.Name,
                     AddDate = p.AddDate,
                     Manufacturer = p.Manufacturer!.Name,
-                    Attributes = p.ProductAttributes
+                    Attributes = p.Characteristics
                         .Select(pa => new ProductAttributeExportModel
                         {
-                            Name = pa.Name,
+                            Name = pa.CharacteristicName.Name,
                             Value = pa.Value
                         })
                         .ToList()
@@ -164,6 +164,6 @@
                product.Manufacturer.Name.ToLower().Contains(keyword) ||
                (product.Description != null && product.Description.ToLower().Contains(keyword)) ||
                (product.Model != null && product.Description.ToLower().Contains(keyword)) ||
-               product.ProductAttributes.Any(pa => pa.Value.ToLower().Contains(keyword));
+               product.Characteristics.Any(pa => pa.Value.ToLower().Contains(keyword));
     }
 }

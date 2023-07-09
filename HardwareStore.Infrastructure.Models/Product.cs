@@ -12,7 +12,7 @@
     {
         public Product()
         {
-            this.ProductAttributes = new HashSet<ProductAttribute>();
+            this.Characteristics = new HashSet<Characteristic>();
             this.ProductsOrders = new HashSet<ProductOrder>();
         }
 
@@ -69,7 +69,7 @@
         [Comment("product category")]
         public Category Category { get; set; } = null!;
 
-        public ICollection<ProductAttribute> ProductAttributes { get; set; }
+        public ICollection<Characteristic> Characteristics { get; set; }
 
         public ICollection<ProductOrder> ProductsOrders { get; set; } = null!;
     }

@@ -15,7 +15,7 @@
 
         public DbSet<Product> Products { get; set; } = null!;
 
-        public DbSet<ProductAttribute> ProductsAttributes { get; set; } = null!;
+        public DbSet<Characteristic> Characteristics { get; set; } = null!;
 
         public DbSet<Category> Categories { get; set; } = null!;
 
@@ -23,11 +23,12 @@
 
         public DbSet<Manufacturer> Manufacturers { get; set; } = null!;
 
+        public DbSet<CharacteristicName> CharacteristicsNames { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new ProductOrderConfiguration());
             builder.ApplyConfiguration(new CustomerConfiguration());
-            builder.ApplyConfiguration(new CategoryConfiguration());
             
             base.OnModelCreating(builder);
         }

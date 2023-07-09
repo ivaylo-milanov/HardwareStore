@@ -4,6 +4,7 @@ using HardwareStore.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HardwareStore.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(HardwareStoreDbContext))]
-    partial class HardwareStoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230709152000_AddedCharacteristicNameTable")]
+    partial class AddedCharacteristicNameTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -39,7 +41,7 @@ namespace HardwareStore.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories", (string)null);
+                    b.ToTable("Categories");
 
                     b.HasComment("category table");
                 });
@@ -73,7 +75,7 @@ namespace HardwareStore.Infrastructure.Data.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Characteristics", (string)null);
+                    b.ToTable("Characteristics");
 
                     b.HasComment("characteristic table");
                 });
@@ -95,7 +97,7 @@ namespace HardwareStore.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("CharacteristicsNames", (string)null);
+                    b.ToTable("CharacteristicsNames");
 
                     b.HasComment("characteristic name table");
                 });
@@ -184,7 +186,7 @@ namespace HardwareStore.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Manufacturers", (string)null);
+                    b.ToTable("Manufacturers");
 
                     b.HasComment("manufacturer table");
                 });
@@ -239,7 +241,7 @@ namespace HardwareStore.Infrastructure.Data.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
 
                     b.HasComment("order table");
                 });
@@ -305,7 +307,7 @@ namespace HardwareStore.Infrastructure.Data.Migrations
 
                     b.HasIndex("ManufacturerId");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
 
                     b.HasComment("product table");
                 });

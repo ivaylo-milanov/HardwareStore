@@ -5,7 +5,6 @@
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Caching.Memory;
 
-    [Route("/video-cards")]
     public class VideoCardsController : Controller
     {
         private readonly IMemoryCache memoryCache;

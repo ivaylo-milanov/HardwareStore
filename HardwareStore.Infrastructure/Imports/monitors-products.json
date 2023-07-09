@@ -36,7 +36,7 @@
       },
       {
         "name": "Ports",
-        "value": "HDMI"
+        "value": "D-Sub (VGA), 3.5mm Audio jack, DVI, HDMI"
       },
       {
         "name": "Posture adjustment",
@@ -93,7 +93,7 @@
       },
       {
         "name": "Ports",
-        "value": "HDMI"
+        "value": "3.5mm Audio jack, HDMI"
       },
       {
         "name": "Technology",
@@ -154,7 +154,7 @@
       },
       {
         "name": "Ports",
-        "value": "HDMI"
+        "value": "D-Sub (VGA), HDMI"
       },
       {
         "name": "Technology",
@@ -215,7 +215,7 @@
       },
       {
         "name": "Ports",
-        "value": "Display Port"
+        "value": "3.5mm Audio jack, HDMI, Display Port"
       },
       {
         "name": "Technology",
@@ -276,7 +276,7 @@
       },
       {
         "name": "Ports",
-        "value": "Display Port"
+        "value": "D-Sub (VGA), 3.5mm Audio jack, HDMI, Display Port"
       },
       {
         "name": "Technology",
@@ -337,7 +337,7 @@
       },
       {
         "name": "Ports",
-        "value": "Display Port"
+        "value": "3.5mm Audio jack, HDMI, Display Port"
       },
       {
         "name": "Posture adjustment",
@@ -394,7 +394,7 @@
       },
       {
         "name": "Ports",
-        "value": "Display Port"
+        "value": "3.5mm Audio jack, HDMI, Display Port, USB-A, USB-C"
       },
       {
         "name": "Posture adjustment",
@@ -415,7 +415,7 @@
     ]
   },
   {
-    "name": "Display Port",
+    "name": "ASROCK PG32QF2B",
     "price": 748.99,
     "quantity": 10,
     "description": "Gaming Monitor ASRock PG32QF2B 32 QHD (2560X1440) Flat VA, 165Hz, 1ms , 92% DCI-P3 , 2xHDMI, 1xDP, WiFi Antena, Freesync Premium",
@@ -451,7 +451,7 @@
       },
       {
         "name": "Ports",
-        "value": "Display Port"
+        "value": "3.5mm Audio jack, HDMI, Display Port"
       },
       {
         "name": "Technology",
@@ -512,7 +512,7 @@
       },
       {
         "name": "Ports",
-        "value": "Display Port"
+        "value": "3.5mm Audio jack, HDMI, Display Port, USB-A, USB-C"
       },
       {
         "name": "Posture adjustment",
@@ -569,7 +569,7 @@
       },
       {
         "name": "Ports",
-        "value": "Display Port"
+        "value": "HDMI, Display Port"
       },
       {
         "name": "Technology",
@@ -630,7 +630,7 @@
       },
       {
         "name": "Ports",
-        "value": "HDMI"
+        "value": "3.5mm Audio jack, DVI, HDMI, Display Port, USB-A, Mini Display Port"
       },
       {
         "name": "Posture adjustment",
@@ -687,7 +687,7 @@
       },
       {
         "name": "Ports",
-        "value": "HDMI"
+        "value": "3.5mm Audio jack, DVI, HDMI, Display Port, USB-A"
       },
       {
         "name": "Posture adjustment",
@@ -744,7 +744,7 @@
       },
       {
         "name": "Ports",
-        "value": "HDMI"
+        "value": "D-Sub (VGA), 3.5mm Audio jack, DVI, HDMI, Display Port, USB-A"
       },
       {
         "name": "Posture adjustment",
@@ -801,7 +801,7 @@
       },
       {
         "name": "Ports",
-        "value": "HDMI"
+        "value": "USB-C, Mini HDMI"
       },
       {
         "name": "Posture adjustment",
@@ -858,7 +858,7 @@
       },
       {
         "name": "Ports",
-        "value": "Display Port"
+        "value": "3.5mm Audio jack, HDMI, Display Port"
       },
       {
         "name": "Posture adjustment",
@@ -915,7 +915,7 @@
       },
       {
         "name": "Ports",
-        "value": "Display Port"
+        "value": "3.5mm Audio jack, HDMI, Display Port, USB-A"
       },
       {
         "name": "Technology",
