@@ -32,6 +32,6 @@
         public string Category { get; set; } = null!;
 
         [JsonProperty("characteristics")]
-        public IEnumerable<ProductAtrributeDto> Characteristics { get; set; } = null!;
+        public IEnumerable<CharacteristicDto> Characteristics { get; set; } = null!;
     }
 }
