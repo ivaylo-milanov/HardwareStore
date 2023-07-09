@@ -2,7 +2,7 @@
 {
     using Newtonsoft.Json;
 
-    public class ProductAtrributeDto
+    public class CharacteristicDto
     {
         [JsonProperty("name")]
         public string Name { get; set; } = null!;
