@@ -1,0 +1,722 @@
+[
+  {
+    "name": "SEASONIC PRIME TX-1600 1600W",
+    "price": 1024.78,
+    "quantity": 10,
+    "description": "Power Supply Seasonic PRIME TX-1600, 1600W, 80+ Titanium PCIe Gen 5, Full Modular",
+    "warranty": 144,
+    "manufacturer": "Seasonic",
+    "model": "PRIME TX-1600",
+    "referenceNumber": "SEASONIC-PRIME-TX-1600",
+    "category": "Power Supply",
+    "characteristics": [
+      {
+        "name": "Power",
+        "value": "1600W"
+      },
+      {
+        "name": "Certificate",
+        "value": "80+ Titanium"
+      },
+      {
+        "name": "Efficiency",
+        "value": "94 %"
+      },
+      {
+        "name": "Type",
+        "value": "Modular"
+      },
+      {
+        "name": "Form Factor",
+        "value": "ATX"
+      },
+      {
+        "name": "PCIe Gen5",
+        "value": "Ready (with adapter)"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      },
+      {
+        "name": "Color",
+        "value": "Black"
+      }
+    ]
+  },
+  {
+    "name": "GIGABYTE AORUS P1200W 80+ PLATINUM",
+    "price": 739.18,
+    "quantity": 10,
+    "description": "Power supply Gigabyte AORUS P1200W 80+ Platinum",
+    "warranty": 60,
+    "manufacturer": "Gigabyte",
+    "model": "AORUS P1200W 80+ Platinum",
+    "referenceNumber": "GIGABYTE-P1200-PLATINUM",
+    "category": "Power Supply",
+    "characteristics": [
+      {
+        "name": "Power",
+        "value": "1200W"
+      },
+      {
+        "name": "Certificate",
+        "value": "80+ Platinum"
+      },
+      {
+        "name": "Efficiency",
+        "value": "92 %"
+      },
+      {
+        "name": "Type",
+        "value": "Modular"
+      },
+      {
+        "name": "Form Factor",
+        "value": "ATX"
+      },
+      {
+        "name": "PCIe Gen5",
+        "value": "No"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      },
+      {
+        "name": "Color",
+        "value": "Black"
+      }
+    ]
+  },
+  {
+    "name": "ASUS ROG-STRIX-850G-WHITE",
+    "price": 421.08,
+    "quantity": 10,
+    "description": "Power supply ASUS ROG STRIX 850W White Edition 80+ Gold Fully Modular",
+    "warranty": 120,
+    "manufacturer": "ASUS",
+    "model": "ROG STRIX 850W White Edition 80+ Gold",
+    "referenceNumber": "ASUS-ROG-STRIX-850G-WHITE",
+    "category": "Power Supply",
+    "characteristics": [
+      {
+        "name": "Power",
+        "value": "850W"
+      },
+      {
+        "name": "Certificate",
+        "value": "80+ Gold"
+      },
+      {
+        "name": "Efficiency",
+        "value": "85 %"
+      },
+      {
+        "name": "Type",
+        "value": "Modular"
+      },
+      {
+        "name": "Form Factor",
+        "value": "ATX"
+      },
+      {
+        "name": "PCIe Gen5",
+        "value": "No"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      },
+      {
+        "name": "Color",
+        "value": "White"
+      }
+    ]
+  },
+  {
+    "name": "KOLINK CORE 600W",
+    "price": 88.57,
+    "quantity": 10,
+    "description": "Power supply Kolink Core 600W 80 PLUS",
+    "warranty": 24,
+    "manufacturer": "Kolink",
+    "model": "Core 600W 80 PLUS",
+    "referenceNumber": "KOLINK-CORE-600",
+    "category": "Power Supply",
+    "characteristics": [
+      {
+        "name": "Power",
+        "value": "600W"
+      },
+      {
+        "name": "Certificate",
+        "value": "80+"
+      },
+      {
+        "name": "Efficiency",
+        "value": "82 %"
+      },
+      {
+        "name": "Type",
+        "value": "Non-modular"
+      },
+      {
+        "name": "Form Factor",
+        "value": "ATX"
+      },
+      {
+        "name": "PCIe Gen5",
+        "value": "No"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      },
+      {
+        "name": "Color",
+        "value": "Black"
+      }
+    ]
+  },
+  {
+    "name": "FSP GROUP HYPER K PRO 500W",
+    "price": 109.48,
+    "quantity": 10,
+    "description": "The new HYPER K PRO PSUs fully comply with ATX12 v2.52 standard and latest safety 62368 regulation as well, and features with all black and high-grade ribbon cables, will give your PC a polished look. The HYPER K PRO series is characterized by a powerful single +12V rail design that continuously delivers maximum performance for the most demanding components, while FSP's custom DC-DC design provides safety and power efficiency.",
+    "warranty": 60,
+    "manufacturer": "FSP",
+    "model": "Group Hyper K PRO 500",
+    "referenceNumber": "FSP-GROUP-HYPER-K-PRO-500",
+    "category": "Power Supply",
+    "characteristics": [
+      {
+        "name": "Power",
+        "value": "500W"
+      },
+      {
+        "name": "Certificate",
+        "value": "80+"
+      },
+      {
+        "name": "Efficiency",
+        "value": "85 %"
+      },
+      {
+        "name": "Type",
+        "value": "Non-modular"
+      },
+      {
+        "name": "Form Factor",
+        "value": "ATX"
+      },
+      {
+        "name": "PCIe Gen5",
+        "value": "No"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      },
+      {
+        "name": "Color",
+        "value": "Black"
+      }
+    ]
+  },
+  {
+    "name": "COOLER MASTER ELITE NEX WHITE 600W",
+    "price": 124.99,
+    "quantity": 10,
+    "description": "Power supply Cooler Master Elite Nex 600W 230V, 80+ White",
+    "warranty": 36,
+    "manufacturer": "Cooler Master",
+    "model": "Elite Nex 600W 230V",
+    "referenceNumber": "COOLER-MASTER-ELITE-NEX-WHITE-600",
+    "category": "Power Supply",
+    "characteristics": [
+      {
+        "name": "Power",
+        "value": "600W"
+      },
+      {
+        "name": "Certificate",
+        "value": "80+"
+      },
+      {
+        "name": "Efficiency",
+        "value": "82 %"
+      },
+      {
+        "name": "Type",
+        "value": "Non-modular"
+      },
+      {
+        "name": "Form Factor",
+        "value": "ATX"
+      },
+      {
+        "name": "PCIe Gen5",
+        "value": "No"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      },
+      {
+        "name": "Color",
+        "value": "Black"
+      }
+    ]
+  },
+  {
+    "name": "CORSAIR CV650W",
+    "price": 155.41,
+    "quantity": 10,
+    "description": "Power supply Corsair CV650, 80+ BRONZE 650W",
+    "warranty": 36,
+    "manufacturer": "Corsair",
+    "model": "CV650",
+    "referenceNumber": "CORSAIR-CV650W-650",
+    "category": "Power Supply",
+    "characteristics": [
+      {
+        "name": "Power",
+        "value": "650W"
+      },
+      {
+        "name": "Certificate",
+        "value": "80+ Bronze"
+      },
+      {
+        "name": "Efficiency",
+        "value": "85 %"
+      },
+      {
+        "name": "Type",
+        "value": "Non-modular"
+      },
+      {
+        "name": "Form Factor",
+        "value": "ATX"
+      },
+      {
+        "name": "PCIe Gen5",
+        "value": "No"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      },
+      {
+        "name": "Color",
+        "value": "Black"
+      }
+    ]
+  },
+  {
+    "name": "FSP HYDRO K PRO 750W",
+    "price": 158.60,
+    "quantity": 10,
+    "description": "Power supply FSP Group Hydro K PRO 600W 80+ Bronze",
+    "warranty": 120,
+    "manufacturer": "FSP",
+    "model": "Group Hydro K PRO 750",
+    "referenceNumber": "FS0-FROUP-HYPERK-PRO-750",
+    "category": "Power Supply",
+    "characteristics": [
+      {
+        "name": "Power",
+        "value": "750W"
+      },
+      {
+        "name": "Certificate",
+        "value": "80+ Bronze"
+      },
+      {
+        "name": "Efficiency",
+        "value": "85 %"
+      },
+      {
+        "name": "Type",
+        "value": "Non-modular"
+      },
+      {
+        "name": "Form Factor",
+        "value": "ATX"
+      },
+      {
+        "name": "PCIe Gen5",
+        "value": "No"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      },
+      {
+        "name": "Color",
+        "value": "Black"
+      }
+    ]
+  },
+  {
+    "name": "SEASONIC FOCUS PLUS 650 GOLD 650W",
+    "price": 225.16,
+    "quantity": 10,
+    "description": "Power supply Seasonic SSR-650FX, 650W, 80+ GOLD",
+    "warranty": 120,
+    "manufacturer": "Seasonic",
+    "model": "SSR-650FX",
+    "referenceNumber": "SEASONIC-FOCUS-PLUS-650-GOLD-650W",
+    "category": "Power Supply",
+    "characteristics": [
+      {
+        "name": "Power",
+        "value": "650W"
+      },
+      {
+        "name": "Certificate",
+        "value": "80+ Gold"
+      },
+      {
+        "name": "Efficiency",
+        "value": "90 %"
+      },
+      {
+        "name": "Type",
+        "value": "Modular"
+      },
+      {
+        "name": "Form Factor",
+        "value": "ATX"
+      },
+      {
+        "name": "PCIe Gen5",
+        "value": "No"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      },
+      {
+        "name": "Color",
+        "value": "Black"
+      }
+    ]
+  },
+  {
+    "name": "SEASONIC FOCUS PLUS 850W GOLD",
+    "price": 343.62,
+    "quantity": 10,
+    "description": "Power supply Seasonic SSR-850FX, 850W, 80+ GOLD",
+    "warranty": 120,
+    "manufacturer": "Seasonic",
+    "model": "SSR-850FX",
+    "referenceNumber": "SEASONIC-FOCUS-PLUS-GOLD-850",
+    "category": "Power Supply",
+    "characteristics": [
+      {
+        "name": "Power",
+        "value": "850W"
+      },
+      {
+        "name": "Certificate",
+        "value": "80+ Gold"
+      },
+      {
+        "name": "Efficiency",
+        "value": "87 %"
+      },
+      {
+        "name": "Type",
+        "value": "Modular"
+      },
+      {
+        "name": "Form Factor",
+        "value": "ATX"
+      },
+      {
+        "name": "PCIe Gen5",
+        "value": "No"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      },
+      {
+        "name": "Color",
+        "value": "Black"
+      }
+    ]
+  },
+  {
+    "name": "ASUS TUF GAMING 850W GOLD",
+    "price": 323.29,
+    "quantity": 10,
+    "description": "Power supply ASUS TUF Gaming 850W, 80+ Gold PCIe 5.0, Fully Modular",
+    "warranty": 120,
+    "manufacturer": "ASUS",
+    "model": "TUF Gaming 850W",
+    "referenceNumber": "ASUS-TUF-GAMING-GOLD-850",
+    "category": "Power Supply",
+    "characteristics": [
+      {
+        "name": "Power",
+        "value": "850W"
+      },
+      {
+        "name": "Certificate",
+        "value": "80+ Gold"
+      },
+      {
+        "name": "Efficiency",
+        "value": "92 %"
+      },
+      {
+        "name": "Type",
+        "value": "Modular"
+      },
+      {
+        "name": "Form Factor",
+        "value": "ATX"
+      },
+      {
+        "name": "PCIe Gen5",
+        "value": "Yes"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      },
+      {
+        "name": "Color",
+        "value": "Black"
+      }
+    ]
+  },
+  {
+    "name": "THERMALTAKE THOUGHPOWER GF2 ARGB 750W",
+    "price": 273.90,
+    "quantity": 10,
+    "description": "Power supply Thermaltake Thoughpower GF2 ARGB 750W (230V) 80+ Gold",
+    "warranty": 60,
+    "manufacturer": "Thermaltake",
+    "model": "Thoughpower GF2 ARGB 750W (230V) 80+ Gold",
+    "referenceNumber": "THERMALTAKE-THOUGHPOWER-GF2-GOLD-750",
+    "category": "Power Supply",
+    "characteristics": [
+      {
+        "name": "Power",
+        "value": "750W"
+      },
+      {
+        "name": "Certificate",
+        "value": "80+ Gold"
+      },
+      {
+        "name": "Efficiency",
+        "value": "90 %"
+      },
+      {
+        "name": "Type",
+        "value": "Modular"
+      },
+      {
+        "name": "Form Factor",
+        "value": "ATX"
+      },
+      {
+        "name": "PCIe Gen5",
+        "value": "No"
+      },
+      {
+        "name": "Backlight",
+        "value": "Yes"
+      },
+      {
+        "name": "Color",
+        "value": "Black"
+      }
+    ]
+  },
+  {
+    "name": "NZXT C650 BRONZE",
+    "price": 181.15,
+    "quantity": 10,
+    "description": "Power supply NZXT C650, 650W 80+ Bronze Semi Modular",
+    "warranty": 120,
+    "manufacturer": "NZXT",
+    "model": "C650",
+    "referenceNumber": "NZXT-C650-650",
+    "category": "Power Supply",
+    "characteristics": [
+      {
+        "name": "Power",
+        "value": "650W"
+      },
+      {
+        "name": "Certificate",
+        "value": "80+ Bronze"
+      },
+      {
+        "name": "Efficiency",
+        "value": "87 %"
+      },
+      {
+        "name": "Type",
+        "value": "Semi-modular"
+      },
+      {
+        "name": "Form Factor",
+        "value": "ATX"
+      },
+      {
+        "name": "PCIe Gen5",
+        "value": "No"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      },
+      {
+        "name": "Color",
+        "value": "Black"
+      }
+    ]
+  },
+  {
+    "name": "BE QUIET PURE POWER 12 650W",
+    "price": 236.00,
+    "quantity": 10,
+    "description": "Pure Power 11 FM 650W is certified 80 PLUS Gold with an efficiency rating of up to 93.3% – a truly outstanding level for this class of PSU. The most compelling benefit: lower power consumption and consequently lower costs, and cooler, quieter operation.",
+    "warranty": 60,
+    "manufacturer": "be quiet!",
+    "model": "Pure Power 12",
+    "referenceNumber": "BE-QUIET-PURE-POWER-650",
+    "category": "Power Supply",
+    "characteristics": [
+      {
+        "name": "Power",
+        "value": "650W"
+      },
+      {
+        "name": "Certificate",
+        "value": "80+ Gold"
+      },
+      {
+        "name": "Efficiency",
+        "value": "92.7 %"
+      },
+      {
+        "name": "Type",
+        "value": "Modular"
+      },
+      {
+        "name": "Form Factor",
+        "value": "ATX"
+      },
+      {
+        "name": "PCIe Gen5",
+        "value": "No"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      },
+      {
+        "name": "Color",
+        "value": "Black"
+      }
+    ]
+  },
+  {
+    "name": "BE QUIET SYSTEM POWER 10 750W",
+    "price": 165.00,
+    "quantity": 10,
+    "description": "System Power 10 750W has been built with price-conscious users in mind that do not want to dispense on reliability and quietness. Elaborated features such as a temperature-controlled fan and a remarkably low stand-by-drain underline the value System Power 10 750W offers even at entry-level. ",
+    "warranty": 60,
+    "manufacturer": "be quiet!",
+    "model": "System Power 10 750W",
+    "referenceNumber": "BE-QUIET-SYSTEM-POWER-10-750",
+    "category": "Power Supply",
+    "characteristics": [
+      {
+        "name": "Power",
+        "value": "750W"
+      },
+      {
+        "name": "Certificate",
+        "value": "80+ Bronze"
+      },
+      {
+        "name": "Efficiency",
+        "value": "89 %"
+      },
+      {
+        "name": "Type",
+        "value": "Semi-modular"
+      },
+      {
+        "name": "Form Factor",
+        "value": "ATX"
+      },
+      {
+        "name": "PCIe Gen5",
+        "value": "No"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      },
+      {
+        "name": "Color",
+        "value": "Black"
+      }
+    ]
+  },
+  {
+    "name": "COOLER MASTER V850 GOLD - V2 (WHITE EDITION) 850W",
+    "price": 319.00,
+    "quantity": 10,
+    "description": "Power supply Cooler Master V850 Gold - V2 (White Edition), Full Modular",
+    "warranty": 120,
+    "manufacturer": "Cooler Master",
+    "model": "V850 Gold - V2 (White Edition)",
+    "referenceNumber": "COOLER-MASTER-V850-WHITE-GOLD-850",
+    "category": "Power Supply",
+    "characteristics": [
+      {
+        "name": "Power",
+        "value": "850W"
+      },
+      {
+        "name": "Certificate",
+        "value": "80+ Gold"
+      },
+      {
+        "name": "Efficiency",
+        "value": "90 %"
+      },
+      {
+        "name": "Type",
+        "value": "Modular"
+      },
+      {
+        "name": "Form Factor",
+        "value": "ATX"
+      },
+      {
+        "name": "PCIe Gen5",
+        "value": "No"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      },
+      {
+        "name": "Color",
+        "value": "White"
+      }
+    ]
+  }
+]

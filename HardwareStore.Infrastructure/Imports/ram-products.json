@@ -1,0 +1,786 @@
+[
+  {
+    "name": "CORSAIR VENGEANCE LPX 16GB (2X8GB) 3200MHZ",
+    "price": 100.24,
+    "quantity": 10,
+    "description": "Memory Corsair Vengeance LPX White 16GB(2x8GB) DDR4 PC4-25600 3200MHz CL16 CMK16GX4M2B3200C16W",
+    "warranty": 99,
+    "manufacturer": "Corsair",
+    "model": "Vengeance LPX White 16GB(2x8GB) DDR4",
+    "referenceNumber": "CORSAIR-VENGEANCE-16-3200",
+    "category": "Ram",
+    "characteristics": [
+      {
+        "name": "Capacity",
+        "value": "16"
+      },
+      {
+        "name": "Type",
+        "value": "DDR4"
+      },
+      {
+        "name": "Frequency",
+        "value": "3200"
+      },
+      {
+        "name": "Timing",
+        "value": "CL 16"
+      },
+      {
+        "name": "Purpose",
+        "value": "Desktop"
+      },
+      {
+        "name": "Heatsink",
+        "value": "Yes"
+      },
+      {
+        "name": "Color",
+        "value": "White"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      },
+      {
+        "name": "Kit",
+        "value": "2"
+      }
+    ]
+  },
+  {
+    "name": "CORSAIR VENGEANCE RS RGB BLACK 32GB (2X16GB) 3200MHZ",
+    "price": 187.50,
+    "quantity": 10,
+    "description": "Memory Corsair Vengeance RS RGB Black 32GB(2x16GB) DDR4 PC4-25600 3200MHz CL16 CMG32GX4M2E3200C16",
+    "warranty": 99,
+    "manufacturer": "Corsair",
+    "model": "Vengeance RS RGB Black 32GB(2x16GB) DDR4",
+    "referenceNumber": "CORSAIR-VEMGEANCE-32-3200",
+    "category": "Ram",
+    "characteristics": [
+      {
+        "name": "Capacity",
+        "value": "32"
+      },
+      {
+        "name": "Type",
+        "value": "DDR4"
+      },
+      {
+        "name": "Frequency",
+        "value": "3200"
+      },
+      {
+        "name": "Timing",
+        "value": "CL 16"
+      },
+      {
+        "name": "Purpose",
+        "value": "Desktop"
+      },
+      {
+        "name": "Heatsink",
+        "value": "Yes"
+      },
+      {
+        "name": "Color",
+        "value": "Black"
+      },
+      {
+        "name": "Backlight",
+        "value": "Yes"
+      },
+      {
+        "name": "Kit",
+        "value": "2"
+      }
+    ]
+  },
+  {
+    "name": "ADATA BLACK 8GB 4800MHZ",
+    "price": 81.60,
+    "quantity": 10,
+    "description": "Memory ADATA Black 8GB DDR5 PC5-38400 4800MHz CL40 AD5U48008G-S",
+    "warranty": 99,
+    "manufacturer": "ADATA",
+    "model": "Black 8GB DDR5",
+    "referenceNumber": "ADATA-BLACK-8-4800",
+    "category": "Ram",
+    "characteristics": [
+      {
+        "name": "Capacity",
+        "value": "8"
+      },
+      {
+        "name": "Type",
+        "value": "DDR5"
+      },
+      {
+        "name": "Frequency",
+        "value": "4800"
+      },
+      {
+        "name": "Timing",
+        "value": "CL 40"
+      },
+      {
+        "name": "Purpose",
+        "value": "Desktop"
+      },
+      {
+        "name": "Heatsink",
+        "value": "No"
+      },
+      {
+        "name": "Color",
+        "value": "Black"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      },
+      {
+        "name": "Kit",
+        "value": "No"
+      }
+    ]
+  },
+  {
+    "name": "ADATA XPG LANCER BLACK RGB 16GB 5200MHZ",
+    "price": 114.00,
+    "quantity": 10,
+    "description": "Memory ADATA XPG Lancer Black RGB 16GB DDR5 PC5-41600 5200MHz CL38 AX5U5200C3816G-CLABK",
+    "warranty": 99,
+    "manufacturer": "ADATA",
+    "model": "XPG Lancer Black RGB 16GB DDR5",
+    "referenceNumber": "ADATA-XPG-LANCER-BLACK-16-5200",
+    "category": "Ram",
+    "characteristics": [
+      {
+        "name": "Capacity",
+        "value": "16"
+      },
+      {
+        "name": "Type",
+        "value": "DDR5"
+      },
+      {
+        "name": "Frequency",
+        "value": "5200"
+      },
+      {
+        "name": "Timing",
+        "value": "CL 38"
+      },
+      {
+        "name": "Purpose",
+        "value": "Desktop"
+      },
+      {
+        "name": "Heatsink",
+        "value": "Yes"
+      },
+      {
+        "name": "Color",
+        "value": "Black"
+      },
+      {
+        "name": "Backlight",
+        "value": "Yes"
+      },
+      {
+        "name": "Kit",
+        "value": "No"
+      }
+    ]
+  },
+  {
+    "name": "KINGSTON FURY BEAST BLACK 32GB (4X8GB) 3600MHZ",
+    "price": 199.09,
+    "quantity": 10,
+    "description": "Memory Kingston FURY Beast Black 32GB(4x8GB) DDR4 PC4-28800 3600MHz CL17 KF436C17BBK4/32",
+    "warranty": 99,
+    "manufacturer": "Kingston",
+    "model": "FURY Beast Black 32GB(4x8GB) DDR4",
+    "referenceNumber": "KINGSTON-FURY-BEAST-BLACK-32-3600",
+    "category": "Ram",
+    "characteristics": [
+      {
+        "name": "Capacity",
+        "value": "32"
+      },
+      {
+        "name": "Type",
+        "value": "DDR4"
+      },
+      {
+        "name": "Frequency",
+        "value": "3600"
+      },
+      {
+        "name": "Timing",
+        "value": "CL 17"
+      },
+      {
+        "name": "Purpose",
+        "value": "Desktop"
+      },
+      {
+        "name": "Heatsink",
+        "value": "Yes"
+      },
+      {
+        "name": "Color",
+        "value": "Black"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      },
+      {
+        "name": "Kit",
+        "value": "4"
+      }
+    ]
+  },
+  {
+    "name": "KINGSTON FURY RENEGADE SILVER RGB 32GB 6000MHZ",
+    "price": 278.44,
+    "quantity": 10,
+    "description": "Memory Kingston Fury Renegade Black RGB 32GB DDR5 PC5-48000 6000MHz CL32 KF560C32RSA-32",
+    "warranty": 99,
+    "manufacturer": "Kingston",
+    "model": "Fury Renegade Black RGB 32GB DDR5",
+    "referenceNumber": "KINGSTON-FURY-RENEGADE-SILVER-RGB-32-6000",
+    "category": "Ram",
+    "characteristics": [
+      {
+        "name": "Capacity",
+        "value": "32"
+      },
+      {
+        "name": "Type",
+        "value": "DDR5"
+      },
+      {
+        "name": "Frequency",
+        "value": "6000"
+      },
+      {
+        "name": "Timing",
+        "value": "CL 32"
+      },
+      {
+        "name": "Purpose",
+        "value": "Desktop"
+      },
+      {
+        "name": "Heatsink",
+        "value": "Yes"
+      },
+      {
+        "name": "Color",
+        "value": "Black, Grey"
+      },
+      {
+        "name": "Backlight",
+        "value": "Yes"
+      },
+      {
+        "name": "Kit",
+        "value": "No"
+      }
+    ]
+  },
+  {
+    "name": "G.SKILL TRIDENT Z RGB 16GB (2X8GB) 3200MHZ",
+    "price": 137.18,
+    "quantity": 10,
+    "description": "Memory G.SKILL Trident Z RGB 16GB(2x8GB) DDR4 PC4-25600 3200MHz CL16 F4-3200C16D-16GTZR",
+    "warranty": 99,
+    "manufacturer": "G.SKILL",
+    "model": "Trident Z RGB 16GB(2x8GB) DDR4",
+    "referenceNumber": "GKILL-TRIDENT-Z-RGB-16-3200",
+    "category": "Ram",
+    "characteristics": [
+      {
+        "name": "Capacity",
+        "value": "16"
+      },
+      {
+        "name": "Type",
+        "value": "DDR4"
+      },
+      {
+        "name": "Frequency",
+        "value": "3200"
+      },
+      {
+        "name": "Timing",
+        "value": "CL 16"
+      },
+      {
+        "name": "Purpose",
+        "value": "Desktop"
+      },
+      {
+        "name": "Heatsink",
+        "value": "Yes"
+      },
+      {
+        "name": "Color",
+        "value": "Black"
+      },
+      {
+        "name": "Backlight",
+        "value": "Yes"
+      },
+      {
+        "name": "Kit",
+        "value": "2"
+      }
+    ]
+  },
+  {
+    "name": "G.SKILL TRIDENT Z ROYAL 16GB (2X8GB) 4000MHZ",
+    "price": 321.58,
+    "quantity": 10,
+    "description": "Memory G.SKILL Trident Z Royal 16GB(2x8GB) DDR4 PC4-32000 4000MHz CL16 F4-4000C16D-16GTRGA",
+    "warranty": 99,
+    "manufacturer": "G.SKILL",
+    "model": "Trident Z Royal 16GB(2x8GB) DDR4",
+    "referenceNumber": "GSKILL-TRIDENT-Z-ROYAL-16-4000",
+    "category": "Ram",
+    "characteristics": [
+      {
+        "name": "Capacity",
+        "value": "16"
+      },
+      {
+        "name": "Type",
+        "value": "DDR4"
+      },
+      {
+        "name": "Frequency",
+        "value": "4000"
+      },
+      {
+        "name": "Timing",
+        "value": "CL 16"
+      },
+      {
+        "name": "Purpose",
+        "value": "Desktop"
+      },
+      {
+        "name": "Heatsink",
+        "value": "Yes"
+      },
+      {
+        "name": "Color",
+        "value": "Gold"
+      },
+      {
+        "name": "Backlight",
+        "value": "Yes"
+      },
+      {
+        "name": "Kit",
+        "value": "2"
+      }
+    ]
+  },
+  {
+    "name": "AORUS RGB MEMORY DDR4 16GB (2X8GB) 3733MHZ",
+    "price": 119.32,
+    "quantity": 10,
+    "description": "Memory Gigabyte AORUS RGB 16GB DDR4 (2x8GB) 3733MHz CL18-19-19-39 1.4v with Demo Kit",
+    "warranty": 99,
+    "manufacturer": "Gigabyte",
+    "model": "AORUS RGB 16GB DDR4 (2x8GB) 3733MHz",
+    "referenceNumber": "GIGABYTE-AORUS-DDR4-16-3733",
+    "category": "Ram",
+    "characteristics": [
+      {
+        "name": "Capacity",
+        "value": "16"
+      },
+      {
+        "name": "Type",
+        "value": "DDR4"
+      },
+      {
+        "name": "Frequency",
+        "value": "3733"
+      },
+      {
+        "name": "Timing",
+        "value": "CL 18"
+      },
+      {
+        "name": "Purpose",
+        "value": "Desktop"
+      },
+      {
+        "name": "Heatsink",
+        "value": "Yes"
+      },
+      {
+        "name": "Color",
+        "value": "Black"
+      },
+      {
+        "name": "Backlight",
+        "value": "Yes"
+      },
+      {
+        "name": "Kit",
+        "value": "2"
+      }
+    ]
+  },
+  {
+    "name": "AORUS RGB MEMORY 16GB 3600 MHZ",
+    "price": 250.00,
+    "quantity": 10,
+    "description": "Memory Gigabyte AORUS RGB 16GB DDR4 (2x8GB) 3600MHz CL18-19-19-39 1.35v",
+    "warranty": 99,
+    "manufacturer": "Gigabyte",
+    "model": "AORUS RGB 16GB DDR4 (2x8GB) 3600MHz",
+    "referenceNumber": "GIGABYTE-AORUS-DDR4-16-3600",
+    "category": "Ram",
+    "characteristics": [
+      {
+        "name": "Capacity",
+        "value": "16"
+      },
+      {
+        "name": "Type",
+        "value": "DDR4"
+      },
+      {
+        "name": "Frequency",
+        "value": "3600"
+      },
+      {
+        "name": "Timing",
+        "value": "CL 18"
+      },
+      {
+        "name": "Purpose",
+        "value": "Desktop"
+      },
+      {
+        "name": "Heatsink",
+        "value": "Yes"
+      },
+      {
+        "name": "Color",
+        "value": "Black"
+      },
+      {
+        "name": "Backlight",
+        "value": "Yes"
+      },
+      {
+        "name": "Kit",
+        "value": "No"
+      }
+    ]
+  },
+  {
+    "name": "T-FORCE VULCAN TUF 16GB (2X8GB) 3200 MHZ",
+    "price": 86.24,
+    "quantity": 10,
+    "description": "Memory T-Force Vulcan TUF 16GB (2x8GB) 1.35V",
+    "warranty": 99,
+    "manufacturer": "Team Group",
+    "model": "T-Force Vulcan TUF 16GB",
+    "referenceNumber": "TEAM-GROUP-T-FORCE-VULCAN-TUF-16-3200",
+    "category": "Ram",
+    "characteristics": [
+      {
+        "name": "Capacity",
+        "value": "16"
+      },
+      {
+        "name": "Type",
+        "value": "DDR4"
+      },
+      {
+        "name": "Frequency",
+        "value": "3200"
+      },
+      {
+        "name": "Timing",
+        "value": "CL 16"
+      },
+      {
+        "name": "Purpose",
+        "value": "Desktop"
+      },
+      {
+        "name": "Heatsink",
+        "value": "Yes"
+      },
+      {
+        "name": "Color",
+        "value": "Black, Yellow"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      },
+      {
+        "name": "Kit",
+        "value": "2"
+      }
+    ]
+  },
+  {
+    "name": "T-FORCE XTREEM ARGB WHITE 32GB (2X16GB) 3600MHZ",
+    "price": 250.01,
+    "quantity": 10,
+    "description": "Memory Team Group T-Force XTREEM WHITE, ARGB, DDR4 32GB (2x16GB), 3600MHz, CL18",
+    "warranty": 99,
+    "manufacturer": "Team Group",
+    "model": "T-Force XTREEM WHITE",
+    "referenceNumber": "TEAM-GROUP-T-FORCE-XTREEM-ARGB-WHITE-32-3600",
+    "category": "Ram",
+    "characteristics": [
+      {
+        "name": "Capacity",
+        "value": "32"
+      },
+      {
+        "name": "Type",
+        "value": "DDR4"
+      },
+      {
+        "name": "Frequency",
+        "value": "3600"
+      },
+      {
+        "name": "Timing",
+        "value": "CL 18"
+      },
+      {
+        "name": "Purpose",
+        "value": "Desktop"
+      },
+      {
+        "name": "Heatsink",
+        "value": "Yes"
+      },
+      {
+        "name": "Color",
+        "value": "White"
+      },
+      {
+        "name": "Backlight",
+        "value": "Yes"
+      },
+      {
+        "name": "Kit",
+        "value": "2"
+      }
+    ]
+  },
+  {
+    "name": "SILICON POWER XPOWER ZENITH 8GB 3200MHZ",
+    "price": 38.86,
+    "quantity": 10,
+    "description": "Memory Silicon Power XPOWER Zenith 8GB DDR4 PC4-25600 UDIMM 3200MHz CL16 SP008GXLZU320BSC",
+    "warranty": 99,
+    "manufacturer": "Silicon Power",
+    "model": "XPOWER Zenith 8GB DDR4",
+    "referenceNumber": "SILICON-POWER-XPOWER-ZENITH-8-3200",
+    "category": "Ram",
+    "characteristics": [
+      {
+        "name": "Capacity",
+        "value": "8"
+      },
+      {
+        "name": "Type",
+        "value": "DDR4"
+      },
+      {
+        "name": "Frequency",
+        "value": "3200"
+      },
+      {
+        "name": "Timing",
+        "value": "CL 16"
+      },
+      {
+        "name": "Purpose",
+        "value": "Desktop"
+      },
+      {
+        "name": "Heatsink",
+        "value": "Yes"
+      },
+      {
+        "name": "Color",
+        "value": "Grey"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      },
+      {
+        "name": "Kit",
+        "value": "No"
+      }
+    ]
+  },
+  {
+    "name": "SILICON POWER 16GB(2X8GB) 3200MHZ",
+    "price": 120.44,
+    "quantity": 10,
+    "description": "Memory Silicon Power 16GB(2x8GB) DDR4 PC4-25600 3200MHz CL22 SP016GBLFU320B22",
+    "warranty": 99,
+    "manufacturer": " Silicon Power",
+    "model": "16GB(2x8GB) DDR4",
+    "referenceNumber": "SILICON-POWER-16-3200",
+    "category": "Ram",
+    "characteristics": [
+      {
+        "name": "Capacity",
+        "value": "16"
+      },
+      {
+        "name": "Type",
+        "value": "DDR4"
+      },
+      {
+        "name": "Frequency",
+        "value": "3200"
+      },
+      {
+        "name": "Timing",
+        "value": "CL 22"
+      },
+      {
+        "name": "Purpose",
+        "value": "Desktop"
+      },
+      {
+        "name": "Heatsink",
+        "value": "No"
+      },
+      {
+        "name": "Color",
+        "value": "Black"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      },
+      {
+        "name": "Kit",
+        "value": "2"
+      }
+    ]
+  },
+  {
+    "name": "G.SKILL TRIDENT Z ROYAL ELITE 32GB (2X16GB) 4000MHZ",
+    "price": 660.14,
+    "quantity": 10,
+    "description": "Memory G.SKILL Trident Z Royal Elite 32GB(2x16GB) DDR4 PC4-32000 4000MHz CL16 F4-4000C16D-32GTES",
+    "warranty": 99,
+    "manufacturer": "G.SKILL",
+    "model": "Trident Z Royal Elite 32GB(2x16GB) DDR4",
+    "referenceNumber": "GSKILL-TRIDENT-Z-ROYAL-ELITE-32-4000",
+    "category": "Ram",
+    "characteristics": [
+      {
+        "name": "Capacity",
+        "value": "32"
+      },
+      {
+        "name": "Type",
+        "value": "DDR4"
+      },
+      {
+        "name": "Frequency",
+        "value": "4000"
+      },
+      {
+        "name": "Timing",
+        "value": "CL 16"
+      },
+      {
+        "name": "Purpose",
+        "value": "Desktop"
+      },
+      {
+        "name": "Heatsink",
+        "value": "Yes"
+      },
+      {
+        "name": "Color",
+        "value": "Silver"
+      },
+      {
+        "name": "Backlight",
+        "value": "Yes"
+      },
+      {
+        "name": "Kit",
+        "value": "2"
+      }
+    ]
+  },
+  {
+    "name": "CORSAIR DOMINATOR PLATINUM RGB BLACK 16GB (2X8GB) 3600MHZ",
+    "price": 312.04,
+    "quantity": 10,
+    "description": "Memory Corsair Dominator Platinum RGB Black 16GB(2x8GB) DDR4 PC4-28800 3600MHz CL18 CMT16GX4M2C3600C18",
+    "warranty": 99,
+    "manufacturer": "Corsair",
+    "model": "Dominator Platinum RGB Black 16GB(2x8GB) DDR4",
+    "referenceNumber": "CORSAIR-DOMINATOR-PLATINUM-16-3600",
+    "category": "Ram",
+    "characteristics": [
+      {
+        "name": "Capacity",
+        "value": "16"
+      },
+      {
+        "name": "Type",
+        "value": "DDR4"
+      },
+      {
+        "name": "Frequency",
+        "value": "3600"
+      },
+      {
+        "name": "Timing",
+        "value": "CL 18"
+      },
+      {
+        "name": "Purpose",
+        "value": "Desktop"
+      },
+      {
+        "name": "Heatsink",
+        "value": "Yes"
+      },
+      {
+        "name": "Color",
+        "value": "Black"
+      },
+      {
+        "name": "Backlight",
+        "value": "Yes"
+      },
+      {
+        "name": "Kit",
+        "value": "2"
+      }
+    ]
+  }
+]
