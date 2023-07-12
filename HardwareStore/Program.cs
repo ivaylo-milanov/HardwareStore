@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using HardwareStore.Infrastructure.Data;
 namespace HardwareStore
 {
     using HardwareStore.Extensions;
