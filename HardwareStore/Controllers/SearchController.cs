@@ -17,12 +17,12 @@
         }
 
         [HttpPost]
-        public async Task<IActionResult> Search(string keyword)
+        public async Task<IActionResult> Index(string keyword)
         {
             var products = await this.productService.GetProductsByKeyword(keyword);
             this.memoryCache.Set("Products", products);
 
-            return RedirectToAction("Index");
+            return View(products);
         }
 
         public IActionResult FilterSearchedProducts([FromBody] ProductFilterOptions filter)

@@ -8,8 +8,6 @@ const defaultData = {
     "Order": "Default"
 };
 
-setInitialData();
-
 async function onFormChange(ev) {
     ev.preventDefault();
     let data = getData();

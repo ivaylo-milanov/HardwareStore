@@ -9,6 +9,7 @@
             services.Configure<RazorViewEngineOptions>(options =>
             {
                 options.ViewLocationFormats.Add("/Views/Shared/Product/{0}.cshtml");
+                options.ViewLocationFormats.Add("/Views/Shared/Search/{0}.cshtml");
             });
 
             return services;

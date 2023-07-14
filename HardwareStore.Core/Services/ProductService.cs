@@ -147,16 +147,25 @@
         }
 
         public async Task<IEnumerable<ProductViewModel>> GetProductsByKeyword(string keyword)
-            => await this.repository.AllReadonly<Product>(p => ContainsKeyword(p, keyword.ToLower()))
+        {
+            var products = await this.repository
+                .AllReadonly<Product>()
+                .ToListAsync();
+
+            var filtered = products
+                .Where(p => ContainsKeyword(p, keyword))
                 .Select(p => new ProductViewModel
                 {
                     Id = p.Id,
                     Name = p.Name,
                     Price = p.Price,
-                    AddDate = p.AddDate,
-                    Manufacturer = p.Manufacturer!.Name
+                    Manufacturer = p.Manufacturer!.Name,
+                    AddDate = p.AddDate
                 })
-                .ToListAsync();
+                .ToList();
+
+            return filtered;
+        }
 
         private bool ContainsKeyword(Product product, string keyword)
             => product.Name.ToLower().Contains(keyword) ||
