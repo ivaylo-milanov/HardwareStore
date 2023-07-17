@@ -174,5 +174,40 @@
                (product.Description != null && product.Description.ToLower().Contains(keyword)) ||
                (product.Model != null && product.Description.ToLower().Contains(keyword)) ||
                product.Characteristics.Any(pa => pa.Value.ToLower().Contains(keyword));
+
+        public async Task<ProductDetailsModel> GetProductDetails(int id)
+        {
+            var product = await this.repository
+                .AllReadonly<Product>()
+                .Include(p => p.Manufacturer)
+                .Where(p => p.Id == id)
+                .FirstOrDefaultAsync();
+
+            if (product == null)
+            {
+                throw new ArgumentNullException("The product does not exist");
+            }
+
+            var model = new ProductDetailsModel
+            {
+                Id = product.Id,
+                Price = product.Price,
+                Name = product.Name,
+                AddDate = product.AddDate,
+                Manufacturer = product.Manufacturer!.Name,
+                ReferenceNumber = product.ReferenceNumber,
+                Description = product.Description,
+                Warranty = product.Warranty,
+                Attributes = product.Characteristics
+                        .Select(pa => new ProductAttributeExportModel
+                        {
+                            Name = pa.CharacteristicName.Name,
+                            Value = pa.Value
+                        })
+                        .ToList()
+            };
+
+            return model;
+        }
     }
 }

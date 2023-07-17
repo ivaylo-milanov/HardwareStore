@@ -1,6 +1,7 @@
 ﻿namespace HardwareStore.Core.Services.Contracts
 {
     using HardwareStore.Core.ViewModels.Product;
+    using HardwareStore.Infrastructure.Models;
 
     public interface IProductService
     {
@@ -11,6 +12,8 @@
             where TModel : ProductViewModel;
 
         Task<IEnumerable<ProductViewModel>> GetProductsByKeyword(string keyword);
+
+        Task<ProductDetailsModel> GetProductDetails(int id);
     }
 
 }

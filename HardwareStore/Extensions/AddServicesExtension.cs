@@ -11,6 +11,8 @@
             services.AddScoped<IRepository, Repository>();
             services.AddScoped<IHomeService, HomeService>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IFavoriteService, FavoriteService>();
+            services.AddScoped<IShoppingCardService, ShoppingCardService>();
 
             services.AddControllers().AddNewtonsoftJson();
 

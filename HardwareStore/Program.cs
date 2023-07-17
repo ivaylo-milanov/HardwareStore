@@ -20,6 +20,7 @@ namespace HardwareStore
             builder.Services.ConfigurateIdentity();
             builder.Services.AddServices();
             builder.Services.AddSearchPaths();
+            builder.Services.AddCustomSession();
 
             var app = builder.Build();
 
@@ -42,6 +43,8 @@ namespace HardwareStore
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.MapControllerRoute(
                 name: "default",

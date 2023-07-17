@@ -1,0 +1,47 @@
+﻿@model ProductDetailsModel
+
+<div>
+    <div class="image">
+        <img src="" alt=""/>
+    </div>
+    <div>
+        <h1>@Model.Name</h1>
+        <div>
+            Ref. Number: <strong>@Model.ReferenceNumber</strong>
+        </div>
+        <div>
+            <div class="price">
+                <div>@Model.Price</div>
+                <div>lv.</div>
+            </div>
+            <span>
+                <input type="number" value="1" />
+                <button>Buy</button>
+            </span>
+            <span>
+                <a>
+                    <img src="" alt=""/>
+                </a>
+            </span>
+        </div>
+        <div>Specifications</div>
+        <table>
+            <tbody>
+                <tr>
+                    <td>Warranty</td>
+                    <td>@Model.Warranty</td>
+                </tr>
+                @foreach (var characteristic in Model.Attributes)
+                {
+                    <tr>
+                        <td>@characteristic.Name</td>
+                        <td>@characteristic.Value</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="description">
+        <p>@Model.Description</p>
+    </div>
+</div>
