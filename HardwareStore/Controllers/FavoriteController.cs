@@ -1,34 +1,61 @@
 ﻿namespace HardwareStore.Controllers
 {
+    using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Extensions;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
     public class FavoriteController : Controller
     {
-        public IActionResult AddToFavorite(int id)
+        private readonly IFavoriteService favoriteService;
+
+        public FavoriteController(IFavoriteService favoriteService)
         {
-            var favorite = GetFavorites();
+            this.favoriteService = favoriteService;
+        }
 
-            favorite.Add(id);
+        public IActionResult Index()
+        {
+            var favorites = GetFavorites();
 
-            HttpContext.Session.Set("Favorite", favorite);
+            return View(favorites);
+        }
+
+        public async Task<IActionResult> AddToFavorite(int id)
+        {
+            List<int> favorites;
+            try
+            {
+                favorites = await this.favoriteService.AddToFavoriteAsync(GetFavorites(), id);
+            }
+            catch (ArgumentNullException)
+            {
+                throw;
+            }
+
+            HttpContext.Session.Set("Favorites", favorites);
 
             return View();
         }
 
-        public IActionResult RemoveFromFavorite(int id)
+        public async Task<IActionResult> RemoveFromFavorite(int id)
         {
-            var favorite = GetFavorites();
+            List<int> favorites;
+            try
+            {
+                favorites = await this.favoriteService.RemoveFromFavoriteAsync(GetFavorites(), id);
+            }
+            catch (ArgumentNullException)
+            {
+                throw;
+            }
 
-            favorite.Remove(id);
-
-            HttpContext.Session.Set("Favorite", favorite);
+            HttpContext.Session.Set("Favorites", favorites);
 
             return View();
         }
 
         private List<int> GetFavorites()
-            => HttpContext.Session.Get<List<int>>("Favorite") ?? new List<int>();
+            => HttpContext.Session.Get<List<int>>("Favorites") ?? new List<int>();
     }
 }

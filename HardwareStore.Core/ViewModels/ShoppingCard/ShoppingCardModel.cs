@@ -1,12 +1,9 @@
 ﻿namespace HardwareStore.Core.ViewModels.ShoppingCard
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-
-    internal class ShoppingCardModel
+    public class ShoppingCardModel
     {
+        public int ProductId { get; set; }
+
+        public int Quantity { get; set; }
     }
 }

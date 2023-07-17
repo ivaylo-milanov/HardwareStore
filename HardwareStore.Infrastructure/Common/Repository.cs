@@ -43,5 +43,9 @@
                 .Where(search)
                 .AsQueryable()
                 .AsNoTracking();
+
+        public async Task<T> FindAsync<T>(object id) where T : class
+            => await Set<T>()
+                .FindAsync(id);
     }
 }

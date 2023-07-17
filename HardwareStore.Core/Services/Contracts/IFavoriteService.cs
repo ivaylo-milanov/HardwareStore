@@ -1,12 +1,9 @@
 ﻿namespace HardwareStore.Core.Services.Contracts
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-
-    internal interface IFavoriteService
+    public interface IFavoriteService
     {
+        Task<List<int>> AddToFavoriteAsync(List<int> favorites, int id);
+
+        Task<List<int>> RemoveFromFavoriteAsync(List<int> favorites, int id)
     }
 }

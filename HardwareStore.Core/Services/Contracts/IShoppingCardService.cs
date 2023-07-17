@@ -1,12 +1,11 @@
 ﻿namespace HardwareStore.Core.Services.Contracts
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using HardwareStore.Core.ViewModels.ShoppingCard;
 
-    internal class IShoppingCardService
+    public interface IShoppingCardService
     {
+        Task<List<ShoppingCardModel>> AddToShoppingCardAsync(List<ShoppingCardModel> shoppings, int id, int quantity);
+
+        Task<List<ShoppingCardModel>> RemoveFromShoppingCardAsync(List<ShoppingCardModel> shoppings, int id);
     }
 }
