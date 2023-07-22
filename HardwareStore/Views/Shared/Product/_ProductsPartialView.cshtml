@@ -1,19 +1,26 @@
 ﻿@model IEnumerable<ProductViewModel>
 
-<ul class="products">
-    @foreach (var product in Model)
-    {
-        <li>
-            <div class="product-card-image">
-                <img src="@product.ImageUrl"/>
-            </div>
-            <div class="product-card-header">
-                <p>@product.Name</p>
-            </div>
-            <div class="product-card-buy">
-                <span>@product.Price</span>
-                <button>Buy</button>
-            </div>
-        </li>
-    }
-</ul>
+@if (Model.Any())
+{
+    <div class="products">
+        @foreach (var product in Model)
+        {
+              <div class="col">
+                <div class="card h-100">
+                  <img src="..." class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">@product.Name</h5>
+                    <div class="price">@product.Price</div>
+                    <div class="buy-button">
+                        <input asp-action="AddToShoppingCard" asp-controller="ShoppingCard" value="Buy"/>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        }
+    </div>
+}
+else
+{
+    <p>There are no products.</p>
+}

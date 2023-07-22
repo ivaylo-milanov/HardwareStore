@@ -1,37 +1,38 @@
 ﻿@model RegisterFormModel
 
-<h1 class="text-center">Register</h1>
 <div>
-    <div>
-        <form id="registerForm" method="post">
+    <div class="register-form-container">
+        <h1>Register</h1>
+        <form id="registerForm" method="post" class="register-form">
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div>
-                <label asp-for="@Model.UserName">Username</label>
-                <input aria-required="true" asp-for="@Model.UserName" />
+            <div class="form-group">
+                <label for="userName">Username</label>
+                <input aria-required="true" asp-for="@Model.UserName" id="userName" class="form-control" />
                 <span asp-validation-for="@Model.UserName" class="text-danger"></span>
             </div>
-            <div>
-                <label asp-for="@Model.Email">Email</label>
-                <input aria-required="true" asp-for="@Model.Email" />
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input aria-required="true" asp-for="@Model.Email" id="email" class="form-control" />
                 <span asp-validation-for="@Model.Email" class="text-danger"></span>
             </div>
-            <div>
-                <label asp-for="@Model.Password">Password</label>
-                <input type="password" aut aria-required="true" asp-for="@Model.Password" />
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" aria-required="true" asp-for="@Model.Password" id="password" class="form-control" />
                 <span asp-validation-for="@Model.Password" class="text-danger"></span>
             </div>
-            <div>
-                <label asp-for="@Model.ConfirmPassword">Confirm Password</label>
-                <input type="password" aut aria-required="true" asp-for="@Model.ConfirmPassword" />
+            <div class="form-group">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" aria-required="true" asp-for="@Model.ConfirmPassword" id="confirmPassword" class="form-control" />
                 <span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
             </div>
-            <div>
-                <button id="registerSubmit" type="submit">Register</button>
+            <div class="form-group">
+                <button id="registerSubmit" type="submit" class="btn btn-primary">Register</button>
             </div>
         </form>
     </div>
 </div>
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

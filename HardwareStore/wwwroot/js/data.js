@@ -1,4 +1,4 @@
-﻿export async function sendFilterData(ev) {
+﻿export async function sendFilterData(ev, data) {
     const path = ev.currentTarget.dataset.url;
     const html = await request.post(path, data);
 

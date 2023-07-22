@@ -1,6 +1,6 @@
 ﻿import * as local from './utils.js';
 import { getURL, returnFilterState } from './state.js';
-import { onFormChange } from './submit.js';
+import { onFormChange } from './filterSubmit.js';
 
 const form = document.querySelector('.filter form');
 const initialUrl = local.getInitialURL();

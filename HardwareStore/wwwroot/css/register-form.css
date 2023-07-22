@@ -1,0 +1,52 @@
+﻿/* ... (previous styles) */
+
+/* Style the register form container */
+.register-form-container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+/* Style the register form */
+.register-form {
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+    /* Style the form labels */
+    .register-form label {
+        display: block;
+        font-weight: bold;
+    }
+
+    /* Style the form inputs and validation messages */
+    .register-form .form-control {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    /* Style the validation messages */
+    .register-form .text-danger {
+        color: #f00;
+    }
+
+    /* Style the register button */
+    .register-form .btn-primary {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+
+        /* Change the color of the register button on hover */
+        .register-form .btn-primary:hover {
+            background-color: #0056b3;
+        }

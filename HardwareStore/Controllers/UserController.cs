@@ -1,21 +1,33 @@
 ﻿namespace HardwareStore.Controllers
 {
+    using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.User;
-    using HardwareStore.Infrastructure.Models;
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
     public class UserController : Controller
     {
-        private readonly SignInManager<Customer> signInManager;
-        private readonly UserManager<Customer> userManager;
+        private readonly IUserService userService;
 
-        public UserController(
-            SignInManager<Customer> signInManager,
-            UserManager<Customer> userManager)
+        public UserController(IUserService userService)
         {
-            this.signInManager = signInManager;
-            this.userManager = userManager;
+            this.userService = userService;
+        }
+
+        public async Task<IActionResult> EasyLogin([FromBody] LoginFormModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Login", "User");
+            }
+
+            var result = await userService.LoginAsync(model);
+
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            return RedirectToAction("Login", "User");
         }
 
         public IActionResult Login()
@@ -33,16 +45,11 @@
                 return View(model);
             }
 
-            var user = await userManager.FindByEmailAsync(model.Email);
+            var result = await userService.LoginAsync(model);
 
-            if (user != null)
+            if (result.Succeeded)
             {
-                var result = await signInManager.PasswordSignInAsync(user, model.Password, false, false);
-
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+                return RedirectToAction("Index", "Home");
             }
 
             ModelState.AddModelError("", "Invalid Login!");
@@ -65,13 +72,7 @@
                 return View(model);
             }
 
-            Customer user = new Customer
-            {
-                UserName = model.UserName,
-                Email = model.Email
-            };
-
-            var result = await userManager.CreateAsync(user, model.Password);
+            var result = await this.userService.RegisterAsync(model);
 
             if (result.Succeeded)
             {
@@ -88,7 +89,7 @@
 
         public async Task<IActionResult> Logout()
         {
-            await signInManager.SignOutAsync();
+            await userService.LogoutAsync();
 
             return RedirectToAction("Index", "Home");
         }

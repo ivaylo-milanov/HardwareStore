@@ -1,0 +1,52 @@
+﻿/* ... (previous styles) */
+
+/* Style the login form container */
+.login-form-container {
+    text-align: center;
+    margin-top: 50px;
+}
+
+/* Style the login form */
+.login-form {
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+    /* Style the form labels */
+    .login-form label {
+        display: block;
+        font-weight: bold;
+    }
+
+    /* Style the form inputs and validation messages */
+    .login-form .form-control {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    /* Style the validation messages */
+    .login-form .text-danger {
+        color: #f00;
+    }
+
+    /* Style the login button */
+    .login-form .btn-primary {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+
+        /* Change the color of the login button on hover */
+        .login-form .btn-primary:hover {
+            background-color: #0056b3;
+        }

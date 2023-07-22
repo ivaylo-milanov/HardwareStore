@@ -1,26 +1,30 @@
 ﻿@model LoginFormModel
 
-<h1>Log in</h1>
-<div>
+<div class="login-form-container">
     <div>
         <section>
-            <form id="account" method="post">
+            <h1>Log in</h1>
+            <form method="post" asp-action="Login" asp-controller="User" class="login-form">
                 <hr />
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div>
-                    <label asp-for="@Model.Email"></label>
-                    <input asp-for="@Model.Email" aria-required="true" />
-                    <span asp-validation-for="@Model.Email"></span>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input asp-for="@Model.Email" id="email" class="form-control" aria-required="true" />
+                    <span asp-validation-for="@Model.Email" class="text-danger"></span>
                 </div>
-                <div>
-                    <label asp-for="@Model.Password"></label>
-                    <input asp-for="@Model.Password" type="password" aria-required="true" />
-                    <span asp-validation-for="@Model.Password"></span>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input asp-for="@Model.Password" type="password" id="password" class="form-control" aria-required="true" />
+                    <span asp-validation-for="@Model.Password" class="text-danger"></span>
                 </div>
-                <div>
-                    <button id="login-submit" type="submit">Log in</button>
+                <div class="form-group">
+                    <button id="login-submit" type="submit" class="btn btn-primary">Log in</button>
                 </div>
             </form>
         </section>
     </div>
 </div>
+
+@section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+}

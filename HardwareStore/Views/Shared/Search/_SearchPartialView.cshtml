@@ -1,8 +1,8 @@
-﻿<div>
-    <form method="post" asp-action="Index" asp-controller="Search">
-        <div>
-            <input type="search" name="keyword" placeholder="Search..."/>
-        </div>
-        <input type="submit" value="Search" />
-    </form>
+﻿<div class="search-form-container .justify-content-center">
+        <form method="post" asp-action="Index" asp-controller="Search">
+            <div class="search-input-container">
+                <input type="search" name="keyword" placeholder="Search..." class="search-input" />
+                <input type="submit" value="Search" class="search-submit" />
+            </div>
+        </form>
 </div>

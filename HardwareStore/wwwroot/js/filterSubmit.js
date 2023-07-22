@@ -11,7 +11,7 @@ export async function onFormChange(ev) {
 
     local.setData('filterData', data);
 
-    await sendFilterData(ev);
+    await sendFilterData(ev, data);
 }
 
 function getData(ev) {

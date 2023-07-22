@@ -13,6 +13,7 @@
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IFavoriteService, FavoriteService>();
             services.AddScoped<IShoppingCardService, ShoppingCardService>();
+            services.AddScoped<IUserService, UserService>();
 
             services.AddControllers().AddNewtonsoftJson();
 
