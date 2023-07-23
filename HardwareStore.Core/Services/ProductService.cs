@@ -3,24 +3,33 @@
     using HardwareStore.Core.Attributes;
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Product;
+    using HardwareStore.Core.ViewModels.Search;
     using HardwareStore.Infrastructure.Common;
     using HardwareStore.Infrastructure.Models;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Caching.Memory;
     using System.Reflection;
 
     public class ProductService : IProductService
     {
         private readonly IRepository repository;
+        private readonly IMemoryCache memoryCache;
 
-        public ProductService(IRepository repository)
+        public ProductService(IRepository repository, IMemoryCache memoryCache)
         {
             this.repository = repository;
+            this.memoryCache = memoryCache;
         }
 
-        public IEnumerable<TModel> FilterProducts<TModel, TFilter>(IEnumerable<TModel> products, TFilter filter)
+        public IEnumerable<TModel> FilterProducts<TModel, TFilter>(TFilter filter)
             where TFilter : ProductFilterOptions
             where TModel : ProductViewModel
         {
+            if (!this.memoryCache.TryGetValue("Products", out IEnumerable<TModel> products))
+            {
+                throw new ArgumentNullException("Products data not found.");
+            }
+
             var properties = filter
                 .GetType()
                 .GetProperties()
@@ -81,7 +90,7 @@
             return products;
         }
 
-        public async Task<IEnumerable<TModel>> GetProductsAsync<TModel>() where TModel : ProductViewModel
+        private async Task<IEnumerable<TModel>> GetProductsAsync<TModel>() where TModel : ProductViewModel
         {
             var categoryName = typeof(TModel).Name.Replace("ViewModel", string.Empty);
 
@@ -146,7 +155,7 @@
             return model;
         }
 
-        public async Task<IEnumerable<ProductViewModel>> GetProductsByKeyword(string keyword)
+        public async Task<IEnumerable<SearchViewModel>> GetProductsByKeyword(string keyword)
         {
             var products = await this.repository
                 .AllReadonly<Product>()
@@ -154,7 +163,7 @@
 
             var filtered = products
                 .Where(p => ContainsKeyword(p, keyword))
-                .Select(p => new ProductViewModel
+                .Select(p => new SearchViewModel
                 {
                     Id = p.Id,
                     Name = p.Name,
@@ -206,6 +215,72 @@
                         })
                         .ToList()
             };
+
+            return model;
+        }
+
+        private IEnumerable<FilterCategoryModel> GetFilterCategories<TModel>(IEnumerable<TModel> products) where TModel : ProductViewModel
+        {
+            var modelType = typeof(TModel);
+
+            var properties = modelType.GetProperties().Where(p => Attribute.IsDefined(p, typeof(CharacteristicAttribute)));
+
+            var filters = new List<FilterCategoryModel>();
+
+            foreach (var property in properties)
+            {
+                var values = products.Select(m => property.GetValue(m).ToString()).Distinct().ToList();
+
+                var filterValues = string.Join(", ", values)
+                    .Split(", ")
+                    .Select(v => v.Trim())
+                    .Distinct();
+
+                var attribute = property.GetCustomAttribute<CharacteristicAttribute>();
+
+                var title = attribute.Name == null ? property.Name : attribute.Name;
+
+                var model = new FilterCategoryModel
+                {
+                    Name = property.Name,
+                    Values = filterValues,
+                    Title = title
+                };
+
+                filters.Add(model);
+            }
+
+            return filters;
+        }
+
+        public async Task<ProductsViewModel<TModel>> GetModel<TModel>() where TModel : ProductViewModel
+        {
+            var products = await GetProductsAsync<TModel>();
+            var filters = GetFilterCategories(products);
+
+            var model = new ProductsViewModel<TModel>
+            {
+                Products = products,
+                Filters = filters
+            };
+
+            this.memoryCache.Set("Products", products);
+
+            return model;
+        }
+
+        public async Task<ProductsViewModel<SearchViewModel>> GetSearchModel(string keyword)
+        {
+            var products = await GetProductsByKeyword(keyword);
+            var filters = GetFilterCategories(products);
+
+            var model = new ProductsViewModel<SearchViewModel>
+            {
+                Products = products,
+                Filters = filters
+            };
+
+            this.memoryCache.Set("Products", products);
 
             return model;
         }

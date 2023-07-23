@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="~/css/card.css"/>
     <link rel="stylesheet" href="~/css/login-form.css"/>
     <link rel="stylesheet" href="~/css/register-form.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/filter-category.css" />
 </head>
 <body>
     <header>
@@ -37,14 +39,20 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - HardwareStore
+    <footer>
+        <div class="footer-content">
+            <p>Copyright &copy; 2023 HardwareStore. All rights reserved.</p>
+            <ul class="footer-links">
+                <li><a href="#">Terms of Use</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Contact Us</a></li>
+            </ul>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script type="module" src="~/js/userSubmit.js"></script>
+    <script src="~/js/card.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

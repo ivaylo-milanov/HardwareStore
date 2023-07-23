@@ -3,35 +3,34 @@
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.InternalDrive;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Caching.Memory;
 
     public class InternalDrivesController : Controller
     {
-        private readonly IMemoryCache memoryCache;
         private readonly IProductService productService;
 
-        public InternalDrivesController(IProductService productService, IMemoryCache memoryCache)
+        public InternalDrivesController(IProductService productService)
         {
-            this.memoryCache = memoryCache;
             this.productService = productService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var internalDrives = await this.productService.GetProductsAsync<InternalDriveViewModel>();
-            this.memoryCache.Set("Internal drives", internalDrives);
+            var model = await this.productService.GetModel<InternalDriveViewModel>();
 
-            return View(internalDrives);
+            return View(model);
         }
 
         public IActionResult FilterInternalDrives([FromBody] InternalDriveFilterOptions filter)
         {
-            if (!this.memoryCache.TryGetValue("Internal drives", out IEnumerable<InternalDriveViewModel> internalDrives))
+            IEnumerable<InternalDriveViewModel> filtered;
+            try
             {
-                return BadRequest("Internal drives data not found.");
+                filtered = this.productService.FilterProducts<InternalDriveViewModel, InternalDriveFilterOptions>(filter);
             }
-
-            IEnumerable<InternalDriveViewModel> filtered = this.productService.FilterProducts(internalDrives, filter);
+            catch (ArgumentNullException)
+            {
+                throw;
+            }
 
             return PartialView("_ProductsPartialView", filtered);
         }

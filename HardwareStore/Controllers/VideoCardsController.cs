@@ -3,35 +3,34 @@
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.VideoCard;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Caching.Memory;
 
     public class VideoCardsController : Controller
     {
-        private readonly IMemoryCache memoryCache;
         private readonly IProductService productService;
 
-        public VideoCardsController(IProductService productService, IMemoryCache memoryCache)
+        public VideoCardsController(IProductService productService)
         {
-            this.memoryCache = memoryCache;
             this.productService = productService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var videoCards = await this.productService.GetProductsAsync<VideoCardViewModel>();
-            this.memoryCache.Set("Video cards", videoCards);
+            var model = await this.productService.GetModel<VideoCardViewModel>();
 
-            return View(videoCards);
+            return View(model);
         }
 
         public IActionResult FilterVideoCards([FromBody] VideoCardFilterOptions filter)
         {
-            if (!this.memoryCache.TryGetValue("Video cards", out IEnumerable<VideoCardViewModel> videoCards))
+            IEnumerable<VideoCardViewModel> filtered;
+            try
             {
-                return BadRequest("Video cards data not found.");
+                filtered = this.productService.FilterProducts<VideoCardViewModel, VideoCardFilterOptions>(filter);
             }
-
-            IEnumerable<VideoCardViewModel> filtered = this.productService.FilterProducts(videoCards, filter);
+            catch (ArgumentNullException)
+            {
+                throw;
+            }
 
             return PartialView("_ProductsPartialView", filtered);
         }

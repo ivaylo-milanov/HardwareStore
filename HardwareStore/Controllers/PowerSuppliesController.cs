@@ -3,35 +3,34 @@
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.PowerSupply;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Caching.Memory;
 
     public class PowerSuppliesController : Controller
     {
-        private readonly IMemoryCache memoryCache;
         private readonly IProductService productService;
 
-        public PowerSuppliesController(IProductService productService, IMemoryCache memoryCache)
+        public PowerSuppliesController(IProductService productService)
         {
-            this.memoryCache = memoryCache;
             this.productService = productService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var powerSupplies = await this.productService.GetProductsAsync<PowerSupplyViewModel>();
-            this.memoryCache.Set("PowerSupplies", powerSupplies);
+            var model = await this.productService.GetModel<PowerSupplyViewModel>();
 
-            return View(powerSupplies);
+            return View(model);
         }
 
         public IActionResult FilterPowerSupplies([FromBody] PowerSupplyFilterOptions filter)
         {
-            if (!this.memoryCache.TryGetValue("PowerSupplies", out IEnumerable<PowerSupplyViewModel> powerSupplies))
+            IEnumerable<PowerSupplyViewModel> filtered;
+            try
             {
-                return BadRequest("Power supplies data not found.");
+                filtered = this.productService.FilterProducts<PowerSupplyViewModel, PowerSupplyFilterOptions>(filter);
             }
-
-            IEnumerable<PowerSupplyViewModel> filtered = this.productService.FilterProducts(powerSupplies, filter);
+            catch (ArgumentNullException)
+            {
+                throw;
+            }
 
             return PartialView("_ProductsPartialView", filtered);
         }

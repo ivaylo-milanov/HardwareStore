@@ -1,53 +1,21 @@
-﻿@model IEnumerable<MotherboardViewModel>
+﻿@model ProductsViewModel<MotherboardViewModel>
 
+<div class="page-title">
+    <h1>Motherboards</h1>
+</div>
 <div>
-    <div class="filter">
-        <form method="get" data-url="@Url.Action("FilterMotherboards", "Motherboards")" data-container="#motherboards">
-            <div class="filter-categories">
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(MotherboardViewModel.Manufacturer),
-                    values = Model.Select(m => m.Manufacturer).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(MotherboardViewModel.Socket),
-                    values = Model.Select(p => p.Socket).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(MotherboardViewModel.FormFactor),
-                    values = Model.Select(p => p.FormFactor).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(MotherboardViewModel.Chipset),
-                    values = Model.Select(p => p.Chipset).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(MotherboardViewModel.MaintenanceMemory),
-                    values = Model.Select(p => p.MaintenanceMemory).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(MotherboardViewModel.BuiltInWIFI),
-                    values = Model.Select(p => p.BuiltInWIFI).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(MotherboardViewModel.Backlight),
-                    values = Model.Select(p => p.Backlight).Distinct()
-                })
-            </div>
-            <div class="additional-filters">
-                <partial name="_OrderPartialView"/>
+        <form class="page-layout" method="get" data-url="@Url.Action("FilterMotherboards", "Motherboards")" data-container="#motherboards">
+            <partial name="_FilterPartialView" model="@Model.Filters"/>
+            <div class="content-container">
+                <div class="additional-filters">
+                    <partial name="_OrderPartialView"/>
+                </div>
+                <div id="motherboards">
+                    <partial name="_ProductsPartialView" model="Model.Products"/>
+                </div>
             </div>
         </form>
     </div>
-    <div id="motherboards">
-        <partial name="_ProductsPartialView" model="Model"/>
-    </div>
-</div>
 
 @section Scripts {
         <script type="module" src="~/js/filter.js"></script>

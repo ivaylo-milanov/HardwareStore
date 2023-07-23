@@ -3,35 +3,34 @@
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Headset;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Caching.Memory;
 
     public class HeadsetsController : Controller
     {
-        private readonly IMemoryCache memoryCache;
         private readonly IProductService productService;
 
-        public HeadsetsController(IProductService productService, IMemoryCache memoryCache)
+        public HeadsetsController(IProductService productService)
         {
-            this.memoryCache = memoryCache;
             this.productService = productService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var headsets = await this.productService.GetProductsAsync<HeadsetViewModel>();
-            this.memoryCache.Set("Headsets", headsets);
+            var model = await this.productService.GetModel<HeadsetViewModel>();
 
-            return View(headsets);
+            return View(model);
         }
 
         public IActionResult FilterHeadsets([FromBody] HeadsetFilterOptions filter)
         {
-            if (!this.memoryCache.TryGetValue("Headsets", out IEnumerable<HeadsetViewModel> headsets))
+            IEnumerable<HeadsetViewModel> filtered;
+            try
             {
-                return BadRequest("Headsets data not found.");
+                filtered = this.productService.FilterProducts<HeadsetViewModel, HeadsetFilterOptions>(filter);
             }
-
-            IEnumerable<HeadsetViewModel> filtered = this.productService.FilterProducts(headsets, filter);
+            catch (ArgumentNullException)
+            {
+                throw;
+            }
 
             return PartialView("_ProductsPartialView", filtered);
         }

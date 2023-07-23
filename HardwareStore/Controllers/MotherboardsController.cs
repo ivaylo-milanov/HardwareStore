@@ -3,35 +3,34 @@
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Motherboard;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Caching.Memory;
 
     public class MotherboardsController : Controller
     {
-        private readonly IMemoryCache memoryCache;
         private readonly IProductService productService;
 
-        public MotherboardsController(IProductService productService, IMemoryCache memoryCache)
+        public MotherboardsController(IProductService productService)
         {
-            this.memoryCache = memoryCache;
             this.productService = productService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var motherboards = await this.productService.GetProductsAsync<MotherboardViewModel>();
-            this.memoryCache.Set("Motherboards", motherboards);
+            var model = await this.productService.GetModel<MotherboardViewModel>();
 
-            return View(motherboards);
+            return View(model);
         }
 
         public IActionResult FilterMotherboards([FromBody] MotherboardFilterOptions filter)
         {
-            if (!this.memoryCache.TryGetValue("Motherboards", out IEnumerable<MotherboardViewModel> motherboards))
+            IEnumerable<MotherboardViewModel> filtered;
+            try
             {
-                return BadRequest("Motherboards data not found.");
+                filtered = this.productService.FilterProducts<MotherboardViewModel, MotherboardFilterOptions>(filter);
             }
-
-            IEnumerable<MotherboardViewModel> filtered = this.productService.FilterProducts(motherboards, filter);
+            catch (ArgumentNullException)
+            {
+                throw;
+            }
 
             return PartialView("_ProductsPartialView", filtered);
         }

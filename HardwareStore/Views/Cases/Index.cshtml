@@ -1,102 +1,20 @@
-﻿@model IEnumerable<CaseViewModel>
+﻿@model ProductsViewModel<CaseViewModel>
 
+<div class="page-title">
+    <h1>Cases</h1>
+</div>
 <div>
-    <div class="filter">
-        <form method="get" data-url="@Url.Action("FilterCases", "Cases")" data-container="#cases">
-            <div class="filter-categories">
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(CaseViewModel.Manufacturer),
-                    values = Model.Select(m => m.Manufacturer).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(CaseViewModel.FormFactor),
-                    values = Model.Select(m => m.FormFactor).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(CaseViewModel.Format),
-                    values = Model.Select(m => m.Format).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(CaseViewModel.FansIncluded),
-                    values = Model.Select(m => m.FansIncluded).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(CaseViewModel.FrontPanel),
-                    values = Model.Select(m => m.FrontPanel).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(CaseViewModel.Color),
-                    values = Model.Select(m => m.Color).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(CaseViewModel.SupportedFansFront),
-                    values = Model.Select(m => m.SupportedFansFront).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(CaseViewModel.SupportedFansBelow),
-                    values = Model.Select(m => m.SupportedFansBelow).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(CaseViewModel.SupportedFansRear),
-                    values = Model.Select(m => m.SupportedFansRear).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(CaseViewModel.SupportedFansTop),
-                    values = Model.Select(m => m.SupportedFansTop).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(CaseViewModel.SupportedFansSides),
-                    values = Model.Select(m => m.SupportedFansSides).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(CaseViewModel.SupportedWaterCoolersFront),
-                    values = Model.Select(m => m.SupportedWaterCoolersFront).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(CaseViewModel.SupportedWaterCoolersBelow),
-                    values = Model.Select(m => m.SupportedWaterCoolersBelow).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(CaseViewModel.SupportedWaterCoolersRear),
-                    values = Model.Select(m => m.SupportedWaterCoolersRear).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(CaseViewModel.SupportedWaterCoolersTop),
-                    values = Model.Select(m => m.SupportedWaterCoolersTop).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(CaseViewModel.SupportedWaterCoolersSides),
-                    values = Model.Select(m => m.SupportedWaterCoolersSides).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(CaseViewModel.FrontMeshPanel),
-                    values = Model.Select(m => m.FrontMeshPanel).Distinct()
-                })
-            </div>
-            <div class="additional-filters">
-                <partial name="_OrderPartialView"/>
+    <form class="page-layout" method="get" data-url="@Url.Action("FilterCases", "Cases")" data-container="#cases">
+            <partial name="_FilterPartialView" model="@Model.Filters"/>
+            <div class="content-container">
+                <div class="additional-filters">
+                    <partial name="_OrderPartialView"/>
+                </div>
+                <div id="motherboards">
+                    <partial name="_ProductsPartialView" model="Model.Products"/>
+                </div>
             </div>
         </form>
-    </div>
-    <div id="cases">
-        <partial name="_ProductsPartialView" model="Model"/>
-    </div>
 </div>
 
 @section Scripts {

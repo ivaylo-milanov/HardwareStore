@@ -3,35 +3,34 @@
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Monitor;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Caching.Memory;
 
     public class MonitorsController : Controller
     {
-        private readonly IMemoryCache memoryCache;
         private readonly IProductService productService;
 
-        public MonitorsController(IMemoryCache memoryCache, IProductService productService)
+        public MonitorsController(IProductService productService)
         {
-            this.memoryCache = memoryCache;
             this.productService = productService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var monitors = await this.productService.GetProductsAsync<MonitorViewModel>();
-            this.memoryCache.Set("Monitors", monitors);
+            var model = await this.productService.GetModel<MonitorViewModel>();
 
-            return View(monitors);
+            return View(model);
         }
 
         public IActionResult FilterMonitors([FromBody] MonitorFilterOptions filter)
         {
-            if (!this.memoryCache.TryGetValue("Monitors", out IEnumerable<MonitorViewModel> monitors))
+            IEnumerable<MonitorViewModel> filtered;
+            try
             {
-                return BadRequest("Monitors data not found.");
+                filtered = this.productService.FilterProducts<MonitorViewModel, MonitorFilterOptions>(filter);
             }
-
-            IEnumerable<MonitorViewModel> filtered = this.productService.FilterProducts(monitors, filter);
+            catch (ArgumentNullException)
+            {
+                throw;
+            }
 
             return PartialView("_ProductsPartialView", filtered);
         }

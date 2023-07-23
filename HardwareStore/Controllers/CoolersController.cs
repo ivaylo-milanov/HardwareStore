@@ -3,35 +3,34 @@
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Cooler;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Caching.Memory;
 
     public class CoolersController : Controller
     {
-        private readonly IMemoryCache memoryCache;
         private readonly IProductService productService;
 
-        public CoolersController(IProductService productService, IMemoryCache memoryCache)
+        public CoolersController(IProductService productService)
         {
-            this.memoryCache = memoryCache;
             this.productService = productService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var coolers = await this.productService.GetProductsAsync<CoolerViewModel>();
-            this.memoryCache.Set("Coolers", coolers);
+            var model = await this.productService.GetModel<CoolerViewModel>();
 
-            return View(coolers);
+            return View(model);
         }
 
         public IActionResult FilterCoolers([FromBody] CoolerFilterOptions filter)
         {
-            if (!this.memoryCache.TryGetValue("Coolers", out IEnumerable<CoolerViewModel> coolers))
+            IEnumerable<CoolerViewModel> filtered;
+            try
             {
-                return BadRequest("Coolers data not found.");
+                filtered = this.productService.FilterProducts<CoolerViewModel, CoolerFilterOptions>(filter);
             }
-
-            IEnumerable<CoolerViewModel> filtered = this.productService.FilterProducts(coolers, filter);
+            catch (ArgumentNullException)
+            {
+                throw;
+            }
 
             return PartialView("_ProductsPartialView", filtered);
         }

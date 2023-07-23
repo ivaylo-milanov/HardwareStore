@@ -2,7 +2,7 @@
 import { getURL, returnFilterState } from './state.js';
 import { onFormChange } from './filterSubmit.js';
 
-const form = document.querySelector('.filter form');
+const form = document.querySelector('.page-layout');
 const initialUrl = local.getInitialURL();
 const defaultData = { "Order": "Default" };
 

@@ -1,0 +1,34 @@
+﻿.filter-category {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    width: 250px;
+}
+
+.filter-header {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.filter-values ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.filter-values li {
+    margin-bottom: 10px;
+}
+
+    .filter-values li label {
+        font-size: 14px;
+        color: #666;
+    }
+
+        .filter-values li label input[type=checkbox] {
+            margin-right: 5px;
+        }

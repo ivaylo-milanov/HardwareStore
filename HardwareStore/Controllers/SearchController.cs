@@ -1,38 +1,37 @@
 ﻿namespace HardwareStore.Controllers
 {
     using HardwareStore.Core.Services.Contracts;
-    using HardwareStore.Core.ViewModels.Product;
+    using HardwareStore.Core.ViewModels.Search;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Caching.Memory;
 
     public class SearchController : Controller
     {
         private readonly IProductService productService;
-        private readonly IMemoryCache memoryCache;
 
-        public SearchController(IProductService productService, IMemoryCache memoryCache)
+        public SearchController(IProductService productService)
         {
             this.productService = productService;
-            this.memoryCache = memoryCache;
         }
 
         [HttpPost]
         public async Task<IActionResult> Index(string keyword)
         {
-            var products = await this.productService.GetProductsByKeyword(keyword);
-            this.memoryCache.Set("Products", products);
+            var model = await this.productService.GetSearchModel(keyword);
 
-            return View(products);
+            return View(model);
         }
 
-        public IActionResult FilterSearchedProducts([FromBody] ProductFilterOptions filter)
+        public IActionResult FilterSearchedProducts([FromBody] SearchFilterOptions filter)
         {
-            if (!this.memoryCache.TryGetValue("Products", out IEnumerable<ProductViewModel> products))
+            IEnumerable<SearchViewModel> filtered;
+            try
             {
-                return BadRequest("Searched data not found.");
+                filtered = this.productService.FilterProducts<SearchViewModel, SearchFilterOptions>(filter);
             }
-
-            IEnumerable<ProductViewModel> filtered = this.productService.FilterProducts(products, filter);
+            catch (ArgumentNullException)
+            {
+                throw;
+            }
 
             return PartialView("_ProductsPartialView", filtered);
         }

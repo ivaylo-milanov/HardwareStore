@@ -1,0 +1,28 @@
+﻿@model IEnumerable<FilterCategoryModel>
+
+<div class="filter-categories">
+    @foreach (var filter in Model)
+    {
+            <div class="filter-category">
+        <div class="filter-header">
+            <label>@filter.Title:</label>
+        </div>
+        <div class="filter-values">
+            <ul>
+                    @if (!filter.Values.Contains(""))
+                    {
+                        @foreach (var value in filter.Values)
+                        {
+                                    <li>
+                                        <label>
+                                            <input type="checkbox" name="@filter.Name" value="@value"/> @value
+                                        </label>
+                                    </li>
+                        }
+                    }
+            </ul>
+        </div>
+    </div>
+
+    }
+    </div>

@@ -1,6 +1,7 @@
 ﻿namespace HardwareStore.Controllers
 {
     using HardwareStore.Core.Services.Contracts;
+    using HardwareStore.Core.ViewModels.Home;
     using Microsoft.AspNetCore.Mvc;
 
     public class HomeController : Controller
@@ -17,7 +18,13 @@
             var newProducts = await this.homeService.GetNewProducts();
             var mostBoughtProducts = await this.homeService.GetMostBoughtProducts();
 
-            return View();
+            HomeViewModel model = new HomeViewModel
+            {
+                NewestProducts = newProducts,
+                MostBoughtProducts = mostBoughtProducts
+            };
+
+            return View(model);
         }
     }
 }

@@ -3,35 +3,34 @@
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Ram;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Caching.Memory;
 
     public class RamController : Controller
     {
-        private readonly IMemoryCache memoryCache;
         private readonly IProductService productService;
 
-        public RamController(IProductService productService, IMemoryCache memoryCache)
+        public RamController(IProductService productService)
         {
-            this.memoryCache = memoryCache;
             this.productService = productService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var ram = await this.productService.GetProductsAsync<RamViewModel>();
-            this.memoryCache.Set("Ram", ram);
+            var model = await this.productService.GetModel<RamViewModel>();
 
-            return View(ram);
+            return View(model);
         }
 
         public IActionResult FilterRam([FromBody] RamFilterOptions filter)
         {
-            if (!this.memoryCache.TryGetValue("Ram", out IEnumerable<RamViewModel> ram))
+            IEnumerable<RamViewModel> filtered;
+            try
             {
-                return BadRequest("Ram data not found.");
+                filtered = this.productService.FilterProducts<RamViewModel, RamFilterOptions>(filter);
             }
-
-            IEnumerable<RamViewModel> filtered = this.productService.FilterProducts(ram, filter);
+            catch (ArgumentNullException)
+            {
+                throw;
+            }
 
             return PartialView("_ProductsPartialView", filtered);
         }

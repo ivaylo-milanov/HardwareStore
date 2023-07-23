@@ -7,7 +7,7 @@
 
 /* Style the profile button */
 .profile-button a,
-.card-button a{
+.card-button i{
     background-color: #4CAF50;
     color: white;
     padding: 10px 20px;
@@ -18,6 +18,11 @@
     text-decoration: none; /* For the "Card" button */
     font-size: 16px; /* For the "Card" button */
     border-radius: 4px; /* For the "Card" button */
+}
+
+.card-button i {
+    font-size: 24px; /* Adjust as needed */
+    color: white; /* Adjust as needed */
 }
 
     /* Style the "Login" and "Create account" links */

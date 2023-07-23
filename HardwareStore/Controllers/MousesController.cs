@@ -3,35 +3,34 @@
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Mouse;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Caching.Memory;
 
     public class MousesController : Controller
     {
         private readonly IProductService productService;
-        private readonly IMemoryCache memoryCache;
 
-        public MousesController(IProductService productService, IMemoryCache memoryCache)
+        public MousesController(IProductService productService)
         {
             this.productService = productService;
-            this.memoryCache = memoryCache;
         }
 
         public async Task<IActionResult> Index()
         {
-            var mouses = await this.productService.GetProductsAsync<MouseViewModel>();
-            this.memoryCache.Set("Mouses", mouses);
+            var model = await this.productService.GetModel<MouseViewModel>();
 
-            return View(mouses);
+            return View(model);
         }
 
         public IActionResult FilterMouses([FromBody] MouseFilterOptions filter)
         {
-            if (!this.memoryCache.TryGetValue("Mouses", out IEnumerable<MouseViewModel> mouses))
+            IEnumerable<MouseViewModel> filtered;
+            try
             {
-                return BadRequest("Mouses data not found.");
+                filtered = this.productService.FilterProducts<MouseViewModel, MouseFilterOptions>(filter);
             }
-
-            IEnumerable<MouseViewModel> filtered = this.productService.FilterProducts(mouses, filter);
+            catch (ArgumentNullException)
+            {
+                throw;
+            }
 
             return PartialView("_ProductsPartialView", filtered);
         }

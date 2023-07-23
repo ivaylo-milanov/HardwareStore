@@ -14,5 +14,55 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
+
+footer {
+    margin-top: auto;
+    bottom: 0;
+    width: 100%;
+    background-color: #f9f9f9;
+    border-top: 1px solid #ddd;
+    padding: 20px 0;
+    box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px; /* Adjust as needed */
+    margin: auto;
+    padding: 0 20px; /* Adjust as needed */
+}
+
+    .footer-content p {
+        margin: 0;
+        color: #666;
+    }
+
+.footer-links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+    .footer-links li:not(:last-child) {
+        margin-right: 10px;
+    }
+
+    .footer-links a {
+        color: #333;
+        text-decoration: none;
+        letter-spacing: 1px;
+        font-weight: 600;
+        transition: all 0.2s ease-in-out;
+    }
+
+        .footer-links a:hover {
+            color: #4CAF50;
+            text-decoration: underline;
+        }

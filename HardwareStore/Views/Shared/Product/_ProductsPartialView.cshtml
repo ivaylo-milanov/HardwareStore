@@ -2,25 +2,27 @@
 
 @if (Model.Any())
 {
-    <div class="products">
-        @foreach (var product in Model)
-        {
-              <div class="col">
-                <div class="card h-100">
-                  <img src="..." class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <h5 class="card-title">@product.Name</h5>
-                    <div class="price">@product.Price</div>
-                    <div class="buy-button">
-                        <input asp-action="AddToShoppingCard" asp-controller="ShoppingCard" value="Buy"/>
-                    </div>
-                  </div>
-                </div>
-              </div>
-        }
+    <div class="container">
+        <div class="products-row">
+            @foreach (var product in Model)
+            {
+                        <div class="product-card">
+                            <div class="product-image">
+                            <img src="product-image.jpg" alt="Product Image">
+                            </div>
+                            <div class="product-details">
+                                <h3 class="product-title">Product Title</h3>
+                                <p class="product-price">$99.99</p>
+                                <a class="product-button" href="other">Details</a>
+                            </div>
+                        </div>
+            }
+        </div>
     </div>
-}
+} 
 else
 {
-    <p>There are no products.</p>
+    <div class="center-content">
+        <p class="paragraph-style">There are no products.</p>
+    </div>
 }

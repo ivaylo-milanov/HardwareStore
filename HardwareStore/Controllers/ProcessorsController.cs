@@ -3,35 +3,34 @@
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Processor;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Caching.Memory;
 
     public class ProcessorsController : Controller
     {
         private readonly IProductService productService;
-        private readonly IMemoryCache memoryCache;
 
-        public ProcessorsController(IProductService productService, IMemoryCache memoryCache)
+        public ProcessorsController(IProductService productService)
         {
             this.productService = productService;
-            this.memoryCache = memoryCache;
         }
 
         public async Task<IActionResult> Index()
         {
-            var processors = await this.productService.GetProductsAsync<ProcessorViewModel>();
-            this.memoryCache.Set("Processors", processors);
+            var model = await this.productService.GetModel<ProcessorViewModel>();
 
-            return View(processors);
+            return View(model);
         }
 
         public IActionResult FilterProcessors([FromBody] ProcessorFilterOptions filter)
         {
-            if (!this.memoryCache.TryGetValue("Processors", out IEnumerable<ProcessorViewModel> processors))
+            IEnumerable<ProcessorViewModel> filtered;
+            try
             {
-                return BadRequest("Processors data not found.");
+                filtered = this.productService.FilterProducts<ProcessorViewModel, ProcessorFilterOptions>(filter);
             }
-
-            IEnumerable<ProcessorViewModel> filtered = this.productService.FilterProducts(processors, filter);
+            catch (ArgumentNullException)
+            {
+                throw;
+            }
 
             return PartialView("_ProductsPartialView", filtered);
         }

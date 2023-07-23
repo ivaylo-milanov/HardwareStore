@@ -2,37 +2,35 @@
 {
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Case;
-    using HardwareStore.Core.ViewModels.Product;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Caching.Memory;
 
     public class CasesController : Controller
     {
-        private readonly IMemoryCache memoryCache;
         private readonly IProductService productService;
 
-        public CasesController(IProductService productService, IMemoryCache memoryCache)
+        public CasesController(IProductService productService)
         {
-            this.memoryCache = memoryCache;
             this.productService = productService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var cases = await this.productService.GetProductsAsync<CaseViewModel>();
-            this.memoryCache.Set("Cases", cases);
+            var model = await this.productService.GetModel<CaseViewModel>();
 
-            return View(cases);
+            return View(model);
         }
 
         public IActionResult FilterCases([FromBody] CaseFilterOptions filter)
         {
-            if (!this.memoryCache.TryGetValue("Cases", out IEnumerable<CaseViewModel> cases))
+            IEnumerable<CaseViewModel> filtered;
+            try
             {
-                return BadRequest("Cases data not found.");
+                filtered = this.productService.FilterProducts<CaseViewModel, CaseFilterOptions>(filter);
             }
-
-            IEnumerable<CaseViewModel> filtered = this.productService.FilterProducts(cases, filter);
+            catch (ArgumentNullException)
+            {
+                throw;
+            }
 
             return PartialView("_ProductsPartialView", filtered);
         }
