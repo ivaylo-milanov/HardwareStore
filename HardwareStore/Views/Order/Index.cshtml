@@ -1,5 +1,55 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿<div class="order-page">
+    <div class="order-form">
+        <form id="order-form" action="" method="">
+            <div class="form-container">
+                <h2 class="form-title">Product Order Form</h2>
+                <h3 class="section-title">Personal Data</h3>
+                <div class="form-group">
+                    <label>
+                        First Name <span class="required">*</span>
+                        <input type="text" name="fname" class="form-input" required>
+                    </label>
+                    <label>
+                        Last Name <span class="required">*</span>
+                        <input type="text" name="lname" class="form-input" required>
+                    </label>
+                    <label>
+                        Phone Number <span class="required">*</span>
+                        <input type="tel" name="phone" class="form-input" required>
+                    </label>
+                    <label>
+                        City <span class="required">*</span>
+                        <input type="text" name="city" class="form-input" required>
+                    </label>
+                    <label>
+                        Address <span class="required">*</span>
+                        <input type="text" name="address" class="form-input" required>
+                    </label>
+                </div>
+                <h3 class="section-title">Additional Notes</h3>
+                <div class="form-group">
+                    <textarea name="notes" class="form-input"></textarea>
+                </div>
+                <h3 class="section-title">Payment Method</h3>
+                <div class="form-group payment-method">
+                    <label class="radio-label">
+                        <input type="radio" name="payment" value="credit" class="radio-input" checked>
+                        <span class="checkmark"></span> Credit Card
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="payment" value="debit" class="radio-input">
+                        <span class="checkmark"></span> Debit Card
+                    </label>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="shopping-cart">
+        <h3 class="section-title">Shopping Cart</h3>
+        <div class="order-summary">
+            <p class="total-amount">Total: $<span class="total-price">200</span></p>
+            <p class="delivery-amount">Delivery: $<span class="delivery-price">20</span></p>
+            <button type="submit" form="order-form" class="btn-submit">Place Order</button>
+        </div>
+    </div>
+</div>

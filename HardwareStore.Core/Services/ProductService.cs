@@ -256,15 +256,7 @@
         public async Task<ProductsViewModel<TModel>> GetModel<TModel>() where TModel : ProductViewModel
         {
             var products = await GetProductsAsync<TModel>();
-            var filters = GetFilterCategories(products);
-
-            var model = new ProductsViewModel<TModel>
-            {
-                Products = products,
-                Filters = filters
-            };
-
-            this.memoryCache.Set("Products", products);
+            var model = CreateProductsModel(products);
 
             return model;
         }
@@ -272,12 +264,19 @@
         public async Task<ProductsViewModel<SearchViewModel>> GetSearchModel(string keyword)
         {
             var products = await GetProductsByKeyword(keyword);
+            var model = CreateProductsModel(products);
+
+            return model;
+        }
+
+        private ProductsViewModel<TModel> CreateProductsModel<TModel>(IEnumerable<TModel> products) where TModel : ProductViewModel
+        {
             var filters = GetFilterCategories(products);
 
-            var model = new ProductsViewModel<SearchViewModel>
+            var model = new ProductsViewModel<TModel>
             {
-                Products = products,
-                Filters = filters
+                Filters = filters,
+                Products = products
             };
 
             this.memoryCache.Set("Products", products);
