@@ -1,20 +1,22 @@
 ﻿@model IEnumerable<ProductViewModel>
 
 <div class="products-container">
-    
     @if (Model.Any())
-        {
+    {
         <div class="products-row">
-            @foreach (var product in Model)
+            @foreach (var favorite in Model)
             {
                 <div class="product-card">
                     <div class="product-image">
                         @*<img src="product-image.jpg" alt="Product Image">*@
                     </div>
                     <div class="product-details">
-                        <h3 class="product-title">Product Title</h3>
-                        <p class="product-price">$99.99</p>
-                        <a class="product-button" href="other">Buy</a>
+                        <h3 class="product-title">@favorite.Name</h3>
+                        <p class="product-price">$@favorite.Price</p>
+                        <div class="product-buttons">
+                            <a class="product-button" href="other">Buy</a>
+                            <span>Remove from favorite <button class="remove-favorite">x</button></span>
+                        </div>
                     </div>
                 </div>
             }

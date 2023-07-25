@@ -6,51 +6,9 @@
 
 <section>
     <div class="container">
-        <h2 class="section-title">Newest products</h2>
-        <div class="products-row">
-            <div class="product-card">
-                                <div class="product-image">
-                                <img src="product-image.jpg" alt="Product Image">
-                                </div>
-                                <div class="product-details">
-                                    <h3 class="product-title">Product Title</h3>
-                                    <p class="product-price">$99.99</p>
-                                    <a class="product-button" href="other">Details</a>
-                                </div>
-                            </div>
-                            <div class="product-card">
-                                <div class="product-image">
-                                <img src="product-image.jpg" alt="Product Image">
-                                </div>
-                                <div class="product-details">
-                                    <h3 class="product-title">Product Title</h3>
-                                    <p class="product-price">$99.99</p>
-                                    <a class="product-button" href="other">Details</a>
-                                </div>
-                            </div>
-                            <div class="product-card">
-                                <div class="product-image">
-                                <img src="product-image.jpg" alt="Product Image">
-                                </div>
-                                <div class="product-details">
-                                    <h3 class="product-title">Product Title</h3>
-                                    <p class="product-price">$99.99</p>
-                                    <a class="product-button" href="other">Details</a>
-                                </div>
-                            </div>
-                            <div class="product-card">
-                                <div class="product-image">
-                                <img src="product-image.jpg" alt="Product Image">
-                                </div>
-                                <div class="product-details">
-                                    <h3 class="product-title">Product Title</h3>
-                                    <p class="product-price">$99.99</p>
-                                    <a class="product-button" href="other">Details</a>
-                                </div>
-                            </div>
+        <h2 class="section-title">Most bought products</h2>
+        <partial name="_HomePartialView" model="@Model.MostBoughtProducts"/>
     </div>
-</div>
-
 </section>
 
 <br />
@@ -58,48 +16,6 @@
 <section>
     <div class="container">
         <h2 class="section-title">Newest products</h2>
-        <div class="products-row">
-            <div class="product-card">
-                                <div class="product-image">
-                                <img src="product-image.jpg" alt="Product Image">
-                                </div>
-                                <div class="product-details">
-                                    <h3 class="product-title">Product Title</h3>
-                                    <p class="product-price">$99.99</p>
-                                    <a class="product-button" href="other">Details</a>
-                                </div>
-                            </div>
-                            <div class="product-card">
-                                <div class="product-image">
-                                <img src="product-image.jpg" alt="Product Image">
-                                </div>
-                                <div class="product-details">
-                                    <h3 class="product-title">Product Title</h3>
-                                    <p class="product-price">$99.99</p>
-                                    <a class="product-button" href="other">Details</a>
-                                </div>
-                            </div>
-                            <div class="product-card">
-                                <div class="product-image">
-                                <img src="product-image.jpg" alt="Product Image">
-                                </div>
-                                <div class="product-details">
-                                    <h3 class="product-title">Product Title</h3>
-                                    <p class="product-price">$99.99</p>
-                                    <a class="product-button" href="other">Details</a>
-                                </div>
-                            </div>
-                            <div class="product-card">
-                                <div class="product-image">
-                                <img src="product-image.jpg" alt="Product Image">
-                                </div>
-                                <div class="product-details">
-                                    <h3 class="product-title">Product Title</h3>
-                                    <p class="product-price">$99.99</p>
-                                    <a class="product-button" href="other">Details</a>
-                                </div>
-                            </div>
-            </div>
+        <partial name="_HomePartialView" model="@Model.NewestProducts"/>
     </div>
-
 </section>

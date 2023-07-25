@@ -1,0 +1,42 @@
+﻿<div class="shopping-cart-page">
+    <h2 class="page-title">Shopping Cart</h2>
+
+    <table class="cart">
+        <thead class="cart-headers">
+            <tr>
+                <th class="card-header">Product</th>
+                <th class="card-header">Qunatity</th>
+                <th class="card-header">Price</th>
+                <th class="card-header">Total</th>
+            </tr>
+        </thead>
+        <tbody class="cart-items">
+            <tr class="cart-item">
+                <td class="cart-product-details">
+                    @*<img class="cart-product-image" src="product.jpg" alt="Product Image">*@
+                    <h3 class="cart-product-name">Product Name</h3>
+                </td>
+                <td class="cart-product-quantity">
+                    <button class="quantity-decrease">-</button>
+                    <input type="number" class="quantity-display" value="1" min="1">
+                    <button class="quantity-increase">+</button>
+                    <button class="btn-remove">x</button>
+                </td>
+                <td class="cart-product-price">
+                    <span class="item-price">$99.99</span>
+                </td>
+                <td class="cart-product-total">
+                    <span class="total-price">$99.99</span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="cart-summary">
+        <h3>Order Summary</h3>
+        <p>Subtotal: <span class="cart-subtotal">$0.00</span></p>
+        <p>Tax: <span class="cart-tax">$0.00</span></p>
+        <p>Total: <span class="cart-total">$0.00</span></p>
+        <button class="btn-checkout">Checkout</button>
+    </div>
+</div>

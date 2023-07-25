@@ -14,6 +14,7 @@ namespace HardwareStore
             // Add services to the container.
             builder.Services.AddDatabaseDeveloperPageExceptionFilter();
             builder.Services.AddControllersWithViews();
+            builder.Services.AddDistributedMemoryCache();
 
             builder.Services.ConfigurateDbContext(builder.Configuration);
             builder.Services.AddDropboxService(builder.Configuration);
@@ -39,12 +40,12 @@ namespace HardwareStore
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
+            app.UseSession();
+
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
-
-            app.UseSession();
 
             app.MapControllerRoute(
                 name: "default",

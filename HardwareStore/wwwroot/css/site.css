@@ -66,3 +66,15 @@ footer {
             color: #4CAF50;
             text-decoration: underline;
         }
+
+.container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.products-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}

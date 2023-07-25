@@ -1,6 +1,7 @@
 ﻿namespace HardwareStore.Controllers
 {
     using HardwareStore.Core.Services.Contracts;
+    using HardwareStore.Core.ViewModels.Product;
     using HardwareStore.Extensions;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
@@ -16,9 +17,9 @@
 
         public IActionResult Index()
         {
-            var favorites = GetFavorites();
+            //var favorites = GetFavorites();
 
-            return View(favorites);
+            return View(new List<ProductViewModel>());
         }
 
         public async Task<IActionResult> AddToFavorite(int id)

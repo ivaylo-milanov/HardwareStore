@@ -5,20 +5,20 @@
     using HardwareStore.Extensions;
     using Microsoft.AspNetCore.Mvc;
 
-    public class ShoppingCardController : Controller
+    public class CartController : Controller
     {
         private readonly IShoppingCardService shoppingCardService;
 
-        public ShoppingCardController(IShoppingCardService shoppingCardService)
+        public CartController(IShoppingCardService shoppingCardService)
         {
             this.shoppingCardService = shoppingCardService;
         }
 
         public IActionResult Index()
         {
-            var shoppingCard = GetShoppingCard();
+            //var shoppingCard = GetShoppingCard();
 
-            return View(shoppingCard);
+            return View();
         }
 
         public async Task<IActionResult> AddToShoppingCard(int id, int quantity)
@@ -56,6 +56,6 @@
         }
 
         private List<ShoppingCardModel> GetShoppingCard()
-            => HttpContext.Session.Get<List<ShoppingCardModel>>("Shopping Card") ?? new List<ShoppingCardModel>();
+            => HttpContext.Session.Get<List<ShoppingCardModel>>("Shopping Cart") ?? new List<ShoppingCardModel>();
     }
 }
