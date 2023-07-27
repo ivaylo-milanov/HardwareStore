@@ -1,47 +1,47 @@
 ﻿@model ProductDetailsModel
 
-<div>
+<div class="details-container">
     <div class="image">
-        <img src="" alt=""/>
+        <img class="product-image" src="" alt=""/>
+    </div>
+<div>
+    <h1>@Model.Name</h1>
+    <div>
+        Ref. Number: <strong>@Model.ReferenceNumber</strong>
     </div>
     <div>
-        <h1>@Model.Name</h1>
-        <div>
-            Ref. Number: <strong>@Model.ReferenceNumber</strong>
+        <div class="product-price">
+            <div>@Model.Price</div>
+            <div>lv.</div>
         </div>
-        <div>
-            <div class="price">
-                <div>@Model.Price</div>
-                <div>lv.</div>
-            </div>
-            <span>
-                <input type="number" name="Quantity" value="1" />
-                <button>Buy</button>
-            </span>
-            <span>
-                <a>
-                    <img src="" alt=""/>
-                </a>
-            </span>
-        </div>
-        <div>Specifications</div>
-        <table>
-            <tbody>
-                <tr>
-                    <td>Warranty</td>
-                    <td>@Model.Warranty</td>
-                </tr>
+        <span>
+            <input type="number" name="Quantity" class="quantity-input" value="1" />
+            <button class="buy-button">Buy</button>
+        </span>
+        <span>
+            <a>
+                <img src="" alt=""/>
+            </a>
+        </span>
+    </div>
+    <div>Specifications</div>
+    <table class="specifications-table">
+        <tbody>
+            <tr>
+                <td class="table-cell">Warranty</td>
+                <td class="table-cell">@Model.Warranty</td>
+            </tr>
                 @foreach (var characteristic in Model.Attributes)
                 {
-                    <tr>
-                        <td>@characteristic.Name</td>
-                        <td>@characteristic.Value</td>
-                    </tr>
+                <tr>
+                    <td class="table-cell">@characteristic.Name</td>
+                    <td class="table-cell">@characteristic.Value</td>
+                </tr>
                 }
-            </tbody>
-        </table>
-    </div>
-    <div class="description">
-        <p>@Model.Description</p>
-    </div>
+        </tbody>
+    </table>
+</div>
+<div class="product-description">
+    <p>@Model.Description</p>
+</div>
 </div>

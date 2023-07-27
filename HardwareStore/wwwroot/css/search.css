@@ -1,10 +1,8 @@
-﻿/* Style the search form container */
-.search-form-container {
+﻿.search-form-container {
     display: flex;
     align-items: center;
 }
 
-/* Style the search input box */
 .search-input-container {
     padding-right: 8px;
 }
@@ -18,7 +16,6 @@
     outline: none;
 }
 
-/* Style the search submit button */
 .search-submit {
     background-color: #4CAF50;
     color: white;
@@ -28,7 +25,6 @@
     cursor: pointer;
 }
 
-    /* Change the search submit button color on hover */
-    .search-submit:hover {
-        background-color: #45a049;
-    }
+.search-submit:hover {
+    background-color: #45a049;
+}

@@ -1,11 +1,9 @@
-﻿/* Style the profile menu container */
-.profile-menu-container {
+﻿.profile-menu-container {
     display: inline-block;
     text-align: center;
     position: relative;
 }
 
-/* Style the profile button */
 .profile-button a,
 .card-button i{
     background-color: #4CAF50;
@@ -15,33 +13,31 @@
     cursor: pointer;
     display: inline-block;
     text-align: center;
-    text-decoration: none; /* For the "Card" button */
-    font-size: 16px; /* For the "Card" button */
-    border-radius: 4px; /* For the "Card" button */
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 4px;
 }
 
 .card-button i {
-    font-size: 24px; /* Adjust as needed */
-    color: white; /* Adjust as needed */
+    font-size: 24px;
+    color: white;
 }
 
-    /* Style the "Login" and "Create account" links */
-    .profile-button a {
-        display: block;
-        text-decoration: none;
-        color: white;
-    }
+.profile-button a {
+    display: block;
+    text-decoration: none;
+    color: white;
+}
 
-    /* Style the "Create account" subtext */
-    .profile-button .subtext {
-        font-size: 80%;
-        margin-top: 5px;
-        color: white;
-        text-decoration: none;
-    }
+.profile-button .subtext {
+    font-size: 80%;
+    margin-top: 5px;
+    color: white;
+    text-decoration: none;
+}
 
-/* Style the profile menu */
-.profile-menu {
+.profile-menu,
+.login-menu {
     display: none;
     position: absolute;
     transform: translateX(-50%);
@@ -53,16 +49,23 @@
     white-space: nowrap;
 }
 
-/* Style the login form inside the profile menu */
+.profile-menu a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    margin-bottom: 5px;
+    display: block;
+    width: 200px;
+}
+
 .login {
     display: flex;
     flex-direction: column;
-    max-width: 300px; /* Limit the form width for better aesthetics */
+    max-width: 300px;
 }
 
-/* Style the login input fields */
 .login-input {
-    margin-bottom: 10px; /* Add some spacing between the input fields */
+    margin-bottom: 10px;
     padding: 8px;
     font-size: 16px;
     border: 1px solid #ccc;
@@ -70,20 +73,17 @@
     outline: none;
 }
 
-/* Style the "Register" link inside the form */
 .login a {
     text-decoration: none;
     color: #333;
 }
 
-/* Style the button container to make the links appear next to each other */
 .button-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
-/* Style the login button */
 .login-button {
     background-color: #4CAF50;
     color: white;
@@ -93,14 +93,17 @@
     cursor: pointer;
 }
 
-    /* Change the login button color on hover */
-    .login-button:hover {
-        background-color: #45a049;
-    }
+.login-button:hover {
+    background-color: #45a049;
+}
 
-/* Show the profile menu when hovering over the profile button or the menu itself */
 .profile-menu-container:hover .profile-menu,
 .profile-menu-container:focus-within .profile-menu {
+    display: block;
+}
+
+.profile-menu-container:hover .login-menu,
+.profile-menu-container:focus-within .login-menu {
     display: block;
 }
 

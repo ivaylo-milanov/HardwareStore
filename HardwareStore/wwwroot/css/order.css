@@ -105,9 +105,9 @@
     width: 100%;
 }
 
-    .btn-submit:hover {
-        background-color: #45a049;
-    }
+.btn-submit:hover {
+    background-color: #45a049;
+}
 
 .shopping-cart {
     flex: 1 0 30%;
@@ -125,8 +125,8 @@
     margin-bottom: 10px;
 }
 
-    .total-amount .total-price,
-    .delivery-amount .delivery-price {
-        font-size: 22px;
-        color: #52ad9c;
-    }
+.total-amount .total-price,
+.delivery-amount .delivery-price {
+    font-size: 22px;
+    color: #52ad9c;
+}

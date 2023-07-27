@@ -1,4 +1,6 @@
-﻿const select = document.querySelector('.order select');
+﻿import * as local from './utils.js';
+
+const select = document.querySelector('.order select');
 
 export function getURL(data) {
     return window.location.pathname + buildQueryString(data);
@@ -29,6 +31,8 @@ export function returnFilterState(data) {
             });
         }
     }
+
+    local.setData('filterData', data);
 }
 
 function buildQueryString(data) {

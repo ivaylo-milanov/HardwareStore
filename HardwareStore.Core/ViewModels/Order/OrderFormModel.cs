@@ -1,9 +1,44 @@
 ﻿namespace HardwareStore.Core.ViewModels.Order
 {
+    using HardwareStore.Common;
+    using HardwareStore.Infrastructure.Models.Enums;
+    using System.ComponentModel.DataAnnotations;
+
     public class OrderFormModel
     {
         public DateTime OrderDate { get; set; }
 
-        public int MyProperty { get; set; }
+        [Required]
+        [MaxLength(GlobalConstants.CustomerFirstNameMaxLength)]
+        public string FirstName { get; set; } = null!;
+
+        [Required]
+        [MaxLength(GlobalConstants.CustomerLastNameMaxLength)]
+        public string LastName { get; set; } = null!;
+
+        [Required]
+        [MaxLength(GlobalConstants.CustomerPhoneMaxLength)]
+        public string Phone { get; set; } = null!;
+
+        [Required]
+        [MaxLength(GlobalConstants.CustomerCityMaxLength)]
+        public string City { get; set; } = null!;
+
+        [Required]
+        [MaxLength(GlobalConstants.CustomerAreaMaxLength)]
+        public string Area { get; set; } = null!;
+
+        [Required]
+        [MaxLength(GlobalConstants.CustomerAddressMaxLength)]
+        public string Address { get; set; } = null!;
+
+        [Required]
+        public decimal TotalAmount { get; set; }
+
+        [Required]
+        public OrderStatus OrderStatus { get; set; }
+
+        [Required]
+        public PaymentMethod PaymentMethod { get; set; }
     }
 }

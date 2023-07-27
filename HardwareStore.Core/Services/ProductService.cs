@@ -159,6 +159,7 @@
         {
             var products = await this.repository
                 .AllReadonly<Product>()
+                .Include(p => p.Manufacturer)
                 .ToListAsync();
 
             var filtered = products
@@ -178,10 +179,8 @@
 
         private bool ContainsKeyword(Product product, string keyword)
             => product.Name.ToLower().Contains(keyword) ||
-               product.Price.ToString().ToLower().Contains(keyword) ||
                product.Manufacturer.Name.ToLower().Contains(keyword) ||
                (product.Description != null && product.Description.ToLower().Contains(keyword)) ||
-               (product.Model != null && product.Description.ToLower().Contains(keyword)) ||
                product.Characteristics.Any(pa => pa.Value.ToLower().Contains(keyword));
 
         public async Task<ProductDetailsModel> GetProductDetails(int id)

@@ -40,11 +40,22 @@
         {
             Customer user = new Customer
             {
-                UserName = model.UserName,
-                Email = model.Email
+                UserName = model.Email,
+                Email = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Phone = model.Phone,
+                City = model.City,
+                Area = model.Area,
+                Address = model.Address
             };
 
             var result = await userManager.CreateAsync(user, model.Password);
+
+            if (result.Succeeded)
+            {
+                await signInManager.SignInAsync(user, isPersistent: false);
+            }
 
             return result;
         }

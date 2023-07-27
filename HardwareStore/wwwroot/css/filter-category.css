@@ -24,11 +24,11 @@
     margin-bottom: 10px;
 }
 
-    .filter-values li label {
-        font-size: 14px;
-        color: #666;
-    }
+.filter-values li label {
+    font-size: 14px;
+    color: #666;
+}
 
-        .filter-values li label input[type=checkbox] {
-            margin-right: 5px;
-        }
+.filter-values li label input[type=checkbox] {
+    margin-right: 5px;
+}

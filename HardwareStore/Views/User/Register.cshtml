@@ -1,36 +1,99 @@
 ﻿@model RegisterFormModel
 
-<div>
-    <div class="register-form-container">
-        <h1>Register</h1>
-        <form id="registerForm" method="post" class="register-form">
-            <hr />
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label for="userName">Username</label>
-                <input aria-required="true" asp-for="@Model.UserName" id="userName" class="form-control" />
-                <span asp-validation-for="@Model.UserName" class="text-danger"></span>
-            </div>
+<div class="register-form-container">
+    <h1>Register</h1>
+    <form id="registerForm" method="post" class="register-form">
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <section>
+            <h2>Account Details</h2>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input aria-required="true" asp-for="@Model.Email" id="email" class="form-control" />
+                <input type="email" aria-required="true" name="Email" id="email" class="form-control" />
                 <span asp-validation-for="@Model.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" aria-required="true" asp-for="@Model.Password" id="password" class="form-control" />
+                <input type="password" aria-required="true" name="Password" id="password" class="form-control" />
                 <span asp-validation-for="@Model.Password" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label for="confirmPassword">Confirm Password</label>
-                <input type="password" aria-required="true" asp-for="@Model.ConfirmPassword" id="confirmPassword" class="form-control" />
+                <input type="password" aria-required="true" name="ConfirmPassword" id="confirmPassword" class="form-control" />
                 <span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
             </div>
+        </section>
+
+        <section>
+            <h2>Personal Details</h2>
             <div class="form-group">
-                <button id="registerSubmit" type="submit" class="btn btn-primary">Register</button>
+                <label for="first-name">First Name</label>
+                <input type="text" aria-required="true" name="FirstName" id="first-name" class="form-control" />
+                <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
             </div>
-        </form>
-    </div>
+            <div class="form-group">
+                <label for="last-name">Last Name</label>
+                <input type="text" aria-required="true" name="LastName" id="last-name" class="form-control" />
+                <span asp-validation-for="@Model.LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone</label>
+                <input type="text" aria-required="true" name="Phone" id="phone" class="form-control" />
+                <span asp-validation-for="@Model.Phone" class="text-danger"></span>
+            </div>
+        </section>
+
+        <section>
+            <h2>Address</h2>
+            <div class="form-group">
+                <label for="area">Area</label>
+                <select aria-required="true" name="Area" id="area" class="form-select">
+                    <option>Blagoevgrad</option>
+                    <option>Burgas</option>
+                    <option>Varna</option>
+                    <option>Veliko Tarnovo</option>
+                    <option>Vidin</option>
+                    <option>Vratsa</option>
+                    <option>Gabrovo</option>
+                    <option>Dobrich</option>
+                    <option>Kardjali</option>
+                    <option>Kustendil</option>
+                    <option>Lovech</option>
+                    <option>Montana</option>
+                    <option>Pazardjic</option>
+                    <option>Pernik</option>
+                    <option>Pleven</option>
+                    <option>Razgrad</option>
+                    <option>Ruse</option>
+                    <option>Silistra</option>
+                    <option>Sliven</option>
+                    <option>Smolyan</option>
+                    <option>Sofia</option>
+                    <option>Sofia Area</option>
+                    <option>Stara Zagora</option>
+                    <option>Targovishte</option>
+                    <option>Haskovo</option>
+                    <option>Shumen</option>
+                    <option>Yambol</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="city">City</label>
+                <input type="text" aria-required="true" name="City" id="city" class="form-control" />
+                <span asp-validation-for="@Model.City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label for="address">Address</label>
+                <input type="text" aria-required="true" name="Address" id="address" class="form-control" />
+                <span asp-validation-for="@Model.Address" class="text-danger"></span>
+            </div>
+        </section>
+
+        <div class="form-group">
+            <button id="registerSubmit" type="submit" class="btn btn-primary">Register</button>
+        </div>
+    </form>
 </div>
 
 

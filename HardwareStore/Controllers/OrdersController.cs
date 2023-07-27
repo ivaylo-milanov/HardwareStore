@@ -1,9 +1,11 @@
 ﻿namespace HardwareStore.Controllers
 {
     using HardwareStore.Infrastructure.Models;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
+    [Authorize]
     public class OrdersController : Controller
     {
         private readonly UserManager<Customer> userManager;

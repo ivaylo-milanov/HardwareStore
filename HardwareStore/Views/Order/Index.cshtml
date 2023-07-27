@@ -1,17 +1,18 @@
-﻿<div class="order-page">
+﻿@model OrderFormModel
+
+<div class="order-page">
     <div class="order-form">
-        <form id="order-form" action="" method="">
+        <form id="order-form" asp-action="" method="post">
             <div class="form-container">
                 <h2 class="form-title">Product Order Form</h2>
                 <h3 class="section-title">Personal Data</h3>
                 <div class="form-group">
-                    <label>
-                        First Name <span class="required">*</span>
-                        <input type="text" name="fname" class="form-input" required>
-                    </label>
+                    <label for="">First Name <span class="required">*</span></label>
+                    <input type="text" name="FirstName" class="form-input" required>
+                    <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
                     <label>
                         Last Name <span class="required">*</span>
-                        <input type="text" name="lname" class="form-input" required>
+                        <input type="text" name="LastName" class="form-input" required>
                     </label>
                     <label>
                         Phone Number <span class="required">*</span>

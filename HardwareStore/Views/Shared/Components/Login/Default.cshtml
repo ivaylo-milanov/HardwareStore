@@ -1,0 +1,14 @@
+﻿@model LoginFormModel
+
+<form class="login" method="post" asp-action="EasyLogin" asp-controller="User">
+    <div>
+        <input type="email" name="Email" placeholder="Email" class="login-input" />
+    </div>
+    <div>
+        <input type="password" autocomplete="off" name="Password" placeholder="Password" class="login-input" />
+    </div>
+    <div class="button-container">
+        <a asp-action="Register" asp-controller="User">Register</a>
+        <input type="submit" value="Login" class="login-button" />
+    </div>
+</form>

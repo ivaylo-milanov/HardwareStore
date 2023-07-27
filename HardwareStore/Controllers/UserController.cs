@@ -13,11 +13,12 @@
             this.userService = userService;
         }
 
-        public async Task<IActionResult> EasyLogin([FromBody] LoginFormModel model)
+        [HttpPost]
+        public async Task<IActionResult> EasyLogin(LoginFormModel model)
         {
             if (!ModelState.IsValid)
             {
-                return RedirectToAction("Login", "User");
+                return RedirectToAction(nameof(Login));
             }
 
             var result = await userService.LoginAsync(model);
@@ -27,7 +28,7 @@
                 return RedirectToAction("Index", "Home");
             }
 
-            return RedirectToAction("Login", "User");
+            return RedirectToAction(nameof(Login));
         }
 
         public IActionResult Login()

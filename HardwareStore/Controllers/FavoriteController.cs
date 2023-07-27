@@ -3,9 +3,11 @@
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Product;
     using HardwareStore.Extensions;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
+    [Authorize]
     public class FavoriteController : Controller
     {
         private readonly IFavoriteService favoriteService;

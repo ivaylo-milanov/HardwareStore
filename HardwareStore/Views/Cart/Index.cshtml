@@ -17,10 +17,10 @@
                     <h3 class="cart-product-name">Product Name</h3>
                 </td>
                 <td class="cart-product-quantity">
-                    <button class="quantity-decrease">-</button>
-                    <input type="number" class="quantity-display" value="1" min="1">
-                    <button class="quantity-increase">+</button>
-                    <button class="btn-remove">x</button>
+                    <a class="quantity-decrease">-</a>
+                    <input type="text" class="quantity-display" value="1" min="1">
+                    <a class="quantity-increase">+</a>
+                    <a class="btn-remove">x</a>
                 </td>
                 <td class="cart-product-price">
                     <span class="item-price">$99.99</span>
@@ -35,8 +35,11 @@
     <div class="cart-summary">
         <h3>Order Summary</h3>
         <p>Subtotal: <span class="cart-subtotal">$0.00</span></p>
-        <p>Tax: <span class="cart-tax">$0.00</span></p>
         <p>Total: <span class="cart-total">$0.00</span></p>
         <button class="btn-checkout">Checkout</button>
     </div>
 </div>
+
+@section Scripts {
+    <script src="~/js/shopping-cart.js"></script>
+}

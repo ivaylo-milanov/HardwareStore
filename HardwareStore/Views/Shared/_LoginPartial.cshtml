@@ -6,36 +6,23 @@
     <div class="profile-menu-container">
         @if (SignInManager.IsSignedIn(User))
         {
-            <div>
-                <a class="profile-button" asp-action="Index" asp-controller="Profile">Profile</a>
+            <div class="profile-button">
+                <a asp-action="Index" asp-controller="Profile">Profile</a>
             </div>
             <div class="profile-menu">
                 <a asp-action="Index" asp-controller="Profile">Profile</a>
                 <a asp-action="Index" asp-controller="Orders">Orders</a>
                 <a asp-action="Index" asp-controller="Favorite">Favorite</a>
-                <a asp-action="Logout" asp-controller="User" href="#">Logout</a>
+                <a asp-action="Logout" asp-controller="User">Logout</a>
             </div>
         }
         else
         {
-            <div class="profile-menu-container">
-                <div class="profile-button">
-                    <a asp-action="Login" asp-controller="User">Login</a>
-                </div>
-                <div class="profile-menu">
-                    <form class="login" method="get">
-                        <div>
-                            <input type="email" name="Email" placeholder="Email" class="login-input" />
-                        </div>
-                        <div>
-                            <input type="password" autocomplete="off" name="Password" placeholder="Password" class="login-input" />
-                        </div>
-                        <div class="button-container">
-                            <a asp-action="Register" asp-controller="User">Register</a>
-                            <input type="submit" value="Login" class="login-button" />
-                        </div>
-                    </form>
-                </div>
+            <div class="profile-button">
+                <a asp-action="Login" asp-controller="User">Login</a>
+            </div>
+            <div class="login-menu">
+                @await Component.InvokeAsync("Login")
             </div>
         }
     </div>

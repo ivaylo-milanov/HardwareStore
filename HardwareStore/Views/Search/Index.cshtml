@@ -1,22 +1,20 @@
-﻿@model IEnumerable<ProductViewModel>
+﻿@model ProductsViewModel<SearchViewModel>
 
+<div class="page-title">
+    <h1>Search</h1>
+</div>
 <div>
-    <div class="filter">
-        <form method="get" data-url="@Url.Action("FilterSearchedProducts", "Search")" data-container="#products">
-            <div class="filter-categories">
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(ProductViewModel.Manufacturer),
-                    values = Model.Select(p => p.Manufacturer).Distinct()
-                })
-            </div>
+    <form class="page-layout" method="get" data-url="@Url.Action("FilterSearchedProducts", "Search")" data-container="#products">
+        <partial name="_FilterPartialView" model="@Model.Filters"/>
+        <div class="content-container">
             <div class="additional-filters">
                 <partial name="_OrderPartialView"/>
             </div>
-        </form>
-    </div>
-    <div id="products">
-        <partial name="_ProductsPartialView" model="Model"/>
-    </div>
+            <div id="products">
+                <partial name="_ProductsPartialView" model="@Model.Products"/>
+            </div>
+        </div>
+    </form>
 </div>
 
 @section Scripts {

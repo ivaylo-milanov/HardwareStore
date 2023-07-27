@@ -9,13 +9,9 @@ const defaultData = { "Order": "Default" };
 function setInitialData() {
     let initialData = null;
 
-    if (performance.navigation.type == 0) {
-        local.removeData('filterData');
-    } else {
-        const savedData = local.getData('filterData');
-        initialData = savedData;
-        returnFilterState(initialData || defaultData);
-    }
+    const savedData = local.getData('filterData');
+    initialData = savedData;
+    returnFilterState(initialData || defaultData);
 
     replaceState(initialData || defaultData);
 

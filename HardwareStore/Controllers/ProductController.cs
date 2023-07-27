@@ -13,12 +13,12 @@
             this.productService = productService;
         }
 
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int productId)
         {
             ProductDetailsModel model;
             try
             {
-                model = await this.productService.GetProductDetails(id);
+                model = await this.productService.GetProductDetails(productId);
             }
             catch (ArgumentNullException)
             {

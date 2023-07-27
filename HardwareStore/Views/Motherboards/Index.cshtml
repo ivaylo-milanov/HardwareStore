@@ -3,19 +3,17 @@
 <div class="page-title">
     <h1>Motherboards</h1>
 </div>
-<div>
-        <form class="page-layout" method="get" data-url="@Url.Action("FilterMotherboards", "Motherboards")" data-container="#motherboards">
-            <partial name="_FilterPartialView" model="@Model.Filters"/>
-            <div class="content-container">
-                <div class="additional-filters">
-                    <partial name="_OrderPartialView"/>
-                </div>
-                <div id="motherboards">
-                    <partial name="_ProductsPartialView" model="Model.Products"/>
-                </div>
-            </div>
-        </form>
+<form class="page-layout" method="get" data-url="@Url.Action("FilterMotherboards", "Motherboards")" data-container="#motherboards">
+    <partial name="_FilterPartialView" model="@Model.Filters"/>
+    <div class="content-container">
+        <div class="additional-filters">
+            <partial name="_OrderPartialView"/>
+        </div>
+        <div id="motherboards">
+            <partial name="_ProductsPartialView" model="@Model.Products"/>
+        </div>
     </div>
+</form>
 
 @section Scripts {
         <script type="module" src="~/js/filter.js"></script>

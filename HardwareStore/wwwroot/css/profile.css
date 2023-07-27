@@ -6,9 +6,9 @@
     background-color: #fff;
     font-family: 'Montserrat', sans-serif;
     color: #333;
-    width: 100%; /* Increase the width from 70% to 80% */
+    width: 100%;
     margin: auto;
-    padding: 50px; /* Increase the padding from 30px to 50px */
+    padding: 50px;
     border-radius: 10px;
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
 }
@@ -18,39 +18,38 @@
     font-weight: 600;
     color: #444;
     text-align: center;
-    margin-bottom: 30px; /* Increase the margin-bottom from 20px to 30px */
+    margin-bottom: 30px;
 }
 
 .profile-details {
     text-align: center;
-    margin-top: 30px; /* Increase the margin-top from 20px to 30px */
+    margin-top: 30px;
 }
 
 .profile-email {
-    font-size: 18px; /* Increase the font-size from 16px to 18px */
+    font-size: 18px;
     color: #666;
-    margin-bottom: 15px; /* Increase the margin-bottom from 10px to 15px */
+    margin-bottom: 15px;
 }
 
 .profile-address {
     text-align: center;
-    margin-top: 40px; /* Increase the margin-top from 30px to 40px */
+    margin-top: 40px;
 }
 
 .profile-fullname, .profile-city {
-    font-size: 24px; /* Increase the font-size from 22px to 24px */
+    font-size: 24px;
     color: #555;
     font-weight: 400;
-    margin-bottom: 10px; /* Increase the margin-bottom from 5px to 10px */
+    margin-bottom: 10px;
 }
 
 .profile-address-line {
-    font-size: 20px; /* Increase the font-size from 18px to 20px */
+    font-size: 20px;
     color: #777;
-    margin-top: 10px; /* Increase the margin-top from 5px to 10px */
+    margin-top: 10px;
 }
 
-/* Header Styling */
 .profile-title {
     width: 100%;
     background-color: #2e8b57;
@@ -61,10 +60,10 @@
     z-index: 10;
 }
 
-    .profile-title h1 {
-        color: #fff;
-        font-size: 24px;
-        text-align: center;
-        font-family: 'Montserrat', sans-serif;
-    }
+.profile-title h1 {
+    color: #fff;
+    font-size: 24px;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+}
 
