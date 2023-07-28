@@ -2,7 +2,6 @@
 {
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Product;
-    using HardwareStore.Extensions;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
@@ -24,41 +23,41 @@
             return View(new List<ProductViewModel>());
         }
 
-        public async Task<IActionResult> AddToFavorite(int id)
-        {
-            List<int> favorites;
-            try
-            {
-                favorites = await this.favoriteService.AddToFavoriteAsync(GetFavorites(), id);
-            }
-            catch (ArgumentNullException)
-            {
-                throw;
-            }
+        //public async Task<IActionResult> AddToFavorite(int id)
+        //{
+        //    List<int> favorites;
+        //    try
+        //    {
+        //        favorites = await this.favoriteService.AddToFavoriteAsync(GetFavorites(), id);
+        //    }
+        //    catch (ArgumentNullException)
+        //    {
+        //        throw;
+        //    }
 
-            HttpContext.Session.Set("Favorites", favorites);
+        //    HttpContext.Session.Set("Favorites", favorites);
 
-            return View();
-        }
+        //    return View();
+        //}
 
-        public async Task<IActionResult> RemoveFromFavorite(int id)
-        {
-            List<int> favorites;
-            try
-            {
-                favorites = await this.favoriteService.RemoveFromFavoriteAsync(GetFavorites(), id);
-            }
-            catch (ArgumentNullException)
-            {
-                throw;
-            }
+        //public async Task<IActionResult> RemoveFromFavorite(int id)
+        //{
+        //    List<int> favorites;
+        //    try
+        //    {
+        //        favorites = await this.favoriteService.RemoveFromFavoriteAsync(GetFavorites(), id);
+        //    }
+        //    catch (ArgumentNullException)
+        //    {
+        //        throw;
+        //    }
 
-            HttpContext.Session.Set("Favorites", favorites);
+        //    HttpContext.Session.Set("Favorites", favorites);
 
-            return View();
-        }
+        //    return View();
+        //}
 
-        private List<int> GetFavorites()
-            => HttpContext.Session.Get<List<int>>("Favorites") ?? new List<int>();
+        //private List<int> GetFavorites()
+        //    => HttpContext.Session.Get<List<int>>("Favorites") ?? new List<int>();
     }
 }

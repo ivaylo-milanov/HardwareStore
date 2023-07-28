@@ -29,6 +29,7 @@
         {
             builder.ApplyConfiguration(new ProductOrderConfiguration());
             builder.ApplyConfiguration(new CustomerConfiguration());
+            builder.ApplyConfiguration(new ShoppingCartItemConfiguration());
             
             base.OnModelCreating(builder);
         }

@@ -1,61 +1,101 @@
 ﻿namespace HardwareStore.Controllers
 {
     using HardwareStore.Core.Services.Contracts;
-    using HardwareStore.Core.ViewModels.ShoppingCard;
-    using HardwareStore.Extensions;
+    using HardwareStore.Core.ViewModels.ShoppingCart;
     using Microsoft.AspNetCore.Mvc;
 
     public class CartController : Controller
     {
-        private readonly IShoppingCardService shoppingCardService;
+        private readonly IShoppingCartService shoppingCartService;
 
-        public CartController(IShoppingCardService shoppingCardService)
+        public CartController(IShoppingCartService shoppingCartService)
         {
-            this.shoppingCardService = shoppingCardService;
+            this.shoppingCartService = shoppingCartService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            //var shoppingCard = GetShoppingCard();
-
-            return View();
-        }
-
-        public async Task<IActionResult> AddToShoppingCard(int id, int quantity)
-        {
-            List<ShoppingCardModel> shoppingCard;
+            ShoppingCartViewModel shoppingCart;
             try
             {
-                shoppingCard = await this.shoppingCardService.AddToShoppingCardAsync(GetShoppingCard(), id, quantity);
+                if (User?.Identity?.IsAuthenticated ?? false)
+                {
+                    shoppingCart = await this.shoppingCartService.GetDatabaseShoppingCartAsync();
+                }
+                else
+                {
+                    shoppingCart = await this.shoppingCartService.GetSessionShoppingCartAsync();
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+
+            return View(shoppingCart);
+        }
+
+        public async Task<IActionResult> AddToShoppingCart(int productId, int quantity)
+        {
+            try
+            {
+                if (User?.Identity?.IsAuthenticated ?? false)
+                {
+                    await this.shoppingCartService.AddToDatabaseShoppingCartAsync(productId, quantity);
+                }
+                else
+                {
+                    await this.shoppingCartService.AddToSessionShoppingCartAsync(productId, quantity);
+                }
             }
             catch (ArgumentNullException)
             {
                 throw;
             }
 
-            HttpContext.Session.Set("Shopping Card", shoppingCard);
-
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> RemoveFromFavorite(int id)
+        public async Task<IActionResult> RemoveFromShoppingCart(int productId)
         {
-            List<ShoppingCardModel> shoppingCard;
             try
             {
-                shoppingCard = await this.shoppingCardService.RemoveFromShoppingCardAsync(GetShoppingCard(), id);
+                if (User?.Identity?.IsAuthenticated ?? false)
+                {
+                    await this.shoppingCartService.RemoveFromDatabaseShoppingCartAsync(productId);
+                }
+                else
+                {
+                    await this.shoppingCartService.RemoveFromSessionShoppingCartAsync(productId);
+                }
             }
             catch (ArgumentNullException)
             {
                 throw;
             }
 
-            HttpContext.Session.Set("Shopping Card", shoppingCard);
-
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
-        private List<ShoppingCardModel> GetShoppingCard()
-            => HttpContext.Session.Get<List<ShoppingCardModel>>("Shopping Cart") ?? new List<ShoppingCardModel>();
+        public async Task<IActionResult> DecreaseItemQuantity([FromBody] int productId)
+        {
+            try
+            {
+                if (User?.Identity?.IsAuthenticated ?? false)
+                {
+                    await this.shoppingCartService.DecreaseDatabaseItemQuantityAsync(productId);
+                }
+                else
+                {
+                    await this.shoppingCartService.DecreaseSessionItemQuantityAsync(productId);
+                }
+            }
+            catch (ArgumentNullException)
+            {
+                throw;
+            }
+
+            return Json(new { productId });
+        }
     }
 }

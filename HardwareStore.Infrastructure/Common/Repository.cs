@@ -47,5 +47,10 @@
         public async Task<T> FindAsync<T>(object id) where T : class
             => await Set<T>()
                 .FindAsync(id);
+
+        public async Task SaveChangesAsync()
+        {
+            await this.context.SaveChangesAsync();
+        }
     }
 }

@@ -11,6 +11,7 @@
         public Customer()
         {
             this.Orders = new HashSet<ProductOrder>();
+            this.ShoppingCartItems = new HashSet<ShoppingCartItem>();
         }
 
         [Comment("customer first name")]
@@ -44,5 +45,7 @@
         public string Address { get; set; } = null!; 
  
         public virtual ICollection<ProductOrder> Orders { get; set; } = null!;
+
+        public virtual ICollection<ShoppingCartItem> ShoppingCartItems { get; set; } = null!;
     }
 }

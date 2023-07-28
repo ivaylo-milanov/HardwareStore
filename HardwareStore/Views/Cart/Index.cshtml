@@ -1,4 +1,6 @@
-﻿<div class="shopping-cart-page">
+﻿@model ShoppingCartViewModel
+
+<div class="shopping-cart-page">
     <h2 class="page-title">Shopping Cart</h2>
 
     <table class="cart">
@@ -11,35 +13,38 @@
             </tr>
         </thead>
         <tbody class="cart-items">
-            <tr class="cart-item">
-                <td class="cart-product-details">
-                    @*<img class="cart-product-image" src="product.jpg" alt="Product Image">*@
-                    <h3 class="cart-product-name">Product Name</h3>
-                </td>
-                <td class="cart-product-quantity">
-                    <a class="quantity-decrease">-</a>
-                    <input type="text" class="quantity-display" value="1" min="1">
-                    <a class="quantity-increase">+</a>
-                    <a class="btn-remove">x</a>
-                </td>
-                <td class="cart-product-price">
-                    <span class="item-price">$99.99</span>
-                </td>
-                <td class="cart-product-total">
-                    <span class="total-price">$99.99</span>
-                </td>
-            </tr>
+            @foreach (var shopping in Model.Shoppings)
+            {
+                <tr class="cart-item">
+                    <td class="cart-product-details">
+                        @*<img class="cart-product-image" src="product.jpg" alt="Product Image">*@
+                        <h3 class="cart-product-name">@shopping.Name</h3>
+                    </td>
+                    <td class="cart-product-quantity">
+                        <a data-product-id="@shopping.ProductId" class="quantity-decrease">-</a>
+                        <input type="text" class="quantity-display" value="@shopping.Quantity" min="1">
+                        <a class="quantity-increase">+</a>
+                        <a asp-action="RemoveFromShoppingCart" asp-controller="Cart" asp-route-productId="@shopping.ProductId" class="btn-remove">x</a>
+                    </td>
+                    <td class="cart-product-price">
+                        <span class="item-price">$@shopping.Price</span>
+                    </td>
+                    <td class="cart-product-total">
+                        <span class="total-price">@shopping.TotalPrice</span>
+                    </td>
+                </tr>
+            }
         </tbody>
     </table>
 
     <div class="cart-summary">
         <h3>Order Summary</h3>
-        <p>Subtotal: <span class="cart-subtotal">$0.00</span></p>
-        <p>Total: <span class="cart-total">$0.00</span></p>
+        <p>Subtotal: <span class="cart-subtotal">$@Model.TotalCartPrice</span></p>
+        <p>Total: <span class="cart-total">$@Model.TotalCartPrice</span></p>
         <button class="btn-checkout">Checkout</button>
     </div>
 </div>
 
 @section Scripts {
-    <script src="~/js/shopping-cart.js"></script>
+    <script type="module" src="~/js/shopping-cart.js"></script>
 }

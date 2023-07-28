@@ -1,6 +1,6 @@
-﻿namespace HardwareStore.Core.ViewModels.ShoppingCard
+﻿namespace HardwareStore.Core.ViewModels.ShoppingCart
 {
-    public class ShoppingCardModel
+    public class ShoppingCartExportModel
     {
         public int ProductId { get; set; }
 

@@ -16,5 +16,7 @@
         IQueryable<T> AllReadonly<T>(Expression<Func<T, bool>> search) where T : class;
 
         Task<T> FindAsync<T>(object id) where T : class;
+
+        Task SaveChangesAsync();
     }
 }
