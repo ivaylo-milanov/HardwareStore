@@ -12,6 +12,10 @@
             {
                 options.SignIn.RequireConfirmedAccount = false;
                 options.Password.RequiredLength = GlobalConstants.CustomerPasswordMinLength;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireDigit = false;
             })
                .AddEntityFrameworkStores<HardwareStoreDbContext>();
 

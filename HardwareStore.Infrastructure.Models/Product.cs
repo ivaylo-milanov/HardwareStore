@@ -15,6 +15,7 @@
             this.Characteristics = new HashSet<Characteristic>();
             this.ProductsOrders = new HashSet<ProductOrder>();
             this.ShoppingCartItems = new HashSet<ShoppingCartItem>();
+            this.Favorites = new HashSet<Favorite>();
         }
 
         [Comment("product id")]
@@ -75,5 +76,7 @@
         public ICollection<ProductOrder> ProductsOrders { get; set; } = null!;
 
         public virtual ICollection<ShoppingCartItem> ShoppingCartItems { get; set; } = null!;
+
+        public virtual ICollection<Favorite> Favorites { get; set; } = null!;
     }
 }

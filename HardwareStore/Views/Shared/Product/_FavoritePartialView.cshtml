@@ -14,7 +14,7 @@
                         <h3 class="product-title">@favorite.Name</h3>
                         <p class="product-price">$@favorite.Price</p>
                         <div class="product-buttons">
-                            <a class="product-button" href="other">Buy</a>
+                            <a asp-action="AddToShoppingCart" asp-controller="Cart" asp-route-productId="@favorite.Id" asp-route-quantity="1" class="product-button" href="other">Buy</a>
                             <span>Remove from favorite <button class="remove-favorite">x</button></span>
                         </div>
                     </div>

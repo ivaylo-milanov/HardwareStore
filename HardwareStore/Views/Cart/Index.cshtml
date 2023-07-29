@@ -7,7 +7,7 @@
         <thead class="cart-headers">
             <tr>
                 <th class="card-header">Product</th>
-                <th class="card-header">Qunatity</th>
+                <th class="card-header">Quantity</th>
                 <th class="card-header">Price</th>
                 <th class="card-header">Total</th>
             </tr>
@@ -20,17 +20,17 @@
                         @*<img class="cart-product-image" src="product.jpg" alt="Product Image">*@
                         <h3 class="cart-product-name">@shopping.Name</h3>
                     </td>
-                    <td class="cart-product-quantity">
-                        <a data-product-id="@shopping.ProductId" class="quantity-decrease">-</a>
+                    <td data-product-id="@shopping.ProductId" class="cart-product-quantity">
+                        <a class="quantity-decrease">-</a>
                         <input type="text" class="quantity-display" value="@shopping.Quantity" min="1">
                         <a class="quantity-increase">+</a>
-                        <a asp-action="RemoveFromShoppingCart" asp-controller="Cart" asp-route-productId="@shopping.ProductId" class="btn-remove">x</a>
+                        <a class="btn-remove">x</a>
                     </td>
                     <td class="cart-product-price">
-                        <span class="item-price">$@shopping.Price</span>
+                        <span class="item-price">$@shopping.Price.ToString("f2")</span>
                     </td>
                     <td class="cart-product-total">
-                        <span class="total-price">@shopping.TotalPrice</span>
+                        <span class="total-price">@shopping.TotalPrice.ToString("f2")</span>
                     </td>
                 </tr>
             }

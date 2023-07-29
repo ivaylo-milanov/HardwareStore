@@ -49,8 +49,19 @@
                 .FindAsync(id);
 
         public async Task SaveChangesAsync()
-        {
-            await this.context.SaveChangesAsync();
-        }
+            => await this.context.SaveChangesAsync();
+
+        public void Remove<T>(T model) where T : class
+            => Set<T>().Remove(model);
+
+        public async Task AddAsync<T>(T model) where T : class
+            => await Set<T>().AddAsync(model);
+
+        public async Task<bool> AnyAsync<T>(Expression<Func<T, bool>> search) where T : class
+            => await Set<T>()
+                .AnyAsync(search);
+
+        public EntityState Entry<T>(T model) where T : class
+            => context.Entry(model).State;
     }
 }

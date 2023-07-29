@@ -14,7 +14,7 @@
                     <div class="product-details">
                         <h3 class="product-title">Product Title</h3>
                         <p class="product-price">$99.99</p>
-                        <a class="product-button" href="other">Buy</a>
+                        <a asp-action="AddToShoppingCart" asp-controller="Cart" asp-route-productId="@product.Id" asp-route-quantity="1" class="product-button">Buy</a>
                     </div>
                     <a class="hiddenLink" asp-action="Details" asp-controller="Product" asp-route-productId="@product.Id" hidden></a>
                 </div>

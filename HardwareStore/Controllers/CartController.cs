@@ -56,7 +56,7 @@
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> RemoveFromShoppingCart(int productId)
+        public async Task<IActionResult> RemoveFromShoppingCart([FromBody] int productId)
         {
             try
             {
@@ -95,7 +95,28 @@
                 throw;
             }
 
-            return Json(new { productId });
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> IncreaseItemQuantity([FromBody] int productId)
+        {
+            try
+            {
+                if (User?.Identity?.IsAuthenticated ?? false)
+                {
+                    await this.shoppingCartService.IncreaseDatabaseItemQuantityAsync(productId);
+                }
+                else
+                {
+                    await this.shoppingCartService.IncreaseSessionItemQuantityAsync(productId);
+                }
+            }
+            catch (ArgumentNullException)
+            {
+                throw;
+            }
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

@@ -1,18 +1,27 @@
 ﻿import * as request from "./api.js";
 
+const endpoint = {
+    decreaseQuantity: '/Cart/DecreaseItemQuantity',
+    removeItem: '/Cart/RemoveFromShoppingCart',
+    increaseQuantity: '/Cart/IncreaseItemQuantity'
+}
+
 export async function sendFilterData(ev, data) {
     const path = ev.currentTarget.dataset.url;
-    const html = await request.post(path, data);
+    const html = await request.post(path, JSON.stringify(data));
 
     const container = ev.currentTarget.dataset.container;
     document.querySelector(container).innerHTML = html;
 }
 
 export async function decreaseItemQuantity(productId) {
-    const path = '/Cart/DecreaseItemQuantity';
-    const body = {
-        productId: productId
-    }
+    await request.post(endpoint.decreaseQuantity, JSON.stringify(productId));
+}
 
-    await request.post(path, body);
+export async function removeItemFromCart(productId) {
+    await request.post(endpoint.removeItem, JSON.stringify(productId));
+}
+
+export async function increaseItemQuantity(productId) {
+    await request.post(endpoint.increaseQuantity, JSON.stringify(productId));
 }

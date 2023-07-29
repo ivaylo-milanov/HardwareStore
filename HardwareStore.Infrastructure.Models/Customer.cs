@@ -12,6 +12,7 @@
         {
             this.Orders = new HashSet<ProductOrder>();
             this.ShoppingCartItems = new HashSet<ShoppingCartItem>();
+            this.Favorites = new HashSet<Favorite>();
         }
 
         [Comment("customer first name")]
@@ -44,8 +45,10 @@
         [MaxLength(GlobalConstants.CustomerAddressMaxLength)]
         public string Address { get; set; } = null!; 
  
-        public virtual ICollection<ProductOrder> Orders { get; set; } = null!;
+        public ICollection<ProductOrder> Orders { get; set; } = null!;
 
-        public virtual ICollection<ShoppingCartItem> ShoppingCartItems { get; set; } = null!;
+        public ICollection<ShoppingCartItem> ShoppingCartItems { get; set; } = null!;
+
+        public ICollection<Favorite> Favorites { get; set; } = null!;
     }
 }

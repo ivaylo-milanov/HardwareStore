@@ -54,8 +54,8 @@
         public string CustomerId { get; set; } = null!;
 
         [Comment("order customer")]
-        public virtual Customer Customer { get; set; } = null!;
+        public Customer Customer { get; set; } = null!;
 
-        public virtual ICollection<ProductOrder> ProductsOrders { get; set; } = null!;
+        public ICollection<ProductOrder> ProductsOrders { get; set; } = null!;
     }
 }

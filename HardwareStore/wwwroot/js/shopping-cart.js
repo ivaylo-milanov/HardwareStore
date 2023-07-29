@@ -1,14 +1,8 @@
-﻿import { decreaseItemQuantity } from "./data.js";
+﻿import { decreaseItemQuantity, increaseItemQuantity, removeItemFromCart } from "./data.js";
 
 const subtotal = document.querySelector('.cart-subtotal');
 const total = document.querySelector('.cart-total');
 const cartItems = document.querySelectorAll('.cart-item');
-
-//window.addEventListener('DOMContentLoaded', () => {
-//    cartItems.forEach(item => {
-//        const button = 
-//    });
-//})
 
 cartItems.forEach(item => {
     const display = item.querySelector('.quantity-display');
@@ -24,12 +18,17 @@ cartItems.forEach(item => {
 
     const price = getPrice();
 
-    item.querySelector('.quantity-increase').addEventListener('click', () => {
+    const increaseQuantityHandler = async (ev) => {
         updateQuantity(1);
         updateTotalAndSubtotal(price);
-    })
 
-    item.querySelector('.quantity-decrease').addEventListener('click', (ev) => {
+        const productId = Number(ev.target.parentNode.dataset.productId);
+        await increaseItemQuantity(productId);
+    }
+
+    item.querySelector('.quantity-increase').addEventListener('click', increaseQuantityHandler);
+
+    const decreaseQuantityHandler = async (ev) => {
         const quantity = getQuantity();
         if (quantity == 1) {
             return;
@@ -38,15 +37,22 @@ cartItems.forEach(item => {
         updateQuantity(-1);
         updateTotalAndSubtotal(-price);
 
-        const productId = Number(ev.target.dataset.productId);
-        decreaseItemQuantity(productId);
-    })
+        const productId = Number(ev.target.parentNode.dataset.productId);
+        await decreaseItemQuantity(productId);
+    }
 
-    item.querySelector('.btn-remove').addEventListener('click', () => {
+    item.querySelector('.quantity-decrease').addEventListener('click', decreaseQuantityHandler);
+
+    const removeItemHandler = async (ev) => {
         item.remove();
         const removePrice = multiplyPriceAndQuantity(getQuantity());
         updateTotalAndSubtotal(-removePrice);
-    })
+
+        const productId = Number(ev.target.parentNode.dataset.productId);
+        await removeItemFromCart(productId);
+    }
+
+    item.querySelector('.btn-remove').addEventListener('click', removeItemHandler);
 
     const updatePrice = (quantity) => {
         const totalPrice = multiplyPriceAndQuantity(quantity);

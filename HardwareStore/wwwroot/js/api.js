@@ -10,7 +10,7 @@ export async function request(method, url, body) {
 
     if (body) {
         options.headers['Content-Type'] = 'application/json';
-        options.body = JSON.stringify(body);
+        options.body = body
     }
 
     try {
@@ -29,7 +29,7 @@ export async function request(method, url, body) {
 
         return data;
     } catch (err) {
-        alert(err.message);
+        console.error('An error occured', err);
         throw err;
     }
 }

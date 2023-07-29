@@ -3,6 +3,7 @@
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.User;
     using HardwareStore.Infrastructure.Models;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using System.Threading.Tasks;
 
