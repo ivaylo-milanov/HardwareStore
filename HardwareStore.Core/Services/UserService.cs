@@ -1,9 +1,9 @@
 ﻿namespace HardwareStore.Core.Services
 {
+    using HardwareStore.Common;
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.User;
     using HardwareStore.Infrastructure.Models;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Identity;
     using System.Threading.Tasks;
 
@@ -24,7 +24,7 @@
 
             if (user == null)
             {
-                throw new InvalidOperationException("The account does not exist.");
+                throw new InvalidOperationException(ExceptionMessages.AccountNotFound);
             }
 
             var result = await signInManager.PasswordSignInAsync(user, model.Password, false, false);

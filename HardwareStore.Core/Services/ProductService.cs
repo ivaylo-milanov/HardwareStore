@@ -1,5 +1,6 @@
 ﻿namespace HardwareStore.Core.Services
 {
+    using HardwareStore.Common;
     using HardwareStore.Core.Attributes;
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Product;
@@ -27,7 +28,7 @@
         {
             if (!this.memoryCache.TryGetValue("Products", out IEnumerable<TModel> products))
             {
-                throw new ArgumentNullException("Products data not found.");
+                throw new ArgumentNullException(ExceptionMessages.NoProductsFound);
             }
 
             var properties = filter
@@ -193,7 +194,7 @@
 
             if (product == null)
             {
-                throw new ArgumentNullException("The product does not exist");
+                throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
             }
 
             var model = new ProductDetailsModel

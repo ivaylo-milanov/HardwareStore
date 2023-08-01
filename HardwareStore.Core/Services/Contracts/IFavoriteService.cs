@@ -2,8 +2,12 @@
 {
     public interface IFavoriteService
     {
-        Task<List<int>> AddToFavoriteAsync(List<int> favorites, int id);
+        Task AddToSessionFavoriteAsync(int productId);
 
-        Task<List<int>> RemoveFromFavoriteAsync(List<int> favorites, int id);
+        Task AddToDatabaseFavoriteAsync(int productId);
+
+        Task RemoveFromSessionFavoriteAsync(int productId);
+
+        Task RemoveFromDatabaseFavoriteAsync(int productId);
     }
 }

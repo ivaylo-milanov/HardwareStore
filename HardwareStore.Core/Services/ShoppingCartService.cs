@@ -1,5 +1,6 @@
 ﻿namespace HardwareStore.Core.Services
 {
+    using HardwareStore.Common;
     using HardwareStore.Core.Extensions;
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.ShoppingCart;
@@ -30,12 +31,7 @@
 
             if (product == null)
             {
-                throw new ArgumentNullException("The product does not exist");
-            }
-
-            if (quantity > product.Quantity)
-            {
-                throw new InvalidOperationException($"Only {product.Quantity} \"{product.Name}\" left in stock.");
+                throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
             }
 
             var cartItem = shoppings.FirstOrDefault(p => p.ProductId == productId);
@@ -52,6 +48,11 @@
             }
             else
             {
+                if (cartItem.Quantity + quantity > product.Quantity)
+                {
+                    throw new InvalidOperationException(String.Format(ExceptionMessages.NotManyItemsLeftInStock, product.Quantity, product.Name));
+                }
+
                 cartItem.Quantity += quantity;
             }
 
@@ -64,14 +65,14 @@
 
             if (!await this.repository.AnyAsync<Product>(p => p.Id == productId))
             {
-                throw new ArgumentNullException("The product does not exist");
+                throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
             }
 
             var cartItem = shoppings.FirstOrDefault(p => p.ProductId == productId);
 
             if (cartItem == null)
             {
-                throw new ArgumentNullException("The cart item does not exist.");
+                throw new ArgumentNullException(ExceptionMessages.CartItemNotFound);
             }
 
             if (cartItem.Quantity > 1)
@@ -93,7 +94,7 @@
 
                 if (product == null)
                 {
-                    throw new ArgumentNullException("The product does not exist.");
+                    throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
                 }
 
                 ShoppingCartItemViewModel item = new ShoppingCartItemViewModel
@@ -124,14 +125,14 @@
 
             if (!await this.repository.AnyAsync<Product>(p => p.Id == productId))
             {
-                throw new ArgumentNullException("The product does not exist.");
+                throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
             }
 
             var cartItem = shoppings.FirstOrDefault(p => p.ProductId == productId);
 
             if (cartItem == null)
             {
-                throw new ArgumentNullException("The cart item does not exist.");
+                throw new ArgumentNullException(ExceptionMessages.CartItemNotFound);
             }
 
             shoppings.Remove(cartItem);
@@ -145,14 +146,14 @@
 
             if (!await this.repository.AnyAsync<Product>(p => p.Id == productId))
             {
-                throw new ArgumentNullException("The product does not exist");
+                throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
             }
 
             var cartItem = shoppings.FirstOrDefault(p => p.ProductId == productId);
 
             if (cartItem == null)
             {
-                throw new ArgumentNullException("The cart item does not exist.");
+                throw new ArgumentNullException(ExceptionMessages.CartItemNotFound);
             }
 
             cartItem.Quantity++;
@@ -166,14 +167,14 @@
 
             if (!await this.repository.AnyAsync<Product>(p => p.Id == model.ProductId))
             {
-                throw new ArgumentNullException("The product does not exist");
+                throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
             }
 
             var cartItem = shoppings.FirstOrDefault(p => p.ProductId == model.ProductId);
 
             if (cartItem == null)
             {
-                throw new ArgumentNullException("The cart item does not exist.");
+                throw new ArgumentNullException(ExceptionMessages.CartItemNotFound);
             }
 
             if (cartItem.Quantity == 1)
@@ -201,19 +202,14 @@
 
             if (user == null)
             {
-                throw new ArgumentNullException("User is not logged in.");
+                throw new ArgumentNullException(ExceptionMessages.UserNotFound);
             }
 
             var product = await this.repository.FindAsync<Product>(productId);
 
             if (product == null)
             {
-                throw new ArgumentNullException("The product does not exist");
-            }
-
-            if (quantity > product.Quantity)
-            {
-                throw new InvalidOperationException($"Only {product.Quantity} \"{product.Name}\" left in stock.");
+                throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
             }
 
             var cartItem = user.ShoppingCartItems.FirstOrDefault(p => p.ProductId == productId);
@@ -231,6 +227,11 @@
             }
             else
             {
+                if (cartItem.Quantity + quantity > product.Quantity)
+                {
+                    throw new InvalidOperationException(String.Format(ExceptionMessages.NotManyItemsLeftInStock, product.Quantity, product.Name));
+                }
+
                 cartItem.Quantity += quantity;
             }
 
@@ -243,12 +244,12 @@
 
             if (user == null)
             {
-                throw new ArgumentNullException("User is not logged in.");
+                throw new ArgumentNullException(ExceptionMessages.UserNotFound);
             }
 
             if (!await this.repository.AnyAsync<Product>(p => p.Id == productId))
             {
-                throw new ArgumentNullException("The product does not exist");
+                throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
             }
 
             var cartItem = user.ShoppingCartItems
@@ -256,7 +257,7 @@
 
             if (cartItem == null)
             {
-                throw new ArgumentNullException("The cart item does not exist.");
+                throw new ArgumentNullException(ExceptionMessages.CartItemNotFound);
             }
 
             this.repository.Remove(cartItem);
@@ -270,7 +271,7 @@
 
             if (user == null)
             {
-                throw new ArgumentNullException("User is not logged in.");
+                throw new ArgumentNullException(ExceptionMessages.UserNotFound);
             }
 
             var shoppings = user.ShoppingCartItems
@@ -299,12 +300,12 @@
 
             if (user == null)
             {
-                throw new ArgumentNullException("User is not logged in.");
+                throw new ArgumentNullException(ExceptionMessages.UserNotFound);
             }
 
             if (!await this.repository.AnyAsync<Product>(p => p.Id == productId))
             {
-                throw new ArgumentNullException("The product does not exist");
+                throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
             }
 
             var cartItem = user.ShoppingCartItems
@@ -312,7 +313,7 @@
 
             if (cartItem == null)
             {
-                throw new ArgumentNullException("The cart item does not exist.");
+                throw new ArgumentNullException(ExceptionMessages.CartItemNotFound);
             }
 
             if (cartItem.Quantity > 1)
@@ -329,12 +330,12 @@
 
             if (user == null)
             {
-                throw new ArgumentNullException("User is not logged in.");
+                throw new ArgumentNullException(ExceptionMessages.UserNotFound);
             }
 
             if (!await this.repository.AnyAsync<Product>(p => p.Id == productId))
             {
-                throw new ArgumentNullException("The product does not exist");
+                throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
             }
 
             var cartItem = user.ShoppingCartItems
@@ -342,7 +343,7 @@
 
             if (cartItem == null)
             {
-                throw new ArgumentNullException("The cart item does not exist.");
+                throw new ArgumentNullException(ExceptionMessages.CartItemNotFound);
             }
 
             cartItem.Quantity++;
@@ -350,33 +351,18 @@
             await this.repository.SaveChangesAsync();
         }
 
-        private void SetShoppingCart(ICollection<ShoppingCartExportModel> shoppings)
-            => httpContextAccessor.HttpContext.Session.Set("Shopping Cart", shoppings);
-
-        private ICollection<ShoppingCartExportModel> GetShoppingCart()
-            => httpContextAccessor.HttpContext.Session.Get<ICollection<ShoppingCartExportModel>>("Shopping Cart") ?? new List<ShoppingCartExportModel>();
-
-        private async Task<Customer> GetUser(string userId)
-            => await repository.All<Customer>()
-                .Include(c => c.ShoppingCartItems)
-                .ThenInclude(c => c.Product)
-                .FirstOrDefaultAsync(c => c.Id == userId);
-
-        private string GetUserId()
-            => httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
         public async Task UpdateDatabaseItemQuantityAsync(ShoppingCartUpdateModel model)
         {
             var user = await GetUser(GetUserId());
 
             if (user == null)
             {
-                throw new ArgumentNullException("User is not logged in.");
+                throw new ArgumentNullException(ExceptionMessages.UserNotFound);
             }
 
             if (!await this.repository.AnyAsync<Product>(p => p.Id == model.ProductId))
             {
-                throw new ArgumentNullException("The product does not exist");
+                throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
             }
 
             var cartItem = user.ShoppingCartItems
@@ -384,7 +370,7 @@
 
             if (cartItem == null)
             {
-                throw new ArgumentNullException("The cart item does not exist.");
+                throw new ArgumentNullException(ExceptionMessages.CartItemNotFound);
             }
 
             if (model.Quantity == 0)
@@ -405,5 +391,20 @@
                 await this.repository.SaveChangesAsync();
             }
         }
+
+        private void SetShoppingCart(ICollection<ShoppingCartExportModel> shoppings)
+            => httpContextAccessor.HttpContext.Session.Set("Shopping Cart", shoppings);
+
+        private ICollection<ShoppingCartExportModel> GetShoppingCart()
+            => httpContextAccessor.HttpContext.Session.Get<ICollection<ShoppingCartExportModel>>("Shopping Cart") ?? new List<ShoppingCartExportModel>();
+
+        private async Task<Customer> GetUser(string userId)
+            => await repository.All<Customer>()
+                .Include(c => c.ShoppingCartItems)
+                .ThenInclude(c => c.Product)
+                .FirstOrDefaultAsync(c => c.Id == userId);
+
+        private string GetUserId()
+            => httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
     }
 }

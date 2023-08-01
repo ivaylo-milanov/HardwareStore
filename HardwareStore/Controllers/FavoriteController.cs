@@ -1,11 +1,11 @@
 ﻿namespace HardwareStore.Controllers
 {
+    using HardwareStore.Core.Extensions;
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Product;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    [Authorize]
     public class FavoriteController : Controller
     {
         private readonly IFavoriteService favoriteService;
@@ -17,46 +17,49 @@
 
         public IActionResult Index()
         {
-            //var favorites = GetFavorites();
-
             return View(new List<ProductViewModel>());
         }
 
-        //public async Task<IActionResult> AddToFavorite(int id)
-        //{
-        //    List<int> favorites;
-        //    try
-        //    {
-        //        favorites = await this.favoriteService.AddToFavoriteAsync(GetFavorites(), id);
-        //    }
-        //    catch (ArgumentNullException)
-        //    {
-        //        throw;
-        //    }
+        public async Task<IActionResult> AddToFavorite(int productId)
+        {
+            try
+            {
+                if (User?.Identity?.IsAuthenticated ?? false)
+                {
+                    await this.favoriteService.AddToDatabaseFavoriteAsync(productId);
+                }
+                else
+                {
+                    await this.favoriteService.AddToSessionFavoriteAsync(productId);
+                }
+            }
+            catch (ArgumentNullException)
+            {
+                throw;
+            }
 
-        //    HttpContext.Session.Set("Favorites", favorites);
+            return RedirectToAction(nameof(Index));
+        }
 
-        //    return View();
-        //}
+        public async Task<IActionResult> RemoveFromFavorite(int productId)
+        {
+            try
+            {
+                if (User?.Identity?.IsAuthenticated ?? false)
+                {
+                    await this.favoriteService.RemoveFromDatabaseFavoriteAsync(productId);
+                }
+                else
+                {
+                    await this.favoriteService.RemoveFromSessionFavoriteAsync(productId);
+                }
+            }
+            catch (ArgumentNullException)
+            {
+                throw;
+            }
 
-        //public async Task<IActionResult> RemoveFromFavorite(int id)
-        //{
-        //    List<int> favorites;
-        //    try
-        //    {
-        //        favorites = await this.favoriteService.RemoveFromFavoriteAsync(GetFavorites(), id);
-        //    }
-        //    catch (ArgumentNullException)
-        //    {
-        //        throw;
-        //    }
-
-        //    HttpContext.Session.Set("Favorites", favorites);
-
-        //    return View();
-        //}
-
-        //private List<int> GetFavorites()
-        //    => HttpContext.Session.Get<List<int>>("Favorites") ?? new List<int>();
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
