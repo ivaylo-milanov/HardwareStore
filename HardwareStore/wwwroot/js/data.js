@@ -3,7 +3,8 @@
 const endpoint = {
     decreaseQuantity: '/Cart/DecreaseItemQuantity',
     removeItem: '/Cart/RemoveFromShoppingCart',
-    increaseQuantity: '/Cart/IncreaseItemQuantity'
+    increaseQuantity: '/Cart/IncreaseItemQuantity',
+    updateQuantity: '/Cart/UpdateItemQuantity'
 }
 
 export async function sendFilterData(ev, data) {
@@ -24,4 +25,13 @@ export async function removeItemFromCart(productId) {
 
 export async function increaseItemQuantity(productId) {
     await request.post(endpoint.increaseQuantity, JSON.stringify(productId));
+}
+
+export async function updateItemQuantity(productId, quantity) {
+    const body = {
+        productId,
+        quantity
+    }
+
+    await request.post(endpoint.updateQuantity, JSON.stringify(body));
 }

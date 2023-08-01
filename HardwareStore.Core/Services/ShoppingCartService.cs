@@ -26,9 +26,16 @@
         {
             var shoppings = GetShoppingCart();
 
-            if (!await this.repository.AnyAsync<Product>(p => p.Id == productId))
+            var product = await this.repository.FindAsync<Product>(productId);
+
+            if (product == null)
             {
                 throw new ArgumentNullException("The product does not exist");
+            }
+
+            if (quantity > product.Quantity)
+            {
+                throw new InvalidOperationException($"Only {product.Quantity} \"{product.Name}\" left in stock.");
             }
 
             var cartItem = shoppings.FirstOrDefault(p => p.ProductId == productId);
@@ -95,7 +102,8 @@
                     Quantity = shopping.Quantity,
                     Name = product.Name,
                     Price = product.Price,
-                    TotalPrice = product.Price * shopping.Quantity
+                    TotalPrice = product.Price * shopping.Quantity,
+                    ProductQuantity = product.Quantity
                 };
 
                 shoppingItems.Add(item);
@@ -152,6 +160,41 @@
             SetShoppingCart(shoppings);
         }
 
+        public async Task UpdateSessionItemQuantityAsync(ShoppingCartUpdateModel model)
+        {
+            var shoppings = GetShoppingCart();
+
+            if (!await this.repository.AnyAsync<Product>(p => p.Id == model.ProductId))
+            {
+                throw new ArgumentNullException("The product does not exist");
+            }
+
+            var cartItem = shoppings.FirstOrDefault(p => p.ProductId == model.ProductId);
+
+            if (cartItem == null)
+            {
+                throw new ArgumentNullException("The cart item does not exist.");
+            }
+
+            if (cartItem.Quantity == 1)
+            {
+                await this.RemoveFromSessionShoppingCartAsync(model.ProductId);
+            }
+            else
+            {
+                if (cartItem.Quantity < 0)
+                {
+                    cartItem.Quantity = 1;
+                }
+                else
+                {
+                    cartItem.Quantity = model.Quantity;
+                }
+
+                SetShoppingCart(shoppings);
+            }
+        }
+
         public async Task AddToDatabaseShoppingCartAsync(int productId, int quantity)
         {
             var user = await GetUser(GetUserId());
@@ -161,9 +204,16 @@
                 throw new ArgumentNullException("User is not logged in.");
             }
 
-            if (!await this.repository.AnyAsync<Product>(p => p.Id == productId))
+            var product = await this.repository.FindAsync<Product>(productId);
+
+            if (product == null)
             {
                 throw new ArgumentNullException("The product does not exist");
+            }
+
+            if (quantity > product.Quantity)
+            {
+                throw new InvalidOperationException($"Only {product.Quantity} \"{product.Name}\" left in stock.");
             }
 
             var cartItem = user.ShoppingCartItems.FirstOrDefault(p => p.ProductId == productId);
@@ -295,8 +345,6 @@
                 throw new ArgumentNullException("The cart item does not exist.");
             }
 
-            var state = repository.Entry(cartItem);
-
             cartItem.Quantity++;
 
             await this.repository.SaveChangesAsync();
@@ -316,5 +364,46 @@
 
         private string GetUserId()
             => httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+        public async Task UpdateDatabaseItemQuantityAsync(ShoppingCartUpdateModel model)
+        {
+            var user = await GetUser(GetUserId());
+
+            if (user == null)
+            {
+                throw new ArgumentNullException("User is not logged in.");
+            }
+
+            if (!await this.repository.AnyAsync<Product>(p => p.Id == model.ProductId))
+            {
+                throw new ArgumentNullException("The product does not exist");
+            }
+
+            var cartItem = user.ShoppingCartItems
+               .FirstOrDefault(i => i.ProductId == model.ProductId);
+
+            if (cartItem == null)
+            {
+                throw new ArgumentNullException("The cart item does not exist.");
+            }
+
+            if (model.Quantity == 0)
+            {
+                await this.RemoveFromDatabaseShoppingCartAsync(model.ProductId);
+            }
+            else
+            {
+                if (model.Quantity < 0)
+                {
+                    cartItem.Quantity = 1;
+                }
+                else
+                {
+                    cartItem.Quantity = model.Quantity;
+                }
+
+                await this.repository.SaveChangesAsync();
+            }
+        }
     }
 }

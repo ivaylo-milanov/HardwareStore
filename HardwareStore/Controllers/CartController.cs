@@ -32,6 +32,11 @@
                 throw;
             }
 
+            if (TempData["ErrorMessage"] != null)
+            {
+                ModelState.AddModelError(string.Empty, TempData["ErrorMessage"].ToString());
+            }
+
             return View(shoppingCart);
         }
 
@@ -51,6 +56,11 @@
             catch (ArgumentNullException)
             {
                 throw;
+            }
+            catch (InvalidOperationException error)
+            {
+                TempData["ErrorMessage"] = error.Message;
+                return RedirectToAction(nameof(Index));
             }
 
             return RedirectToAction(nameof(Index));
@@ -109,6 +119,27 @@
                 else
                 {
                     await this.shoppingCartService.IncreaseSessionItemQuantityAsync(productId);
+                }
+            }
+            catch (ArgumentNullException)
+            {
+                throw;
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> UpdateItemQuantity([FromBody] ShoppingCartUpdateModel model)
+        {
+            try
+            {
+                if (User?.Identity?.IsAuthenticated ?? false)
+                {
+                    await this.shoppingCartService.UpdateDatabaseItemQuantityAsync(model);
+                }
+                else
+                {
+                    await this.shoppingCartService.UpdateSessionItemQuantityAsync(model);
                 }
             }
             catch (ArgumentNullException)

@@ -23,5 +23,9 @@
         Task IncreaseDatabaseItemQuantityAsync(int productId);
 
         Task IncreaseSessionItemQuantityAsync(int productId);
+
+        Task UpdateDatabaseItemQuantityAsync(ShoppingCartUpdateModel model);
+
+        Task UpdateSessionItemQuantityAsync(ShoppingCartUpdateModel model);
     }
 }
