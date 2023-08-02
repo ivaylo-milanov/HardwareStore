@@ -15,11 +15,13 @@
     {
         private readonly IRepository repository;
         private readonly IMemoryCache memoryCache;
+        private readonly IFavoriteService favoriteService;
 
-        public ProductService(IRepository repository, IMemoryCache memoryCache)
+        public ProductService(IRepository repository, IMemoryCache memoryCache, IFavoriteService favoriteService)
         {
             this.repository = repository;
             this.memoryCache = memoryCache;
+            this.favoriteService = favoriteService;
         }
 
         public IEnumerable<TModel> FilterProducts<TModel, TFilter>(TFilter filter)
@@ -184,18 +186,20 @@
                (product.Description != null && product.Description.ToLower().Contains(keyword)) ||
                product.Characteristics.Any(pa => pa.Value.ToLower().Contains(keyword));
 
-        public async Task<ProductDetailsModel> GetProductDetails(int id)
+        public async Task<ProductDetailsModel> GetProductDetails(int productId)
         {
             var product = await this.repository
                 .AllReadonly<Product>()
                 .Include(p => p.Manufacturer)
-                .Where(p => p.Id == id)
+                .Where(p => p.Id == productId)
                 .FirstOrDefaultAsync();
 
             if (product == null)
             {
                 throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
             }
+
+            var isFavorite = await favoriteService.IsFavorite(productId);
 
             var model = new ProductDetailsModel
             {
@@ -207,6 +211,7 @@
                 ReferenceNumber = product.ReferenceNumber,
                 Description = product.Description,
                 Warranty = product.Warranty,
+                IsFavorite = isFavorite,
                 Attributes = product.Characteristics
                         .Select(pa => new ProductAttributeExportModel
                         {

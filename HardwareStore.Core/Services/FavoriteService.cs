@@ -3,7 +3,7 @@
     using HardwareStore.Common;
     using HardwareStore.Core.Extensions;
     using HardwareStore.Core.Services.Contracts;
-    using HardwareStore.Core.ViewModels.ShoppingCart;
+    using HardwareStore.Core.ViewModels.Favorite;
     using HardwareStore.Infrastructure.Common;
     using HardwareStore.Infrastructure.Models;
     using Microsoft.AspNetCore.Http;
@@ -109,6 +109,69 @@
 
             favorites.Remove(productId);
             SetFavorites(favorites);
+        }
+
+        public async Task<ICollection<FavoriteExportModel>> GetDatabaseFavoriteAsync()
+        {
+            var user = await GetUser(GetUserId());
+
+            if (user == null)
+            {
+                throw new ArgumentNullException(ExceptionMessages.UserNotFound);
+            }
+
+            var favorites = user
+                .Favorites
+                .Select(f => new FavoriteExportModel
+                {
+                    Id = f.ProductId,
+                    Name = f.Product.Name,
+                    Price = f.Product.Price
+                })
+                .ToList();
+
+            return favorites;
+        }
+
+        public async Task<ICollection<FavoriteExportModel>> GetSessionFavoriteAsync()
+        {
+            var favorites = GetFavorites();
+            var favoriteItems = new List<FavoriteExportModel>();
+
+            foreach (var favoriteId in favorites)
+            {
+                var product = await this.repository.FindAsync<Product>(favoriteId);
+
+                if (product == null)
+                {
+                    throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
+                }
+
+                var favoriteItem = new FavoriteExportModel
+                {
+                    Id = favoriteId,
+                    Name = product.Name,
+                    Price = product.Price
+                };
+
+                favoriteItems.Add(favoriteItem);
+            }
+
+            return favoriteItems;
+        }
+
+        public async Task<bool> IsFavorite(int productId)
+        {
+            var userId = GetUserId();
+
+            if (userId == null)
+            {
+                var favorites = GetFavorites();
+                return favorites.Contains(productId);
+            }
+
+            var user = await GetUser(userId);
+            return user.Favorites.Any(f => f.ProductId == productId);
         }
 
         private void SetFavorites(ICollection<int> shoppings)

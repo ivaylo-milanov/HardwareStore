@@ -2,7 +2,6 @@
 {
     using HardwareStore.Core.ViewModels.Product;
     using HardwareStore.Core.ViewModels.Search;
-    using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
     public interface IProductService
     {
@@ -14,7 +13,7 @@
 
         Task<ProductsViewModel<SearchViewModel>> GetSearchModel(string keyword);
 
-        Task<ProductDetailsModel> GetProductDetails(int id);
+        Task<ProductDetailsModel> GetProductDetails(int productId);
 
         Task<ProductsViewModel<TModel>> GetModel<TModel>() where TModel : ProductViewModel;
     }

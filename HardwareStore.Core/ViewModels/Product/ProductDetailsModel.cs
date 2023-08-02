@@ -8,6 +8,8 @@
 
         public int Warranty { get; set; }
 
+        public bool IsFavorite { get; set; }
+
         public IEnumerable<ProductAttributeExportModel> Attributes { get; set; } = null!;
     }
 }

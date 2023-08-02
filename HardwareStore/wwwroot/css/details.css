@@ -71,67 +71,67 @@
     border: 2px solid #4CAF50;
     background-color: transparent;
     text-decoration: none;
-    padding: 0.5rem; /* adjust as needed */
+    padding: 0.5rem;
     position: relative;
-    width: 2rem; /* equal width and height */
-    height: 2rem; /* equal width and height */
+    width: 2rem;
+    height: 2rem;
     vertical-align: middle;
     text-align: center;
-    display: flex; /* flexbox for centering */
-    align-items: center; /* center vertically */
-    justify-content: center; /* center horizontally */
-    border-radius: 50%; /* makes it round */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
     color: #4CAF50;
     transition: all ease 0.4s;
     font-size: 0.75rem;
 }
 
-    .button-like .fa {
-        transition: all ease 0.4s;
-    }
+.button-like .fa {
+    transition: all ease 0.4s;
+}
 
-    .button-like:focus {
-        background-color: transparent;
-    }
+.button-like:focus {
+    background-color: transparent;
+}
 
-        .button-like:focus .fa {
-            color: #4CAF50;
-        }
+.button-like:focus .fa {
+    color: #4CAF50;
+}
 
-    .button-like:hover {
-        border-color: #4CAF50;
-        background-color: transparent;
-    }
+.button-like:hover {
+    border-color: #4CAF50;
+    background-color: transparent;
+}
 
-        .button-like:hover .fa {
-            color: #4CAF50;
-        }
+.button-like:hover .fa {
+    color: #4CAF50;
+}
 
 .liked {
     background-color: #4CAF50;
     border-color: #4CAF50;
 }
 
-    .liked .fa {
-        color: #fefefe;
-    }
+.liked .fa {
+    color: #fefefe;
+}
 
-    .liked:focus {
-        background-color: #4CAF50;
-    }
+.liked:focus {
+    background-color: #4CAF50;
+}
 
-        .liked:focus .fa {
-            color: #fefefe;
-        }
+.liked:focus .fa {
+    color: #fefefe;
+}
 
-    .liked:hover {
-        background-color: #4CAF50;
-        border-color: #4CAF50;
-    }
+.liked:hover {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+}
 
-        .liked:hover .fa {
-            color: #fefefe;
-        }
+.liked:hover .fa {
+    color: #fefefe;
+}
 
 .like-container {
     display: flex;

@@ -4,57 +4,51 @@
     <div class="image">
         <img class="product-image" src="" alt=""/>
     </div>
-<div>
-    <h1>@Model.Name</h1>
     <div>
-        Ref. Number: <strong>@Model.ReferenceNumber</strong>
-    </div>
-    <div>
-        <div class="product-price">
-            <div>$@Model.Price.ToString("F2")</div>
+        <h1>@Model.Name</h1>
+        <div class="product-reference-number">
+            Ref. Number: <strong>@Model.ReferenceNumber</strong>
         </div>
-        <div class="like-container">
-            <a class="button button-like">
-                <i class="fa fa-heart"></i>
-            </a>
-            <span class="like-text">Add to favorite</span>
+        <div>
+            <div>
+                <div>$@Model.Price.ToString("F2")</div>
+            </div>
+            <div class="like-container" data-is-favorite="@Model.IsFavorite">
+                <a asp-action="AddToFavorite" asp-controller="Favorite" asp-route-productId="@Model.Id" class="button button-like">
+                    <i class="fa fa-heart"></i>
+                </a>
+                <span class="like-text"></span>
+            </div>
+            <span>
+                <form asp-action="AddToShoppingCart" asp-controller="Cart" method="post">
+                    <input type="hidden" name="productId" value="@Model.Id" />
+                    <input type="text" name="quantity" class="quantity-input" value="1" />
+                    <button type="submit" class="buy-button">Buy</button>
+                </form>
+            </span>
         </div>
-        <span>
-            <form asp-action="AddToShoppingCart" asp-controller="Cart" method="post">
-                <input type="hidden" name="productId" value="@Model.Id" />
-                <input type="text" name="quantity" class="quantity-input" value="1" />
-                <button type="submit" class="buy-button">Buy</button>
-            </form>
-        </span>
-        <span>
-            <a>
-                <img src="" alt=""/>
-            </a>
-        </span>
-    </div>
-    <div>Specifications</div>
-    <table class="specifications-table">
-        <tbody>
-            <tr>
-                <td class="table-cell">Warranty</td>
-                <td class="table-cell">@Model.Warranty</td>
-            </tr>
+        <div>Specifications</div>
+        <table class="specifications-table">
+            <tbody>
+                <tr>
+                    <td class="table-cell">Warranty</td>
+                    <td class="table-cell">@Model.Warranty</td>
+                </tr>
                 @foreach (var characteristic in Model.Attributes)
                 {
-                <tr>
-                    <td class="table-cell">@characteristic.Name</td>
-                    <td class="table-cell">@characteristic.Value</td>
-                </tr>
+                    <tr>
+                        <td class="table-cell">@characteristic.Name</td>
+                        <td class="table-cell">@characteristic.Value</td>
+                    </tr>
                 }
-        </tbody>
-    </table>
-</div>
-<div class="product-description">
-    <p>@Model.Description</p>
-</div>
+            </tbody>
+        </table>
+    </div>
+    <div class="product-description">
+        <p>@Model.Description</p>
+    </div>
 </div>
 
 @section Scripts {
     <script src="~/js/details.js"></script>
 }
-
