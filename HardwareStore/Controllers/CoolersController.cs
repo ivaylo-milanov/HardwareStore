@@ -2,6 +2,7 @@
 {
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Cooler;
+    using HardwareStore.Core.ViewModels.Product;
     using Microsoft.AspNetCore.Mvc;
 
     public class CoolersController : Controller
@@ -15,7 +16,15 @@
 
         public async Task<IActionResult> Index()
         {
-            var model = await this.productService.GetModel<CoolerViewModel>();
+            ProductsViewModel<CoolerViewModel> model;
+            try
+            {
+                model = await this.productService.GetModel<CoolerViewModel>();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
 
             return View(model);
         }

@@ -1,39 +1,15 @@
-﻿@model IEnumerable<InternalDriveViewModel>
+﻿@model ProductsViewModel<InternalDriveViewModel>
 
-<div>
-    <div class="filter">
-        <form method="get" data-url="@Url.Action("FilterInternalDrives", "InternalDrives")" data-container="#internal-drives">
-            <div class="filter-categories">
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(InternalDriveViewModel.Manufacturer),
-                    values = Model.Select(m => m.Manufacturer).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(InternalDriveViewModel.Type),
-                    values = Model.Select(m => m.Type).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(InternalDriveViewModel.Interface),
-                    values = Model.Select(m => m.Interface).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(InternalDriveViewModel.FormFactor),
-                    values = Model.Select(m => m.FormFactor).Distinct()
-                })
-            </div>
-            <div class="additional-filters">
-                <partial name="_OrderPartialView"/>
-            </div>
-        </form>
-    </div>
-    <div id="internal-drives">
-        <partial name="_ProductsPartialView" model="Model"/>
-    </div>
+<div class="page-title">
+    <h1>Internal Drives</h1>
+</div>
+<div class="page-body">
+    <form class="page-layout" method="get" data-url="@Url.Action("FilterInternalDrives", "InternalDrives")">
+        <partial name="_FilterPartialView" model="@Model.Filters"/>
+        <partial name="_ProductsContentPartialView" model="@Model.Products"/>
+    </form>
 </div>
 
 @section Scripts {
-           <script type="module" src="~/js/filter.js"></script>
+   <script type="module" src="~/js/filter.js"></script>
 }

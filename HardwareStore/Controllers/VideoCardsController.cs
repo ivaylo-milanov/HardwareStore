@@ -1,6 +1,7 @@
 ﻿namespace HardwareStore.Controllers
 {
     using HardwareStore.Core.Services.Contracts;
+    using HardwareStore.Core.ViewModels.Product;
     using HardwareStore.Core.ViewModels.VideoCard;
     using Microsoft.AspNetCore.Mvc;
 
@@ -15,7 +16,15 @@
 
         public async Task<IActionResult> Index()
         {
-            var model = await this.productService.GetModel<VideoCardViewModel>();
+            ProductsViewModel<VideoCardViewModel> model;
+            try
+            {
+                model = await this.productService.GetModel<VideoCardViewModel>();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
 
             return View(model);
         }

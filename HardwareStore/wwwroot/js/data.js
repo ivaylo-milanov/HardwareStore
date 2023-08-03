@@ -11,8 +11,7 @@ export async function sendFilterData(ev, data) {
     const path = ev.currentTarget.dataset.url;
     const html = await request.post(path, JSON.stringify(data));
 
-    const container = ev.currentTarget.dataset.container;
-    document.querySelector(container).innerHTML = html;
+    document.querySelector('#products').innerHTML = html;
 }
 
 export async function decreaseItemQuantity(productId) {

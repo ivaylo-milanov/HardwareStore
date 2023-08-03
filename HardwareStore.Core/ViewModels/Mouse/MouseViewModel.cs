@@ -3,6 +3,7 @@
     using HardwareStore.Core.Attributes;
     using HardwareStore.Core.ViewModels.Product;
 
+    [Category("Mouse")]
     public class MouseViewModel : ProductViewModel
     {
         [Characteristic]

@@ -1,6 +1,7 @@
 ﻿namespace HardwareStore.Controllers
 {
     using HardwareStore.Core.Services.Contracts;
+    using HardwareStore.Core.ViewModels;
     using HardwareStore.Core.ViewModels.Home;
     using Microsoft.AspNetCore.Mvc;
 
@@ -15,16 +16,28 @@
 
         public async Task<IActionResult> Index()
         {
-            var newProducts = await this.homeService.GetNewProducts();
-            var mostBoughtProducts = await this.homeService.GetMostBoughtProducts();
-
-            HomeViewModel model = new HomeViewModel
+            HomeViewModel model;
+            try
             {
-                NewestProducts = newProducts,
-                MostBoughtProducts = mostBoughtProducts
-            };
+                model = await this.homeService.GetHomeModel();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
 
             return View(model);
+        }
+
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error(string message)
+        {
+            var errorModel = new ErrorViewModel
+            {
+                ErrorMessage = message
+            };
+
+            return View(errorModel);
         }
     }
 }

@@ -3,6 +3,7 @@
     using Core.Services;
     using Core.Services.Contracts;
     using HardwareStore.Infrastructure.Common;
+    using HardwareStore.Infrastructure.Seed;
 
     public static class AddServicesExtension
     {
@@ -14,8 +15,12 @@
             services.AddScoped<IFavoriteService, FavoriteService>();
             services.AddScoped<IShoppingCartService, ShoppingCartService>();
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IProfileService, ProfileService>();
+            services.AddScoped<IFileReader, FileReader>();
+            services.AddScoped<DataSeeder>();
 
             services.AddControllers().AddNewtonsoftJson();
+            services.AddHttpContextAccessor();
 
             return services;
         }

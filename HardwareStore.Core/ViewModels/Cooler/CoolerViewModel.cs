@@ -3,6 +3,7 @@
     using HardwareStore.Core.Attributes;
     using HardwareStore.Core.ViewModels.Product;
 
+    [Category("Cooler")]
     public class CoolerViewModel : ProductViewModel
     {
         [Characteristic]

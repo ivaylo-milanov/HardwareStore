@@ -1,44 +1,15 @@
-﻿@model IEnumerable<CoolerViewModel>
+﻿@model ProductsViewModel<CoolerViewModel>
 
-<div>
-    <div class="filter">
-        <form method="get" data-url="@Url.Action("FilterCoolers", "Coolers")" data-container="#coolers">
-            <div class="filter-categories">
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(CoolerViewModel.Manufacturer),
-                    values = Model.Select(m => m.Manufacturer).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(CoolerViewModel.Backlight),
-                    values = Model.Select(m => m.Backlight).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(CoolerViewModel.Type),
-                    values = Model.Select(m => m.Type).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(CoolerViewModel.Socket),
-                    values = Model.Select(m => m.Socket).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(CoolerViewModel.FanSize),
-                    values = Model.Select(m => m.FanSize).Distinct()
-                })
-            </div>
-            <div class="additional-filters">
-                <partial name="_OrderPartialView"/>
-            </div>
-        </form>
-    </div>
-    <div id="coolers">
-        <partial name="_ProductsPartialView" model="Model"/>
-    </div>
+<div class="page-title">
+    <h1>Coolers</h1>
+</div>
+<div class="page-body">
+    <form class="page-layout" method="get" data-url="@Url.Action("FilterCoolers", "Coolers")">
+        <partial name="_FilterPartialView" model="@Model.Filters"/>
+        <partial name="_ProductsContentPartialView" model="@Model.Products"/>
+    </form>
 </div>
 
 @section Scripts {
-           <script type="module" src="~/js/filter.js"></script>
+    <script type="module" src="~/js/filter.js"></script>
 }

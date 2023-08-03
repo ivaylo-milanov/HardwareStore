@@ -1,44 +1,15 @@
-﻿@model IEnumerable<MousePadViewModel>
+﻿@model ProductsViewModel<MousePadViewModel>
 
-<div>
-    <div class="filter">
-        <form method="get" data-url="@Url.Action("FilterMousePads", "MousePads")" data-container="#mouse-pads">
-            <div class="filter-categories">
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(MousePadViewModel.Manufacturer),
-                    values = Model.Select(m => m.Manufacturer).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(MousePadViewModel.Surface),
-                    values = Model.Select(m => m.Surface).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(MousePadViewModel.Cover),
-                    values = Model.Select(m => m.Cover).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(MousePadViewModel.Backlight),
-                    values = Model.Select(m => m.Backlight).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(MousePadViewModel.Color),
-                    values = Model.Select(m => m.Color).Distinct()
-                })
-            </div>
-            <div class="additional-filters">
-                <partial name="_OrderPartialView"/>
-            </div>
-        </form>
-    </div>
-    <div id="mouse-pads">
-        <partial name="_ProductsPartialView" model="Model"/>
-    </div>
+<div class="page-title">
+    <h1>Mouse Pads</h1>
+</div>
+<div class="page-body">
+    <form class="page-layout" method="get" data-url="@Url.Action("FilterMousePads", "MousePads")">
+        <partial name="_FilterPartialView" model="@Model.Filters"/>
+        <partial name="_ProductsContentPartialView" model="@Model.Products"/>
+    </form>
 </div>
 
 @section Scripts {
-        <script type="module" src="~/js/filter.js"></script>
+   <script type="module" src="~/js/filter.js"></script>
 }

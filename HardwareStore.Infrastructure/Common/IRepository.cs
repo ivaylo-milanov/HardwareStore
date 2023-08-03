@@ -25,6 +25,12 @@
 
         Task<bool> AnyAsync<T>(Expression<Func<T, bool>> search) where T : class;
 
-        EntityState Entry<T>(T model) where T : class;
+        Task<bool> AnyAsync<T>() where T : class;
+
+        void AddRange<T>(IEnumerable<T> entities) where T : class;
+
+        T FirstOrDefault<T>(Expression<Func<T, bool>> search) where T : class;
+
+        Task<T> FirstOrDefaultAsync<T>(Expression<Func<T, bool>> search) where T : class;
     }
 }

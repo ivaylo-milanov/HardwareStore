@@ -3,6 +3,7 @@
     using HardwareStore.Core.Attributes;
     using HardwareStore.Core.ViewModels.Product;
 
+    [Category("Motherboard")]
     public class MotherboardViewModel : ProductViewModel
     {
         [Characteristic]

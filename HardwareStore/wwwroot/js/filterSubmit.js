@@ -30,7 +30,7 @@ function getData(ev) {
     });
 
     const order = ev.target.value;
-    data.Order = order;
+    data.Order = Number(order);
 
     return data;
 }

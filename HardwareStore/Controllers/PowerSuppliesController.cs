@@ -2,6 +2,7 @@
 {
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.PowerSupply;
+    using HardwareStore.Core.ViewModels.Product;
     using Microsoft.AspNetCore.Mvc;
 
     public class PowerSuppliesController : Controller
@@ -15,7 +16,15 @@
 
         public async Task<IActionResult> Index()
         {
-            var model = await this.productService.GetModel<PowerSupplyViewModel>();
+            ProductsViewModel<PowerSupplyViewModel> model;
+            try
+            {
+                model = await this.productService.GetModel<PowerSupplyViewModel>();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
 
             return View(model);
         }

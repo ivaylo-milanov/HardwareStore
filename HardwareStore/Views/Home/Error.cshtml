@@ -1,0 +1,13 @@
+﻿@model ErrorViewModel
+@{
+    ViewData["Title"] = "Error";
+}
+
+<div class="container text-center mt-5">
+    <h1 class="display-4">Oops, something went wrong!</h1>
+    <p class="lead">@Model.ErrorMessage</p>
+    <hr />
+    <p>It looks like something went wrong while processing your request.</p>
+    <p>If you continue to experience issues, please contact our support team.</p>
+    <a class="btn btn-primary btn-lg" asp-action="Index" asp-controller="Home" role="button">Return Home</a>
+</div>

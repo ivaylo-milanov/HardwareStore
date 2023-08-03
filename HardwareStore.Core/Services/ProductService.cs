@@ -2,6 +2,7 @@
 {
     using HardwareStore.Common;
     using HardwareStore.Core.Attributes;
+    using HardwareStore.Core.Enum;
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Product;
     using HardwareStore.Core.ViewModels.Search;
@@ -72,34 +73,34 @@
             return isValid;
         }
 
-        private IEnumerable<TModel> OrderProducts<TModel>(IEnumerable<TModel> products, string order) where TModel : ProductViewModel
+        private IEnumerable<TModel> OrderProducts<TModel>(IEnumerable<TModel> products, int order) where TModel : ProductViewModel
         {
-            switch (order)
-            {
-                case "Highest price":
-                    products = products.OrderByDescending(m => m.Price);
-                    break;
-                case "Lowest price":
-                    products = products.OrderBy(m => m.Price);
-                    break;
-                case "Oldest":
-                    products = products.OrderBy(m => m.AddDate);
-                    break;
-                case "Newest":
-                    products = products.OrderByDescending(m => m.AddDate);
-                    break;
-            }
+            ProductOrdering ordering = (ProductOrdering)order;
 
-            return products;
+            var orderedProducts = ordering switch
+            {
+                ProductOrdering.LowestPrice => products.OrderBy(p => p.Price),
+                ProductOrdering.HighestPrice => products.OrderByDescending(p => p.Price),
+                ProductOrdering.Newest => products.OrderByDescending(p => p.AddDate),
+                ProductOrdering.Oldest => products.OrderBy(p => p.AddDate),
+                ProductOrdering.Default => products
+            };
+
+            return orderedProducts;
         }
 
         private async Task<IEnumerable<TModel>> GetProductsAsync<TModel>() where TModel : ProductViewModel
         {
-            var categoryName = typeof(TModel).Name.Replace("ViewModel", string.Empty);
+            var categoryNameAttribute = (CategoryAttribute)Attribute.GetCustomAttribute(typeof(TModel), typeof(CategoryAttribute));
+
+            if (categoryNameAttribute == null)
+            {
+                throw new ArgumentException($"The model type {typeof(TModel)} does not have a Category attribute");
+            }
 
             var query = await this.repository
                 .AllReadonly<Product>()
-                .Where(p => p.Category.Name == categoryName)
+                .Where(p => p.Category.Name == categoryNameAttribute.CategoryName)
                 .Select(p => new ProductExportModel
                 {
                     Id = p.Id,
@@ -181,10 +182,14 @@
         }
 
         private bool ContainsKeyword(Product product, string keyword)
-            => product.Name.ToLower().Contains(keyword) ||
-               product.Manufacturer.Name.ToLower().Contains(keyword) ||
-               (product.Description != null && product.Description.ToLower().Contains(keyword)) ||
-               product.Characteristics.Any(pa => pa.Value.ToLower().Contains(keyword));
+        {
+            var wildCard = $"%{keyword}%";
+
+            return EF.Functions.Like(product.Name, wildCard) ||
+                EF.Functions.Like(product.Manufacturer?.Name, wildCard) ||
+                EF.Functions.Like(product.Description, wildCard) ||
+                EF.Functions.Like(product.Model, wildCard);
+        }
 
         public async Task<ProductDetailsModel> GetProductDetails(int productId)
         {

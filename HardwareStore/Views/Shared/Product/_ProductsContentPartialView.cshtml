@@ -1,0 +1,10 @@
+﻿@model IEnumerable<ProductViewModel>
+
+<div class="content-container">
+    <div class="additional-filters">
+        <partial name="_OrderPartialView"/>
+    </div>
+    <div id="products">
+        <partial name="_ProductsPartialView" model="@Model"/>
+    </div>
+</div>

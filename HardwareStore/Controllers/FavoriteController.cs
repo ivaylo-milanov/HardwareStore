@@ -2,7 +2,6 @@
 {
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Favorite;
-    using HardwareStore.Core.ViewModels.Product;
     using Microsoft.AspNetCore.Mvc;
 
     public class FavoriteController : Controller

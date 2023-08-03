@@ -3,6 +3,7 @@
     using HardwareStore.Infrastructure.Data;
     using Microsoft.EntityFrameworkCore;
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
     using System.Threading.Tasks;
@@ -45,23 +46,33 @@
                 .AsNoTracking();
 
         public async Task<T> FindAsync<T>(object id) where T : class
-            => await Set<T>()
+            => await this.Set<T>()
                 .FindAsync(id);
 
         public async Task SaveChangesAsync()
             => await this.context.SaveChangesAsync();
 
         public void Remove<T>(T model) where T : class
-            => Set<T>().Remove(model);
+            => this.Set<T>().Remove(model);
 
         public async Task AddAsync<T>(T model) where T : class
-            => await Set<T>().AddAsync(model);
+            => await this.Set<T>().AddAsync(model);
 
         public async Task<bool> AnyAsync<T>(Expression<Func<T, bool>> search) where T : class
-            => await Set<T>()
+            => await this.Set<T>()
                 .AnyAsync(search);
 
-        public EntityState Entry<T>(T model) where T : class
-            => context.Entry(model).State;
+        public async Task<bool> AnyAsync<T>() where T : class
+            => await this.Set<T>()
+                .AnyAsync();
+
+        public void AddRange<T>(IEnumerable<T> entities) where T : class
+            => this.Set<T>().AddRange(entities);
+
+        public T FirstOrDefault<T>(Expression<Func<T, bool>> search) where T : class
+            => this.Set<T>().FirstOrDefault(search);
+
+        public async Task<T> FirstOrDefaultAsync<T>(Expression<Func<T, bool>> search)
+            => await All.FirstOrDefaultAsync(search);
     }
 }

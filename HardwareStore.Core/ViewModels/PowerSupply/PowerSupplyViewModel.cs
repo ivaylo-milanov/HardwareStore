@@ -3,6 +3,7 @@
     using HardwareStore.Core.Attributes;
     using HardwareStore.Core.ViewModels.Product;
 
+    [Category("Power Supply")]
     public class PowerSupplyViewModel : ProductViewModel
     {
         [Characteristic]

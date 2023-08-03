@@ -1,49 +1,15 @@
-﻿@model IEnumerable<MouseViewModel>
+﻿@model ProductsViewModel<MouseViewModel>
 
-<div>
-    <div class="filter">
-        <form method="get" data-url="@Url.Action("FilterMouses", "Mouses")" data-container="#mouses">
-            <div class="filter-categories">
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(MouseViewModel.Manufacturer),
-                    values = Model.Select(m => m.Manufacturer).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(MouseViewModel.Connectivity),
-                    values = Model.Select(m => m.Connectivity).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(MouseViewModel.Interface),
-                    values = Model.Select(m => m.Interface).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(MouseViewModel.Sensor),
-                    values = Model.Select(m => m.Sensor).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(MouseViewModel.ProgrammableButtons),
-                    values = Model.Select(m => m.ProgrammableButtons).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(MouseViewModel.Color),
-                    values = Model.Select(m => m.Color).Distinct()
-                })
-            </div>
-            <div class="additional-filters">
-                <partial name="_OrderPartialView"/>
-            </div>
-        </form>
-    </div>
-    <div id="mouses">
-        <partial name="_ProductsPartialView" model="Model"/>
-    </div>
+<div class="page-title">
+    <h1>Mouses</h1>
+</div>
+<div class="page-body">
+    <form class="page-layout" method="get" data-url="@Url.Action("FilterMouses", "Mouses")">
+        <partial name="_FilterPartialView" model="@Model.Filters"/>
+        <partial name="_ProductsContentPartialView" model="@Model.Products"/>
+    </form>
 </div>
 
 @section Scripts {
-        <script type="module" src="~/js/filter.js"></script>
+    <script type="module" src="~/js/filter.js"></script>
 }

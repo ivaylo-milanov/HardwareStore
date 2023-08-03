@@ -2,7 +2,7 @@
 {
     public class ProductFilterOptions
     {
-        public string Order { get; set; } = null!;
+        public int Order { get; set; }
 
         public IEnumerable<string> Manufacturer { get; set; } = null!;
     }

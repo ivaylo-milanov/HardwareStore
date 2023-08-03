@@ -1,44 +1,15 @@
-﻿@model IEnumerable<VideoCardViewModel>
+﻿@model ProductsViewModel<VideoCardViewModel>
 
-<div>
-    <div class="filter">
-        <form method="get" data-url="@Url.Action("FilterVideoCards", "VideoCards")" data-container="#video-cards">
-            <div class="filter-categories">
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(VideoCardViewModel.Manufacturer),
-                    values = Model.Select(m => m.Manufacturer).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(VideoCardViewModel.Series),
-                    values = Model.Select(m => m.Series).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(VideoCardViewModel.Memory),
-                    values = Model.Select(m => m.Memory.ToString()).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(VideoCardViewModel.Outputs),
-                    values = Model.Select(m => m.Outputs).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(VideoCardViewModel.MemoryType),
-                    values = Model.Select(m => m.MemoryType).Distinct()
-                })
-            </div>
-            <div class="additional-filters">
-                <partial name="_OrderPartialView"/>
-            </div>
-        </form>
-    </div>
-    <div id="video-cards">
-        <partial name="_ProductsPartialView" model="Model"/>
-    </div>
+<div class="page-title">
+    <h1>Video Cards</h1>
+</div>
+<div class="page-body">
+    <form class="page-layout" method="get" data-url="@Url.Action("FilterVideoCards", "VideoCards")">
+        <partial name="_FilterPartialView" model="@Model.Filters"/>
+        <partial name="_ProductsContentPartialView" model="@Model.Products"/>
+    </form>
 </div>
 
 @section Scripts {
-       <script src="~/js/filter.js"></script>
+    <script type="module" src="~/js/filter.js"></script>
 }

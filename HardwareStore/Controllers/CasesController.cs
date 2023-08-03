@@ -2,20 +2,31 @@
 {
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Case;
+    using HardwareStore.Core.ViewModels.Product;
     using Microsoft.AspNetCore.Mvc;
 
     public class CasesController : Controller
     {
         private readonly IProductService productService;
+        private readonly ILogger<CasesController> logger;
 
-        public CasesController(IProductService productService)
+        public CasesController(IProductService productService, ILogger<CasesController> logger)
         {
             this.productService = productService;
+            this.logger = logger;
         }
 
         public async Task<IActionResult> Index()
         {
-            var model = await this.productService.GetModel<CaseViewModel>();
+            ProductsViewModel<CaseViewModel> model;
+            try
+            {
+                model = await this.productService.GetModel<CaseViewModel>();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
 
             return View(model);
         }

@@ -1,84 +1,15 @@
-﻿@model IEnumerable<KeyboardViewModel>
+﻿@model ProductsViewModel<KeyboardViewModel>
 
-<div>
-    <div class="filter">
-        <form method="get" data-url="@Url.Action("FilterKeyboards", "Keyboards")" data-container="#keyboards">
-            <div class="filter-categories">
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(KeyboardViewModel.Manufacturer),
-                    values = Model.Select(p => p.Manufacturer).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(KeyboardViewModel.Connectivity),
-                    values = Model.Select(p => p.Connectivity).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(KeyboardViewModel.Type),
-                    values = Model.Select(p => p.Type).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(KeyboardViewModel.Form),
-                    values = Model.Select(p => p.Form).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(KeyboardViewModel.Backlight),
-                    values = Model.Select(p => p.Backlight).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(KeyboardViewModel.Cyrillicization),
-                    values = Model.Select(p => p.Cyrillicization).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(KeyboardViewModel.ButtonType),
-                    values = Model.Select(p => p.ButtonType).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(KeyboardViewModel.MacroButtons),
-                    values = Model.Select(p => p.MacroButtons).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(KeyboardViewModel.MultiMediaButtons),
-                    values = Model.Select(p => p.MultiMediaButtons).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(KeyboardViewModel.Switch),
-                    values = Model.Select(p => p.Switch).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(KeyboardViewModel.Layout),
-                    values = Model.Select(p => p.Layout).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(KeyboardViewModel.HotSwappable),
-                    values = Model.Select(p => p.HotSwappable).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(KeyboardViewModel.Color),
-                    values = Model.Select(p => p.Color).Distinct()
-                })
-            </div>
-            <div class="additional-filters">
-                <partial name="_OrderPartialView"/>
-            </div>
-        </form>
-    </div>
-    <div id="keyboards">
-        <partial name="_ProductsPartialView" model="Model"/>
-    </div>
+<div class="page-title">
+    <h1>Keyboards</h1>
+</div>
+<div class="page-body">
+    <form class="page-layout" method="get" data-url="@Url.Action("FilterKeyboards", "Keyboards")">
+        <partial name="_FilterPartialView" model="@Model.Filters"/>
+        <partial name="_ProductsContentPartialView" model="@Model.Products"/>
+    </form>
 </div>
 
 @section Scripts {
-       <script type="module" src="~/js/filter.js"></script>
+   <script type="module" src="~/js/filter.js"></script>
 }

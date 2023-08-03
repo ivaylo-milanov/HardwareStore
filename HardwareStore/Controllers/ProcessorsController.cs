@@ -2,6 +2,7 @@
 {
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Processor;
+    using HardwareStore.Core.ViewModels.Product;
     using Microsoft.AspNetCore.Mvc;
 
     public class ProcessorsController : Controller
@@ -15,7 +16,15 @@
 
         public async Task<IActionResult> Index()
         {
-            var model = await this.productService.GetModel<ProcessorViewModel>();
+            ProductsViewModel<ProcessorViewModel> model;
+            try
+            {
+                model = await this.productService.GetModel<ProcessorViewModel>();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
 
             return View(model);
         }

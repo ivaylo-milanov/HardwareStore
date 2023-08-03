@@ -2,6 +2,7 @@
 {
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Headset;
+    using HardwareStore.Core.ViewModels.Product;
     using Microsoft.AspNetCore.Mvc;
 
     public class HeadsetsController : Controller
@@ -15,7 +16,15 @@
 
         public async Task<IActionResult> Index()
         {
-            var model = await this.productService.GetModel<HeadsetViewModel>();
+            ProductsViewModel<HeadsetViewModel> model;
+            try
+            {
+                model = await this.productService.GetModel<HeadsetViewModel>();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
 
             return View(model);
         }

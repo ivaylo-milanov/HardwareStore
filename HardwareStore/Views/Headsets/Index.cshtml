@@ -1,54 +1,15 @@
-﻿@model IEnumerable<HeadsetViewModel>
+﻿@model ProductsViewModel<HeadsetViewModel>
 
-<div>
-    <div class="filter">
-        <form method="get" data-url="@Url.Action("FilterHeadsets", "Headsets")" data-container="#headsets">
-            <div class="filter-categories">
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(HeadsetViewModel.Manufacturer),
-                    values = Model.Select(m => m.Manufacturer).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(HeadsetViewModel.Form),
-                    values = Model.Select(m => m.Form).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(HeadsetViewModel.Interface),
-                    values = Model.Select(m => m.Interface).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(HeadsetViewModel.Soundproofing),
-                    values = Model.Select(m => m.Soundproofing).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(HeadsetViewModel.Type),
-                    values = Model.Select(m => m.Type).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(HeadsetViewModel.Compatibility),
-                    values = Model.Select(m => m.Compatibility).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(HeadsetViewModel.Color),
-                    values = Model.Select(m => m.Color).Distinct()
-                })
-            </div>
-            <div class="additional-filters">
-                <partial name="_OrderPartialView"/>
-            </div>
-        </form>
-    </div>
-    <div id="headsets">
-        <partial name="_ProductsPartialView" model="Model"/>
-    </div>
+<div class="page-title">
+    <h1>Headsets</h1>
+</div>
+<div class="page-body">
+    <form class="page-layout" method="get" data-url="@Url.Action("FilterHeadsets", "Headsets")">
+        <partial name="_FilterPartialView" model="@Model.Filters"/>
+        <partial name="_ProductsContentPartialView" model="@Model.Products"/>
+    </form>
 </div>
 
 @section Scripts {
-       <script type="module" src="~/js/filter.js"></script>
+   <script type="module" src="~/js/filter.js"></script>
 }

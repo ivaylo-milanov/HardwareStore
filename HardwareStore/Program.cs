@@ -4,6 +4,7 @@ using HardwareStore.Infrastructure.Data;
 namespace HardwareStore
 {
     using HardwareStore.Extensions;
+    using HardwareStore.Infrastructure.Seed;
 
     public class Program
     {
@@ -29,6 +30,7 @@ namespace HardwareStore
             if (app.Environment.IsDevelopment())
             {
                 app.UseMigrationsEndPoint();
+                app.UseDeveloperExceptionPage();
             }
             else
             {
@@ -55,11 +57,11 @@ namespace HardwareStore
             using (var scope = app.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
-                var context = services.GetRequiredService<HardwareStoreDbContext>();
 
                 try
                 {
-                    await context.SeedData();
+                    var dataSeeder = services.GetRequiredService<DataSeeder>();
+                    await dataSeeder.SeedData();
                 }
                 catch (Exception ex)
                 {

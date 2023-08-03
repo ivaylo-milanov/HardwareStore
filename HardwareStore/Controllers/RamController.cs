@@ -1,6 +1,7 @@
 ﻿namespace HardwareStore.Controllers
 {
     using HardwareStore.Core.Services.Contracts;
+    using HardwareStore.Core.ViewModels.Product;
     using HardwareStore.Core.ViewModels.Ram;
     using Microsoft.AspNetCore.Mvc;
 
@@ -15,7 +16,15 @@
 
         public async Task<IActionResult> Index()
         {
-            var model = await this.productService.GetModel<RamViewModel>();
+            ProductsViewModel<RamViewModel> model;
+            try
+            {
+                model = await this.productService.GetModel<RamViewModel>();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
 
             return View(model);
         }

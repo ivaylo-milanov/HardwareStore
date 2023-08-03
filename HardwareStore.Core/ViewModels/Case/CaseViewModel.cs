@@ -3,6 +3,7 @@
     using HardwareStore.Core.Attributes;
     using HardwareStore.Core.ViewModels.Product;
 
+    [Category("Case")]
     public class CaseViewModel : ProductViewModel
     {
         [Characteristic("Form Factor")]

@@ -2,6 +2,7 @@
 {
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.MousePad;
+    using HardwareStore.Core.ViewModels.Product;
     using Microsoft.AspNetCore.Mvc;
 
     public class MousePadsController : Controller
@@ -15,7 +16,15 @@
 
         public async Task<IActionResult> Index()
         {
-            var model = await this.productService.GetModel<MousePadViewModel>();
+            ProductsViewModel<MousePadViewModel> model;
+            try
+            {
+                model = await this.productService.GetModel<MousePadViewModel>();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
 
             return View(model);
         }

@@ -1,44 +1,15 @@
-﻿@model IEnumerable<ProcessorViewModel>
+﻿@model ProductsViewModel<ProcessorViewModel>
 
-<div>
-    <div class="filter">
-        <form method="get" data-url="@Url.Action("FilterProcessors", "Processors")" data-container="#processors">
-            <div class="filter-categories">
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(ProcessorViewModel.Manufacturer),
-                    values = Model.Select(p => p.Manufacturer).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(ProcessorViewModel.Series),
-                    values = Model.Select(p => p.Series).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(ProcessorViewModel.Generation),
-                    values = Model.Select(p => p.Generation).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(ProcessorViewModel.Socket),
-                    values = Model.Select(p => p.Socket).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(ProcessorViewModel.BoxCooler),
-                    values = Model.Select(p => p.BoxCooler).Distinct()
-                })
-            </div>
-            <div class="additional-filters">
-                <partial name="_OrderPartialView"/>
-            </div>
-        </form>
-    </div>
-    <div id="processors">
-        <partial name="_ProductsPartialView" model="Model"/>
-    </div>
+<div class="page-title">
+    <h1>Processors</h1>
+</div>
+<div class="page-body">
+    <form class="page-layout" method="get" data-url="@Url.Action("FilterProcessors", "Processors")">
+        <partial name="_FilterPartialView" model="@Model.Filters"/>
+        <partial name="_ProductsContentPartialView" model="@Model.Products"/>
+    </form>
 </div>
 
 @section Scripts {
-        <script type="module" src="~/js/filter.js"></script>
+    <script type="module" src="~/js/filter.js"></script>
 }

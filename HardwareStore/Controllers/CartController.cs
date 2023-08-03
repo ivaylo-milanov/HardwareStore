@@ -6,11 +6,13 @@
 
     public class CartController : Controller
     {
+        private readonly ILogger<CartController> logger;
         private readonly IShoppingCartService shoppingCartService;
 
-        public CartController(IShoppingCartService shoppingCartService)
+        public CartController(IShoppingCartService shoppingCartService, ILogger<CartController> logger)
         {
             this.shoppingCartService = shoppingCartService;
+            this.logger = logger;
         }
 
         public async Task<IActionResult> Index()
@@ -27,14 +29,15 @@
                     shoppingCart = await this.shoppingCartService.GetSessionShoppingCartAsync();
                 }
             }
-            catch (Exception)
+            catch (ArgumentNullException ex)
             {
-                throw;
+                this.logger.LogError(ex, $"An error occured: {ex.Message}");
+                return RedirectToAction("Error", "Home");
             }
 
             if (TempData["ErrorMessage"] != null)
             {
-                ModelState.AddModelError(string.Empty, TempData["ErrorMessage"].ToString());
+                ModelState.AddModelError(string.Empty, TempData["ErrorMessage"]!.ToString()!);
             }
 
             return View(shoppingCart);
@@ -53,20 +56,22 @@
                     await this.shoppingCartService.AddToSessionShoppingCartAsync(productId, quantity);
                 }
             }
-            catch (ArgumentNullException)
+            catch (ArgumentNullException ex)
             {
-                throw;
+                this.logger.LogError(ex, $"An error occured: {ex.Message}");
+                return RedirectToAction("Error", "Home");
             }
-            catch (InvalidOperationException error)
+            catch (InvalidOperationException ex)
             {
-                TempData["ErrorMessage"] = error.Message;
+                this.logger.LogError(ex, ex.Message);
+                TempData["ErrorMessage"] = ex.Message;
                 return RedirectToAction(nameof(Index));
             }
 
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> RemoveFromShoppingCart([FromBody] int productId)
+        public async Task<IActionResult> RemoveFromShoppingCart(int productId)
         {
             try
             {
@@ -79,9 +84,10 @@
                     await this.shoppingCartService.RemoveFromSessionShoppingCartAsync(productId);
                 }
             }
-            catch (ArgumentNullException)
+            catch (ArgumentNullException ex)
             {
-                throw;
+                this.logger.LogError(ex, $"An error occured: {ex.Message}");
+                return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
             return RedirectToAction(nameof(Index));
@@ -100,9 +106,10 @@
                     await this.shoppingCartService.DecreaseSessionItemQuantityAsync(productId);
                 }
             }
-            catch (ArgumentNullException)
+            catch (ArgumentNullException ex)
             {
-                throw;
+                this.logger.LogError(ex, $"An error occured: {ex.Message}");
+                return RedirectToAction("Error", "Home");
             }
 
             return RedirectToAction(nameof(Index));
@@ -121,9 +128,10 @@
                     await this.shoppingCartService.IncreaseSessionItemQuantityAsync(productId);
                 }
             }
-            catch (ArgumentNullException)
+            catch (ArgumentNullException ex)
             {
-                throw;
+                this.logger.LogError(ex, $"An error occured: {ex.Message}");
+                return RedirectToAction("Error", "Home");
             }
 
             return RedirectToAction(nameof(Index));
@@ -142,9 +150,10 @@
                     await this.shoppingCartService.UpdateSessionItemQuantityAsync(model);
                 }
             }
-            catch (ArgumentNullException)
+            catch (ArgumentNullException ex)
             {
-                throw;
+                this.logger.LogError(ex, $"An error occured: {ex.Message}");
+                return RedirectToAction("Error", "Home");
             }
 
             return RedirectToAction(nameof(Index));

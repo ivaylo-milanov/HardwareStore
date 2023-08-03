@@ -4,7 +4,7 @@ import { onFormChange } from './filterSubmit.js';
 
 const form = document.querySelector('.page-layout');
 const initialUrl = local.getInitialURL();
-const defaultData = { "Order": "Default" };
+const defaultData = { "Order": "1" };
 
 function setInitialData() {
     let initialData = null;

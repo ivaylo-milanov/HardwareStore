@@ -3,17 +3,10 @@
 <div class="page-title">
     <h1>Search</h1>
 </div>
-<div>
-    <form class="page-layout" method="get" data-url="@Url.Action("FilterSearchedProducts", "Search")" data-container="#products">
+<div class="page-body">
+    <form class="page-layout" method="get" data-url="@Url.Action("FilterSearchedProducts", "Search")">
         <partial name="_FilterPartialView" model="@Model.Filters"/>
-        <div class="content-container">
-            <div class="additional-filters">
-                <partial name="_OrderPartialView"/>
-            </div>
-            <div id="products">
-                <partial name="_ProductsPartialView" model="@Model.Products"/>
-            </div>
-        </div>
+        <partial name="_ProductsContentPartialView" model="@Model.Products"/>
     </form>
 </div>
 

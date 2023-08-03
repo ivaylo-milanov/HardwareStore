@@ -3,6 +3,7 @@
     using HardwareStore.Core.Attributes;
     using HardwareStore.Core.ViewModels.Product;
 
+    [Category("RAM")]
     public class RamViewModel : ProductViewModel
     {
         [Characteristic]

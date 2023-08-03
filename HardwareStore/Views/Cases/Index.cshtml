@@ -3,20 +3,13 @@
 <div class="page-title">
     <h1>Cases</h1>
 </div>
-<div>
-    <form class="page-layout" method="get" data-url="@Url.Action("FilterCases", "Cases")" data-container="#cases">
-            <partial name="_FilterPartialView" model="@Model.Filters"/>
-            <div class="content-container">
-                <div class="additional-filters">
-                    <partial name="_OrderPartialView"/>
-                </div>
-                <div id="motherboards">
-                    <partial name="_ProductsPartialView" model="Model.Products"/>
-                </div>
-            </div>
-        </form>
+<div class="page-body">
+    <form class="page-layout" method="get" data-url="@Url.Action("FilterCases", "Cases")">
+        <partial name="_FilterPartialView" model="@Model.Filters"/>
+        <partial name="_ProductsContentPartialView" model="@Model.Products"/>
+    </form>
 </div>
 
 @section Scripts {
-       <script type="module" src="~/js/filter.js"></script>
+   <script type="module" src="~/js/filter.js"></script>
 }

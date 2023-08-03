@@ -33,6 +33,11 @@
 
         public IActionResult Login()
         {
+            if (User?.Identity?.IsAuthenticated ?? false)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             LoginFormModel model = new LoginFormModel();
 
             return View(model);
@@ -60,6 +65,11 @@
 
         public IActionResult Register()
         {
+            if (User?.Identity?.IsAuthenticated ?? false)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
             RegisterFormModel model = new RegisterFormModel();
 
             return View(model);

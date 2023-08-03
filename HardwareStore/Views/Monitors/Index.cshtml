@@ -1,64 +1,15 @@
-﻿@model IEnumerable<MonitorViewModel>
+﻿@model ProductsViewModel<MonitorViewModel>
 
-<div>
-    <div class="filter">
-        <form method="get" data-url="@Url.Action("FilterMonitors", "Monitors")" data-container="#monitors">
-            <div class="filter-categories">
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(MonitorViewModel.Manufacturer),
-                    values = Model.Select(m => m.Manufacturer).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(MonitorViewModel.Resolution),
-                    values = Model.Select(m => m.Resolution).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(MonitorViewModel.Matrix),
-                    values = Model.Select(m => m.Matrix).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(MonitorViewModel.Ports),
-                    values = Model.Select(m => m.Ports).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(MonitorViewModel.Technology),
-                    values = Model.Select(m => m.Technology).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(MonitorViewModel.PostureAdjustment),
-                    values = Model.Select(m => m.PostureAdjustment).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(MonitorViewModel.TouchScreen),
-                    values = Model.Select(m => m.TouchScreen).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(MonitorViewModel.VESA),
-                    values = Model.Select(m => m.VESA).Distinct()
-                })
-
-                @await Component.InvokeAsync("FilterComponent", new {
-                    name = nameof(MonitorViewModel.Color),
-                    values = Model.Select(m => m.Color).Distinct()
-                })
-            </div>
-            <div class="additional-filters">
-                <partial name="_OrderPartialView"/>
-            </div>
-        </form>
-    </div>
-    <div id="monitors">
-        <partial name="_ProductsPartialView" model="Model"/>
-    </div>
+<div class="page-title">
+    <h1>Monitors</h1>
+</div>
+<div class="page-body">
+    <form class="page-layout" method="get" data-url="@Url.Action("FilterMonitors", "Monitors")">
+        <partial name="_FilterPartialView" model="@Model.Filters"/>
+        <partial name="_ProductsContentPartialView" model="@Model.Products"/>
+    </form>
 </div>
 
 @section Scripts {
-        <script type="module" src="~/js/filter.js"></script>
+   <script type="module" src="~/js/filter.js"></script>
 }
