@@ -1,3 +1,730 @@
-{
-
-}
+[
+  {
+    "name": "GIGABYTE NVME SSD 256GB",
+    "price": 37.68,
+    "quantity": 10,
+    "description": "Solid State Drive (SSD) Gigabyte M.2 Nvme PCIe SSD",
+    "warranty": 60,
+    "manufacturer": "Gigabyte",
+    "model": "NVME SSD 256GB",
+    "referenceNumber": "GIGABYTE-NVME-256GB",
+    "category": "Internal Drive",
+    "characteristics": [
+      {
+        "name": "Type",
+        "value": "NVMe"
+      },
+      {
+        "name": "Interface",
+        "value": "PCIe Gen 3.0"
+      },
+      {
+        "name": "Form Factor",
+        "value": "M.2 2280"
+      },
+      {
+        "name": "Capacity",
+        "value": "256 GB"
+      },
+      {
+        "name": "Reading speed",
+        "value": "1700 MB/s"
+      },
+      {
+        "name": "Typing speed",
+        "value": "1100 MB/s"
+      },
+      {
+        "name": "Random Read IOPS",
+        "value": "180 k"
+      },
+      {
+        "name": "Random Write IOPS",
+        "value": "250 k"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      }
+    ]
+  },
+  {
+    "name": "GIGABYTE SSD 256GB",
+    "price": 33.65,
+    "quantity": 10,
+    "description": "Solid State Drive (SSD) Gigabyte 256GB, 7mm",
+    "warranty": 36,
+    "manufacturer": "Gigabyte",
+    "model": "SSD 256GB",
+    "referenceNumber": "GIGABYTE-256GB",
+    "category": "Internal Drive",
+    "characteristics": [
+      {
+        "name": "Type",
+        "value": "SSD"
+      },
+      {
+        "name": "Interface",
+        "value": "SATA III"
+      },
+      {
+        "name": "Form Factor",
+        "value": "2.5\""
+      },
+      {
+        "name": "Capacity",
+        "value": "256 GB"
+      },
+      {
+        "name": "Reading speed",
+        "value": "520 MB/s"
+      },
+      {
+        "name": "Typing speed",
+        "value": "500 MB/s"
+      },
+      {
+        "name": "Random Read IOPS",
+        "value": "80 k"
+      },
+      {
+        "name": "Random Write IOPS",
+        "value": "85 k"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      }
+    ]
+  },
+  {
+    "name": "GIGABYTE AORUS GEN4 5000E SSD 500GB",
+    "price": 85.34,
+    "quantity": 10,
+    "description": "Solid State Drive (SSD) Gigabyte AORUS 5000E 500GB, NVMe, PCIe Gen4, AG450E500G-G",
+    "warranty": 60,
+    "manufacturer": "Gigabyte",
+    "model": "AORUS 5000E 500GB",
+    "referenceNumber": "GIGABYTE-AORUS-5000E-500GB",
+    "category": "Internal Drive",
+    "characteristics": [
+      {
+        "name": "Type",
+        "value": "NVMe"
+      },
+      {
+        "name": "Interface",
+        "value": "PCIe Gen 4.0"
+      },
+      {
+        "name": "Form Factor",
+        "value": "M.2 2280"
+      },
+      {
+        "name": "Capacity",
+        "value": "500 GB"
+      },
+      {
+        "name": "Reading speed",
+        "value": "5000 MB/s"
+      },
+      {
+        "name": "Typing speed",
+        "value": "3800 MB/s"
+      }
+    ]
+  },
+  {
+    "name": "GIGABYTE AORUS NVME GEN4 2TB",
+    "price": 265.86,
+    "quantity": 10,
+    "description": "Solid State Drive (SSD) Gigabyte AORUS NVMe Gen4",
+    "warranty": 60,
+    "manufacturer": "Gigabyte",
+    "model": "AORUS NVMe Gen4",
+    "referenceNumber": "GIGABYTE-AORUS-NVME-GEN4-2TB",
+    "category": "Internal Drive",
+    "characteristics": [
+      {
+        "name": "Type",
+        "value": "NVMe"
+      },
+      {
+        "name": "Interface",
+        "value": "PCIe Gen 4.0"
+      },
+      {
+        "name": "Form Factor",
+        "value": "M.2 2280"
+      },
+      {
+        "name": "Capacity",
+        "value": "2000 GB"
+      },
+      {
+        "name": "Reading speed",
+        "value": "5000 MB/s"
+      },
+      {
+        "name": "Typing speed",
+        "value": "4400 MB/s"
+      },
+      {
+        "name": "Random Read IOPS",
+        "value": "750 k"
+      },
+      {
+        "name": "Random Write IOPS",
+        "value": "700 k"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      }
+    ]
+  },
+  {
+    "name": "KINGSTON A400 480GB",
+    "price": 51.61,
+    "quantity": 10,
+    "description": "Solid State Drive (SSD) KINGSTON A400",
+    "warranty": 36,
+    "manufacturer": "Kingston",
+    "model": "A400 480GB",
+    "referenceNumber": "KINGSTON-A400-480GB",
+    "category": "Internal Drive",
+    "characteristics": [
+      {
+        "name": "Type",
+        "value": "SSD"
+      },
+      {
+        "name": "Interface",
+        "value": "SATA III"
+      },
+      {
+        "name": "Form Factor",
+        "value": "2.5\""
+      },
+      {
+        "name": "Capacity",
+        "value": "480 GB"
+      },
+      {
+        "name": "Reading speed",
+        "value": "500 MB/s"
+      },
+      {
+        "name": "Typing speed",
+        "value": "450 MB/s"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      }
+    ]
+  },
+  {
+    "name": "KINGSTON KC600 512GB",
+    "price": 111.85,
+    "quantity": 10,
+    "description": "Solid State Drive (SSD) Kingston KC600",
+    "warranty": 60,
+    "manufacturer": "Kingston",
+    "model": "KC600 512GB",
+    "referenceNumber": "KINGSTON-KC600-512GB",
+    "category": "Internal Drive",
+    "characteristics": [
+      {
+        "name": "Type",
+        "value": "SSD"
+      },
+      {
+        "name": "Interface",
+        "value": "SATA III"
+      },
+      {
+        "name": "Form Factor",
+        "value": "2.5\""
+      },
+      {
+        "name": "Capacity",
+        "value": "512 GB"
+      },
+      {
+        "name": "Reading speed",
+        "value": "550 MB/s"
+      },
+      {
+        "name": "Typing speed",
+        "value": "520 MB/s"
+      },
+      {
+        "name": "Random Read IOPS",
+        "value": "90 k"
+      },
+      {
+        "name": "Random Write IOPS",
+        "value": "80 k"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      }
+    ]
+  },
+  {
+    "name": "KINGSTON KC3000 4TB",
+    "price": 767.42,
+    "quantity": 10,
+    "description": "Solid State Drive (SSD) KINGSTON KC3000 M.2-2280 PCIe 4.0 NVMe 4096GB",
+    "warranty": 60,
+    "manufacturer": "Kingston",
+    "model": "KC3000 M.2-2280 PCIe 4.0 NVMe 4096GB",
+    "referenceNumber": "KINGSTON-KC3000-4TB",
+    "category": "Internal Drive",
+    "characteristics": [
+      {
+        "name": "Type",
+        "value": "NVMe"
+      },
+      {
+        "name": "Interface",
+        "value": "PCIe Gen 4.0"
+      },
+      {
+        "name": "Form Factor",
+        "value": "M.2 2280"
+      },
+      {
+        "name": "Capacity",
+        "value": "4096 GB"
+      },
+      {
+        "name": "Reading speed",
+        "value": "7000 MB/s"
+      },
+      {
+        "name": "Typing speed",
+        "value": "7000 MB/s"
+      },
+      {
+        "name": "Random Read IOPS",
+        "value": "1000 k"
+      },
+      {
+        "name": "Random Write IOPS",
+        "value": "1000 k"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      }
+    ]
+  },
+  {
+    "name": "KINGSTON FURY RENEGADE 500GB NVME",
+    "price": 122.44,
+    "quantity": 10,
+    "description": "Solid State Drive (SSD) Kingston FURY Renegade PCIe 4.0 NVMe M.2 SSD 500GB",
+    "warranty": 60,
+    "manufacturer": "Kingston",
+    "model": "FURY Renegade PCIe 4.0 NVMe M.2 SSD 500GB",
+    "referenceNumber": "KINGSTON-FURY-RENEGATE-500GB",
+    "category": "Internal Drive",
+    "characteristics": [
+      {
+        "name": "Type",
+        "value": "NVMe"
+      },
+      {
+        "name": "Interface",
+        "value": "PCIe Gen 4.0"
+      },
+      {
+        "name": "Form Factor",
+        "value": "M.2 2280"
+      },
+      {
+        "name": "Capacity",
+        "value": "500 GB"
+      },
+      {
+        "name": "Reading speed",
+        "value": "7300 MB/s"
+      },
+      {
+        "name": "Typing speed",
+        "value": "3900 MB/s"
+      },
+      {
+        "name": "Random Read IOPS",
+        "value": "450 k"
+      },
+      {
+        "name": "Random Write IOPS",
+        "value": "900 k"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      }
+    ]
+  },
+  {
+    "name": "SAMSUNG 970 EVO PLUS 250GB",
+    "price": 64.82,
+    "quantity": 10,
+    "description": "Solid State Drive (SSD) SAMSUNG 970 EVO Plus",
+    "warranty": 60,
+    "manufacturer": "Samsung",
+    "model": "970 EVO PLUS 250GB",
+    "referenceNumber": "SAMSUNG-970-EVO-250GB",
+    "category": "Internal Drive",
+    "characteristics": [
+      {
+        "name": "Type",
+        "value": "NVMe"
+      },
+      {
+        "name": "Interface",
+        "value": "PCIe Gen 3.0"
+      },
+      {
+        "name": "Form Factor",
+        "value": "M.2 2280"
+      },
+      {
+        "name": "Capacity",
+        "value": "250 GB"
+      },
+      {
+        "name": "Reading speed",
+        "value": "3500 MB/s"
+      },
+      {
+        "name": "Typing speed",
+        "value": "2300 MB/s"
+      },
+      {
+        "name": "Random Read IOPS",
+        "value": "250 k"
+      },
+      {
+        "name": "Random Write IOPS",
+        "value": "550 k"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      }
+    ]
+  },
+  {
+    "name": "SAMSUNG 870 EVO 500GB",
+    "price": 82.61,
+    "quantity": 10,
+    "description": "Solid State Drive (SSD) SAMSUNG 870 EVO SATA 2.5”, 500GB, SATA 6 Gb/s, MZ-77E500B/EU",
+    "warranty": 36,
+    "manufacturer": "Samsung",
+    "model": "870 EVO 500GB",
+    "referenceNumber": "SAMSUNG-870-EVO-500GB",
+    "category": "Internal Drive",
+    "characteristics": [
+      {
+        "name": "Type",
+        "value": "SSD"
+      },
+      {
+        "name": "Interface",
+        "value": "SATA III"
+      },
+      {
+        "name": "Form Factor",
+        "value": "2.5\""
+      },
+      {
+        "name": "Capacity",
+        "value": "500 GB"
+      },
+      {
+        "name": "Reading speed",
+        "value": "560 MB/s"
+      },
+      {
+        "name": "Typing speed",
+        "value": "530 MB/s"
+      },
+      {
+        "name": "Random Read IOPS",
+        "value": "98 k"
+      },
+      {
+        "name": "Random Write IOPS",
+        "value": "88 k"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      }
+    ]
+  },
+  {
+    "name": "SAMSUNG 980 PRO 1TB",
+    "price": 167.32,
+    "quantity": 10,
+    "description": "Solid State Drive (SSD) SAMSUNG 980 PRO, 1TB, M.2 Type 2280, MZ-V8P1T0BW",
+    "warranty": 60,
+    "manufacturer": "Samsung",
+    "model": "980 PRO 1TB",
+    "referenceNumber": "SAMSUNG-980-PRO-1TB",
+    "category": "Internal Drive",
+    "characteristics": [
+      {
+        "name": "Type",
+        "value": "NVMe"
+      },
+      {
+        "name": "Interface",
+        "value": "PCIe Gen 4.0"
+      },
+      {
+        "name": "Form Factor",
+        "value": "M.2 2280"
+      },
+      {
+        "name": "Capacity",
+        "value": "1000 GB"
+      },
+      {
+        "name": "Reading speed",
+        "value": "7000 MB/s"
+      },
+      {
+        "name": "Typing speed",
+        "value": "5000 MB/s"
+      },
+      {
+        "name": "Random Read IOPS",
+        "value": "690 k"
+      },
+      {
+        "name": "Random Write IOPS",
+        "value": "660 k"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      }
+    ]
+  },
+  {
+    "name": "SAMSUNG 990 PRO W/ HEATSINK 1TB",
+    "price": 278.40,
+    "quantity": 10,
+    "description": "Solid State Drive (SSD) SAMSUNG 990 PRO с Heatsink, 1TB, M.2 Type 2280, MZ-V9P1T0CW",
+    "warranty": 60,
+    "manufacturer": "Samsung",
+    "model": "990 PRO",
+    "referenceNumber": "SAMSUNG-990-PRO-1TB",
+    "category": "Internal Drive",
+    "characteristics": [
+      {
+        "name": "Type",
+        "value": "NVMe"
+      },
+      {
+        "name": "Interface",
+        "value": "PCIe Gen 4.0"
+      },
+      {
+        "name": "Form Factor",
+        "value": "M.2 2280"
+      },
+      {
+        "name": "Capacity",
+        "value": "1000 GB"
+      },
+      {
+        "name": "Reading speed",
+        "value": "7450 MB/s"
+      },
+      {
+        "name": "Typing speed",
+        "value": "6900 MB/s"
+      },
+      {
+        "name": "Random Read IOPS",
+        "value": "1200 k"
+      },
+      {
+        "name": "Random Write IOPS",
+        "value": "1550 k"
+      }
+    ]
+  },
+  {
+    "name": "SILICON POWER A55 256GB",
+    "price": 29.42,
+    "quantity": 10,
+    "description": "Solid State Drive (SSD) SILICON POWER A55",
+    "warranty": 60,
+    "manufacturer": "Silicon Power",
+    "model": "A55 256GB",
+    "referenceNumber": "SILICON-POWER-A55-256GB",
+    "category": "Internal Drive",
+    "characteristics": [
+      {
+        "name": "Type",
+        "value": "SSD"
+      },
+      {
+        "name": "Interface",
+        "value": "SATA III"
+      },
+      {
+        "name": "Form Factor",
+        "value": "2.5\""
+      },
+      {
+        "name": "Capacity",
+        "value": "256 GB"
+      },
+      {
+        "name": "Reading speed",
+        "value": "550 MB/s"
+      },
+      {
+        "name": "Typing speed",
+        "value": "450 MB/s"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      }
+    ]
+  },
+  {
+    "name": "SILICON POWER UD85 250GB",
+    "price": 48.18,
+    "quantity": 10,
+    "description": "Solid State Drive (SSD) Silicon Power UD85, M.2-2280, PCIe Gen 4x4, NVMe, 250GB, SP250GBP44UD8505",
+    "warranty": 60,
+    "manufacturer": "Silicon Power",
+    "model": "UD85 250GB",
+    "referenceNumber": "SILICON-POWER-UD85-250GB",
+    "category": "Internal Drive",
+    "characteristics": [
+      {
+        "name": "Type",
+        "value": "NVMe"
+      },
+      {
+        "name": "Interface",
+        "value": "PCIe Gen 4.0"
+      },
+      {
+        "name": "Form Factor",
+        "value": "M.2 2280"
+      },
+      {
+        "name": "Capacity",
+        "value": "250 GB"
+      },
+      {
+        "name": "Reading speed",
+        "value": "3300 MB/s"
+      },
+      {
+        "name": "Typing speed",
+        "value": "1300 MB/s"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      }
+    ]
+  },
+  {
+    "name": "SILICON POWER UD80 500GB",
+    "price": 59.86,
+    "quantity": 10,
+    "description": "Solid State Drive (SSD) Silicon Power UD80 M.2-2280 PCIe Gen 3x4 NVMe 500GB",
+    "warranty": 60,
+    "manufacturer": "Silicon Power",
+    "model": "UD80 500GB",
+    "referenceNumber": "SILICON-POWER-UD80-500GB",
+    "category": "Internal Drive",
+    "characteristics": [
+      {
+        "name": "Type",
+        "value": "NVMe"
+      },
+      {
+        "name": "Interface",
+        "value": "PCIe Gen 3.0"
+      },
+      {
+        "name": "Form Factor",
+        "value": "M.2 2280"
+      },
+      {
+        "name": "Capacity",
+        "value": "500 GB"
+      },
+      {
+        "name": "Reading speed",
+        "value": "3400 MB/s"
+      },
+      {
+        "name": "Typing speed",
+        "value": "2300 MB/s"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      }
+    ]
+  },
+  {
+    "name": "SILICON POWER P34A60 1TB",
+    "price": 112.88,
+    "quantity": 10,
+    "description": "Solid State Drive (SSD) Silicon Power A60 M.2-2280 PCIe Gen 3x4 NVMe 1ТB",
+    "warranty": 60,
+    "manufacturer": "Silicon Power",
+    "model": "P34A60 1TB",
+    "referenceNumber": "SILICON-POWER-P34A60-1TB",
+    "category": "Internal Drive",
+    "characteristics": [
+      {
+        "name": "Type",
+        "value": "NVMe"
+      },
+      {
+        "name": "Interface",
+        "value": "PCIe Gen 3.0"
+      },
+      {
+        "name": "Form Factor",
+        "value": "M.2 2280"
+      },
+      {
+        "name": "Capacity",
+        "value": "1000 GB"
+      },
+      {
+        "name": "Reading speed",
+        "value": "2200 MB/s"
+      },
+      {
+        "name": "Typing speed",
+        "value": "1600 MB/s"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      }
+    ]
+  }
+]
