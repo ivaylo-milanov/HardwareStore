@@ -44,7 +44,7 @@
       },
       {
         "name": "Kit",
-        "value": "2"
+        "value": "from 2 memories"
       }
     ]
   },
@@ -93,7 +93,7 @@
       },
       {
         "name": "Kit",
-        "value": "2"
+        "value": "from 2 memories"
       }
     ]
   },
@@ -208,7 +208,7 @@
     "characteristics": [
       {
         "name": "Capacity",
-        "value": "32"
+        "value": "32 GB"
       },
       {
         "name": "Type",
@@ -216,7 +216,7 @@
       },
       {
         "name": "Frequency",
-        "value": "3600"
+        "value": "3600 MHz"
       },
       {
         "name": "Timing",
@@ -240,7 +240,7 @@
       },
       {
         "name": "Kit",
-        "value": "4"
+        "value": "from 4 memories"
       }
     ]
   },
@@ -257,7 +257,7 @@
     "characteristics": [
       {
         "name": "Capacity",
-        "value": "32"
+        "value": "32 GB"
       },
       {
         "name": "Type",
@@ -265,7 +265,7 @@
       },
       {
         "name": "Frequency",
-        "value": "6000"
+        "value": "6000 MHz"
       },
       {
         "name": "Timing",
@@ -306,7 +306,7 @@
     "characteristics": [
       {
         "name": "Capacity",
-        "value": "16"
+        "value": "16 GB"
       },
       {
         "name": "Type",
@@ -314,7 +314,7 @@
       },
       {
         "name": "Frequency",
-        "value": "3200"
+        "value": "3200 MHz"
       },
       {
         "name": "Timing",
@@ -338,7 +338,7 @@
       },
       {
         "name": "Kit",
-        "value": "2"
+        "value": "from 2 memories"
       }
     ]
   },
@@ -355,7 +355,7 @@
     "characteristics": [
       {
         "name": "Capacity",
-        "value": "16"
+        "value": "16 GB"
       },
       {
         "name": "Type",
@@ -363,7 +363,7 @@
       },
       {
         "name": "Frequency",
-        "value": "4000"
+        "value": "4000 MHz"
       },
       {
         "name": "Timing",
@@ -387,7 +387,7 @@
       },
       {
         "name": "Kit",
-        "value": "2"
+        "value": "from 2 memories"
       }
     ]
   },
@@ -404,7 +404,7 @@
     "characteristics": [
       {
         "name": "Capacity",
-        "value": "16"
+        "value": "16 GB"
       },
       {
         "name": "Type",
@@ -412,7 +412,7 @@
       },
       {
         "name": "Frequency",
-        "value": "3733"
+        "value": "3733 MHz"
       },
       {
         "name": "Timing",
@@ -436,7 +436,7 @@
       },
       {
         "name": "Kit",
-        "value": "2"
+        "value": "from 2 memories"
       }
     ]
   },
@@ -453,7 +453,7 @@
     "characteristics": [
       {
         "name": "Capacity",
-        "value": "16"
+        "value": "16 GB"
       },
       {
         "name": "Type",
@@ -461,7 +461,7 @@
       },
       {
         "name": "Frequency",
-        "value": "3600"
+        "value": "3600 MHz"
       },
       {
         "name": "Timing",
@@ -502,7 +502,7 @@
     "characteristics": [
       {
         "name": "Capacity",
-        "value": "16"
+        "value": "16 GB"
       },
       {
         "name": "Type",
@@ -510,7 +510,7 @@
       },
       {
         "name": "Frequency",
-        "value": "3200"
+        "value": "3200 MHz"
       },
       {
         "name": "Timing",
@@ -534,7 +534,7 @@
       },
       {
         "name": "Kit",
-        "value": "2"
+        "value": "from 2 memories"
       }
     ]
   },
@@ -551,7 +551,7 @@
     "characteristics": [
       {
         "name": "Capacity",
-        "value": "32"
+        "value": "32 GB"
       },
       {
         "name": "Type",
@@ -559,7 +559,7 @@
       },
       {
         "name": "Frequency",
-        "value": "3600"
+        "value": "3600 MHz"
       },
       {
         "name": "Timing",
@@ -583,7 +583,7 @@
       },
       {
         "name": "Kit",
-        "value": "2"
+        "value": "from 2 memories"
       }
     ]
   },
@@ -600,7 +600,7 @@
     "characteristics": [
       {
         "name": "Capacity",
-        "value": "8"
+        "value": "8 GB"
       },
       {
         "name": "Type",
@@ -608,7 +608,7 @@
       },
       {
         "name": "Frequency",
-        "value": "3200"
+        "value": "3200 MHz"
       },
       {
         "name": "Timing",
@@ -649,7 +649,7 @@
     "characteristics": [
       {
         "name": "Capacity",
-        "value": "16"
+        "value": "16 GB"
       },
       {
         "name": "Type",
@@ -657,7 +657,7 @@
       },
       {
         "name": "Frequency",
-        "value": "3200"
+        "value": "3200 MHz"
       },
       {
         "name": "Timing",
@@ -681,7 +681,7 @@
       },
       {
         "name": "Kit",
-        "value": "2"
+        "value": "from 2 memories"
       }
     ]
   },
@@ -698,7 +698,7 @@
     "characteristics": [
       {
         "name": "Capacity",
-        "value": "32"
+        "value": "32 GB"
       },
       {
         "name": "Type",
@@ -706,7 +706,7 @@
       },
       {
         "name": "Frequency",
-        "value": "4000"
+        "value": "4000 MHz"
       },
       {
         "name": "Timing",
@@ -730,7 +730,7 @@
       },
       {
         "name": "Kit",
-        "value": "2"
+        "value": "from 2 memories"
       }
     ]
   },
@@ -747,7 +747,7 @@
     "characteristics": [
       {
         "name": "Capacity",
-        "value": "16"
+        "value": "16 MHz"
       },
       {
         "name": "Type",
@@ -755,7 +755,7 @@
       },
       {
         "name": "Frequency",
-        "value": "3600"
+        "value": "3600 GB"
       },
       {
         "name": "Timing",
@@ -779,7 +779,7 @@
       },
       {
         "name": "Kit",
-        "value": "2"
+        "value": "from 2 memories"
       }
     ]
   }

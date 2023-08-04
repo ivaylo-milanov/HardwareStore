@@ -4,11 +4,11 @@
     "price": 55.12,
     "quantity": 10,
     "description": "CPU Cooler ARCTIC Freezer i35 Black/White",
-    "warranty": 24,
+    "warranty": 120,
     "manufacturer": "Arctic",
     "model": "Freezer i35",
     "referenceNumber": "ARCTIC-FREEZER-I35",
-    "category": "Case",
+    "category": "Cooler",
     "characteristics": [
       {
         "name": "Type",
@@ -44,5 +44,695 @@
       }
     ]
   },
-
+  {
+    "name": "ARCTIC FREEZER 34 ESPORTS DUO",
+    "price": 90.76,
+    "quantity": 10,
+    "description": "Arctic Freezer 34 eSports DUO Red processor cooler",
+    "warranty": 120,
+    "manufacturer": "Arctic",
+    "model": "Freezer 34 eSports DUO Red",
+    "referenceNumber": "ARCTIC-FREEZER-34-ESPORTS-DUO-RED",
+    "category": "Cooler",
+    "characteristics": [
+      {
+        "name": "Type",
+        "value": "Aerial"
+      },
+      {
+        "name": "TDP",
+        "value": "210 W"
+      },
+      {
+        "name": "Socket",
+        "value": "1150, 1151, 1155, 1156, 2066, AM4, 2011-3, 1200, 1700"
+      },
+      {
+        "name": "Height",
+        "value": "157 mm"
+      },
+      {
+        "name": "Fan speed",
+        "value": "2100 RPM"
+      },
+      {
+        "name": "Air flow",
+        "value": "135.12 CFM"
+      },
+      {
+        "name": "Noise level",
+        "value": "28 dBA"
+      },
+      {
+        "name": "Fan size",
+        "value": "120 x 25 mm x2"
+      },
+      {
+        "name": "Connector",
+        "value": "4-pin PWM"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      }
+    ]
+  },
+  {
+    "name": "ARCTIC LIQUID FREEZER II 240",
+    "price": 195.28,
+    "quantity": 10,
+    "description": "Arctic Freezer II CPU Cooler (240mm), Water Cooling, ACFRE00046A AMD/Intel",
+    "warranty": 72,
+    "manufacturer": "Arctic",
+    "model": "Freezer II (240mm)",
+    "referenceNumber": "ARCTIC-LIQUID-FREEZER-II-240",
+    "category": "Cooler",
+    "characteristics": [
+      {
+        "name": "Type",
+        "value": "Watery"
+      },
+      {
+        "name": "Socket",
+        "value": "1150, 1151, 1155, 1156, 2066, AM4, 2011-3, 1200, 1700"
+      },
+      {
+        "name": "Fan speed",
+        "value": "1800 RPM"
+      },
+      {
+        "name": "Air flow",
+        "value": "56.3 CFM"
+      },
+      {
+        "name": "Noise level",
+        "value": "23 dBA"
+      },
+      {
+        "name": "Fan size",
+        "value": "120 x 25 mm x2"
+      },
+      {
+        "name": "Connector",
+        "value": "4-pin PWM"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      }
+    ]
+  },
+  {
+    "name": "ARCTIC LIQUID FREEZER II - 240 A-RGB",
+    "price": 237.24,
+    "quantity": 10,
+    "description": "CPU cooler Arctic Freezer II A-RGB (240mm), water cooling, ACFRE00093A AMD/Intel",
+    "warranty": 72,
+    "manufacturer": "Arctic",
+    "model": "Freezer II A-RGB (240mm)",
+    "referenceNumber": "ARCTIC-LIQUID-FREEZER-II-240-ARGB",
+    "category": "Cooler",
+    "characteristics": [
+      {
+        "name": "Type",
+        "value": "Watery"
+      },
+      {
+        "name": "Socket",
+        "value": "1150, 1151, 1155, 1156, 1366, 2011, 2066, AM4, 2011-3, 1200, 1700"
+      },
+      {
+        "name": "Fan speed",
+        "value": "1800 RPM"
+      },
+      {
+        "name": "Air flow",
+        "value": "48.8 CFM"
+      },
+      {
+        "name": "Noise level",
+        "value": "23 dBA"
+      },
+      {
+        "name": "Fan size",
+        "value": "120 x 25 mm x2"
+      },
+      {
+        "name": "Connector",
+        "value": "4-pin PWM, 3-pin 5V ARGB"
+      },
+      {
+        "name": "Backlight",
+        "value": "ARGB"
+      }
+    ]
+  },
+  {
+    "name": "ASUS ROG STRIX LC II 240",
+    "price": 329.00,
+    "quantity": 10,
+    "description": "ASUS ROG STRIX LC II 240 CPU Cooler",
+    "warranty": 72,
+    "manufacturer": "ASUS",
+    "model": "ROG STRIX LC II 240",
+    "referenceNumber": "ASUS-ROG-STRIX-LCII-240",
+    "category": "Cooler",
+    "characteristics": [
+      {
+        "name": "Type",
+        "value": "Watery"
+      },
+      {
+        "name": "Socket",
+        "value": "1150, 1151, 1155, 1156, 2011, 2066, AM4, 2011-3, TR4, 1200, 1700"
+      },
+      {
+        "name": "Fan speed",
+        "value": "2500 RPM"
+      },
+      {
+        "name": "Air flow",
+        "value": "67 CFM"
+      },
+      {
+        "name": "Noise level",
+        "value": "29 dBA"
+      },
+      {
+        "name": "Fan size",
+        "value": "120 x 25 mm x2"
+      },
+      {
+        "name": "Connector",
+        "value": "4-pin, 4-pin PWM, 3-pin 5V ARGB"
+      },
+      {
+        "name": "Backlight",
+        "value": "ARGB"
+      }
+    ]
+  },
+  {
+    "name": "ASUS ROG STRIX LC II 280 ARGB",
+    "price": 379.00,
+    "quantity": 10,
+    "description": "CPU Cooler ASUS ROG STRIX LC II 280 ARGB, AIO",
+    "warranty": 72,
+    "manufacturer": "ASUS",
+    "model": "ROG STRIX LC II 280 ARGB",
+    "referenceNumber": "ASUS",
+    "category": "Cooler",
+    "characteristics": [
+      {
+        "name": "Type",
+        "value": "Watery"
+      },
+      {
+        "name": "Socket",
+        "value": "1150, 1151, 1155, 1156, 1200, 1700"
+      },
+      {
+        "name": "Fan speed",
+        "value": "2100 RPM"
+      },
+      {
+        "name": "Air flow",
+        "value": "102.3 CFM"
+      },
+      {
+        "name": "Noise level",
+        "value": "35.7 dBA"
+      },
+      {
+        "name": "Fan size",
+        "value": "140 x 25 mm x2"
+      },
+      {
+        "name": "Connector",
+        "value": "4-pin, USB Header, 3-pin, 3-pin 5V ARGB"
+      },
+      {
+        "name": "Backlight",
+        "value": "ARGB"
+      }
+    ]
+  },
+  {
+    "name": "ASUS ROG RYUJIN 360",
+    "price": 425.60,
+    "quantity": 10,
+    "description": "ROG Ryujin is the flagship of All-in-one water coolers, which aims to provide the best cooling in extreme configurations. It relies on 3 x 120mm Noctua iPPC industrial fans for excellent and quiet cooling, + a built-in fan in the pump housing to further cool the VRM and M.2 drive, all of which ensure your machine will perform at its highest level.",
+    "warranty": 36,
+    "manufacturer": "ASUS",
+    "model": "ROG RYUJIN 360 Aura Sync",
+    "referenceNumber": "ASUS-ROG-RYUJIN-360",
+    "category": "Cooler",
+    "characteristics": [
+      {
+        "name": "Type",
+        "value": "Watery"
+      },
+      {
+        "name": "Socket",
+        "value": "1150, 1151, 1155, 1156, 1366, 2011, 2066, AM4, 2011-3, TR4, 1200"
+      },
+      {
+        "name": "Fan speed",
+        "value": "2000 RPM"
+      },
+      {
+        "name": "Air flow",
+        "value": "71.6 CFM"
+      },
+      {
+        "name": "Noise level",
+        "value": "29.7 dBA"
+      },
+      {
+        "name": "Fan size",
+        "value": "120 x 25 mm x3"
+      },
+      {
+        "name": "Connector",
+        "value": "4-pin, USB Header, 4-pin PWM, SATA Power"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      }
+    ]
+  },
+  {
+    "name": "ASUS ROG RYUJIN III 360",
+    "price": 849.00,
+    "quantity": 10,
+    "description": "CPU Cooler ASUS ROG RYUJIN III 360, 3.5 Full Color LCD Display, Noctua NF-F12 IndustrialPPC Fans",
+    "warranty": 72,
+    "manufacturer": "ASUS",
+    "model": "ROG RYUJIN III 360",
+    "referenceNumber": "ASUS-ROG-RYUJIN-III-360",
+    "category": "Cooler",
+    "characteristics": [
+      {
+        "name": "Type",
+        "value": "Watery"
+      },
+      {
+        "name": "Socket",
+        "value": "1150, 1151, 1155, 1156, AM4, 1200, 1700, AM5"
+      },
+      {
+        "name": "Fan speed",
+        "value": "2000 RPM"
+      },
+      {
+        "name": "Air flow",
+        "value": "71.6 CFM"
+      },
+      {
+        "name": "Noise level",
+        "value": "29.7 dBA"
+      },
+      {
+        "name": "Fan size",
+        "value": "120 x 25 mm x3"
+      },
+      {
+        "name": "Connector",
+        "value": "4-pin, USB Header, 3-pin 5V ARGB"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      }
+    ]
+  },
+  {
+    "name": "COOLER MASTER HYPER 212 BLACK EDITION LGA1700",
+    "price": 88.99,
+    "quantity": 10,
+    "description": "The legendary Hyper air cooler is back and better than ever. The Hyper 212 Black Edition offers better installation and great performance, easily one of the best air cooling solutions out there. The aluminum top cover and nickel-plated black fins give the Hyper 212 Black Edition a premium aesthetic appeal. The sleek jet black not only makes it look great, but also boosts cooling efficiency.",
+    "warranty": 24,
+    "manufacturer": "Cooler Master",
+    "model": "Hyper 212 Black Edition",
+    "referenceNumber": "COOLER-MASTER-HYPER-212-BLACK-EDITION",
+    "category": "Cooler",
+    "characteristics": [
+      {
+        "name": "Type",
+        "value": "Aerial"
+      },
+      {
+        "name": "Socket",
+        "value": "1150, 1151, 1155, 1156, 1366, AM2, AM2+, AM3, AM3+, FM1, FM2, FM2+, AM4, 1200, 1700"
+      },
+      {
+        "name": "Height",
+        "value": "159 mm"
+      },
+      {
+        "name": "Fan speed",
+        "value": "2000 RPM"
+      },
+      {
+        "name": "Air flow",
+        "value": "42 CFM"
+      },
+      {
+        "name": "Noise level",
+        "value": "26 dBA"
+      },
+      {
+        "name": "Fan size",
+        "value": "120 x 25 mm"
+      },
+      {
+        "name": "Connector",
+        "value": "4-pin PWM"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      }
+    ]
+  },
+  {
+    "name": "COOLER MASTER HYPER 212 HALO BLACK",
+    "price": 99.00,
+    "quantity": 10,
+    "description": "CPU Cooler Cooler Master Hyper 212 HALO Black Edition, AMD/INTEL",
+    "warranty": 24,
+    "manufacturer": "Cooler Master",
+    "model": "Hyper 212 HALO Black Edition",
+    "referenceNumber": "COOLER-MASTER-HYPER-212-HALO-BLACK-EDITION",
+    "category": "Cooler",
+    "characteristics": [
+      {
+        "name": "Type",
+        "value": "Aerial"
+      },
+      {
+        "name": "Socket",
+        "value": "1150, 1151, 1155, 1156, AM4, 1200, 1700, AM5"
+      },
+      {
+        "name": "Height",
+        "value": "154 mm"
+      },
+      {
+        "name": "Fan speed",
+        "value": "2050 RPM"
+      },
+      {
+        "name": "Air flow",
+        "value": "42 CFM"
+      },
+      {
+        "name": "Noise level",
+        "value": "27 dBA"
+      },
+      {
+        "name": "Fan size",
+        "value": "120 x 25 mm"
+      },
+      {
+        "name": "Connector",
+        "value": "4-pin PWM, 3-pin 5V ARGB"
+      },
+      {
+        "name": "Backlight",
+        "value": "ARGB"
+      }
+    ]
+  },
+  {
+    "name": "COOLER MASTER MASTERLIQUID ML240 ILLUSION",
+    "price": 199.00,
+    "quantity": 10,
+    "description": "Cooler Master MasterLiquid ML240 Illusion processor cooler",
+    "warranty": 36,
+    "manufacturer": "Cooler Master",
+    "model": "MasterLiquid ML240 Illusion",
+    "referenceNumber": "COOLER-MASTER-MASTERLIQUID-ML240-ILLUSION",
+    "category": "Cooler",
+    "characteristics": [
+      {
+        "name": "Type",
+        "value": "Watery"
+      },
+      {
+        "name": "Socket",
+        "value": "1150, 1151, 1155, 1156, 2011, 2066, AM2, AM2+, AM3, AM3+, FM1, FM2, FM2+, AM4, 2011-3, 1200"
+      },
+      {
+        "name": "Fan speed",
+        "value": "1800 RPM"
+      },
+      {
+        "name": "Air flow",
+        "value": "47.2 CFM"
+      },
+      {
+        "name": "Noise level",
+        "value": "30 dBA"
+      },
+      {
+        "name": "Fan size",
+        "value": "120 x 25 mm x2"
+      },
+      {
+        "name": "Connector",
+        "value": "4-pin, 3-pin, 3-pin 5V ARGB"
+      },
+      {
+        "name": "Backlight",
+        "value": "ARGB"
+      }
+    ]
+  },
+  {
+    "name": "COOLER MASTER MASTERLIQUID 360L CORE ARGB WHITE",
+    "price": 268.99,
+    "quantity": 10,
+    "description": "Cooler Master builds on the classic MasterLiquid L series to present a redesigned and improved edition of the MasterLiquid 360L Core ARGB White. With new design elements that bring a classic minimalist look to the series, the MasterLiquid 360L Core ARGB White represents Cooler Master's continued innovative spirit.",
+    "warranty": 24,
+    "manufacturer": "Cooler Master",
+    "model": "MasterLiquid 360L Core ARGB White Edition",
+    "referenceNumber": "COOLER-MASTER-MASTERLIQUID-360L-CORE-ARGB-WHITE-EDITION",
+    "category": "Cooler",
+    "characteristics": [
+      {
+        "name": "Type",
+        "value": "Watery"
+      },
+      {
+        "name": "Socket",
+        "value": "1150, 1151, 1155, 1156, AM2, AM2+, AM3, AM3+, FM1, FM2, FM2+, AM4, 1200, 1700, AM5"
+      },
+      {
+        "name": "Fan speed",
+        "value": "1750 RPM"
+      },
+      {
+        "name": "Air flow",
+        "value": "71.93 CFM"
+      },
+      {
+        "name": "Noise level",
+        "value": "27.2 dBA"
+      },
+      {
+        "name": "Fan size",
+        "value": "120 x 25mm x3"
+      },
+      {
+        "name": "Connector",
+        "value": "3-pin, 4-pin PWM, 3-pin 5V ARGB"
+      },
+      {
+        "name": "Backlight",
+        "value": "ARGB"
+      }
+    ]
+  },
+  {
+    "name": "CORSAIR ICUE H100I ELITE CAPELLIX",
+    "price": 371.56,
+    "quantity": 10,
+    "description": "Corsair iCUE H100i Elite Capellix 240 White RGB AMD/INTEL CPU Cooler",
+    "warranty": 60,
+    "manufacturer": "Corsair",
+    "model": "iCUE H100i Elite Capellix 240",
+    "referenceNumber": "CORSAIR-ICUE-H100I-ELITE-CAPELLIX",
+    "category": "Cooler",
+    "characteristics": [
+      {
+        "name": "Type",
+        "value": "Watery"
+      },
+      {
+        "name": "Socket",
+        "value": "1150, 1151, 1155, 1156, 1366, 2011, 2066, AM2, AM3, FM2, AM4, 1200, 1700"
+      },
+      {
+        "name": "Fan speed",
+        "value": "2400 RPM"
+      },
+      {
+        "name": "Air flow",
+        "value": "75 CFM"
+      },
+      {
+        "name": "Noise level",
+        "value": "37 dBA"
+      },
+      {
+        "name": "Fan size",
+        "value": "120 x 25 mm x2"
+      },
+      {
+        "name": "Connector",
+        "value": "4-pin, 3-pin, SATA Power"
+      },
+      {
+        "name": "Backlight",
+        "value": "RGB"
+      }
+    ]
+  },
+  {
+    "name": "CORSAIR ICUE H115I ELITE CAPELLIX LIQUID CPU COOLER",
+    "price": 431.65,
+    "quantity": 10,
+    "description": "Corsair iCUE H115i Elite Capellix 280 Black RGB AMD/INTEL Processor Cooler",
+    "warranty": 60,
+    "manufacturer": "Corsair",
+    "model": "iCUE H115i Elite Capellix 280 Black RGB",
+    "referenceNumber": "CORSAIR-ICUE-H115I-ELITE-CAPELLIX",
+    "category": "Cooler",
+    "characteristics": [
+      {
+        "name": "Type",
+        "value": "Watery"
+      },
+      {
+        "name": "Socket",
+        "value": "1150, 1151, 1155, 1156, 1366, 2011, 2066, AM2, AM3, AM4, sTRX4, 1200, 1700"
+      },
+      {
+        "name": "Fan speed",
+        "value": "2000 RPM"
+      },
+      {
+        "name": "Air flow",
+        "value": "97 CFM"
+      },
+      {
+        "name": "Noise level",
+        "value": "36 dBA"
+      },
+      {
+        "name": "Fan size",
+        "value": "140 x 25 mm x2"
+      },
+      {
+        "name": "Connector",
+        "value": "3-pin, 4-pin PWM, SATA Power"
+      },
+      {
+        "name": "Backlight",
+        "value": "RGB"
+      }
+    ]
+  },
+  {
+    "name": "CORSAIR ICUE H150I ELITE CAPELLIX XT",
+    "price": 565.90,
+    "quantity": 10,
+    "description": "CPU Cooler Corsair iCUE H150i Elite Capellix XT 360 White RGB AMD/INTEL, CW-9060073-WW",
+    "warranty": 60,
+    "manufacturer": "Corsair",
+    "model": "iCUE H150i Elite Capellix XT 360 White RGB",
+    "referenceNumber": "CORSAIR-ICUE-H150I-ELITE-CAPELLIX-XT",
+    "category": "Cooler",
+    "characteristics": [
+      {
+        "name": "Type",
+        "value": "Watery"
+      },
+      {
+        "name": "Socket",
+        "value": "1150, 1151, 1155, 1156, 2011, 2066, AM4, sTRX4, 1200, 1700, sTR4"
+      },
+      {
+        "name": "Fan speed",
+        "value": "2100 RPM"
+      },
+      {
+        "name": "Air flow",
+        "value": "65.57 CFM"
+      },
+      {
+        "name": "Noise level",
+        "value": "34.1 dBA"
+      },
+      {
+        "name": "Fan size",
+        "value": "120 x 25 mm x3"
+      },
+      {
+        "name": "Connector",
+        "value": "USB Header, 3-pin, 4-pin PWM, SATA Power"
+      },
+      {
+        "name": "Backlight",
+        "value": "ARGB"
+      }
+    ]
+  },
+  {
+    "name": "CORSAIR ICUE H170I ELITE CAPELLIX XT LIQUID CPU COOLER",
+    "price": 644.32,
+    "quantity": 10,
+    "description": "CPU Cooler Corsair iCUE H170i Elite CAPELLIX XT 420mm Black RGB AMD/INTEL, CW-9060071-WW",
+    "warranty": 60,
+    "manufacturer": "Cooler Master",
+    "model": "iCUE H170i Elite CAPELLIX XT 420mm Black RGB",
+    "referenceNumber": "CORSAIR-ICUE-H170I-ELITE-CAPELLIX-XT",
+    "category": "Cooler",
+    "characteristics": [
+      {
+        "name": "Type",
+        "value": "Watery"
+      },
+      {
+        "name": "Socket",
+        "value": "1150, 1151, 1155, 1156, 2011, 2066, AM4, sTRX4, 1200, 1700, sTR4"
+      },
+      {
+        "name": "Fan speed",
+        "value": "1700 RPM"
+      },
+      {
+        "name": "Air flow",
+        "value": "89 CFM"
+      },
+      {
+        "name": "Noise level",
+        "value": "33.8 dBA"
+      },
+      {
+        "name": "Fan size",
+        "value": "140 x 25 mm x3"
+      },
+      {
+        "name": "Connector",
+        "value": "USB Header, 3-pin, 3-pin 5V ARGB, SATA Power"
+      },
+      {
+        "name": "Backlight",
+        "value": "ARGB"
+      }
+    ]
+  }
 ]
