@@ -1,3 +1,658 @@
-{
-
-}
+[
+  {
+    "name": "ASROCK AMD RADEON RX 6600 CHALLENGER D 8G",
+    "price": 278.44,
+    "quantity": 10,
+    "description": "Video card ASRock AMD Radeon RX 6600 Challenger D 8G",
+    "warranty": 24,
+    "manufacturer": "ASRock",
+    "model": "Radeon RX 6600 Challenger D 8G",
+    "referenceNumber": "ASROCK-RADEON-RX6600-CHALLENGER",
+    "category": "Video Card",
+    "characteristics": [
+      {
+        "name": "Memory",
+        "value": "8 GB"
+      },
+      {
+        "name": "Cores",
+        "value": "1792 Stream"
+      },
+      {
+        "name": "Frequency",
+        "value": "2044 MHz"
+      },
+      {
+        "name": "Sheena",
+        "value": "128 bit"
+      },
+      {
+        "name": "Exits",
+        "value": "HDMI, DisplayPort"
+      },
+      {
+        "name": "Memory type",
+        "value": "GDDR6"
+      },
+      {
+        "name": "Series",
+        "value": "RX 6000 Series"
+      }
+    ]
+  },
+  {
+    "name": "ASROCK AMD RADEON RX 7600 STEEL LEGEND 8GB OC",
+    "price": 690.14,
+    "quantity": 10,
+    "description": "Video card ASROCK AMD RADEON RX 7600 Steel Legend OC 8GB GDDR6",
+    "warranty": 36,
+    "manufacturer": "ASRock",
+    "model": "RADEON RX 7600 Steel Legend OC 8GB GDDR6",
+    "referenceNumber": "ASROCK-RADEON-RX7600-STEEL-LEGEND",
+    "category": "Video Card",
+    "characteristics": [
+      {
+        "name": "Memory",
+        "value": "8 GB"
+      },
+      {
+        "name": "Cores",
+        "value": "2048 Stream"
+      },
+      {
+        "name": "Frequency",
+        "value": "2320 MHz"
+      },
+      {
+        "name": "Sheena",
+        "value": "128 bit"
+      },
+      {
+        "name": "Exits",
+        "value": "HDMI, DisplayPort"
+      },
+      {
+        "name": "Memory type",
+        "value": "GDDR6"
+      },
+      {
+        "name": "Series",
+        "value": "RX 7000 Series"
+      }
+    ]
+  },
+  {
+    "name": "ASROCK RADEON RX 6950 XT PHANTOM GAMING 16GB OC",
+    "price": 1357.03,
+    "quantity": 10,
+    "description": "Video card Asrock AMD Radeon RX 6950 XT Phantom Gaming 16G OC",
+    "warranty": 36,
+    "manufacturer": "ASRock",
+    "model": "Radeon RX 6950 XT Phantom Gaming 16G OC",
+    "referenceNumber": "ASROCK-RADEON-RX6950XT-PHANTOM-GAMING",
+    "category": "Video Card",
+    "characteristics": [
+      {
+        "name": "Memory",
+        "value": "16 GB"
+      },
+      {
+        "name": "Cores",
+        "value": "5120 Stream"
+      },
+      {
+        "name": "Frequency",
+        "value": "2116 MHz"
+      },
+      {
+        "name": "Sheena",
+        "value": "256 bit"
+      },
+      {
+        "name": "Exits",
+        "value": "HDMI, DisplayPort"
+      },
+      {
+        "name": "Memory type",
+        "value": "GDDR6"
+      },
+      {
+        "name": "Series",
+        "value": "RX 6000 Series"
+      }
+    ]
+  },
+  {
+    "name": "ASROCK RADEON RX 7900 XTX TAICHI WHITE 24GB OC",
+    "price": 2437.45,
+    "quantity": 10,
+    "description": "Video card ASROCK AMD RADEON RX 7900 XTX Taichi White OC 24GB GDDR6, RX7900XTX TCW 24GO",
+    "warranty": 36,
+    "manufacturer": "ASRock",
+    "model": "RADEON RX 7900 XTX Taichi",
+    "referenceNumber": "ASROCK-RADEON-RX7900XTX-TAICHI",
+    "category": "Video Card",
+    "characteristics": [
+      {
+        "name": "Memory",
+        "value": "24 GB"
+      },
+      {
+        "name": "Cores",
+        "value": "6144 Stream"
+      },
+      {
+        "name": "Frequency",
+        "value": "2680 MHz"
+      },
+      {
+        "name": "Sheena",
+        "value": "384 bit"
+      },
+      {
+        "name": "Exits",
+        "value": "HDMI, DisplayPort"
+      },
+      {
+        "name": "Memory type",
+        "value": "GDDR6"
+      },
+      {
+        "name": "Series",
+        "value": "RX 7000 Series"
+      }
+    ]
+  },
+  {
+    "name": "ASUS DUAL GEFORCE RTX 4060 OC EDITION 8G",
+    "price": 750.42,
+    "quantity": 10,
+    "description": "Video card ASUS DUAL GeForce RTX 4060 OC 8GB GDDR6",
+    "warranty": 36,
+    "manufacturer": "ASUS",
+    "model": "DUAL GeForce RTX 4060 OC 8GB GDDR6",
+    "referenceNumber": "ASUS-DUAL-RTX-4060-OC",
+    "category": "Video Card",
+    "characteristics": [
+      {
+        "name": "Memory",
+        "value": "8 GB"
+      },
+      {
+        "name": "Cores",
+        "value": "3072 CUDA"
+      },
+      {
+        "name": "Frequency",
+        "value": "2535 MHz"
+      },
+      {
+        "name": "Sheena",
+        "value": "128 bit"
+      },
+      {
+        "name": "Exits",
+        "value": "HDMI, DisplayPort"
+      },
+      {
+        "name": "Memory type",
+        "value": "GDDR6"
+      },
+      {
+        "name": "Series",
+        "value": "RTX 4000 Series"
+      }
+    ]
+  },
+  {
+    "name": "ASUS TUF GAMING GEFORCE RTX 3060 V2 OC EDITION 12G",
+    "price": 899.00,
+    "quantity": 10,
+    "description": "Video card ASUS TUF Gaming GeForce RTX 3060 V2 OC Edition 12GB GDDR6",
+    "warranty": 36,
+    "manufacturer": "ASUS",
+    "model": "TUF Gaming GeForce RTX 3060 V2 OC Edition 12GB GDDR6",
+    "referenceNumber": "ASUS-TUF-GAMING-GEFORCE-RTX-3060-OC",
+    "category": "Video Card",
+    "characteristics": [
+      {
+        "name": "Memory",
+        "value": "12 GB"
+      },
+      {
+        "name": "Cores",
+        "value": "3584 CUDA"
+      },
+      {
+        "name": "Frequency",
+        "value": "1852 MHz"
+      },
+      {
+        "name": "Sheena",
+        "value": "192 bit"
+      },
+      {
+        "name": "Exits",
+        "value": "HDMI, DisplayPort"
+      },
+      {
+        "name": "Memory type",
+        "value": "GDDR6"
+      },
+      {
+        "name": "Series",
+        "value": "RTX 3000 Series"
+      }
+    ]
+  },
+  {
+    "name": "ASUS DUAL GEFORCE RTX 3060 TI WHITE OC EDITION 8GB",
+    "price": 949.00,
+    "quantity": 10,
+    "description": "Video card ASUS Dual GeForce RTX 3060 TI OC Edition White 8GB GDDR6X",
+    "warranty": 36,
+    "manufacturer": "ASUS",
+    "model": "Dual GeForce RTX 3060 TI OC Edition White 8GB GDDR6X",
+    "referenceNumber": "ASUS-DUAL-GEFORCE-RTX-3060TI-OC",
+    "category": "Video Card",
+    "characteristics": [
+      {
+        "name": "Memory",
+        "value": "8 GB"
+      },
+      {
+        "name": "Cores",
+        "value": "4864 CUDA"
+      },
+      {
+        "name": "Frequency",
+        "value": "1710 MHz"
+      },
+      {
+        "name": "Sheena",
+        "value": "256 bit"
+      },
+      {
+        "name": "Exits",
+        "value": "HDMI, DisplayPort"
+      },
+      {
+        "name": "Memory type",
+        "value": "GDDR6X"
+      },
+      {
+        "name": "Series",
+        "value": "RTX 3000 Series"
+      }
+    ]
+  },
+  {
+    "name": "ASUS ROG STRIX GEFORCE RTX 4070TI 12GB GDDR6X OC EDITION",
+    "price": 2399.00,
+    "quantity": 10,
+    "description": "Video card ASUS ROG STRIX GeForce RTX 4070 TI OC 12GB GDDR6X, DLSS 3.0",
+    "warranty": 36,
+    "manufacturer": "ASUS",
+    "model": "ROG STRIX GeForce RTX 4070 TI OC 12GB GDDR6X",
+    "referenceNumber": "ASUS-ROG-STRIX-RTX-4070TI-OC",
+    "category": "Video Card",
+    "characteristics": [
+      {
+        "name": "Memory",
+        "value": "12 GB"
+      },
+      {
+        "name": "Cores",
+        "value": "7680 CUDA"
+      },
+      {
+        "name": "Frequency",
+        "value": "2790 MHz"
+      },
+      {
+        "name": "Sheena",
+        "value": "192 bit"
+      },
+      {
+        "name": "Exits",
+        "value": "HDMI, DisplayPort"
+      },
+      {
+        "name": "Memory type",
+        "value": "GDDR6X"
+      },
+      {
+        "name": "Series",
+        "value": "RTX 4000 Series"
+      }
+    ]
+  },
+  {
+    "name": "GIGABYTE GEFORCE RTX 3050 EAGLE 8G",
+    "price": 608.84,
+    "quantity": 10,
+    "description": "Video card GIGABYTE GeForce RTX 3050 EAGLE 8GB GDDR6",
+    "warranty": 36,
+    "manufacturer": "Gigabyte",
+    "model": "GeForce RTX 3050 EAGLE 8GB GDDR6",
+    "referenceNumber": "GIGABYTE-GEFORCE-RTX-3050-EAGLE",
+    "category": "Video Card",
+    "characteristics": [
+      {
+        "name": "Memory",
+        "value": "8 GB"
+      },
+      {
+        "name": "Cores",
+        "value": "2560 CUDA"
+      },
+      {
+        "name": "Frequency",
+        "value": "1777 MHz"
+      },
+      {
+        "name": "Sheena",
+        "value": "128 bit"
+      },
+      {
+        "name": "Exits",
+        "value": "HDMI, DisplayPort"
+      },
+      {
+        "name": "Memory type",
+        "value": "GDDR6"
+      },
+      {
+        "name": "Series",
+        "value": "RTX 3000 Series"
+      }
+    ]
+  },
+  {
+    "name": "GIGABYTE GEFORCE RTX 4060 GAMING OC 8GB GDDR6",
+    "price": 777.28,
+    "quantity": 10,
+    "description": "Video card GIGABYTE GeForce RTX 4060 GAMING OC 8GB GDDR6 DLSS 3",
+    "warranty": 36,
+    "manufacturer": "Gigabyte",
+    "model": "GeForce RTX 4060 GAMING OC 8GB GDDR6 DLSS 3",
+    "referenceNumber": "GIGABYTE-GEFORCE-RTX-4060-GAMING-OC",
+    "category": "Video Card",
+    "characteristics": [
+      {
+        "name": "Memory",
+        "value": "8 GB"
+      },
+      {
+        "name": "Cores",
+        "value": "3072 CUDA"
+      },
+      {
+        "name": "Frequency",
+        "value": "2550 MHz"
+      },
+      {
+        "name": "Sheena",
+        "value": "128 bit"
+      },
+      {
+        "name": "Exits",
+        "value": "HDMI, DisplayPort"
+      },
+      {
+        "name": "Memory type",
+        "value": "GDDR6"
+      },
+      {
+        "name": "Series",
+        "value": "RTX 4000 Series"
+      }
+    ]
+  },
+  {
+    "name": "GIGABYTE GEFORCE GTX 1660 SUPER D6 6G",
+    "price": 559.19,
+    "quantity": 10,
+    "description": "Video card GIGABYTE GTX 1660 SUPER 6GB GDDR6 192 Bit",
+    "warranty": 36,
+    "manufacturer": "Gigabyte",
+    "model": "GTX 1660 SUPER 6GB GDDR6 192 Bit",
+    "referenceNumber": "GIGABYTE-GTX-1660-SUPER",
+    "category": "Video Card",
+    "characteristics": [
+      {
+        "name": "Memory",
+        "value": "6 GB"
+      },
+      {
+        "name": "Cores",
+        "value": "1408 CUDA"
+      },
+      {
+        "name": "Frequency",
+        "value": "1785 MHz"
+      },
+      {
+        "name": "Sheena",
+        "value": "192 bit"
+      },
+      {
+        "name": "Exits",
+        "value": "HDMI, DisplayPort"
+      },
+      {
+        "name": "Memory type",
+        "value": "GDDR6"
+      },
+      {
+        "name": "Series",
+        "value": "GTX 1000 Series"
+      }
+    ]
+  },
+  {
+    "name": "GIGABYTE GEFORCE RTX 4070 WINDFORCE OC 12G",
+    "price": 1437.94,
+    "quantity": 10,
+    "description": "Video card GIGABYTE GeForce RTX 4070 WINDFORCE OC 12GB GDDR6X, DLSS 3",
+    "warranty": 36,
+    "manufacturer": "Gigabyte",
+    "model": "GeForce RTX 4070 WINDFORCE OC 12GB GDDR6X, DLSS 3",
+    "referenceNumber": "GIGABYTE-GEFORCE-RTX-4070-WINDFORCE-OC",
+    "category": "Video Card",
+    "characteristics": [
+      {
+        "name": "Memory",
+        "value": "12 GB"
+      },
+      {
+        "name": "Cores",
+        "value": "5888 CUDA"
+      },
+      {
+        "name": "Frequency",
+        "value": "2490 MHz"
+      },
+      {
+        "name": "Sheena",
+        "value": "192 bit"
+      },
+      {
+        "name": "Exits",
+        "value": "HDMI, DisplayPort"
+      },
+      {
+        "name": "Memory type",
+        "value": "GDDR6X"
+      },
+      {
+        "name": "Series",
+        "value": "RTX 4000 Series"
+      }
+    ]
+  },
+  {
+    "name": "POWERCOLOR FIGHTER RADEON RX 6600 8G",
+    "price": 417.29,
+    "quantity": 10,
+    "description": "Video card PowerColor Fighter Radeon RX 6600 8GB GDDR6 AXRX 6600 8GBD6-3DH",
+    "warranty": 36,
+    "manufacturer": "PowerColor",
+    "model": " Fighter Radeon RX 6600 8GB GDDR6 AXRX 6600 8GBD6-3DH",
+    "referenceNumber": "POWERCOLOR-FIGHTER-RADEON-RX6600",
+    "category": "Video Card",
+    "characteristics": [
+      {
+        "name": "Memory",
+        "value": "8 GB"
+      },
+      {
+        "name": "Cores",
+        "value": "1792 Stream"
+      },
+      {
+        "name": "Frequency",
+        "value": "2044 MHz"
+      },
+      {
+        "name": "Sheena",
+        "value": "128 bit"
+      },
+      {
+        "name": "Exits",
+        "value": "HDMI, DisplayPort"
+      },
+      {
+        "name": "Memory type",
+        "value": "GDDR6"
+      },
+      {
+        "name": "Series",
+        "value": "RX 6000 Series"
+      }
+    ]
+  },
+  {
+    "name": "POWERCOLOR FIGHTER AMD RADEON RX 6700 XT 12G",
+    "price": 699.08,
+    "quantity": 10,
+    "description": "Video card PowerColor Fighter AMD Radeon RX 6700 XT 12GB GDDR6, AXRX 6700 XT 12GBD6-3DH",
+    "warranty": 36,
+    "manufacturer": "PowerColor",
+    "model": "Fighter AMD Radeon RX 6700 XT 12GB GDDR6, AXRX 6700 XT 12GBD6-3DH",
+    "referenceNumber": "POWERCOLOR-FIGHTER-RADEON-RX6700XT",
+    "category": "Video Card",
+    "characteristics": [
+      {
+        "name": "Memory",
+        "value": "12 GB"
+      },
+      {
+        "name": "Cores",
+        "value": "2560 Stream"
+      },
+      {
+        "name": "Frequency",
+        "value": "2424 MHz"
+      },
+      {
+        "name": "Sheena",
+        "value": "192 bit"
+      },
+      {
+        "name": "Exits",
+        "value": "HDMI, DisplayPort"
+      },
+      {
+        "name": "Memory type",
+        "value": "GDDR6"
+      },
+      {
+        "name": "Series",
+        "value": "RX 6000 Series"
+      }
+    ]
+  },
+  {
+    "name": "POWERCOLOR AMD RADEON HELLHOUND RX 7900 XT 20G",
+    "price": 2202.61,
+    "quantity": 10,
+    "description": "Video card Powercolor AMD RADEON HELLHOUND RX 7900 XT 20GB GDDR6",
+    "warranty": 36,
+    "manufacturer": "PowerColor",
+    "model": "RADEON HELLHOUND RX 7900 XT 20GB GDDR6",
+    "referenceNumber": "POWERCOLOR-RADEON-HELLHOUND-RX7900XT",
+    "category": "Video Card",
+    "characteristics": [
+      {
+        "name": "Memory",
+        "value": "20 GB"
+      },
+      {
+        "name": "Cores",
+        "value": "5376 Stream"
+      },
+      {
+        "name": "Frequency",
+        "value": "2130 MHz"
+      },
+      {
+        "name": "Sheena",
+        "value": "320 bit"
+      },
+      {
+        "name": "Exits",
+        "value": "HDMI, DisplayPort"
+      },
+      {
+        "name": "Memory type",
+        "value": "GDDR6"
+      },
+      {
+        "name": "Series",
+        "value": "RX 7000 Series"
+      }
+    ]
+  },
+  {
+    "name": "POWERCOLOR RED DEVIL AMD RADEON RX 7900 XTX 24G",
+    "price": 2495.49,
+    "quantity": 10,
+    "description": "Video card Powercolor AMD RADEON RX 7900 XTX Red Devil OC 24GB GDDR6 - RX 7900 XTX 24G-E/OC",
+    "warranty": 36,
+    "manufacturer": "PowerColor",
+    "model": "RADEON RX 7900 XTX Red Devil OC 24GB GDDR6 - RX 7900 XTX 24G-E/OC",
+    "referenceNumber": "POWERCOLOR-RADEON-RX7900XTX-RED-DEVIL",
+    "category": "Video Card",
+    "characteristics": [
+      {
+        "name": "Memory",
+        "value": "24 GB"
+      },
+      {
+        "name": "Cores",
+        "value": "6144 Stream"
+      },
+      {
+        "name": "Frequency",
+        "value": "2395 MHz"
+      },
+      {
+        "name": "Sheena",
+        "value": "384 bit"
+      },
+      {
+        "name": "Exits",
+        "value": "HDMI, DisplayPort"
+      },
+      {
+        "name": "Memory type",
+        "value": "GDDR6"
+      },
+      {
+        "name": "Series",
+        "value": "RX 7000 Series"
+      }
+    ]
+  }
+]

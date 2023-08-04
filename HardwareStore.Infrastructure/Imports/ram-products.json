@@ -8,7 +8,7 @@
     "manufacturer": "Corsair",
     "model": "Vengeance LPX White 16GB(2x8GB) DDR4",
     "referenceNumber": "CORSAIR-VENGEANCE-16-3200",
-    "category": "Ram",
+    "category": "RAM",
     "characteristics": [
       {
         "name": "Capacity",
@@ -57,7 +57,7 @@
     "manufacturer": "Corsair",
     "model": "Vengeance RS RGB Black 32GB(2x16GB) DDR4",
     "referenceNumber": "CORSAIR-VEMGEANCE-32-3200",
-    "category": "Ram",
+    "category": "RAM",
     "characteristics": [
       {
         "name": "Capacity",
@@ -106,7 +106,7 @@
     "manufacturer": "ADATA",
     "model": "Black 8GB DDR5",
     "referenceNumber": "ADATA-BLACK-8-4800",
-    "category": "Ram",
+    "category": "RAM",
     "characteristics": [
       {
         "name": "Capacity",
@@ -155,7 +155,7 @@
     "manufacturer": "ADATA",
     "model": "XPG Lancer Black RGB 16GB DDR5",
     "referenceNumber": "ADATA-XPG-LANCER-BLACK-16-5200",
-    "category": "Ram",
+    "category": "RAM",
     "characteristics": [
       {
         "name": "Capacity",
@@ -204,7 +204,7 @@
     "manufacturer": "Kingston",
     "model": "FURY Beast Black 32GB(4x8GB) DDR4",
     "referenceNumber": "KINGSTON-FURY-BEAST-BLACK-32-3600",
-    "category": "Ram",
+    "category": "RAM",
     "characteristics": [
       {
         "name": "Capacity",
@@ -253,7 +253,7 @@
     "manufacturer": "Kingston",
     "model": "Fury Renegade Black RGB 32GB DDR5",
     "referenceNumber": "KINGSTON-FURY-RENEGADE-SILVER-RGB-32-6000",
-    "category": "Ram",
+    "category": "RAM",
     "characteristics": [
       {
         "name": "Capacity",
@@ -302,7 +302,7 @@
     "manufacturer": "G.SKILL",
     "model": "Trident Z RGB 16GB(2x8GB) DDR4",
     "referenceNumber": "GKILL-TRIDENT-Z-RGB-16-3200",
-    "category": "Ram",
+    "category": "RAM",
     "characteristics": [
       {
         "name": "Capacity",
@@ -351,7 +351,7 @@
     "manufacturer": "G.SKILL",
     "model": "Trident Z Royal 16GB(2x8GB) DDR4",
     "referenceNumber": "GSKILL-TRIDENT-Z-ROYAL-16-4000",
-    "category": "Ram",
+    "category": "RAM",
     "characteristics": [
       {
         "name": "Capacity",
@@ -400,7 +400,7 @@
     "manufacturer": "Gigabyte",
     "model": "AORUS RGB 16GB DDR4 (2x8GB) 3733MHz",
     "referenceNumber": "GIGABYTE-AORUS-DDR4-16-3733",
-    "category": "Ram",
+    "category": "RAM",
     "characteristics": [
       {
         "name": "Capacity",
@@ -449,7 +449,7 @@
     "manufacturer": "Gigabyte",
     "model": "AORUS RGB 16GB DDR4 (2x8GB) 3600MHz",
     "referenceNumber": "GIGABYTE-AORUS-DDR4-16-3600",
-    "category": "Ram",
+    "category": "RAM",
     "characteristics": [
       {
         "name": "Capacity",
@@ -498,7 +498,7 @@
     "manufacturer": "Team Group",
     "model": "T-Force Vulcan TUF 16GB",
     "referenceNumber": "TEAM-GROUP-T-FORCE-VULCAN-TUF-16-3200",
-    "category": "Ram",
+    "category": "RAM",
     "characteristics": [
       {
         "name": "Capacity",
@@ -547,7 +547,7 @@
     "manufacturer": "Team Group",
     "model": "T-Force XTREEM WHITE",
     "referenceNumber": "TEAM-GROUP-T-FORCE-XTREEM-ARGB-WHITE-32-3600",
-    "category": "Ram",
+    "category": "RAM",
     "characteristics": [
       {
         "name": "Capacity",
@@ -596,7 +596,7 @@
     "manufacturer": "Silicon Power",
     "model": "XPOWER Zenith 8GB DDR4",
     "referenceNumber": "SILICON-POWER-XPOWER-ZENITH-8-3200",
-    "category": "Ram",
+    "category": "RAM",
     "characteristics": [
       {
         "name": "Capacity",
@@ -645,7 +645,7 @@
     "manufacturer": " Silicon Power",
     "model": "16GB(2x8GB) DDR4",
     "referenceNumber": "SILICON-POWER-16-3200",
-    "category": "Ram",
+    "category": "RAM",
     "characteristics": [
       {
         "name": "Capacity",
@@ -694,7 +694,7 @@
     "manufacturer": "G.SKILL",
     "model": "Trident Z Royal Elite 32GB(2x16GB) DDR4",
     "referenceNumber": "GSKILL-TRIDENT-Z-ROYAL-ELITE-32-4000",
-    "category": "Ram",
+    "category": "RAM",
     "characteristics": [
       {
         "name": "Capacity",
@@ -743,7 +743,7 @@
     "manufacturer": "Corsair",
     "model": "Dominator Platinum RGB Black 16GB(2x8GB) DDR4",
     "referenceNumber": "CORSAIR-DOMINATOR-PLATINUM-16-3600",
-    "category": "Ram",
+    "category": "RAM",
     "characteristics": [
       {
         "name": "Capacity",
