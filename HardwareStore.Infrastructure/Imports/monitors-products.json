@@ -12,7 +12,7 @@
     "characteristics": [
       {
         "name": "Screen size",
-        "value": "24"
+        "value": "24 inch"
       },
       {
         "name": "Resolution",
@@ -24,11 +24,11 @@
       },
       {
         "name": "Refresh rate",
-        "value": "75"
+        "value": "75 Hz"
       },
       {
         "name": "Reaction time",
-        "value": "1"
+        "value": "1 ms"
       },
       {
         "name": "Color",
@@ -52,7 +52,7 @@
       },
       {
         "name": "Brightness",
-        "value": "250"
+        "value": "250 cd/㎡"
       }
     ]
   },
@@ -69,7 +69,7 @@
     "characteristics": [
       {
         "name": "Screen size",
-        "value": "23.8"
+        "value": "23.8 inch"
       },
       {
         "name": "Resolution",
@@ -81,11 +81,11 @@
       },
       {
         "name": "Refresh rate",
-        "value": "100"
+        "value": "100 Hz"
       },
       {
         "name": "Reaction time",
-        "value": "1"
+        "value": "1 ms"
       },
       {
         "name": "Color",
@@ -113,7 +113,7 @@
       },
       {
         "name": "Brightness",
-        "value": "300"
+        "value": "300 cd/㎡"
       }
     ]
   },
@@ -130,7 +130,7 @@
     "characteristics": [
       {
         "name": "Screen size",
-        "value": "27"
+        "value": "27 inch"
       },
       {
         "name": "Resolution",
@@ -142,11 +142,11 @@
       },
       {
         "name": "Refresh rate",
-        "value": "75"
+        "value": "75 Hz"
       },
       {
         "name": "Reaction time",
-        "value": "5"
+        "value": "5 ms"
       },
       {
         "name": "Color",
@@ -174,7 +174,7 @@
       },
       {
         "name": "Brightness",
-        "value": "250"
+        "value": "250 cd/㎡"
       }
     ]
   },
@@ -191,7 +191,7 @@
     "characteristics": [
       {
         "name": "Screen size",
-        "value": "24"
+        "value": "24 inch"
       },
       {
         "name": "Resolution",
@@ -203,11 +203,11 @@
       },
       {
         "name": "Refresh rate",
-        "value": "165"
+        "value": "165 Hz"
       },
       {
         "name": "Reaction time",
-        "value": "1"
+        "value": "1 ms"
       },
       {
         "name": "Color",
@@ -235,7 +235,7 @@
       },
       {
         "name": "Brightness",
-        "value": "250"
+        "value": "250 cd/㎡"
       }
     ]
   },
@@ -252,7 +252,7 @@
     "characteristics": [
       {
         "name": "Screen size",
-        "value": "31.5"
+        "value": "31.5 inch"
       },
       {
         "name": "Resolution",
@@ -264,11 +264,11 @@
       },
       {
         "name": "Refresh rate",
-        "value": "75"
+        "value": "75 Hz"
       },
       {
         "name": "Reaction time",
-        "value": "5"
+        "value": "5 ms"
       },
       {
         "name": "Color",
@@ -296,7 +296,7 @@
       },
       {
         "name": "Brightness",
-        "value": "300"
+        "value": "300 cd/㎡"
       }
     ]
   },
@@ -313,7 +313,7 @@
     "characteristics": [
       {
         "name": "Screen size",
-        "value": "24"
+        "value": "24 inch"
       },
       {
         "name": "Resolution",
@@ -325,11 +325,11 @@
       },
       {
         "name": "Refresh rate",
-        "value": "144"
+        "value": "144 Hz"
       },
       {
         "name": "Reaction time",
-        "value": "1"
+        "value": "1 ms"
       },
       {
         "name": "Color",
@@ -353,7 +353,7 @@
       },
       {
         "name": "Brightness",
-        "value": "320"
+        "value": "320 cd/㎡"
       }
     ]
   },
@@ -370,7 +370,7 @@
     "characteristics": [
       {
         "name": "Screen size",
-        "value": "27"
+        "value": "27 inch"
       },
       {
         "name": "Resolution",
@@ -382,11 +382,11 @@
       },
       {
         "name": "Refresh rate",
-        "value": "165"
+        "value": "165 Hz"
       },
       {
         "name": "Reaction time",
-        "value": "1"
+        "value": "1 ms"
       },
       {
         "name": "Color",
@@ -410,7 +410,7 @@
       },
       {
         "name": "Brightness",
-        "value": "400"
+        "value": "400 cd/㎡"
       }
     ]
   },
@@ -427,7 +427,7 @@
     "characteristics": [
       {
         "name": "Screen size",
-        "value": "31.5"
+        "value": "31.5 inch"
       },
       {
         "name": "Resolution",
@@ -439,11 +439,11 @@
       },
       {
         "name": "Refresh rate",
-        "value": "165"
+        "value": "165 Hz"
       },
       {
         "name": "Reaction time",
-        "value": "1"
+        "value": "1 ms"
       },
       {
         "name": "Color",
@@ -471,7 +471,7 @@
       },
       {
         "name": "Brightness",
-        "value": "550"
+        "value": "550 cd/㎡"
       }
     ]
   },
@@ -488,7 +488,7 @@
     "characteristics": [
       {
         "name": "Screen size",
-        "value": "23.8"
+        "value": "23.8 inch"
       },
       {
         "name": "Resolution",
@@ -500,11 +500,11 @@
       },
       {
         "name": "Refresh rate",
-        "value": "270"
+        "value": "270 Hz"
       },
       {
         "name": "Reaction time",
-        "value": "1"
+        "value": "1 ms"
       },
       {
         "name": "Color",
@@ -528,7 +528,7 @@
       },
       {
         "name": "Brightness",
-        "value": "350"
+        "value": "350 cd/㎡"
       }
     ]
   },
@@ -545,7 +545,7 @@
     "characteristics": [
       {
         "name": "Screen size",
-        "value": "24.5"
+        "value": "24.5 inch"
       },
       {
         "name": "Resolution",
@@ -557,11 +557,11 @@
       },
       {
         "name": "Refresh rate",
-        "value": "240"
+        "value": "240 Hz"
       },
       {
         "name": "Reaction time",
-        "value": "1"
+        "value": "1 ms"
       },
       {
         "name": "Color",
@@ -589,7 +589,7 @@
       },
       {
         "name": "Brightness",
-        "value": "400"
+        "value": "400 cd/㎡"
       }
     ]
   },
@@ -606,7 +606,7 @@
     "characteristics": [
       {
         "name": "Screen size",
-        "value": "27"
+        "value": "27 inch"
       },
       {
         "name": "Resolution",
@@ -618,11 +618,11 @@
       },
       {
         "name": "Refresh rate",
-        "value": "60"
+        "value": "60 Hz"
       },
       {
         "name": "Reaction time",
-        "value": "5"
+        "value": "5 ms"
       },
       {
         "name": "Color",
@@ -646,7 +646,7 @@
       },
       {
         "name": "Brightness",
-        "value": "No"
+        "value": "300 cd/㎡"
       }
     ]
   },
@@ -663,7 +663,7 @@
     "characteristics": [
       {
         "name": "Screen size",
-        "value": "23.8"
+        "value": "23.8 inch"
       },
       {
         "name": "Resolution",
@@ -675,11 +675,11 @@
       },
       {
         "name": "Refresh rate",
-        "value": "60"
+        "value": "60 Hz"
       },
       {
         "name": "Reaction time",
-        "value": "5"
+        "value": "5 ms"
       },
       {
         "name": "Color",
@@ -703,7 +703,7 @@
       },
       {
         "name": "Brightness",
-        "value": "250"
+        "value": "250 cd/㎡"
       }
     ]
   },
@@ -720,7 +720,7 @@
     "characteristics": [
       {
         "name": "Screen size",
-        "value": "27"
+        "value": "27 inch"
       },
       {
         "name": "Resolution",
@@ -732,11 +732,11 @@
       },
       {
         "name": "Refresh rate",
-        "value": "60"
+        "value": "60 Hz"
       },
       {
         "name": "Reaction time",
-        "value": "6"
+        "value": "6 ms"
       },
       {
         "name": "Color",
@@ -760,7 +760,7 @@
       },
       {
         "name": "Brightness",
-        "value": "250"
+        "value": "250 cd/㎡"
       }
     ]
   },
@@ -777,7 +777,7 @@
     "characteristics": [
       {
         "name": "Screen size",
-        "value": "15.6"
+        "value": "15.6 inch"
       },
       {
         "name": "Resolution",
@@ -789,11 +789,11 @@
       },
       {
         "name": "Refresh rate",
-        "value": "60"
+        "value": "60 Hz"
       },
       {
         "name": "Reaction time",
-        "value": "1"
+        "value": "1 ms"
       },
       {
         "name": "Color",
@@ -817,7 +817,7 @@
       },
       {
         "name": "Brightness",
-        "value": "360"
+        "value": "360 cd/㎡"
       }
     ]
   },
@@ -834,7 +834,7 @@
     "characteristics": [
       {
         "name": "Screen size",
-        "value": "27"
+        "value": "27 inch"
       },
       {
         "name": "Resolution",
@@ -846,11 +846,11 @@
       },
       {
         "name": "Refresh rate",
-        "value": "240"
+        "value": "240 Hz"
       },
       {
         "name": "Reaction time",
-        "value": "0.5"
+        "value": "0.5 ms"
       },
       {
         "name": "Color",
@@ -874,7 +874,7 @@
       },
       {
         "name": "Brightness",
-        "value": "320"
+        "value": "320 cd/㎡"
       }
     ]
   },
@@ -903,11 +903,11 @@
       },
       {
         "name": "Refresh rate",
-        "value": "240"
+        "value": "240 Hz"
       },
       {
         "name": "Reaction time",
-        "value": "0.03"
+        "value": "0.03 ms"
       },
       {
         "name": "Color",
@@ -935,7 +935,7 @@
       },
       {
         "name": "Brightness",
-        "value": "450"
+        "value": "450 cd/㎡"
       }
     ]
   }

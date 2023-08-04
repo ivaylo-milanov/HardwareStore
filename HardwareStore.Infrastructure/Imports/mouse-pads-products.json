@@ -12,15 +12,15 @@
     "characteristics": [
       {
         "name": "Width",
-        "value": "230"
+        "value": "230 mm" 
       },
       {
         "name": "Length",
-        "value": "200"
+        "value": "200 mm"
       },
       {
         "name": "Thickness",
-        "value": "2"
+        "value": "2 mm"
       },
       {
         "name": "Surface",
@@ -53,15 +53,15 @@
     "characteristics": [
       {
         "name": "Width",
-        "value": "750"
+        "value": "750 mm"
       },
       {
         "name": "Length",
-        "value": "300"
+        "value": "300 mm"
       },
       {
         "name": "Thickness",
-        "value": "3"
+        "value": "3 mm"
       },
       {
         "name": "Surface",
@@ -94,15 +94,15 @@
     "characteristics": [
       {
         "name": "Width",
-        "value": "250"
+        "value": "250 mm"
       },
       {
         "name": "Length",
-        "value": "210"
+        "value": "210 mm"
       },
       {
         "name": "Thickness",
-        "value": "2"
+        "value": "2 mm"
       },
       {
         "name": "Surface",
@@ -135,15 +135,15 @@
     "characteristics": [
       {
         "name": "Width",
-        "value": "700"
+        "value": "700 mm"
       },
       {
         "name": "Length",
-        "value": "300"
+        "value": "300 mm"
       },
       {
         "name": "Thickness",
-        "value": "2"
+        "value": "2 mm"
       },
       {
         "name": "Surface",
@@ -176,15 +176,15 @@
     "characteristics": [
       {
         "name": "Width",
-        "value": "360"
+        "value": "360 mm"
       },
       {
         "name": "Length",
-        "value": "300"
+        "value": "300 mm"
       },
       {
         "name": "Thickness",
-        "value": "3.5"
+        "value": "3.5 mm"
       },
       {
         "name": "Surface",
@@ -217,15 +217,15 @@
     "characteristics": [
       {
         "name": "Width",
-        "value": "350"
+        "value": "350 mm"
       },
       {
         "name": "Length",
-        "value": "250"
+        "value": "250 mm"
       },
       {
         "name": "Thickness",
-        "value": "3"
+        "value": "3 mm"
       },
       {
         "name": "Surface",
@@ -258,15 +258,15 @@
     "characteristics": [
       {
         "name": "Width",
-        "value": "330"
+        "value": "330 mm"
       },
       {
         "name": "Length",
-        "value": "280"
+        "value": "280 mm"
       },
       {
         "name": "Thickness",
-        "value": "2"
+        "value": "2 mm"
       },
       {
         "name": "Surface",
@@ -299,15 +299,15 @@
     "characteristics": [
       {
         "name": "Width",
-        "value": "355"
+        "value": "355 mm"
       },
       {
         "name": "Length",
-        "value": "315"
+        "value": "315 mm"
       },
       {
         "name": "Thickness",
-        "value": "3.5"
+        "value": "3.5 mm"
       },
       {
         "name": "Surface",
@@ -340,15 +340,15 @@
     "characteristics": [
       {
         "name": "Width",
-        "value": "900"
+        "value": "900 mm"
       },
       {
         "name": "Length",
-        "value": "400"
+        "value": "400 mm"
       },
       {
         "name": "Thickness",
-        "value": "3"
+        "value": "3 mm"
       },
       {
         "name": "Surface",
@@ -381,15 +381,15 @@
     "characteristics": [
       {
         "name": "Width",
-        "value": "340"
+        "value": "340 mm"
       },
       {
         "name": "Length",
-        "value": "280"
+        "value": "280 mm"
       },
       {
         "name": "Thickness",
-        "value": "3"
+        "value": "3 mm"
       },
       {
         "name": "Surface",
@@ -422,15 +422,15 @@
     "characteristics": [
       {
         "name": "Width",
-        "value": "900"
+        "value": "900 mm"
       },
       {
         "name": "Length",
-        "value": "420"
+        "value": "420 mm"
       },
       {
         "name": "Thickness",
-        "value": "3"
+        "value": "3 mm"
       },
       {
         "name": "Surface",
@@ -463,15 +463,15 @@
     "characteristics": [
       {
         "name": "Width",
-        "value": "900"
+        "value": "900 mm"
       },
       {
         "name": "Length",
-        "value": "420"
+        "value": "420 mm"
       },
       {
         "name": "Thickness",
-        "value": "4"
+        "value": "4 mm"
       },
       {
         "name": "Surface",
@@ -504,15 +504,15 @@
     "characteristics": [
       {
         "name": "Width",
-        "value": "900"
+        "value": "900 mm"
       },
       {
         "name": "Length",
-        "value": "420"
+        "value": "420 mm"
       },
       {
         "name": "Thickness",
-        "value": "4"
+        "value": "4 mm"
       },
       {
         "name": "Surface",
@@ -545,15 +545,15 @@
     "characteristics": [
       {
         "name": "Width",
-        "value": "900"
+        "value": "900 mm"
       },
       {
         "name": "Length",
-        "value": "420"
+        "value": "420 mm"
       },
       {
         "name": "Thickness",
-        "value": "3"
+        "value": "3 mm"
       },
       {
         "name": "Surface",
@@ -586,15 +586,15 @@
     "characteristics": [
       {
         "name": "Width",
-        "value": "460"
+        "value": "460 mm"
       },
       {
         "name": "Length",
-        "value": "400"
+        "value": "400 mm"
       },
       {
         "name": "Thickness",
-        "value": "4"
+        "value": "4 mm"
       },
       {
         "name": "Surface",
@@ -627,15 +627,15 @@
     "characteristics": [
       {
         "name": "Width",
-        "value": "900"
+        "value": "900 mm"
       },
       {
         "name": "Length",
-        "value": "300"
+        "value": "300 mm"
       },
       {
         "name": "Thickness",
-        "value": "4"
+        "value": "4 mm"
       },
       {
         "name": "Surface",

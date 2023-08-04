@@ -12,7 +12,7 @@
     "characteristics": [
       {
         "name": "Capacity",
-        "value": "16"
+        "value": "16 GB"
       },
       {
         "name": "Type",
@@ -20,7 +20,7 @@
       },
       {
         "name": "Frequency",
-        "value": "3200"
+        "value": "3200 MHz"
       },
       {
         "name": "Timing",
@@ -61,7 +61,7 @@
     "characteristics": [
       {
         "name": "Capacity",
-        "value": "32"
+        "value": "32 GB"
       },
       {
         "name": "Type",
@@ -69,7 +69,7 @@
       },
       {
         "name": "Frequency",
-        "value": "3200"
+        "value": "3200 MHz"
       },
       {
         "name": "Timing",
@@ -110,7 +110,7 @@
     "characteristics": [
       {
         "name": "Capacity",
-        "value": "8"
+        "value": "8 GB"
       },
       {
         "name": "Type",
@@ -118,7 +118,7 @@
       },
       {
         "name": "Frequency",
-        "value": "4800"
+        "value": "4800 MHz"
       },
       {
         "name": "Timing",
@@ -159,7 +159,7 @@
     "characteristics": [
       {
         "name": "Capacity",
-        "value": "16"
+        "value": "16 GB"
       },
       {
         "name": "Type",
@@ -167,7 +167,7 @@
       },
       {
         "name": "Frequency",
-        "value": "5200"
+        "value": "5200 MHz"
       },
       {
         "name": "Timing",

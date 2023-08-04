@@ -24,11 +24,11 @@
       },
       {
         "name": "Base frequency",
-        "value": "3.9"
+        "value": "3.9 GHz"
       },
       {
         "name": "Cache memory",
-        "value": "4"
+        "value": "4 MB"
       },
       {
         "name": "Box cooler",
@@ -69,15 +69,15 @@
       },
       {
         "name": "Base frequency",
-        "value": "3.6"
+        "value": "3.6 GHz"
       },
       {
         "name": "Boost frequency",
-        "value": "4.3"
+        "value": "4.3 GHz"
       },
       {
         "name": "Cache memory",
-        "value": "6"
+        "value": "6 MB"
       },
       {
         "name": "Box cooler",
@@ -118,15 +118,15 @@
       },
       {
         "name": "Base frequency",
-        "value": "3.6"
+        "value": "3.6 GHz"
       },
       {
         "name": "Boost frequency",
-        "value": "4.2"
+        "value": "4.2 GHz"
       },
       {
         "name": "Cache memory",
-        "value": "19"
+        "value": "19 MB"
       },
       {
         "name": "Box cooler",
@@ -167,15 +167,15 @@
       },
       {
         "name": "Base frequency",
-        "value": "3.4"
+        "value": "3.4 GHz"
       },
       {
         "name": "Boost frequency",
-        "value": "4.5"
+        "value": "4.5 GHz"
       },
       {
         "name": "Cache memory",
-        "value": "5"
+        "value": "5 MB"
       },
       {
         "name": "Box cooler",
@@ -216,15 +216,15 @@
       },
       {
         "name": "Base frequency",
-        "value": "2.6"
+        "value": "2.6 GHz"
       },
       {
         "name": "Boost frequency",
-        "value": "4.4"
+        "value": "4.4 GHz"
       },
       {
         "name": "Cache memory",
-        "value": "12"
+        "value": "12 MB"
       },
       {
         "name": "Box cooler",
@@ -265,15 +265,15 @@
       },
       {
         "name": "Base frequency",
-        "value": "3.9"
+        "value": "3.9 GHz"
       },
       {
         "name": "Boost frequency",
-        "value": "4.4"
+        "value": "4.4 GHz"
       },
       {
         "name": "Cache memory",
-        "value": "19"
+        "value": "19 MB"
       },
       {
         "name": "Box cooler",
@@ -314,15 +314,15 @@
       },
       {
         "name": "Base frequency",
-        "value": "2.5"
+        "value": "2.5 GHz"
       },
       {
         "name": "Boost frequency",
-        "value": "4.4"
+        "value": "4.4 GHz"
       },
       {
         "name": "Cache memory",
-        "value": "18"
+        "value": "18 MB"
       },
       {
         "name": "Box cooler",
@@ -363,15 +363,15 @@
       },
       {
         "name": "Base frequency",
-        "value": "3.8"
+        "value": "3.8 GHz"
       },
       {
         "name": "Boost frequency",
-        "value": "4.6"
+        "value": "4.6 GHz"
       },
       {
         "name": "Cache memory",
-        "value": "20"
+        "value": "20 MB"
       },
       {
         "name": "Box cooler",
@@ -412,15 +412,15 @@
       },
       {
         "name": "Base frequency",
-        "value": "3.7"
+        "value": "3.7 GHz"
       },
       {
         "name": "Boost frequency",
-        "value": "4.9"
+        "value": "4.9 GHz"
       },
       {
         "name": "Cache memory",
-        "value": "20"
+        "value": "20 MB"
       },
       {
         "name": "Box cooler",
@@ -461,15 +461,15 @@
       },
       {
         "name": "Base frequency",
-        "value": "3.8"
+        "value": "3.8 GHz"
       },
       {
         "name": "Boost frequency",
-        "value": "5.1"
+        "value": "5.1 GHz"
       },
       {
         "name": "Cache memory",
-        "value": "32"
+        "value": "32 MB"
       },
       {
         "name": "Box cooler",
@@ -510,15 +510,15 @@
       },
       {
         "name": "Base frequency",
-        "value": "3.7"
+        "value": "3.7 GHz"
       },
       {
         "name": "Boost frequency",
-        "value": "4.8"
+        "value": "4.8 GHz"
       },
       {
         "name": "Cache memory",
-        "value": "70"
+        "value": "70 MB"
       },
       {
         "name": "Box cooler",
@@ -559,15 +559,15 @@
       },
       {
         "name": "Base frequency",
-        "value": "3.8"
+        "value": "3.8 GHz"
       },
       {
         "name": "Boost frequency",
-        "value": "5.3"
+        "value": "5.3 GHz"
       },
       {
         "name": "Cache memory",
-        "value": "32"
+        "value": "32 MB"
       },
       {
         "name": "Box cooler",
@@ -609,15 +609,15 @@
       },
       {
         "name": "Base frequency",
-        "value": "2.1"
+        "value": "2.1 GHz"
       },
       {
         "name": "Boost frequency",
-        "value": "5.2"
+        "value": "5.2 GHz"
       },
       {
         "name": "Cache memory",
-        "value": "30"
+        "value": "30 MB"
       },
       {
         "name": "Box cooler",
@@ -658,15 +658,15 @@
       },
       {
         "name": "Base frequency",
-        "value": "3"
+        "value": "3 GHz"
       },
       {
         "name": "Boost frequency",
-        "value": "5.2"
+        "value": "5.2 GHz"
       },
       {
         "name": "Cache memory",
-        "value": "30"
+        "value": "30 MB"
       },
       {
         "name": "Box cooler",
@@ -707,15 +707,15 @@
       },
       {
         "name": "Base frequency",
-        "value": "3"
+        "value": "3 GHz"
       },
       {
         "name": "Boost frequency",
-        "value": "5.8"
+        "value": "5.8 GHz"
       },
       {
         "name": "Cache memory",
-        "value": "36"
+        "value": "36 MB"
       },
       {
         "name": "Box cooler",
@@ -756,15 +756,15 @@
       },
       {
         "name": "Base frequency",
-        "value": "3.8"
+        "value": "3.8 GHz"
       },
       {
         "name": "Boost frequency",
-        "value": "4.5"
+        "value": "4.5 GHz"
       },
       {
         "name": "Cache memory",
-        "value": "140"
+        "value": "140 MB"
       },
       {
         "name": "Box cooler",

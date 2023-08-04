@@ -1,3 +1,48 @@
-{
+[
+  {
+    "name": "ARCTIC FREEZER I35",
+    "price": 55.12,
+    "quantity": 10,
+    "description": "CPU Cooler ARCTIC Freezer i35 Black/White",
+    "warranty": 24,
+    "manufacturer": "Arctic",
+    "model": "Freezer i35",
+    "referenceNumber": "ARCTIC-FREEZER-I35",
+    "category": "Case",
+    "characteristics": [
+      {
+        "name": "Type",
+        "value": "Aerial"
+      },
+      {
+        "name": "Socket",
+        "value": "1150, 1151, 1155, 1156, 1200, 1700"
+      },
+      {
+        "name": "Height",
+        "value": "158.5 mm"
+      },
+      {
+        "name": "Fan speed",
+        "value": "1800 RPM"
+      },
+      {
+        "name": "Noise level",
+        "value": "23 dBA"
+      },
+      {
+        "name": "Fan size",
+        "value": "120 x 25 mm"
+      },
+      {
+        "name": "Connector",
+        "value": "4-pin"
+      },
+      {
+        "name": "Backlight",
+        "value": "No"
+      }
+    ]
+  },
 
-}
+]

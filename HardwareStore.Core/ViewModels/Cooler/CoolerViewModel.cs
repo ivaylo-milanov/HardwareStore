@@ -15,7 +15,7 @@
         [Characteristic]
         public string Socket { get; set; } = null!;
 
-        [Characteristic("Size of the fan")]
+        [Characteristic("Fan size")]
         public string FanSize { get; set; } = null!;
 
         [Characteristic]
