@@ -1,5 +1,41 @@
 [
   {
-    "name": "dsafsdf"
+    "name": "Mouse"
+  },
+  {
+    "name": "Keyboard"
+  },
+  {
+    "name": "Headset"
+  },
+  {
+    "name": "Mouse Pad"
+  },
+  {
+    "name": "Monitor"
+  },
+  {
+    "name": "Processor"
+  },
+  {
+    "name": "Motherboard"
+  },
+  {
+    "name": "Internal Drive"
+  },
+  {
+    "name": "Power Supply"
+  },
+  {
+    "name": "Video Card"
+  },
+  {
+    "name": "RAM"
+  },
+  {
+    "name": "Case"
+  },
+  {
+    "name": "Cooler"
   }
 ]

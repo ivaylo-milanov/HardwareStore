@@ -18,36 +18,24 @@
 
         public async Task SeedData()
         {
-            using (var transaction = this.Database.BeginTransaction())
+            if (!await this.repository.AnyAsync<CharacteristicName>())
             {
-                try
-                {
-                    if (!await this.repository.AnyAsync<CharacteristicName>())
-                    {
-                        await SeedCharacteristicsNames();
-                    }
+                await SeedCharacteristicsNames();
+            }
 
-                    if (!await this.repository.AnyAsync<Manufacturer>())
-                    {
-                        await SeedManufacturers();
-                    }
+            if (!await this.repository.AnyAsync<Manufacturer>())
+            {
+                await SeedManufacturers();
+            }
 
-                    if (!await this.repository.AnyAsync<Category>())
-                    {
-                        await SeedCategories();
-                    }
+            if (!await this.repository.AnyAsync<Category>())
+            {
+                await SeedCategories();
+            }
 
-                    if (!await this.repository.AnyAsync<Product>())
-                    {
-                        await SeedProducts();
-                    }
-
-                    transaction.Commit();
-                }
-                catch (Exception)
-                {
-                    transaction.Rollback();
-                }
+            if (!await this.repository.AnyAsync<Product>())
+            {
+                await SeedProducts();
             }
         }
 

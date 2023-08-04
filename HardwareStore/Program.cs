@@ -1,10 +1,7 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using HardwareStore.Infrastructure.Data;
 namespace HardwareStore
 {
+    using HardwareStore.Infrastructure.Data;
     using HardwareStore.Extensions;
-    using HardwareStore.Infrastructure.Seed;
 
     public class Program
     {
@@ -18,7 +15,6 @@ namespace HardwareStore
             builder.Services.AddDistributedMemoryCache();
 
             builder.Services.ConfigurateDbContext(builder.Configuration);
-            builder.Services.AddDropboxService(builder.Configuration);
             builder.Services.ConfigurateIdentity();
             builder.Services.AddServices();
             builder.Services.AddSearchPaths();
@@ -30,7 +26,6 @@ namespace HardwareStore
             if (app.Environment.IsDevelopment())
             {
                 app.UseMigrationsEndPoint();
-                app.UseDeveloperExceptionPage();
             }
             else
             {
@@ -54,21 +49,8 @@ namespace HardwareStore
                 pattern: "{controller=Home}/{action=Index}/{id?}");
             app.MapRazorPages();
 
-            using (var scope = app.Services.CreateScope())
-            {
-                var services = scope.ServiceProvider;
-
-                try
-                {
-                    var dataSeeder = services.GetRequiredService<DataSeeder>();
-                    await dataSeeder.SeedData();
-                }
-                catch (Exception ex)
-                {
-                    var logger = services.GetRequiredService<ILogger<Program>>();
-                    logger.LogError(ex, "An error occurred while migrating or initializing the database.");
-                }
-            }
+            //Uncomment this to seed the data into the database
+            await app.MigrateDatabase<HardwareStoreDbContext>();
 
             await app.RunAsync();
         }

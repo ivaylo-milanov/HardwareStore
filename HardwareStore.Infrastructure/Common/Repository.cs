@@ -72,7 +72,7 @@
         public T FirstOrDefault<T>(Expression<Func<T, bool>> search) where T : class
             => this.Set<T>().FirstOrDefault(search);
 
-        public async Task<T> FirstOrDefaultAsync<T>(Expression<Func<T, bool>> search)
-            => await All.FirstOrDefaultAsync(search);
+        public async Task<T> FirstOrDefaultAsync<T>(Expression<Func<T, bool>> search) where T : class
+            => await this.Set<T>().FirstOrDefaultAsync(search);
     }
 }
