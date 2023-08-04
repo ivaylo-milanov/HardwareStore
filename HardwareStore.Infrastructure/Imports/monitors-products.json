@@ -39,7 +39,7 @@
         "value": "D-Sub (VGA), 3.5mm Audio jack, DVI, HDMI"
       },
       {
-        "name": "Posture adjustment",
+        "name": "Stand adjustment",
         "value": "No"
       },
       {
@@ -60,10 +60,10 @@
     "name": "ASUS TUF GAMING VG246H1A",
     "price": 309.00,
     "quantity": 10,
-    "description": "Monitor ASUS TUF GAMING VG246H1A 23.8 IPS Full HD 1920 x 1080, Frameless, 0.5 ms MPRT, 100Hz FreeSync, ELMB",
+    "description": "Monitor ASUS TUF GAMING VG246H1A 23.8\" IPS Full HD 1920 x 1080, Frameless, 0.5 ms MPRT, 100Hz FreeSync, ELMB",
     "warranty": 36,
     "manufacturer": "ASUS",
-    "model": "",
+    "model": "TUF GAMING VG246H1A",
     "referenceNumber": "ASUS-TUF-GAMING-VG246H1A",
     "category": "Monitor",
     "characteristics": [
@@ -100,7 +100,7 @@
         "value": "FreeSync"
       },
       {
-        "name": "Posture adjustment",
+        "name": "Stand adjustment",
         "value": "No"
       },
       {
@@ -161,7 +161,7 @@
         "value": "FreeSync"
       },
       {
-        "name": "Posture adjustment",
+        "name": "Stand adjustment",
         "value": "No"
       },
       {
@@ -222,7 +222,7 @@
         "value": "FreeSync"
       },
       {
-        "name": "Posture adjustment",
+        "name": "Stand adjustment",
         "value": "Yes"
       },
       {
@@ -243,7 +243,7 @@
     "name": "LG 32MP60G-B",
     "price": 469.00,
     "quantity": 10,
-    "description": "Monitor 32 LG 32MP60G-B",
+    "description": "Monitor 32\" LG 32MP60G-B",
     "warranty": 36,
     "manufacturer": "LG",
     "model": "32MP60G-B",
@@ -283,7 +283,7 @@
         "value": "FreeSync"
       },
       {
-        "name": "Posture adjustment",
+        "name": "Stand adjustment",
         "value": "No"
       },
       {
@@ -340,7 +340,7 @@
         "value": "3.5mm Audio jack, HDMI, Display Port"
       },
       {
-        "name": "Posture adjustment",
+        "name": "Stand adjustment",
         "value": "Yes"
       },
       {
@@ -397,7 +397,7 @@
         "value": "3.5mm Audio jack, HDMI, Display Port, USB-A, USB-C"
       },
       {
-        "name": "Posture adjustment",
+        "name": "Stand adjustment",
         "value": "No"
       },
       {
@@ -418,7 +418,7 @@
     "name": "ASROCK PG32QF2B",
     "price": 748.99,
     "quantity": 10,
-    "description": "Gaming Monitor ASRock PG32QF2B 32 QHD (2560X1440) Flat VA, 165Hz, 1ms , 92% DCI-P3 , 2xHDMI, 1xDP, WiFi Antena, Freesync Premium",
+    "description": "Gaming Monitor ASRock PG32QF2B 32\" QHD (2560X1440) Flat VA, 165Hz, 1ms , 92% DCI-P3 , 2xHDMI, 1xDP, WiFi Antena, Freesync Premium",
     "warranty": 36,
     "manufacturer": "ASRock",
     "model": "PG32QF2B",
@@ -458,7 +458,7 @@
         "value": "FreeSync"
       },
       {
-        "name": "Posture adjustment",
+        "name": "Stand adjustment",
         "value": "Yes"
       },
       {
@@ -479,7 +479,7 @@
     "name": "ASUS ROG STRIX XG249CM",
     "price": 769.00,
     "quantity": 10,
-    "description": "Gaming monitor ROG Strix XG249CM – 23.8 inches Full HD (1920 x 1080), 270Hz, 1ms GTG, Extreme Low Motion Blur Sync, 105% sRGB, FreeSync Premium, HDR",
+    "description": "Gaming monitor ROG Strix XG249CM – 23.8\" inches Full HD (1920 x 1080), 270Hz, 1ms GTG, Extreme Low Motion Blur Sync, 105% sRGB, FreeSync Premium, HDR",
     "warranty": 36,
     "manufacturer": "ASUS",
     "model": "ROG Strix XG249CM",
@@ -515,7 +515,7 @@
         "value": "3.5mm Audio jack, HDMI, Display Port, USB-A, USB-C"
       },
       {
-        "name": "Posture adjustment",
+        "name": "Stand adjustment",
         "value": "Yes"
       },
       {
@@ -539,7 +539,7 @@
     "description": "Monitor HyperX ARMADA 25 240Hz, IPS, 24.5 inch, Wide, Full HD, HDMI, DP, Black",
     "warranty": 36,
     "manufacturer": "HyperX",
-    "model": "ARMADA 25",
+    "model": "ARMADA 25\"",
     "referenceNumber": "HYPERX-ARMADA-25",
     "category": "Monitor",
     "characteristics": [
@@ -576,7 +576,7 @@
         "value": "G-Sync"
       },
       {
-        "name": "Posture adjustment",
+        "name": "Stand adjustment",
         "value": "Yes"
       },
       {
@@ -597,7 +597,7 @@
     "name": "ASUS PROART DISPLAY PA278QV",
     "price": 789.00,
     "quantity": 10,
-    "description": "Monitor ASUS ProArt PA278QV Professional 27 IPS, WQHD (2560 x 1440), 100% sRGB, 100% Rec. 709, Color Accuracy ΔE < 2, Calman Verified, ProArt Preset, ProArt Palette",
+    "description": "Monitor ASUS ProArt PA278QV Professional 27\" IPS, WQHD (2560 x 1440), 100% sRGB, 100% Rec. 709, Color Accuracy ΔE < 2, Calman Verified, ProArt Preset, ProArt Palette",
     "warranty": 36,
     "manufacturer": "ASUS",
     "model": "ProArt PA278QV",
@@ -633,7 +633,7 @@
         "value": "3.5mm Audio jack, DVI, HDMI, Display Port, USB-A, Mini Display Port"
       },
       {
-        "name": "Posture adjustment",
+        "name": "Stand adjustment",
         "value": "Yes"
       },
       {
@@ -654,7 +654,7 @@
     "name": "EIZO FLEXSCAN EV2460",
     "price": 841.37,
     "quantity": 10,
-    "description": "Monitor EIZO FlexScan EV2460, IPS, 23.8 inch, Wide, Full HD, D-Sub, DVI, HDMI, DisplayPort, USB Hub, Black",
+    "description": "Monitor EIZO FlexScan EV2460, IPS, 23.8\" inch, Wide, Full HD, D-Sub, DVI, HDMI, DisplayPort, USB Hub, Black",
     "warranty": 36,
     "manufacturer": "EIZO",
     "model": "FlexScan EV2460",
@@ -690,7 +690,7 @@
         "value": "3.5mm Audio jack, DVI, HDMI, Display Port, USB-A"
       },
       {
-        "name": "Posture adjustment",
+        "name": "Stand adjustment",
         "value": "Yes"
       },
       {
@@ -747,7 +747,7 @@
         "value": "D-Sub (VGA), 3.5mm Audio jack, DVI, HDMI, Display Port, USB-A"
       },
       {
-        "name": "Posture adjustment",
+        "name": "Stand adjustment",
         "value": "Yes"
       },
       {
@@ -768,7 +768,7 @@
     "name": "ASUS ZENSCREEN OLED MQ16AH",
     "price": 1039.00,
     "quantity": 10,
-    "description": "Monitor ASUS ZenScreen MQ16AH – 15.6, FHD (1920 x 1080) OLED, 1ms, USB-C, Mini HDMI, HDR-10",
+    "description": "Monitor ASUS ZenScreen MQ16AH – 15.6\", FHD (1920 x 1080) OLED, 1ms, USB-C, Mini HDMI, HDR-10",
     "warranty": 36,
     "manufacturer": "ASUS",
     "model": "ZENSCREEN OLED MQ16AH",
@@ -804,7 +804,7 @@
         "value": "USB-C, Mini HDMI"
       },
       {
-        "name": "Posture adjustment",
+        "name": "Stand adjustment",
         "value": "No"
       },
       {
@@ -861,7 +861,7 @@
         "value": "3.5mm Audio jack, HDMI, Display Port"
       },
       {
-        "name": "Posture adjustment",
+        "name": "Stand adjustment",
         "value": "Yes"
       },
       {
@@ -922,7 +922,7 @@
         "value": "G-Sync"
       },
       {
-        "name": "Posture adjustment",
+        "name": "Stand adjustment",
         "value": "Yes"
       },
       {

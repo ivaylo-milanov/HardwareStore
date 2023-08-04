@@ -31,7 +31,7 @@
         "value": "1700 MB/s"
       },
       {
-        "name": "Typing speed",
+        "name": "Writing speed",
         "value": "1100 MB/s"
       },
       {
@@ -80,7 +80,7 @@
         "value": "520 MB/s"
       },
       {
-        "name": "Typing speed",
+        "name": "Writing speed",
         "value": "500 MB/s"
       },
       {
@@ -129,7 +129,7 @@
         "value": "5000 MB/s"
       },
       {
-        "name": "Typing speed",
+        "name": "Writing speed",
         "value": "3800 MB/s"
       }
     ]
@@ -166,7 +166,7 @@
         "value": "5000 MB/s"
       },
       {
-        "name": "Typing speed",
+        "name": "Writing speed",
         "value": "4400 MB/s"
       },
       {
@@ -215,7 +215,7 @@
         "value": "500 MB/s"
       },
       {
-        "name": "Typing speed",
+        "name": "Writing speed",
         "value": "450 MB/s"
       },
       {
@@ -256,7 +256,7 @@
         "value": "550 MB/s"
       },
       {
-        "name": "Typing speed",
+        "name": "Writing speed",
         "value": "520 MB/s"
       },
       {
@@ -305,7 +305,7 @@
         "value": "7000 MB/s"
       },
       {
-        "name": "Typing speed",
+        "name": "Writing speed",
         "value": "7000 MB/s"
       },
       {
@@ -354,7 +354,7 @@
         "value": "7300 MB/s"
       },
       {
-        "name": "Typing speed",
+        "name": "Writing speed",
         "value": "3900 MB/s"
       },
       {
@@ -403,7 +403,7 @@
         "value": "3500 MB/s"
       },
       {
-        "name": "Typing speed",
+        "name": "Writing speed",
         "value": "2300 MB/s"
       },
       {
@@ -452,7 +452,7 @@
         "value": "560 MB/s"
       },
       {
-        "name": "Typing speed",
+        "name": "Writing speed",
         "value": "530 MB/s"
       },
       {
@@ -501,7 +501,7 @@
         "value": "7000 MB/s"
       },
       {
-        "name": "Typing speed",
+        "name": "Writing speed",
         "value": "5000 MB/s"
       },
       {
@@ -550,7 +550,7 @@
         "value": "7450 MB/s"
       },
       {
-        "name": "Typing speed",
+        "name": "Writing speed",
         "value": "6900 MB/s"
       },
       {
@@ -595,7 +595,7 @@
         "value": "550 MB/s"
       },
       {
-        "name": "Typing speed",
+        "name": "Writing speed",
         "value": "450 MB/s"
       },
       {
@@ -636,7 +636,7 @@
         "value": "3300 MB/s"
       },
       {
-        "name": "Typing speed",
+        "name": "Writing speed",
         "value": "1300 MB/s"
       },
       {
@@ -677,7 +677,7 @@
         "value": "3400 MB/s"
       },
       {
-        "name": "Typing speed",
+        "name": "Writing speed",
         "value": "2300 MB/s"
       },
       {
@@ -718,7 +718,7 @@
         "value": "2200 MB/s"
       },
       {
-        "name": "Typing speed",
+        "name": "Writing speed",
         "value": "1600 MB/s"
       },
       {

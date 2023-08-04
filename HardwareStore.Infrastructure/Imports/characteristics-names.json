@@ -1,5 +1,302 @@
 [
   {
-    "name": "asdasdas"
+    "name": "Form Format"
+  },
+  {
+    "name": "Format"
+  },
+  {
+    "name": "Fans included"
+  },
+  {
+    "name": "Front panel"
+  },
+  {
+    "name": "Color"
+  },
+  {
+    "name": "Length"
+  },
+  {
+    "name": "Width"
+  },
+  {
+    "name": "Height"
+  },
+  {
+    "name": "Maximum height of air cooler"
+  },
+  {
+    "name": "Maximum video card length"
+  },
+  {
+    "name": "Front supported fans"
+  },
+  {
+    "name": "Rear fans supported"
+  },
+  {
+    "name": "Supported fans on top"
+  },
+  {
+    "name": "Supported water coolers in the front"
+  },
+  {
+    "name": "Rear water coolers supported"
+  },
+  {
+    "name": "Supported water coolers on top"
+  },
+  {
+    "name": "Mesh front panel"
+  },
+  {
+    "name": "Supported side fans"
+  },
+  {
+    "name": "Supported water coolers on the side"
+  },
+  {
+    "name": "Supported fans below"
+  },
+  {
+    "name": "Supported water coolers below"
+  },
+  {
+    "name": "Type"
+  },
+  {
+    "name": "Socket"
+  },
+  {
+    "name": "Fan speed"
+  },
+  {
+    "name": "Noise level"
+  },
+  {
+    "name": "Fan size"
+  },
+  {
+    "name": "Connector"
+  },
+  {
+    "name": "Backlight"
+  },
+  {
+    "name": "Air flow"
+  },
+  {
+    "name": "TDP"
+  },
+  {
+    "name": "Form"
+  },
+  {
+    "name": "Interface"
+  },
+  {
+    "name": "Microphone"
+  },
+  {
+    "name": "Frequency range"
+  },
+  {
+    "name": "Resistance"
+  },
+  {
+    "name": "Waterproof"
+  },
+  {
+    "name": "Soundproofing"
+  },
+  {
+    "name": "Sensitivity"
+  },
+  {
+    "name": "Compatibility"
+  },
+  {
+    "name": "Cable length"
+  },
+  {
+    "name": "Size of speakers"
+  },
+  {
+    "name": "Capacity"
+  },
+  {
+    "name": "Reading speed"
+  },
+  {
+    "name": "Writing speed"
+  },
+  {
+    "name": "Random Read IOPS"
+  },
+  {
+    "name": "Random Write IOPS"
+  },
+  {
+    "name": "Connectivity"
+  },
+  {
+    "name": "Cyrillicization"
+  },
+  {
+    "name": "Type of buttons"
+  },
+  {
+    "name": "Macro buttons"
+  },
+  {
+    "name": "Layout"
+  },
+  {
+    "name": "Hot-swappable"
+  },
+  {
+    "name": "Multi media buttons"
+  },
+  {
+    "name": "Switch"
+  },
+  {
+    "name": "Screen size"
+  },
+  {
+    "name": "Resolution"
+  },
+  {
+    "name": "Matrix"
+  },
+  {
+    "name": "Refresh rate"
+  },
+  {
+    "name": "Reaction time"
+  },
+  {
+    "name": "Ports"
+  },
+  {
+    "name": "Stand adjustment"
+  },
+  {
+    "name": "Touch screen"
+  },
+  {
+    "name": "VESA"
+  },
+  {
+    "name": "Brightness"
+  },
+  {
+    "name": "Technology"
+  },
+  {
+    "name": "Chipset"
+  },
+  {
+    "name": "Number of memory slots"
+  },
+  {
+    "name": "RAM capacity"
+  },
+  {
+    "name": "Memory frequency"
+  },
+  {
+    "name": "Supported memory"
+  },
+  {
+    "name": "Built-in Wi-Fi"
+  },
+  {
+    "name": "Thickness"
+  },
+  {
+    "name": "Surface"
+  },
+  {
+    "name": "Cover"
+  },
+  {
+    "name": "Sensor"
+  },
+  {
+    "name": "Programmable buttons"
+  },
+  {
+    "name": "Number of buttons"
+  },
+  {
+    "name": "Power"
+  },
+  {
+    "name": "Certificate"
+  },
+  {
+    "name": "Efficiency"
+  },
+  {
+    "name": "PCIe Gen5"
+  },
+  {
+    "name": "Physical cores"
+  },
+  {
+    "name": "Threads"
+  },
+  {
+    "name": "Base frequency"
+  },
+  {
+    "name": "Boost frequency"
+  },
+  {
+    "name": "Cache memory"
+  },
+  {
+    "name": "Box cooler"
+  },
+  {
+    "name": "Series"
+  },
+  {
+    "name": "Generation"
+  },
+  {
+    "name": "Frequency"
+  },
+  {
+    "name": "Timing"
+  },
+  {
+    "name": "Purpose"
+  },
+  {
+    "name": "Heatsink"
+  },
+  {
+    "name": "Kit"
+  },
+  {
+    "name": "Memory"
+  },
+  {
+    "name": "Cores"
+  },
+  {
+    "name": "Frequency"
+  },
+  {
+    "name": "Sheena"
+  },
+  {
+    "name": "Exits"
+  },
+  {
+    "name": "Memory type"
   }
 ]
