@@ -7,7 +7,7 @@
     public class PowerSupplyViewModel : ProductViewModel
     {
         [Characteristic]
-        public int Power { get; set; }
+        public string Power { get; set; } = null!;
 
         [Characteristic]
         public string Certificate { get; set; } = null!;
@@ -17,9 +17,6 @@
 
         [Characteristic("Form Factor")]
         public string FormFactor { get; set; } = null!;
-
-        [Characteristic]
-        public string Specification { get; set; } = null!;
 
         [Characteristic("PCIe Gen5")]
         public string PCIeGen5 { get; set; } = null!;

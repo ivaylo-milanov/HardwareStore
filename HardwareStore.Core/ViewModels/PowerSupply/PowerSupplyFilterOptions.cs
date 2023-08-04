@@ -12,8 +12,6 @@
 
         public IEnumerable<string> FormFactor { get; set; } = null!;
 
-        public IEnumerable<string> Specification { get; set; } = null!;
-
         public IEnumerable<string> PCIeGen5 { get; set; } = null!;
 
         public IEnumerable<string> Backlight { get; set; } = null!;

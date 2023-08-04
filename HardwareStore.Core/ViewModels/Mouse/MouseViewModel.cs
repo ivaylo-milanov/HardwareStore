@@ -13,9 +13,6 @@
         public string Color { get; set; } = null!;
 
         [Characteristic]
-        public string Interface { get; set; } = null!;
-
-        [Characteristic]
         public string Sensor { get; set; } = null!;
 
         [Characteristic("Programmable buttons")]

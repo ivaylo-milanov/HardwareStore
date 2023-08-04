@@ -4,6 +4,7 @@ using HardwareStore.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HardwareStore.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(HardwareStoreDbContext))]
-    partial class HardwareStoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230804174111_IncreasedProductReferenceNumberLength")]
+    partial class IncreasedProductReferenceNumberLength
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -63,8 +65,8 @@ namespace HardwareStore.Infrastructure.Data.Migrations
 
                     b.Property<string>("Value")
                         .IsRequired()
-                        .HasMaxLength(120)
-                        .HasColumnType("nvarchar(120)")
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)")
                         .HasComment("characteristic value");
 
                     b.HasKey("Id");
@@ -89,8 +91,8 @@ namespace HardwareStore.Infrastructure.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
                         .HasComment("characteristic name");
 
                     b.HasKey("Id");
@@ -328,8 +330,8 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                         .HasComment("product manufacturer id");
 
                     b.Property<string>("Model")
-                        .HasMaxLength(150)
-                        .HasColumnType("nvarchar(150)")
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)")
                         .HasComment("product model");
 
                     b.Property<string>("Name")

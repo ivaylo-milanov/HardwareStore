@@ -2,10 +2,12 @@
 {
     using HardwareStore.Common;
     using HardwareStore.Infrastructure.Common;
+    using HardwareStore.Infrastructure.Data;
     using HardwareStore.Infrastructure.DTOs;
     using HardwareStore.Infrastructure.Models;
+    using HardwareStore.Infrastructure.Seed.Contracts;
 
-    public class DataSeeder
+    public class DataSeeder : IDataSeeder
     {
         private readonly IRepository repository;
         private readonly IFileReader fileReader;
@@ -16,31 +18,13 @@
             this.fileReader = fileReader;
         }
 
-        public async Task SeedData()
+        public async Task SeedCharacteristicsNames(HardwareStoreDbContext context)
         {
-            if (!await this.repository.AnyAsync<CharacteristicName>())
+            if (await this.repository.AnyAsync<CharacteristicName>())
             {
-                await SeedCharacteristicsNames();
+                return;
             }
 
-            if (!await this.repository.AnyAsync<Manufacturer>())
-            {
-                await SeedManufacturers();
-            }
-
-            if (!await this.repository.AnyAsync<Category>())
-            {
-                await SeedCategories();
-            }
-
-            if (!await this.repository.AnyAsync<Product>())
-            {
-                await SeedProducts();
-            }
-        }
-
-        private async Task SeedCharacteristicsNames()
-        {
             var characteristicsNamesFiles = this.fileReader.GetFilesNames("characteristics-names.json");
 
             foreach (var file in characteristicsNamesFiles)
@@ -59,8 +43,13 @@
             await this.repository.SaveChangesAsync();
         }
 
-        private async Task SeedManufacturers()
+        public async Task SeedManufacturers(HardwareStoreDbContext context)
         {
+            if (await this.repository.AnyAsync<Manufacturer>())
+            {
+                return;
+            }
+
             var manufacturersFiles = this.fileReader.GetFilesNames("manufacturers.json");
 
             foreach (var file in manufacturersFiles)
@@ -79,8 +68,13 @@
             await this.repository.SaveChangesAsync();
         }
 
-        private async Task SeedCategories()
+        public async Task SeedCategories(HardwareStoreDbContext context)
         {
+            if (await this.repository.AnyAsync<Category>())
+            {
+                return;
+            }
+
             var categoriesFiles = this.fileReader.GetFilesNames("categories.json");
 
             foreach (var file in categoriesFiles)
@@ -99,8 +93,13 @@
             await this.repository.SaveChangesAsync();
         }
 
-        private async Task SeedProducts()
+        public async Task SeedProducts(HardwareStoreDbContext context)
         {
+            if (await this.repository.AnyAsync<Product>())
+            {
+                return;
+            }
+
             var productFiles = this.fileReader.GetFilesNames("*-products.json");
 
             foreach (var file in productFiles)
@@ -120,21 +119,21 @@
 
             foreach (var productDto in productDtos)
             {
-                var category = await this.repository.FirstOrDefaultAsync<Category>(c => c.Name == productDto.Name);
+                var category = await this.repository.FirstOrDefaultAsync<Category>(c => c.Name == productDto.Category);
 
                 if (category == null)
                 {
                     throw new ArgumentNullException(ExceptionMessages.CategoryNotFound);
                 }
 
-                var manufacturer = await this.repository.FirstOrDefaultAsync<Manufacturer>(m => m.Name == productDto.Name);
+                var manufacturer = await this.repository.FirstOrDefaultAsync<Manufacturer>(m => m.Name == productDto.Manufacturer);
 
                 if (manufacturer == null)
                 {
                     throw new ArgumentNullException(ExceptionMessages.ManufacturerNotFound);
                 }
 
-                if (await this.repository.AnyAsync<Product>(p => p.Name == productDto.Name))
+                if (await this.repository.AnyAsync<Product>(p => p.ReferenceNumber == productDto.ReferenceNumber))
                 {
                     continue;
                 }
@@ -173,6 +172,7 @@
                 }
 
                 product.Characteristics = characteristics;
+                products.Add(product);
             }
 
             return products;

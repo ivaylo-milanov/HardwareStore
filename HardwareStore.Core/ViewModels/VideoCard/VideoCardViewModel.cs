@@ -10,12 +10,12 @@
         public string Series { get; set; } = null!;
 
         [Characteristic]
-        public int Memory { get; set; }
+        public string Memory { get; set; } = null!;
 
         [Characteristic]
         public string Outputs { get; set; } = null!;
 
-        [Characteristic("Type of memory")]
+        [Characteristic("Memory type")]
         public string MemoryType { get; set; } = null!;
     }
 }

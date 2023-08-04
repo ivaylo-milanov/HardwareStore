@@ -1,4 +1,4 @@
-﻿namespace HardwareStore.Infrastructure.Seed
+﻿namespace HardwareStore.Infrastructure.Seed.Contracts
 {
     public interface IFileReader
     {

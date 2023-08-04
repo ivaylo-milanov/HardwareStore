@@ -139,6 +139,11 @@
 
                     object characteristicValue = product.Attributes.FirstOrDefault(a => a.Name == name)?.Value;
 
+                    if (characteristicValue == null && prop.Name == "Manufacturer")
+                    {
+                        characteristicValue = product.Manufacturer;
+                    }
+
                     if (characteristicValue != null && prop.PropertyType != characteristicValue.GetType())
                     {
                         characteristicValue = Convert.ChangeType(characteristicValue, prop.PropertyType);
@@ -166,8 +171,14 @@
                 .Include(p => p.Manufacturer)
                 .ToListAsync();
 
+            var wildCard = $"%{keyword}%";
+
             var filtered = products
-                .Where(p => ContainsKeyword(p, keyword))
+                .Where(p => 
+                    EF.Functions.Like(p.Name, wildCard) ||
+                    EF.Functions.Like(p.Manufacturer.Name, wildCard) ||
+                    EF.Functions.Like(p.Description, wildCard) ||
+                    EF.Functions.Like(p.Model, wildCard) )
                 .Select(p => new SearchViewModel
                 {
                     Id = p.Id,
@@ -181,21 +192,13 @@
             return filtered;
         }
 
-        private bool ContainsKeyword(Product product, string keyword)
-        {
-            var wildCard = $"%{keyword}%";
-
-            return EF.Functions.Like(product.Name, wildCard) ||
-                EF.Functions.Like(product.Manufacturer?.Name, wildCard) ||
-                EF.Functions.Like(product.Description, wildCard) ||
-                EF.Functions.Like(product.Model, wildCard);
-        }
-
         public async Task<ProductDetailsModel> GetProductDetails(int productId)
         {
             var product = await this.repository
                 .AllReadonly<Product>()
                 .Include(p => p.Manufacturer)
+                .Include(p => p.Characteristics)
+                .ThenInclude(p => p.CharacteristicName)
                 .Where(p => p.Id == productId)
                 .FirstOrDefaultAsync();
 
@@ -239,7 +242,12 @@
 
             foreach (var property in properties)
             {
-                var values = products.Select(m => property.GetValue(m).ToString()).Distinct().ToList();
+                var values = products
+                    .Select(m => property.GetValue(m))
+                    .Where(v => v != null)
+                    .Select(v => v.ToString())
+                    .Distinct()
+                    .ToList();
 
                 var filterValues = string.Join(", ", values)
                     .Split(", ")
@@ -253,7 +261,7 @@
                 var model = new FilterCategoryModel
                 {
                     Name = property.Name,
-                    Values = filterValues,
+                    Values = filterValues.OrderByDescending(p => p),
                     Title = title
                 };
 

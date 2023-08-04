@@ -8,8 +8,6 @@
 
         public IEnumerable<string> Color { get; set; } = null!;
 
-        public IEnumerable<string> Interface { get; set; } = null!;
-
         public IEnumerable<string> Type { get; set; } = null!;
 
         public IEnumerable<string> Form { get; set; } = null!;

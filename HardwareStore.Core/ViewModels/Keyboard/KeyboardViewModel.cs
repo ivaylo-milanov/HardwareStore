@@ -13,9 +13,6 @@
         public string Color { get; set; } = null!;
 
         [Characteristic]
-        public string Interface { get; set; } = null!;
-
-        [Characteristic]
         public string Type { get; set; } = null!;
 
         [Characteristic]

@@ -1,33 +1,71 @@
 ﻿namespace HardwareStore.Extensions
 {
-    using HardwareStore.Infrastructure.Seed;
-    using Microsoft.EntityFrameworkCore;
+    using HardwareStore.Infrastructure.Data;
+    using HardwareStore.Infrastructure.Seed.Contracts;
 
     public static class HostExtension
     {
-        public static async Task<IHost> MigrateDatabase<TContext>(this IHost host) where TContext : DbContext
+        public static async Task<IHost> MigrateDatabase(this IHost host)
         {
             using (var scope = host.Services.CreateScope())
             {
                 var services = scope.ServiceProvider;
-                var context = services.GetRequiredService<TContext>();
+                var context = services.GetRequiredService<HardwareStoreDbContext>();
+                var dataSeeder = services.GetRequiredService<IDataSeeder>();
 
-                using (var transaction = context.Database.BeginTransaction())
+                using (var transaction = await context.Database.BeginTransactionAsync())
                 {
                     try
                     {
-                        var dataSeeder = services.GetRequiredService<DataSeeder>();
-                        await dataSeeder.SeedData();
-
-                        transaction.Commit();
+                        await dataSeeder.SeedCharacteristicsNames(context);
+                        await transaction.CommitAsync();
                     }
-                    catch (Exception ex)
+                    catch (Exception)
                     {
-                        var logger = services.GetRequiredService<ILogger<Program>>();
-                        logger.LogError(ex, "An error occurred while migrating or initializing the database.");
+                        await transaction.RollbackAsync();
+                        throw;
+                    }
+                }
 
-                        // Rollback transaction if any error occurs
-                        transaction.Rollback();
+                using (var transaction = await context.Database.BeginTransactionAsync())
+                {
+                    try
+                    {
+                        await dataSeeder.SeedManufacturers(context);
+                        await transaction.CommitAsync();
+                    }
+                    catch (Exception)
+                    {
+                        await transaction.RollbackAsync();
+                        throw;
+                    }
+                }
+
+                using (var transaction = await context.Database.BeginTransactionAsync())
+                {
+                    try
+                    {
+                        await dataSeeder.SeedCategories(context);
+                        await transaction.CommitAsync();
+                    }
+                    catch (Exception)
+                    {
+                        await transaction.RollbackAsync();
+                        throw;
+                    }
+                }
+
+                using (var transaction = await context.Database.BeginTransactionAsync())
+                {
+                    try
+                    {
+                        await dataSeeder.SeedProducts(context);
+                        await transaction.CommitAsync();
+                    }
+                    catch (Exception)
+                    {
+                        await transaction.RollbackAsync();
+                        throw;
                     }
                 }
             }

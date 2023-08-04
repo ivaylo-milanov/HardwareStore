@@ -41,7 +41,7 @@ cartItems.forEach(item => {
         const currentQuantity = getQuantity();
         if (currentQuantity > productQuantity) {
             display.value = previousQuantity;
-            alert(`Only 3 "${productName}" left in stock.`);
+            alert(`Only ${productQuantity} "${productName}" left in stock.`);
         }
         else {
             updateTotalAndSubtotal(price);

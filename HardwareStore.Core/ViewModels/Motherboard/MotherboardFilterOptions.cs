@@ -10,7 +10,7 @@
 
         public IEnumerable<string> Chipset { get; set; } = null!;
 
-        public IEnumerable<string> MaintenanceMemory { get; set; } = null!;
+        public IEnumerable<string> SupportedMemory { get; set; } = null!;
 
         public IEnumerable<string> BuiltInWIFI { get; set; } = null!;
 

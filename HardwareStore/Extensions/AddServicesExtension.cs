@@ -4,6 +4,7 @@
     using Core.Services.Contracts;
     using HardwareStore.Infrastructure.Common;
     using HardwareStore.Infrastructure.Seed;
+    using HardwareStore.Infrastructure.Seed.Contracts;
 
     public static class AddServicesExtension
     {
@@ -17,7 +18,7 @@
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IProfileService, ProfileService>();
             services.AddScoped<IFileReader, FileReader>();
-            services.AddScoped<DataSeeder>();
+            services.AddScoped<IDataSeeder, DataSeeder>();
 
             services.AddControllers().AddNewtonsoftJson();
             services.AddHttpContextAccessor();

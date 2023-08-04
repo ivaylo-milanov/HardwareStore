@@ -1,5 +1,6 @@
 ﻿namespace HardwareStore.Infrastructure.Seed
 {
+    using HardwareStore.Infrastructure.Seed.Contracts;
     using Newtonsoft.Json;
 
     public class FileReader : IFileReader

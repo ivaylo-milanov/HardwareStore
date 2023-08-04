@@ -15,8 +15,8 @@
         [Characteristic]
         public string Chipset { get; set; } = null!;
 
-        [Characteristic("Maintenance memory")]
-        public string MaintenanceMemory { get; set; } = null!;
+        [Characteristic("Supported memory")]
+        public string SupportedMemory { get; set; } = null!;
 
         [Characteristic("Built-in Wi-Fi")]
         public string BuiltInWIFI { get; set; } = null!;

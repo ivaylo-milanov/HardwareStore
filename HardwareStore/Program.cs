@@ -50,7 +50,7 @@ namespace HardwareStore
             app.MapRazorPages();
 
             //Uncomment this to seed the data into the database
-            await app.MigrateDatabase<HardwareStoreDbContext>();
+            //await app.MigrateDatabase();
 
             await app.RunAsync();
         }

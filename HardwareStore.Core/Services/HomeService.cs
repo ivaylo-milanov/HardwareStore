@@ -51,7 +51,7 @@
                     Name = p.Name,
                     Price= p.Price
                 })
-                .Take(7)
+                .Take(4)
                 .ToListAsync();
     }
 }

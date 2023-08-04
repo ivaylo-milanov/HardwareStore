@@ -18,7 +18,7 @@
         [Characteristic]
         public string Technology { get; set; } = null!;
 
-        [Characteristic("Posture adjustment")]
+        [Characteristic("Stand adjustment")]
         public string PostureAdjustment { get; set; } = null!;
 
         [Characteristic("Touch screen")]

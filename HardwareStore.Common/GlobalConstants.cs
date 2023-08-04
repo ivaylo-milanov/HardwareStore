@@ -18,13 +18,13 @@
         public const int ProductDescriptionMinLength = 5;
         public const int ProductDescriptionMaxLength = 5000;
         public const int ProductModelMinLength = 3;
-        public const int ProductModelMaxLength = 40;
+        public const int ProductModelMaxLength = 150;
         public const int ProductReferenceNumberMinLength = 8;
-        public const int ProductReferenceNumberMaxLength = 50;
+        public const int ProductReferenceNumberMaxLength = 100;
 
         //Characteristic
         public const int CharacteristicValueMinLength = 1;
-        public const int CharacteristicValueMaxLength = 30;
+        public const int CharacteristicValueMaxLength = 120;
 
         //Customer
         public const int CustomerUserNameMinLength = 3;
@@ -46,6 +46,6 @@
 
         //CharacteristicName
         public const int CharacteristicNameMinLength = 3;
-        public const int CharacteristicNameMaxLength = 30;
+        public const int CharacteristicNameMaxLength = 60;
     }
 }

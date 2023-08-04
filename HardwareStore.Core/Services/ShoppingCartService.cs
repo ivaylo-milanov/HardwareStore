@@ -281,7 +281,8 @@
                     Name = sci.Product.Name,
                     Quantity = sci.Quantity,
                     Price = sci.Product.Price,
-                    TotalPrice = sci.Product.Price * sci.Quantity
+                    TotalPrice = sci.Product.Price * sci.Quantity,
+                    ProductQuantity = sci.Product.Quantity
                 })
                 .ToList();
 
