@@ -32,5 +32,7 @@
         T FirstOrDefault<T>(Expression<Func<T, bool>> search) where T : class;
 
         Task<T> FirstOrDefaultAsync<T>(Expression<Func<T, bool>> search) where T : class;
+
+        Task<ICollection<T>> FromSqlRawAsync<T>(string sql, params object[] parameters) where T : class;
     }
 }

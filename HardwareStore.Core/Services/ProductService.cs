@@ -8,9 +8,12 @@
     using HardwareStore.Core.ViewModels.Search;
     using HardwareStore.Infrastructure.Common;
     using HardwareStore.Infrastructure.Models;
+    using Microsoft.Data.SqlClient;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Caching.Memory;
+    using System.Linq;
     using System.Reflection;
+    using static Dropbox.Api.Files.SearchMatchType;
 
     public class ProductService : IProductService
     {
@@ -166,30 +169,41 @@
 
         public async Task<IEnumerable<SearchViewModel>> GetProductsByKeyword(string keyword)
         {
-            var products = await this.repository
-                .AllReadonly<Product>()
-                .Include(p => p.Manufacturer)
-                .ToListAsync();
+            var formattedKeyword = $"\"{keyword}*\"";
 
-            var wildCard = $"%{keyword}%";
+            var sql = @"SELECT p.* FROM Products p
+                LEFT JOIN Manufacturers m ON m.Id = p.ManufacturerId
+                WHERE (
+                    FREETEXT((p.Name, p.Description, p.Model), @keyword) OR
+                    FREETEXT((m.Name), @keyword) OR
+                    EXISTS (
+                        SELECT 1 FROM Characteristics c 
+                        WHERE c.ProductId = p.Id 
+                        AND FREETEXT((c.Value), @keyword)
+                    )
+                )";
 
-            var filtered = products
-                .Where(p => 
-                    EF.Functions.Like(p.Name, wildCard) ||
-                    EF.Functions.Like(p.Manufacturer.Name, wildCard) ||
-                    EF.Functions.Like(p.Description, wildCard) ||
-                    EF.Functions.Like(p.Model, wildCard) )
+            var filtered = await this.repository
+                .FromSqlRawAsync<Product>(sql, new SqlParameter("@keyword", formattedKeyword));
+
+            var productIds = filtered.Select(p => p.Id).ToList();
+
+            var manufacturers = await this.repository.All<Manufacturer>()
+                .Where(m => m.Products.Any(p => productIds.Contains(p.Id)))
+                .ToDictionaryAsync(m => m.Id, m => m.Name);
+
+            var result = filtered
                 .Select(p => new SearchViewModel
                 {
                     Id = p.Id,
                     Name = p.Name,
                     Price = p.Price,
-                    Manufacturer = p.Manufacturer!.Name,
+                    Manufacturer = p.ManufacturerId.HasValue && manufacturers.ContainsKey(p.ManufacturerId.Value) ? manufacturers[p.ManufacturerId.Value] : null,
                     AddDate = p.AddDate
                 })
                 .ToList();
 
-            return filtered;
+            return result;
         }
 
         public async Task<ProductDetailsModel> GetProductDetails(int productId)

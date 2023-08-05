@@ -6,6 +6,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
+    using System.Runtime.CompilerServices;
     using System.Threading.Tasks;
 
     public class Repository : IRepository
@@ -74,5 +75,8 @@
 
         public async Task<T> FirstOrDefaultAsync<T>(Expression<Func<T, bool>> search) where T : class
             => await this.Set<T>().FirstOrDefaultAsync(search);
+
+        public async Task<ICollection<T>> FromSqlRawAsync<T>(string sql, params object[] parameters) where T : class
+            => await this.Set<T>().FromSqlRaw(sql, parameters).ToListAsync();
     }
 }

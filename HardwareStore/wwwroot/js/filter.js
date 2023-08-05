@@ -1,23 +1,16 @@
 ﻿import * as local from './utils.js';
 import { getURL, returnFilterState } from './state.js';
 import { onFormChange } from './filterSubmit.js';
+import { sendFilterData } from './data.js';
 
 const form = document.querySelector('.page-layout');
 const initialUrl = local.getInitialURL();
 const defaultData = { "Order": "1" };
 
 function setInitialData() {
-    let initialData = null;
+    returnFilterState(defaultData);
 
-    const savedData = local.getData('filterData');
-    initialData = savedData;
-    returnFilterState(initialData || defaultData);
-
-    replaceState(initialData || defaultData);
-
-    if (initialData === null) {
-        local.setData('filterData', defaultData);
-    }
+    replaceState(defaultData);
 }
 
 function replaceState(data) {
@@ -31,7 +24,7 @@ async function onPopState(ev) {
     returnFilterState(data || defaultData);
     replaceState(data || defaultData);
 
-    await sendFilterData(ev);
+    await sendFilterData(form, data || defaultData);
 }
 
 window.addEventListener('popstate', onPopState);

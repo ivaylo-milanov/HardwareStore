@@ -1,6 +1,5 @@
 ﻿import { sendFilterData } from './data.js';
 import { getURL } from './state.js';
-import * as local from './utils.js';
 
 export async function onFormChange(ev) {
     ev.preventDefault();
@@ -9,9 +8,7 @@ export async function onFormChange(ev) {
     let url = getURL(data);
     window.history.pushState(data, null, url);
 
-    local.setData('filterData', data);
-
-    await sendFilterData(ev, data);
+    await sendFilterData(ev.currentTarget, data);
 }
 
 function getData(ev) {
@@ -29,8 +26,8 @@ function getData(ev) {
         data[key].push(value);
     });
 
-    const order = ev.target.value;
-    data.Order = Number(order);
+    const order = document.querySelector('select').value;
+    data.Order = order;
 
     return data;
 }

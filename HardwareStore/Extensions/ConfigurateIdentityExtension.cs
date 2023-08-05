@@ -19,6 +19,11 @@
             })
                .AddEntityFrameworkStores<HardwareStoreDbContext>();
 
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/User/Login";
+            });
+
             return services;
         }
     }

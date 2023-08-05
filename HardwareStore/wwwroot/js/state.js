@@ -1,6 +1,4 @@
-﻿import * as local from './utils.js';
-
-const select = document.querySelector('.order select');
+﻿const select = document.querySelector('.order select');
 
 export function getURL(data) {
     return window.location.pathname + buildQueryString(data);
@@ -31,20 +29,18 @@ export function returnFilterState(data) {
             });
         }
     }
-
-    local.setData('filterData', data);
 }
 
 function buildQueryString(data) {
     const searchParams = new URLSearchParams();
 
-    var arrayEntries = Object.entries(data).filter(p => Array.isArray(p.value));
+    var arrayEntries = Object.entries(data).filter(([key, value]) => Array.isArray(value));
 
     if (arrayEntries.length > 0) {
         arrayEntries.forEach(([key, value]) => searchParams.set(key, value.join(',')));
     }
 
-    var [orderKey, orderValue] = Object.entries(data).filter(p => !Array.isArray(p.value))[0];
+    var [orderKey, orderValue] = Object.entries(data).filter(([key, value]) => !Array.isArray(value))[0];
 
     searchParams.set(orderKey, orderValue);
 
