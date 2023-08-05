@@ -19,6 +19,7 @@
             services.AddScoped<IProfileService, ProfileService>();
             services.AddScoped<IFileReader, FileReader>();
             services.AddScoped<IDataSeeder, DataSeeder>();
+            services.AddScoped<IOrderService, OrderService>();
 
             services.AddControllers().AddNewtonsoftJson();
             services.AddHttpContextAccessor();

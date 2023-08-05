@@ -2,7 +2,9 @@
 {
     using HardwareStore.Common;
     using HardwareStore.Core.Services.Contracts;
+    using HardwareStore.Core.ViewModels.ShoppingCart;
     using HardwareStore.Core.ViewModels.User;
+    using HardwareStore.Infrastructure.Common;
     using HardwareStore.Infrastructure.Models;
     using Microsoft.AspNetCore.Identity;
     using System.Threading.Tasks;
@@ -11,14 +13,16 @@
     {
         private readonly SignInManager<Customer> signInManager;
         private readonly UserManager<Customer> userManager;
+        private readonly IRepository repository;
 
-        public UserService(SignInManager<Customer> signInManager, UserManager<Customer> userManager)
+        public UserService(SignInManager<Customer> signInManager, UserManager<Customer> userManager, IRepository repository)
         {
             this.signInManager = signInManager;
             this.userManager = userManager;
+            this.repository = repository;
         }
 
-        public async Task<SignInResult> LoginAsync(LoginFormModel model)
+        public async Task<SignInResult> LoginAsync(LoginFormModel model, ICollection<ShoppingCartExportModel> cart, ICollection<int> favorites)
         {
             var user = await userManager.FindByEmailAsync(model.Email);
 
@@ -29,6 +33,19 @@
 
             var result = await signInManager.PasswordSignInAsync(user, model.Password, false, false);
 
+            if (result.Succeeded)
+            {
+                if (cart != null)
+                {
+                    await AddToCartAsync(user.Id, cart);
+                }
+
+                if (favorites != null)
+                {
+                    await AddToFavoritesAsync(user.Id, favorites);
+                }
+            }
+
             return result;
         }
 
@@ -37,7 +54,7 @@
             await signInManager.SignOutAsync();
         }
 
-        public async Task<IdentityResult> RegisterAsync(RegisterFormModel model)
+        public async Task<IdentityResult> RegisterAsync(RegisterFormModel model, ICollection<ShoppingCartExportModel> cart, ICollection<int> favorites)
         {
             Customer user = new Customer
             {
@@ -56,9 +73,72 @@
             if (result.Succeeded)
             {
                 await signInManager.SignInAsync(user, isPersistent: false);
+
+                if (cart != null)
+                {
+                    await AddToCartAsync(user.Id, cart);
+                }
+
+                if (favorites != null)
+                {
+                    await AddToFavoritesAsync(user.Id, favorites);
+                }
             }
 
             return result;
+        }
+
+        private async Task AddToFavoritesAsync(string userId, ICollection<int> favorites)
+        {
+            ICollection<Favorite> dbFavorites = new List<Favorite>();
+            foreach (var productId in favorites)
+            {
+                var existingFavorite = await this.repository
+                    .FirstOrDefaultAsync<Favorite>(f => f.ProductId == productId && f.UserId == userId);
+
+                if (existingFavorite == null)
+                {
+                    var favoriteProduct = new Favorite
+                    {
+                        ProductId = productId,
+                        UserId = userId
+                    };
+
+                    dbFavorites.Add(favoriteProduct);
+                }   
+            }
+
+            this.repository.AddRange(dbFavorites);
+            await this.repository.SaveChangesAsync();
+        }
+
+        private async Task AddToCartAsync(string userId, ICollection<ShoppingCartExportModel> cart)
+        {
+            ICollection<ShoppingCartItem> shoppings = new List<ShoppingCartItem>();
+            foreach (var item in cart)
+            {
+                var existingCartItem = await this.repository
+                    .FirstOrDefaultAsync<ShoppingCartItem>(f => f.ProductId == item.ProductId && f.UserId == userId);
+
+                if (existingCartItem == null)
+                {
+                    var dbCartItem = new ShoppingCartItem
+                    {
+                        ProductId = item.ProductId,
+                        Quantity = item.Quantity,
+                        UserId = userId
+                    };
+
+                    shoppings.Add(dbCartItem);
+                }
+                else
+                {
+                    existingCartItem.Quantity += item.Quantity;
+                }
+            }
+
+            this.repository.AddRange(shoppings);
+            await this.repository.SaveChangesAsync();
         }
     }
 }

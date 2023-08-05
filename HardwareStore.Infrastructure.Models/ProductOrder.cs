@@ -19,7 +19,7 @@
         [Comment("product order order id")]
         [Required]
         [ForeignKey(nameof(Order))]
-        public int OrderId { get; set; }
+        public Guid OrderId { get; set; }
 
         [Comment("product order product")]
         public virtual Order Order { get; set; } = null!;

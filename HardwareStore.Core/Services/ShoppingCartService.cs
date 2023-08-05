@@ -161,16 +161,16 @@
             SetShoppingCart(shoppings);
         }
 
-        public async Task UpdateSessionItemQuantityAsync(ShoppingCartUpdateModel model)
+        public async Task UpdateSessionItemQuantityAsync(int quantity, int productId)
         {
             var shoppings = GetShoppingCart();
 
-            if (!await this.repository.AnyAsync<Product>(p => p.Id == model.ProductId))
+            if (!await this.repository.AnyAsync<Product>(p => p.Id == quantity))
             {
                 throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
             }
 
-            var cartItem = shoppings.FirstOrDefault(p => p.ProductId == model.ProductId);
+            var cartItem = shoppings.FirstOrDefault(p => p.ProductId == quantity);
 
             if (cartItem == null)
             {
@@ -179,7 +179,7 @@
 
             if (cartItem.Quantity == 1)
             {
-                await this.RemoveFromSessionShoppingCartAsync(model.ProductId);
+                await this.RemoveFromSessionShoppingCartAsync(quantity);
             }
             else
             {
@@ -189,7 +189,7 @@
                 }
                 else
                 {
-                    cartItem.Quantity = model.Quantity;
+                    cartItem.Quantity = quantity;
                 }
 
                 SetShoppingCart(shoppings);
@@ -352,7 +352,7 @@
             await this.repository.SaveChangesAsync();
         }
 
-        public async Task UpdateDatabaseItemQuantityAsync(ShoppingCartUpdateModel model)
+        public async Task UpdateDatabaseItemQuantityAsync(int quantity, int productId)
         {
             var user = await GetUser(GetUserId());
 
@@ -361,32 +361,32 @@
                 throw new ArgumentNullException(ExceptionMessages.UserNotFound);
             }
 
-            if (!await this.repository.AnyAsync<Product>(p => p.Id == model.ProductId))
+            if (!await this.repository.AnyAsync<Product>(p => p.Id == productId))
             {
                 throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
             }
 
             var cartItem = user.ShoppingCartItems
-               .FirstOrDefault(i => i.ProductId == model.ProductId);
+               .FirstOrDefault(i => i.ProductId == productId);
 
             if (cartItem == null)
             {
                 throw new ArgumentNullException(ExceptionMessages.CartItemNotFound);
             }
 
-            if (model.Quantity == 0)
+            if (quantity == 0)
             {
-                await this.RemoveFromDatabaseShoppingCartAsync(model.ProductId);
+                await this.RemoveFromDatabaseShoppingCartAsync(productId);
             }
             else
             {
-                if (model.Quantity < 0)
+                if (quantity < 0)
                 {
                     cartItem.Quantity = 1;
                 }
                 else
                 {
-                    cartItem.Quantity = model.Quantity;
+                    cartItem.Quantity = quantity;
                 }
 
                 await this.repository.SaveChangesAsync();

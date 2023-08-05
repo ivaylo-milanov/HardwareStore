@@ -7,6 +7,7 @@
         public const int CategoryNameMaxLength = 30;
 
         //Order
+        public const int OrderAdditionalNotesMaxLength = 2000;
         public const int OrderBillingAddressMinLength = 10;
         public const int OrderBillingAddressMaxLength = 50;
         public const int OrderShippingAddressMinLength = 10;

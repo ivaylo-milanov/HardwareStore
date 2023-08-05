@@ -2,30 +2,36 @@
 
 <div class="order-page">
     <div class="order-form">
-        <form id="order-form" asp-action="" method="post">
+        <form id="order-form" asp-action="Index" asp-controller="Order" method="post">
             <div class="form-container">
                 <h2 class="form-title">Product Order Form</h2>
                 <h3 class="section-title">Personal Data</h3>
                 <div class="form-group">
-                    <label for="">First Name <span class="required">*</span></label>
-                    <input type="text" name="FirstName" class="form-input" required>
-                    <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
-                    <label>
-                        Last Name <span class="required">*</span>
-                        <input type="text" name="LastName" class="form-input" required>
-                    </label>
-                    <label>
-                        Phone Number <span class="required">*</span>
-                        <input type="tel" name="phone" class="form-input" required>
-                    </label>
-                    <label>
-                        City <span class="required">*</span>
-                        <input type="text" name="city" class="form-input" required>
-                    </label>
-                    <label>
-                        Address <span class="required">*</span>
-                        <input type="text" name="address" class="form-input" required>
-                    </label>
+                    <div class="form-item">
+                        <label for="">First Name <span class="required">*</span></label>
+                        <input type="text" name="FirstName" class="form-input" required value="@Model.FirstName">
+                        <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-item">
+                        <label for="">Last Name <span class="required">*</span></label>
+                        <input type="text" name="LastName" class="form-input" required value="@Model.LastName">
+                        <span asp-validation-for="@Model.LastName" class="text-danger"></span>
+                    </div>
+                    <div class="form-item">
+                        <label for="">Phone Number <span class="required">*</span></label>
+                        <input type="text" name="Phone" class="form-input" required value="@Model.Phone">
+                        <span asp-validation-for="@Model.Phone" class="text-danger"></span>
+                    </div>
+                    <div class="form-item">
+                        <label for="">City <span class="required">*</span></label>
+                        <input type="text" name="City" class="form-input" required value="@Model.City">
+                        <span asp-validation-for="@Model.City" class="text-danger"></span>
+                    </div>
+                    <div class="form-item">
+                        <label for="">Address <span class="required">*</span></label>
+                        <input type="text" name="Address" class="form-input" required value="@Model.Address">
+                        <span asp-validation-for="@Model.Address" class="text-danger"></span>
+                    </div>
                 </div>
                 <h3 class="section-title">Additional Notes</h3>
                 <div class="form-group">
@@ -34,12 +40,12 @@
                 <h3 class="section-title">Payment Method</h3>
                 <div class="form-group payment-method">
                     <label class="radio-label">
-                        <input type="radio" name="payment" value="credit" class="radio-input" checked>
+                        <input type="radio" name="PaymentMethod" value="1" class="radio-input" checked>
                         <span class="checkmark"></span> Credit Card
                     </label>
                     <label class="radio-label">
-                        <input type="radio" name="payment" value="debit" class="radio-input">
-                        <span class="checkmark"></span> Debit Card
+                        <input type="radio" name="PaymentMethod" value="2" class="radio-input">
+                        <span class="checkmark"></span> Cash
                     </label>
                 </div>
             </div>
@@ -48,8 +54,8 @@
     <div class="shopping-cart">
         <h3 class="section-title">Shopping Cart</h3>
         <div class="order-summary">
-            <p class="total-amount">Total: $<span class="total-price">200</span></p>
-            <p class="delivery-amount">Delivery: $<span class="delivery-price">20</span></p>
+            <p class="total-amount">Total: $<span class="total-price">@Model.TotalAmount</span></p>
+            <p class="delivery-amount">Delivery: Free</p>
             <button type="submit" form="order-form" class="btn-submit">Place Order</button>
         </div>
     </div>

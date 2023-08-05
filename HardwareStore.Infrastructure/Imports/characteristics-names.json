@@ -294,9 +294,12 @@
     "name": "Sheena"
   },
   {
-    "name": "Exits"
+    "name": "Outputs"
   },
   {
     "name": "Memory type"
+  },
+  {
+    "name": "Weight"
   }
 ]

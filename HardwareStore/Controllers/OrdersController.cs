@@ -1,32 +1,36 @@
 ﻿namespace HardwareStore.Controllers
 {
-    using HardwareStore.Infrastructure.Models;
+    using HardwareStore.Core.Services.Contracts;
+    using HardwareStore.Core.ViewModels.Order;
     using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
+    using System.Security.Claims;
 
     [Authorize]
     public class OrdersController : Controller
     {
-        private readonly UserManager<Customer> userManager;
+        private readonly IOrderService orderService;
 
-        public OrdersController(UserManager<Customer> userManager)
+        public OrdersController(IOrderService orderService)
         {
-            userManager = userManager;
+            this.orderService = orderService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var user = await userManager.GetUserAsync(User);
-
-            if (user == null)
+            IEnumerable<OrderViewModel> orders;
+            try
             {
-                return NotFound("User not found.");
+                orders = await this.orderService.GetUserOrders(GetUserId());
             }
-
-            var orders = user.Orders.ToList();
+            catch (Exception)
+            {
+                throw;
+            }
 
             return View(orders);
         }
+
+        private string GetUserId() => HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
     }
 }

@@ -2,7 +2,6 @@
 {
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.ShoppingCart;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
     public class CartController : Controller
@@ -39,6 +38,11 @@
             if (TempData["ErrorMessage"] != null)
             {
                 ModelState.AddModelError(string.Empty, TempData["ErrorMessage"]!.ToString()!);
+            }
+
+            if (shoppingCart.TotalCartPrice == 0)
+            {
+                ModelState.AddModelError(string.Empty, "To make an order, it is necessary that cart total amount is worth more than $8");
             }
 
             return View(shoppingCart);
@@ -94,7 +98,7 @@
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> DecreaseItemQuantity([FromBody] int productId)
+        public async Task<IActionResult> DecreaseItemQuantity(int productId)
         {
             try
             {
@@ -116,7 +120,7 @@
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> IncreaseItemQuantity([FromBody] int productId)
+        public async Task<IActionResult> IncreaseItemQuantity(int productId)
         {
             try
             {
@@ -138,17 +142,17 @@
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> UpdateItemQuantity([FromBody] ShoppingCartUpdateModel model)
+        public async Task<IActionResult> UpdateItemQuantity(int quantity, int productId)
         {
             try
             {
                 if (User?.Identity?.IsAuthenticated ?? false)
                 {
-                    await this.shoppingCartService.UpdateDatabaseItemQuantityAsync(model);
+                    await this.shoppingCartService.UpdateDatabaseItemQuantityAsync(quantity, productId);
                 }
                 else
                 {
-                    await this.shoppingCartService.UpdateSessionItemQuantityAsync(model);
+                    await this.shoppingCartService.UpdateSessionItemQuantityAsync(quantity, productId);
                 }
             }
             catch (ArgumentNullException ex)

@@ -130,3 +130,37 @@
     font-size: 22px;
     color: #52ad9c;
 }
+
+.order-confirmation-wrapper {
+    display: grid;
+    justify-items: center;
+    align-content: start;
+    min-height: 100vh;
+    padding: 10px;
+    height: 50vh;
+}
+
+.order-confirmation-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    width: 70%;
+}
+
+.page-title {
+    color: #333;
+    text-align: center;
+    font-size: 22px;
+    margin-bottom: 15px;
+}
+
+.order-confirmation-message {
+    color: #2d2d2a;
+    text-align: center;
+    font-size: 18px;
+}

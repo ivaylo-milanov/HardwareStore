@@ -6,8 +6,6 @@
 
     public class OrderFormModel
     {
-        public DateTime OrderDate { get; set; }
-
         [Required]
         [MaxLength(GlobalConstants.CustomerFirstNameMaxLength)]
         public string FirstName { get; set; } = null!;
@@ -35,8 +33,8 @@
         [Required]
         public decimal TotalAmount { get; set; }
 
-        [Required]
-        public OrderStatus OrderStatus { get; set; }
+        [MaxLength(GlobalConstants.OrderAdditionalNotesMaxLength)]
+        public string? AdditionalNotes { get; set; }
 
         [Required]
         public PaymentMethod PaymentMethod { get; set; }

@@ -27,7 +27,7 @@
         "value": "128 bit"
       },
       {
-        "name": "Exits",
+        "name": "Outputs",
         "value": "HDMI, DisplayPort"
       },
       {
@@ -68,7 +68,7 @@
         "value": "128 bit"
       },
       {
-        "name": "Exits",
+        "name": "Outputs",
         "value": "HDMI, DisplayPort"
       },
       {
@@ -109,7 +109,7 @@
         "value": "256 bit"
       },
       {
-        "name": "Exits",
+        "name": "Outputs",
         "value": "HDMI, DisplayPort"
       },
       {
@@ -150,7 +150,7 @@
         "value": "384 bit"
       },
       {
-        "name": "Exits",
+        "name": "Outputs",
         "value": "HDMI, DisplayPort"
       },
       {
@@ -191,7 +191,7 @@
         "value": "128 bit"
       },
       {
-        "name": "Exits",
+        "name": "Outputs",
         "value": "HDMI, DisplayPort"
       },
       {
@@ -232,7 +232,7 @@
         "value": "192 bit"
       },
       {
-        "name": "Exits",
+        "name": "Outputs",
         "value": "HDMI, DisplayPort"
       },
       {
@@ -273,7 +273,7 @@
         "value": "256 bit"
       },
       {
-        "name": "Exits",
+        "name": "Outputs",
         "value": "HDMI, DisplayPort"
       },
       {
@@ -314,7 +314,7 @@
         "value": "192 bit"
       },
       {
-        "name": "Exits",
+        "name": "Outputs",
         "value": "HDMI, DisplayPort"
       },
       {
@@ -355,7 +355,7 @@
         "value": "128 bit"
       },
       {
-        "name": "Exits",
+        "name": "Outputs",
         "value": "HDMI, DisplayPort"
       },
       {
@@ -396,7 +396,7 @@
         "value": "128 bit"
       },
       {
-        "name": "Exits",
+        "name": "Outputs",
         "value": "HDMI, DisplayPort"
       },
       {
@@ -437,7 +437,7 @@
         "value": "192 bit"
       },
       {
-        "name": "Exits",
+        "name": "Outputs",
         "value": "HDMI, DisplayPort"
       },
       {
@@ -478,7 +478,7 @@
         "value": "192 bit"
       },
       {
-        "name": "Exits",
+        "name": "Outputs",
         "value": "HDMI, DisplayPort"
       },
       {

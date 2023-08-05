@@ -28,8 +28,14 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    NormalizedUserName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    FirstName = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false, comment: "customer first name"),
+                    LastName = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false, comment: "customer last name"),
+                    Phone = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false, comment: "customer phone"),
+                    City = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false, comment: "customer city"),
+                    Area = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false, comment: "customer area"),
+                    Address = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, comment: "customer address"),
+                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
@@ -46,7 +52,8 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
+                },
+                comment: "customer table");
 
             migrationBuilder.CreateTable(
                 name: "Categories",
@@ -61,6 +68,20 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                     table.PrimaryKey("PK_Categories", x => x.Id);
                 },
                 comment: "category table");
+
+            migrationBuilder.CreateTable(
+                name: "CharacteristicsNames",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false, comment: "characteristic name id")
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false, comment: "characteristic name")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CharacteristicsNames", x => x.Id);
+                },
+                comment: "characteristic name table");
 
             migrationBuilder.CreateTable(
                 name: "Manufacturers",
@@ -186,15 +207,18 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                 name: "Orders",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false, comment: "order id")
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "order id"),
                     OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "order date"),
                     TotalAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false, comment: "order total amount"),
                     OrderStatus = table.Column<int>(type: "int", nullable: false, comment: "order status"),
-                    BillingAddress = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, comment: "order billing address"),
-                    ShippingAddress = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, comment: "order shipping address"),
                     PaymentMethod = table.Column<int>(type: "int", nullable: false, comment: "order payment method"),
-                    AdditionalNotes = table.Column<string>(type: "nvarchar(max)", nullable: true, comment: "order additional notes"),
+                    AdditionalNotes = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: true, comment: "order additional notes"),
+                    FirstName = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false, comment: "order first name"),
+                    LastName = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false, comment: "order last name"),
+                    Phone = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false, comment: "order phone"),
+                    City = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false, comment: "order city"),
+                    Area = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false, comment: "order area"),
+                    Address = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false, comment: "order address"),
                     CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: false, comment: "order customer id")
                 },
                 constraints: table =>
@@ -216,13 +240,14 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false, comment: "product id")
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false, comment: "product price"),
-                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false, comment: "product name"),
+                    Name = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false, comment: "product name"),
                     Quantity = table.Column<int>(type: "int", nullable: false, comment: "product quantity"),
                     Description = table.Column<string>(type: "nvarchar(max)", maxLength: 5000, nullable: true, comment: "product description"),
+                    AddDate = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "product add date"),
                     Warranty = table.Column<int>(type: "int", nullable: false, comment: "product warranty"),
-                    ManufacturerId = table.Column<int>(type: "int", nullable: false, comment: "product manufacturer id"),
-                    Model = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true, comment: "product model"),
-                    ReferenceNumber = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false, comment: "product reference number"),
+                    ManufacturerId = table.Column<int>(type: "int", nullable: true, comment: "product manufacturer id"),
+                    Model = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true, comment: "product model"),
+                    ReferenceNumber = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, comment: "product reference number"),
                     CategoryId = table.Column<int>(type: "int", nullable: false, comment: "product category id")
                 },
                 constraints: table =>
@@ -238,63 +263,67 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                         name: "FK_Products_Manufacturers_ManufacturerId",
                         column: x => x.ManufacturerId,
                         principalTable: "Manufacturers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 },
                 comment: "product table");
 
             migrationBuilder.CreateTable(
-                name: "ComputerParts",
+                name: "Characteristics",
                 columns: table => new
                 {
-                    PartId = table.Column<int>(type: "int", nullable: false, comment: "computer part id"),
-                    ComputerId = table.Column<int>(type: "int", nullable: false, comment: "computer id")
+                    Id = table.Column<int>(type: "int", nullable: false, comment: "characteristic id")
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductId = table.Column<int>(type: "int", nullable: false, comment: "characteristic product id"),
+                    CharacteristicNameId = table.Column<int>(type: "int", nullable: false, comment: "characteristic name id"),
+                    Value = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false, comment: "characteristic value")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ComputerParts", x => new { x.PartId, x.ComputerId });
+                    table.PrimaryKey("PK_Characteristics", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ComputerParts_Products_ComputerId",
-                        column: x => x.ComputerId,
-                        principalTable: "Products",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_ComputerParts_Products_PartId",
-                        column: x => x.PartId,
-                        principalTable: "Products",
+                        name: "FK_Characteristics_CharacteristicsNames_CharacteristicNameId",
+                        column: x => x.CharacteristicNameId,
+                        principalTable: "CharacteristicsNames",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                },
-                comment: "computer part table");
-
-            migrationBuilder.CreateTable(
-                name: "ProductsAttributes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false, comment: "product attribute id")
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductId = table.Column<int>(type: "int", nullable: false, comment: "product attribute product id"),
-                    Name = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false, comment: "product attribute key"),
-                    Value = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false, comment: "product attribute value")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProductsAttributes", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProductsAttributes_Products_ProductId",
+                        name: "FK_Characteristics_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 },
-                comment: "product attribute table");
+                comment: "characteristic table");
+
+            migrationBuilder.CreateTable(
+                name: "Favorites",
+                columns: table => new
+                {
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false, comment: "favorite user id"),
+                    ProductId = table.Column<int>(type: "int", nullable: false, comment: "favorite product id")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Favorites", x => new { x.ProductId, x.UserId });
+                    table.ForeignKey(
+                        name: "FK_Favorites_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Favorites_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id");
+                },
+                comment: "favorite table");
 
             migrationBuilder.CreateTable(
                 name: "ProductsOrders",
                 columns: table => new
                 {
                     ProductId = table.Column<int>(type: "int", nullable: false, comment: "product order product id"),
-                    OrderId = table.Column<int>(type: "int", nullable: false, comment: "product order order id"),
+                    OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "product order order id"),
                     Quantity = table.Column<int>(type: "int", nullable: false, comment: "product order quantity"),
                     CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
@@ -310,33 +339,38 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                         name: "FK_ProductsOrders_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_ProductsOrders_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 },
                 comment: "product order table");
 
-            migrationBuilder.InsertData(
-                table: "Categories",
-                columns: new[] { "Id", "Name" },
-                values: new object[,]
+            migrationBuilder.CreateTable(
+                name: "ShoppingCartItems",
+                columns: table => new
                 {
-                    { 1, "Processor" },
-                    { 2, "Mother Board" },
-                    { 3, "Power Supply" },
-                    { 4, "Case" },
-                    { 5, "Hard Disk" },
-                    { 6, "SSD" },
-                    { 7, "RAM" },
-                    { 8, "Processor Cooler" },
-                    { 9, "Video Card" },
-                    { 10, "Computer" }
-                });
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false, comment: "shopping cart item user id"),
+                    ProductId = table.Column<int>(type: "int", nullable: false, comment: "shopping cart item product id"),
+                    Quantity = table.Column<int>(type: "int", nullable: false, comment: "shopping cart item quantity")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ShoppingCartItems", x => new { x.ProductId, x.UserId });
+                    table.ForeignKey(
+                        name: "FK_ShoppingCartItems_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_ShoppingCartItems_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id");
+                },
+                comment: "shopping cart item table");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -378,9 +412,19 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ComputerParts_ComputerId",
-                table: "ComputerParts",
-                column: "ComputerId");
+                name: "IX_Characteristics_CharacteristicNameId",
+                table: "Characteristics",
+                column: "CharacteristicNameId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Characteristics_ProductId",
+                table: "Characteristics",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Favorites_UserId",
+                table: "Favorites",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_CustomerId",
@@ -398,11 +442,6 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                 column: "ManufacturerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductsAttributes_ProductId",
-                table: "ProductsAttributes",
-                column: "ProductId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ProductsOrders_CustomerId",
                 table: "ProductsOrders",
                 column: "CustomerId");
@@ -411,6 +450,11 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                 name: "IX_ProductsOrders_ProductId",
                 table: "ProductsOrders",
                 column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ShoppingCartItems_UserId",
+                table: "ShoppingCartItems",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -431,16 +475,22 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "ComputerParts");
+                name: "Characteristics");
 
             migrationBuilder.DropTable(
-                name: "ProductsAttributes");
+                name: "Favorites");
 
             migrationBuilder.DropTable(
                 name: "ProductsOrders");
 
             migrationBuilder.DropTable(
+                name: "ShoppingCartItems");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "CharacteristicsNames");
 
             migrationBuilder.DropTable(
                 name: "Orders");

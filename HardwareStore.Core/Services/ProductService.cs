@@ -13,7 +13,6 @@
     using Microsoft.Extensions.Caching.Memory;
     using System.Linq;
     using System.Reflection;
-    using static Dropbox.Api.Files.SearchMatchType;
 
     public class ProductService : IProductService
     {

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HardwareStore.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(HardwareStoreDbContext))]
-    [Migration("20230804174248_IncreasedProductModelLength2")]
-    partial class IncreasedProductModelLength2
+    [Migration("20230805165856_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -65,8 +65,8 @@ namespace HardwareStore.Infrastructure.Data.Migrations
 
                     b.Property<string>("Value")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)")
                         .HasComment("characteristic value");
 
                     b.HasKey("Id");
@@ -91,8 +91,8 @@ namespace HardwareStore.Infrastructure.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)")
                         .HasComment("characteristic name");
 
                     b.HasKey("Id");
@@ -250,27 +250,50 @@ namespace HardwareStore.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("HardwareStore.Infrastructure.Models.Order", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("uniqueidentifier")
                         .HasComment("order id");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
                     b.Property<string>("AdditionalNotes")
-                        .HasColumnType("nvarchar(max)")
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)")
                         .HasComment("order additional notes");
 
-                    b.Property<string>("BillingAddress")
+                    b.Property<string>("Address")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
-                        .HasComment("order billing address");
+                        .HasComment("order address");
+
+                    b.Property<string>("Area")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasComment("order area");
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)")
+                        .HasComment("order city");
 
                     b.Property<string>("CustomerId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)")
                         .HasComment("order customer id");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)")
+                        .HasComment("order first name");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)")
+                        .HasComment("order last name");
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2")
@@ -284,11 +307,11 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                         .HasColumnType("int")
                         .HasComment("order payment method");
 
-                    b.Property<string>("ShippingAddress")
+                    b.Property<string>("Phone")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasComment("order shipping address");
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)")
+                        .HasComment("order phone");
 
                     b.Property<decimal>("TotalAmount")
                         .HasColumnType("decimal(18,2)")
@@ -371,8 +394,8 @@ namespace HardwareStore.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("HardwareStore.Infrastructure.Models.ProductOrder", b =>
                 {
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int")
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uniqueidentifier")
                         .HasComment("product order order id");
 
                     b.Property<int>("ProductId")

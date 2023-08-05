@@ -1,61 +1,73 @@
 ﻿@model ShoppingCartViewModel
 
-<div class="shopping-cart-page">
-    <h2 class="page-title">Shopping Cart</h2>
+@if (Model.Shoppings.Any())
+{
+    <div class="shopping-cart-page">
+        <h2 class="page-title">Shopping Cart</h2>
 
-    @if (!ViewData.ModelState.IsValid)
-    {
-        <div class="alert alert-danger">
-            @Html.ValidationSummary()
-        </div>
-    }
+        @if (!ViewData.ModelState.IsValid)
+        {
+            <div class="alert alert-danger">
+                @Html.ValidationSummary()
+            </div>
+        }
 
-    <table class="cart">
-        <thead class="cart-headers">
-            <tr>
-                <th class="card-header">Product</th>
-                <th class="card-header">Quantity</th>
-                <th class="card-header">Price</th>
-                <th class="card-header">Total</th>
-            </tr>
-        </thead>
-        <tbody class="cart-items">
-            @foreach (var shopping in Model.Shoppings)
-            {
-                <tr class="cart-item">
-                    <td class="cart-product-details">
-                        @*<img class="cart-product-image" src="product.jpg" alt="Product Image">*@
-                        <h3 class="cart-product-name">@shopping.Name</h3>
-                    </td>
-                    <td 
-                        data-product-id="@shopping.ProductId" 
-                        data-product-quantity="@shopping.ProductQuantity" 
-                        class="cart-product-quantity"
-                    >
-                        <a class="quantity-decrease">-</a>
-                        <input type="text" class="quantity-display" value="@shopping.Quantity" min="1">
-                        <a class="quantity-increase">+</a>
-                        <a class="btn-remove">x</a>
-                    </td>
-                    <td class="cart-product-price">
-                        <span class="item-price">$@shopping.Price.ToString("F2")</span>
-                    </td>
-                    <td class="cart-product-total">
-                        <span class="total-price">@shopping.TotalPrice.ToString("F2")</span>
-                    </td>
+        <table class="cart">
+            <thead class="cart-headers">
+                <tr>
+                    <th class="card-header">Product</th>
+                    <th class="card-header">Quantity</th>
+                    <th class="card-header">Price</th>
+                    <th class="card-header">Total</th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody class="cart-items">
+                @foreach (var shopping in Model.Shoppings)
+                {
+                        <tr class="cart-item">
+                            <td class="cart-product-details">
+                                <h3 class="cart-product-name">@shopping.Name</h3>
+                            </td>
+                            <td 
+                                data-product-id="@shopping.ProductId" 
+                                data-product-quantity="@shopping.ProductQuantity" 
+                                class="cart-product-quantity"
+                            >
+                                <form id="quantity-form" method="post" asp-action="UpdateItemQuantity" asp-controller="Cart">
+                                    <a asp-action="DecreaseItemQuantity" asp-controller="Cart" asp-route-productId="@shopping.ProductId" class="quantity-decrease">-</a>
+                                    <input type="text" name="quantity" class="quantity-display" value="@shopping.Quantity" min="1" />
+                                    <input type="hidden" name="productId" value="@shopping.ProductId" />
+                                    <a asp-action="IncreaseItemQuantity" asp-controller="Cart" asp-route-productId="@shopping.ProductId" class="quantity-increase">+</a>
+                                    <a asp-action="RemoveFromShoppingCart" asp-controller="Cart" asp-route-productId="@shopping.ProductId" class="btn-remove">x</a>
+                                </form>
+                            </td>
+                            <td class="cart-product-price">
+                                <span class="item-price">$@shopping.Price.ToString("F2")</span>
+                            </td>
+                            <td class="cart-product-total">
+                                    <span class="total-price">@shopping.TotalPrice.ToString("F2")</span>
+                            </td>
+                        </tr>
+                }
+            </tbody>
+        </table>
 
     <div class="cart-summary">
         <h3>Order Summary</h3>
         <p>Subtotal: <span class="cart-subtotal">$@Model.TotalCartPrice.ToString("F2")</span></p>
         <p>Total: <span class="cart-total">$@Model.TotalCartPrice.ToString("F2")</span></p>
-        <button class="btn-checkout">Checkout</button>
+            @if (Model.TotalCartPrice > 8)
+            {
+                <a class="btn-checkout" asp-action="Index" asp-controller="Order">Checkout</a>
+            }
+        </div>
     </div>
-</div>
-
-@section Scripts {
-    <script type="module" src="~/js/shopping-cart.js"></script>
+}
+else
+{
+    <div class="empty-cart-container">
+        <h2 class="empty-cart-title">Your Shopping Cart is Empty</h2>
+        <p class="empty-cart-text">Looks like you haven't added any products yet. Start shopping to fill your cart!</p>
+        <a asp-controller="Home" asp-action="Index" class="btn-go-shopping">Start Shopping</a>
+    </div>
 }

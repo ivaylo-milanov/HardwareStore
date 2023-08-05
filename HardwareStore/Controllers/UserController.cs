@@ -1,7 +1,10 @@
 ﻿namespace HardwareStore.Controllers
 {
+    using HardwareStore.Core.Extensions;
     using HardwareStore.Core.Services.Contracts;
+    using HardwareStore.Core.ViewModels.ShoppingCart;
     using HardwareStore.Core.ViewModels.User;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
     public class UserController : Controller
@@ -21,11 +24,23 @@
                 return RedirectToAction(nameof(Login));
             }
 
-            var result = await userService.LoginAsync(model);
+            var cartItems = GetShoppingCart();
+            var favorites = GetFavorites();
 
-            if (result.Succeeded)
+            try
             {
-                return RedirectToAction("Index", "Home");
+                var result = await userService.LoginAsync(model, cartItems, favorites);
+
+                if (result.Succeeded)
+                {
+                    RemoveShoppingCart();
+                    RemoveFavorites();
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            catch (Exception)
+            {
+                throw;
             }
 
             return RedirectToAction(nameof(Login));
@@ -51,14 +66,24 @@
                 return View(model);
             }
 
-            var result = await userService.LoginAsync(model);
+            var cartItems = GetShoppingCart();
+            var favorites = GetFavorites();
 
-            if (result.Succeeded)
+            try
             {
-                return RedirectToAction("Index", "Home");
-            }
+                var result = await userService.LoginAsync(model, cartItems, favorites);
 
-            ModelState.AddModelError("", "Invalid Login!");
+                if (result.Succeeded)
+                {
+                    RemoveShoppingCart();
+                    RemoveFavorites();
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("", "Invalid Login!");
+            }
 
             return View(model);
         }
@@ -83,10 +108,23 @@
                 return View(model);
             }
 
-            var result = await this.userService.RegisterAsync(model);
+            var cartItems = GetShoppingCart();
+            var favorites = GetFavorites();
+
+            IdentityResult result;
+            try
+            {
+                result = await this.userService.RegisterAsync(model, cartItems, favorites);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
 
             if (result.Succeeded)
             {
+                RemoveShoppingCart();
+                RemoveFavorites();
                 return RedirectToAction("Index", "Home");
             }
 
@@ -104,5 +142,17 @@
 
             return RedirectToAction("Index", "Home");
         }
+
+        private ICollection<ShoppingCartExportModel> GetShoppingCart()
+            => HttpContext.Session.Get<ICollection<ShoppingCartExportModel>>("Shopping Cart") ?? new List<ShoppingCartExportModel>();
+
+        private ICollection<int> GetFavorites()
+            => HttpContext.Session.Get<ICollection<int>>("Favorite") ?? new List<int>();
+
+        private void RemoveShoppingCart()
+            => HttpContext.Session.Remove("Shopping Cart");
+
+        private void RemoveFavorites()
+            => HttpContext.Session.Remove("Favorite");
     }
 }

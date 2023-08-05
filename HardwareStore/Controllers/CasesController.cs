@@ -25,7 +25,7 @@
             }
             catch (Exception)
             {
-                throw;
+                this.logger.LogError()
             }
 
             return View(model);
