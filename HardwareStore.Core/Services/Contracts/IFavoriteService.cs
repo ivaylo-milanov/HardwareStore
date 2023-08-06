@@ -4,17 +4,16 @@
 
     public interface IFavoriteService
     {
-        Task<ICollection<FavoriteExportModel>> GetDatabaseFavoriteAsync();
+        Task<ICollection<FavoriteExportModel>> GetDatabaseFavoriteAsync(string userId);
 
-        Task<ICollection<FavoriteExportModel>> GetSessionFavoriteAsync();
+        Task<ICollection<FavoriteExportModel>> GetSessionFavoriteAsync(ICollection<int> favorites);
 
-        Task AddToSessionFavoriteAsync(int productId);
+        Task<ICollection<int>> AddToSessionFavoriteAsync(int productId, ICollection<int> favorites);
 
-        Task AddToDatabaseFavoriteAsync(int productId);
+        Task AddToDatabaseFavoriteAsync(int productId, string userId);
 
-        Task RemoveFromSessionFavoriteAsync(int productId);
+        Task<ICollection<int>> RemoveFromSessionFavoriteAsync(int productId, ICollection<int> favorites);
 
-        Task RemoveFromDatabaseFavoriteAsync(int productId);
-        Task<bool> IsFavorite(int productId);
+        Task RemoveFromDatabaseFavoriteAsync(int productId, string userId);
     }
 }

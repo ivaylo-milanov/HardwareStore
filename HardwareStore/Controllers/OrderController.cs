@@ -10,10 +10,12 @@
     public class OrderController : Controller
     {
         private readonly IOrderService orderService;
+        private readonly ILogger<OrderController> logger;
 
-        public OrderController(IOrderService orderService)
+        public OrderController(IOrderService orderService, ILogger<OrderController> logger)
         {
             this.orderService = orderService;
+            this.logger = logger;
         }
 
         public async Task<IActionResult> Index()
@@ -23,9 +25,10 @@
             {
                 model = await this.orderService.GetOrderModel(GetUserId());
             }
-            catch (Exception)
+            catch (ArgumentNullException ex)
             {
-                throw;
+                this.logger.LogError(ex, ex.Message);
+                return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
             return View(model);
@@ -43,9 +46,10 @@
             {
                 await this.orderService.OrderAsync(model, GetUserId());
             }
-            catch (Exception)
+            catch (ArgumentNullException ex)
             {
-                throw;
+                this.logger.LogError(ex, ex.Message);
+                return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
             return RedirectToAction("Success");

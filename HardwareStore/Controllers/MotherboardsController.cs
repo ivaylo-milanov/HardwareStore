@@ -8,10 +8,12 @@
     public class MotherboardsController : Controller
     {
         private readonly IProductService productService;
+        private readonly ILogger<MotherboardsController> logger;
 
-        public MotherboardsController(IProductService productService)
+        public MotherboardsController(IProductService productService, ILogger<MotherboardsController> logger)
         {
             this.productService = productService;
+            this.logger = logger;
         }
 
         public async Task<IActionResult> Index()
@@ -21,9 +23,10 @@
             {
                 model = await this.productService.GetModel<MotherboardViewModel>();
             }
-            catch (Exception)
+            catch (ArgumentException ex)
             {
-                throw;
+                this.logger.LogError(ex, ex.Message);
+                return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
             return View(model);
@@ -36,9 +39,10 @@
             {
                 filtered = this.productService.FilterProducts<MotherboardViewModel, MotherboardFilterOptions>(filter);
             }
-            catch (ArgumentNullException)
+            catch (ArgumentNullException ex)
             {
-                throw;
+                this.logger.LogError(ex, ex.Message);
+                return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
             return PartialView("_ProductsPartialView", filtered);

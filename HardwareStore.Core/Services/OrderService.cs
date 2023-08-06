@@ -32,8 +32,7 @@
                 throw new ArgumentNullException(ExceptionMessages.UserNotFound);
             }
 
-            var totalAmount = user.ShoppingCartItems.Sum(sc => sc.Quantity * sc.Product.Price);
-
+            var totalAmount = GetTotalAmount(user.ShoppingCartItems);
             OrderFormModel model = new OrderFormModel
             {
                 FirstName = user.FirstName,
@@ -76,22 +75,6 @@
 
         public async Task OrderAsync(OrderFormModel model, string userId)
         {
-            Order order = new Order
-            {
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                Phone = model.Phone,
-                City = model.City,
-                Area = model.Area,
-                Address = model.Address,
-                AdditionalNotes = model.AdditionalNotes,
-                TotalAmount = model.TotalAmount,
-                CustomerId = userId,
-                OrderStatus = OrderStatus.Pending,
-                PaymentMethod = model.PaymentMethod,
-                OrderDate = DateTime.Now,
-            };
-
             var user = await this.repository
                 .All<Customer>()
                 .Include(p => p.ShoppingCartItems)
@@ -103,10 +86,26 @@
                 throw new ArgumentNullException(ExceptionMessages.UserNotFound);
             }
 
-            var orderItems = user.ShoppingCartItems;
+            var totalAmount = GetTotalAmount(user.ShoppingCartItems);
+            Order order = new Order
+            {
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Phone = model.Phone,
+                City = model.City,
+                Area = model.Area,
+                Address = model.Address,
+                AdditionalNotes = model.AdditionalNotes,
+                TotalAmount = totalAmount,
+                CustomerId = userId,
+                OrderStatus = OrderStatus.Pending,
+                PaymentMethod = model.PaymentMethod,
+                OrderDate = DateTime.Now,
+            };
+
             var orderProducts = new List<ProductOrder>();
 
-            foreach (var item in orderItems)
+            foreach (var item in user.ShoppingCartItems)
             {
                 if (!await this.repository.AnyAsync<Product>(p => p.Id == item.ProductId))
                 {
@@ -119,11 +118,17 @@
                     Quantity = item.Quantity
                 };
 
-                order.ProductsOrders = orderProducts;
+                orderProducts.Add(productOrder);
             }
 
+            order.ProductsOrders = orderProducts;
             await this.repository.AddAsync(order);
+
+            this.repository.RemoveRange(user.ShoppingCartItems);
+
             await this.repository.SaveChangesAsync();
         }
+
+        private decimal GetTotalAmount(ICollection<ShoppingCartItem> cart) => cart.Sum(sc => sc.Quantity * sc.Product.Price);
     }
 }

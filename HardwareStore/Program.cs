@@ -26,6 +26,7 @@ namespace HardwareStore
             if (app.Environment.IsDevelopment())
             {
                 app.UseMigrationsEndPoint();
+                app.UseDeveloperExceptionPage();
             }
             else
             {
@@ -50,7 +51,7 @@ namespace HardwareStore
             app.MapRazorPages();
 
             //Uncomment this to seed the data into the database
-            await app.MigrateDatabase();
+            //await app.MigrateDatabase();
 
             await app.RunAsync();
         }

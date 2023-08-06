@@ -7,13 +7,13 @@
     [Comment("shopping cart item table")]
     public class ShoppingCartItem
     {
-        [Comment("shopping cart item user id")]
+        [Comment("shopping cart item customer id")]
         [Required]
-        public string UserId { get; set; } = null!;
+        public string CustomerId { get; set; } = null!;
 
-        [Comment("shopping cart item user")]
-        [ForeignKey(nameof(UserId))]
-        public Customer User { get; set; } = null!;
+        [Comment("shopping cart item customer")]
+        [ForeignKey(nameof(CustomerId))]
+        public Customer Customer { get; set; } = null!;
 
         [Comment("shopping cart item product id")]
         [Required]

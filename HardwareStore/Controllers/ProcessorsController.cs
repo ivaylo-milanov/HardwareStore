@@ -8,10 +8,12 @@
     public class ProcessorsController : Controller
     {
         private readonly IProductService productService;
+        private readonly ILogger<ProcessorsController> logger;
 
-        public ProcessorsController(IProductService productService)
+        public ProcessorsController(IProductService productService, ILogger<ProcessorsController> logger)
         {
             this.productService = productService;
+            this.logger = logger;
         }
 
         public async Task<IActionResult> Index()
@@ -21,9 +23,10 @@
             {
                 model = await this.productService.GetModel<ProcessorViewModel>();
             }
-            catch (Exception)
+            catch (ArgumentException ex)
             {
-                throw;
+                this.logger.LogError(ex, ex.Message);
+                return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
             return View(model);
@@ -36,9 +39,10 @@
             {
                 filtered = this.productService.FilterProducts<ProcessorViewModel, ProcessorFilterOptions>(filter);
             }
-            catch (ArgumentNullException)
+            catch (ArgumentNullException ex)
             {
-                throw;
+                this.logger.LogError(ex, ex.Message);
+                return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
             return PartialView("_ProductsPartialView", filtered);

@@ -4,6 +4,6 @@
 
     public interface IProfileService
     {
-        Task<ProfileViewModel> GetProfileModel();
+        Task<ProfileViewModel> GetProfileModel(string userId);
     }
 }

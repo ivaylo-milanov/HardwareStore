@@ -1,5 +1,6 @@
 ﻿namespace HardwareStore.Infrastructure.Common
 {
+    using HardwareStore.Infrastructure.Models;
     using Microsoft.EntityFrameworkCore;
     using System.Linq.Expressions;
 
@@ -34,5 +35,7 @@
         Task<T> FirstOrDefaultAsync<T>(Expression<Func<T, bool>> search) where T : class;
 
         Task<ICollection<T>> FromSqlRawAsync<T>(string sql, params object[] parameters) where T : class;
+
+        void RemoveRange<T>(ICollection<T> items) where T : class;
     }
 }

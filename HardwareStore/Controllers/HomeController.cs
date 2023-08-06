@@ -8,10 +8,12 @@
     public class HomeController : Controller
     {
         private readonly IHomeService homeService;
+        private readonly ILogger<HomeController> logger;
 
-        public HomeController(IHomeService homeService)
+        public HomeController(IHomeService homeService, ILogger<HomeController> logger)
         {
             this.homeService = homeService;
+            this.logger = logger;
         }
 
         public async Task<IActionResult> Index()
@@ -21,9 +23,10 @@
             {
                 model = await this.homeService.GetHomeModel();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                this.logger.LogError(ex, ex.Message);
+                return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
             return View(model);

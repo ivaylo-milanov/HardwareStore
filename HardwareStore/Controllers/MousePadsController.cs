@@ -8,10 +8,12 @@
     public class MousePadsController : Controller
     {
         private readonly IProductService productService;
+        private readonly ILogger<MousePadsController> logger;
 
-        public MousePadsController(IProductService productService)
+        public MousePadsController(IProductService productService, ILogger<MousePadsController> logger)
         {
             this.productService = productService;
+            this.logger = logger;
         }
 
         public async Task<IActionResult> Index()
@@ -21,9 +23,10 @@
             {
                 model = await this.productService.GetModel<MousePadViewModel>();
             }
-            catch (Exception)
+            catch (ArgumentException ex)
             {
-                throw;
+                this.logger.LogError(ex, ex.Message);
+                return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
             return View(model);
@@ -36,9 +39,10 @@
             {
                 filtered = this.productService.FilterProducts<MousePadViewModel, MousePadFilterOptions>(filter);
             }
-            catch (ArgumentNullException)
+            catch (ArgumentNullException ex)
             {
-                throw;
+                this.logger.LogError(ex, ex.Message);
+                return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
             return PartialView("_ProductsPartialView", filtered);

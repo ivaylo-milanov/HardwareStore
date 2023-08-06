@@ -1,16 +1,21 @@
 ﻿namespace HardwareStore.Controllers
 {
+    using HardwareStore.Core.Extensions;
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Favorite;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
+    using System.Security.Claims;
 
     public class FavoriteController : Controller
     {
         private readonly IFavoriteService favoriteService;
+        private readonly ILogger<FavoriteController> logger;
 
-        public FavoriteController(IFavoriteService favoriteService)
+        public FavoriteController(IFavoriteService favoriteService, ILogger<FavoriteController> logger)
         {
             this.favoriteService = favoriteService;
+            this.logger = logger;
         }
 
         public async Task<IActionResult> Index()
@@ -20,16 +25,17 @@
             {
                 if (User?.Identity?.IsAuthenticated ?? false)
                 {
-                    favorites = await this.favoriteService.GetDatabaseFavoriteAsync();
+                    favorites = await this.favoriteService.GetDatabaseFavoriteAsync(GetUserId());
                 }
                 else
                 {
-                    favorites = await this.favoriteService.GetSessionFavoriteAsync();
+                    favorites = await this.favoriteService.GetSessionFavoriteAsync(GetFavorites());
                 }
             }
-            catch (ArgumentNullException)
+            catch (ArgumentNullException ex)
             {
-                throw;
+                this.logger.LogError(ex, ex.Message);
+                return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
             return View(favorites);
@@ -41,16 +47,18 @@
             {
                 if (User?.Identity?.IsAuthenticated ?? false)
                 {
-                    await this.favoriteService.AddToDatabaseFavoriteAsync(productId);
+                    await this.favoriteService.AddToDatabaseFavoriteAsync(productId, GetUserId());
                 }
                 else
                 {
-                    await this.favoriteService.AddToSessionFavoriteAsync(productId);
+                    var favorites = await this.favoriteService.AddToSessionFavoriteAsync(productId, GetFavorites());
+                    SetFavorites(favorites);
                 }
             }
-            catch (ArgumentNullException)
+            catch (ArgumentNullException ex)
             {
-                throw;
+                this.logger.LogError(ex, ex.Message);
+                return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
             return RedirectToAction(nameof(Index));
@@ -62,19 +70,29 @@
             {
                 if (User?.Identity?.IsAuthenticated ?? false)
                 {
-                    await this.favoriteService.RemoveFromDatabaseFavoriteAsync(productId);
+                    await this.favoriteService.RemoveFromDatabaseFavoriteAsync(productId, GetUserId());
                 }
                 else
                 {
-                    await this.favoriteService.RemoveFromSessionFavoriteAsync(productId);
+                    var favorites = await this.favoriteService.RemoveFromSessionFavoriteAsync(productId, GetFavorites());
+                    SetFavorites(favorites);
                 }
             }
-            catch (ArgumentNullException)
+            catch (ArgumentNullException ex)
             {
-                throw;
+                this.logger.LogError(ex, ex.Message);
+                return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
-
             return RedirectToAction(nameof(Index));
         }
+
+        private void SetFavorites(ICollection<int> favorites)
+            => HttpContext.Session.Set("Favorite", favorites);
+
+        private ICollection<int> GetFavorites()
+            => HttpContext.Session.Get<ICollection<int>>("Favorite") ?? new List<int>();
+
+        private string GetUserId()
+            => HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
     }
 }

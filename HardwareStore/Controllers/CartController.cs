@@ -91,7 +91,7 @@
             }
             catch (ArgumentNullException ex)
             {
-                this.logger.LogError(ex, $"An error occured: {ex.Message}");
+                this.logger.LogError(ex, ex.Message);
                 return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
@@ -113,8 +113,8 @@
             }
             catch (ArgumentNullException ex)
             {
-                this.logger.LogError(ex, $"An error occured: {ex.Message}");
-                return RedirectToAction("Error", "Home");
+                this.logger.LogError(ex, ex.Message);
+                return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
             return RedirectToAction(nameof(Index));
@@ -136,7 +136,7 @@
             catch (ArgumentNullException ex)
             {
                 this.logger.LogError(ex, $"An error occured: {ex.Message}");
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
             return RedirectToAction(nameof(Index));
@@ -158,7 +158,7 @@
             catch (ArgumentNullException ex)
             {
                 this.logger.LogError(ex, $"An error occured: {ex.Message}");
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
             return RedirectToAction(nameof(Index));

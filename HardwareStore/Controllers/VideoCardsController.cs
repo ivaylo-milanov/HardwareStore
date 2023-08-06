@@ -8,10 +8,12 @@
     public class VideoCardsController : Controller
     {
         private readonly IProductService productService;
+        private readonly ILogger<VideoCardsController> logger;
 
-        public VideoCardsController(IProductService productService)
+        public VideoCardsController(IProductService productService, ILogger<VideoCardsController> logger)
         {
             this.productService = productService;
+            this.logger = logger;
         }
 
         public async Task<IActionResult> Index()
@@ -21,9 +23,10 @@
             {
                 model = await this.productService.GetModel<VideoCardViewModel>();
             }
-            catch (Exception)
+            catch (ArgumentException ex)
             {
-                throw;
+                this.logger.LogError(ex, ex.Message);
+                return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
             return View(model);
@@ -36,9 +39,10 @@
             {
                 filtered = this.productService.FilterProducts<VideoCardViewModel, VideoCardFilterOptions>(filter);
             }
-            catch (ArgumentNullException)
+            catch (ArgumentNullException ex)
             {
-                throw;
+                this.logger.LogError(ex, ex.Message);
+                return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
             return PartialView("_ProductsPartialView", filtered);

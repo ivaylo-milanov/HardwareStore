@@ -14,7 +14,5 @@
 
         [Characteristic]
         public string Manufacturer { get; set; } = null!;
-
-        public string ImageUrl { get; set; } = null!;
     }
 }

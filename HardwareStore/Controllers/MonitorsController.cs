@@ -8,10 +8,12 @@
     public class MonitorsController : Controller
     {
         private readonly IProductService productService;
+        private readonly ILogger<MonitorsController> logger;
 
-        public MonitorsController(IProductService productService)
+        public MonitorsController(IProductService productService, ILogger<MonitorsController> logger)
         {
             this.productService = productService;
+            this.logger = logger;
         }
 
         public async Task<IActionResult> Index()
@@ -21,9 +23,10 @@
             {
                 model = await this.productService.GetModel<MonitorViewModel>();
             }
-            catch (Exception)
+            catch (ArgumentException ex)
             {
-                throw;
+                this.logger.LogError(ex, ex.Message);
+                return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
             return View(model);
@@ -36,9 +39,10 @@
             {
                 filtered = this.productService.FilterProducts<MonitorViewModel, MonitorFilterOptions>(filter);
             }
-            catch (ArgumentNullException)
+            catch (ArgumentNullException ex)
             {
-                throw;
+                this.logger.LogError(ex, ex.Message);
+                return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
             return PartialView("_ProductsPartialView", filtered);

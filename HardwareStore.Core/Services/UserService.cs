@@ -7,6 +7,7 @@
     using HardwareStore.Infrastructure.Common;
     using HardwareStore.Infrastructure.Models;
     using Microsoft.AspNetCore.Identity;
+    using Microsoft.EntityFrameworkCore;
     using System.Threading.Tasks;
 
     public class UserService : IUserService
@@ -94,14 +95,14 @@
             foreach (var productId in favorites)
             {
                 var existingFavorite = await this.repository
-                    .FirstOrDefaultAsync<Favorite>(f => f.ProductId == productId && f.UserId == userId);
+                    .FirstOrDefaultAsync<Favorite>(f => f.ProductId == productId && f.CustomerId == userId);
 
                 if (existingFavorite == null)
                 {
                     var favoriteProduct = new Favorite
                     {
                         ProductId = productId,
-                        UserId = userId
+                        CustomerId = userId
                     };
 
                     dbFavorites.Add(favoriteProduct);
@@ -118,7 +119,7 @@
             foreach (var item in cart)
             {
                 var existingCartItem = await this.repository
-                    .FirstOrDefaultAsync<ShoppingCartItem>(f => f.ProductId == item.ProductId && f.UserId == userId);
+                    .FirstOrDefaultAsync<ShoppingCartItem>(f => f.ProductId == item.ProductId && f.CustomerId == userId);
 
                 if (existingCartItem == null)
                 {
@@ -126,7 +127,7 @@
                     {
                         ProductId = item.ProductId,
                         Quantity = item.Quantity,
-                        UserId = userId
+                        CustomerId = userId
                     };
 
                     shoppings.Add(dbCartItem);
@@ -139,6 +140,22 @@
 
             this.repository.AddRange(shoppings);
             await this.repository.SaveChangesAsync();
+        }
+
+        public async Task<ICollection<Favorite>> GetCustomerFavorites(string userId)
+        {
+            var customer = await this.repository
+                .All<Customer>()
+                .Include(c => c.Favorites)
+                .ThenInclude(c => c.Product)
+                .FirstOrDefaultAsync(c => c.Id == userId);
+
+            if (customer == null)
+            {
+                throw new ArgumentNullException(ExceptionMessages.UserNotFound);
+            }
+
+            return customer.Favorites;
         }
     }
 }

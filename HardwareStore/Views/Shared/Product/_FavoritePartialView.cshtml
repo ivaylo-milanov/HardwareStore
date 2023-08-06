@@ -7,9 +7,6 @@
             @foreach (var favorite in Model)
             {
                 <div class="product-card">
-                    <div class="product-image">
-                        @*<img src="product-image.jpg" alt="Product Image">*@
-                    </div>
                     <div class="product-details">
                         <h3 class="product-title">@favorite.Name</h3>
                         <p class="product-price">$@favorite.Price</p>
@@ -17,6 +14,7 @@
                             <a asp-action="AddToShoppingCart" asp-controller="Cart" asp-route-productId="@favorite.Id" asp-route-quantity="1" class="product-button">Buy</a>
                             <span>Remove from favorite <a asp-action="RemoveFromFavorite" asp-controller="Favorite" asp-route-productId="@favorite.Id" class="remove-favorite">x</a></span>
                         </div>
+                        <a class="hiddenLink" asp-action="Details" asp-controller="Product" asp-route-productId="@favorite.Id" hidden></a>
                     </div>
                 </div>
             }

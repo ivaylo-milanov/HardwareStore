@@ -78,5 +78,8 @@
 
         public async Task<ICollection<T>> FromSqlRawAsync<T>(string sql, params object[] parameters) where T : class
             => await this.Set<T>().FromSqlRaw(sql, parameters).ToListAsync();
+
+        public void RemoveRange<T>(ICollection<T> items) where T : class
+            => this.Set<T>().RemoveRange(items); 
     }
 }

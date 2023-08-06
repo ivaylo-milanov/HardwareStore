@@ -10,10 +10,12 @@
     public class UserController : Controller
     {
         private readonly IUserService userService;
+        private readonly ILogger<UserController> logger;
 
-        public UserController(IUserService userService)
+        public UserController(IUserService userService, ILogger<UserController> logger)
         {
             this.userService = userService;
+            this.logger = logger;
         }
 
         [HttpPost]
@@ -38,9 +40,10 @@
                     return RedirectToAction("Index", "Home");
                 }
             }
-            catch (Exception)
+            catch (ArgumentNullException ex)
             {
-                throw;
+                this.logger.LogError(ex, ex.Message);
+                return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
             return RedirectToAction(nameof(Login));
@@ -80,9 +83,11 @@
                     return RedirectToAction("Index", "Home");
                 }
             }
-            catch (Exception)
+            catch (ArgumentNullException ex)
             {
                 ModelState.AddModelError("", "Invalid Login!");
+                this.logger.LogError(ex, ex.Message);
+                return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
             return View(model);
@@ -116,9 +121,10 @@
             {
                 result = await this.userService.RegisterAsync(model, cartItems, favorites);
             }
-            catch (Exception)
+            catch (ArgumentNullException ex)
             {
-                throw;
+                this.logger.LogError(ex, ex.Message);
+                return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
             if (result.Succeeded)

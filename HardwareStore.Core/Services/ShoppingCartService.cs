@@ -218,7 +218,7 @@
             {
                 var model = new ShoppingCartItem
                 {
-                    UserId = user.Id,
+                    CustomerId = user.Id,
                     ProductId = productId,
                     Quantity = quantity,
                 };

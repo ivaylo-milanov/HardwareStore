@@ -18,13 +18,11 @@
     {
         private readonly IRepository repository;
         private readonly IMemoryCache memoryCache;
-        private readonly IFavoriteService favoriteService;
 
-        public ProductService(IRepository repository, IMemoryCache memoryCache, IFavoriteService favoriteService)
+        public ProductService(IRepository repository, IMemoryCache memoryCache)
         {
             this.repository = repository;
             this.memoryCache = memoryCache;
-            this.favoriteService = favoriteService;
         }
 
         public IEnumerable<TModel> FilterProducts<TModel, TFilter>(TFilter filter)
@@ -85,7 +83,7 @@
                 ProductOrdering.HighestPrice => products.OrderByDescending(p => p.Price),
                 ProductOrdering.Newest => products.OrderByDescending(p => p.AddDate),
                 ProductOrdering.Oldest => products.OrderBy(p => p.AddDate),
-                ProductOrdering.Default => products
+                _=> products
             };
 
             return orderedProducts;
@@ -97,11 +95,14 @@
 
             if (categoryNameAttribute == null)
             {
-                throw new ArgumentException($"The model type {typeof(TModel)} does not have a Category attribute");
+                throw new ArgumentException($"The model type {typeof(TModel).Name} does not have a Category attribute");
             }
 
             var query = await this.repository
-                .AllReadonly<Product>()
+                .All<Product>()
+                .Include(p => p.Manufacturer)
+                .Include(p => p.Characteristics)
+                .ThenInclude(p => p.CharacteristicName)
                 .Where(p => p.Category.Name == categoryNameAttribute.CategoryName)
                 .Select(p => new ProductExportModel
                 {
@@ -141,7 +142,12 @@
 
                     object characteristicValue = product.Attributes.FirstOrDefault(a => a.Name == name)?.Value;
 
-                    if (characteristicValue == null && prop.Name == "Manufacturer")
+                    if (characteristicValue == null && prop.Name != "Manufacturer")
+                    {
+                        continue;
+                    }
+
+                    if (prop.Name == "Manufacturer")
                     {
                         characteristicValue = product.Manufacturer;
                     }
@@ -166,9 +172,22 @@
             return model;
         }
 
-        public async Task<IEnumerable<SearchViewModel>> GetProductsByKeyword(string keyword)
+        private async Task<IEnumerable<SearchViewModel>> GetProductsByKeyword(string keyword)
         {
-            var formattedKeyword = $"\"{keyword}*\"";
+            if (string.IsNullOrWhiteSpace(keyword))
+            {
+                return await this.repository.All<Product>()
+                    .Include(p => p.Manufacturer)
+                    .Select(p => new SearchViewModel
+                    {
+                        Id = p.Id,
+                        Name = p.Name,
+                        Price = p.Price,
+                        Manufacturer = p.Manufacturer.Name,
+                        AddDate = p.AddDate
+                    })
+                    .ToListAsync();
+            }
 
             var sql = @"SELECT p.* FROM Products p
                 LEFT JOIN Manufacturers m ON m.Id = p.ManufacturerId
@@ -183,7 +202,7 @@
                 )";
 
             var filtered = await this.repository
-                .FromSqlRawAsync<Product>(sql, new SqlParameter("@keyword", formattedKeyword));
+                .FromSqlRawAsync<Product>(sql, new SqlParameter("@keyword", keyword));
 
             var productIds = filtered.Select(p => p.Id).ToList();
 
@@ -220,19 +239,17 @@
                 throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
             }
 
-            var isFavorite = await favoriteService.IsFavorite(productId);
-
             var model = new ProductDetailsModel
             {
                 Id = product.Id,
                 Price = product.Price,
                 Name = product.Name,
                 AddDate = product.AddDate,
-                Manufacturer = product.Manufacturer!.Name,
+                Manufacturer = product.Manufacturer?.Name,
                 ReferenceNumber = product.ReferenceNumber,
                 Description = product.Description,
                 Warranty = product.Warranty,
-                IsFavorite = isFavorite,
+                IsFavorite = false,
                 Attributes = product.Characteristics
                         .Select(pa => new ProductAttributeExportModel
                         {
@@ -274,7 +291,7 @@
                 var model = new FilterCategoryModel
                 {
                     Name = property.Name,
-                    Values = filterValues.OrderByDescending(p => p),
+                    Values = filterValues.First() == "" ? new List<string>() : filterValues.OrderByDescending(p => p),
                     Title = title
                 };
 

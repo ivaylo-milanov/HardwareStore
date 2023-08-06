@@ -10,6 +10,7 @@
     public class OrdersController : Controller
     {
         private readonly IOrderService orderService;
+        private readonly ILogger<OrdersController> logger;
 
         public OrdersController(IOrderService orderService)
         {
@@ -23,9 +24,10 @@
             {
                 orders = await this.orderService.GetUserOrders(GetUserId());
             }
-            catch (Exception)
+            catch (ArgumentNullException ex)
             {
-                throw;
+                this.logger.LogError(ex, ex.Message);
+                return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
             return View(orders);

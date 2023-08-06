@@ -9,8 +9,6 @@
             where TFilter : ProductFilterOptions
             where TModel : ProductViewModel;
 
-        Task<IEnumerable<SearchViewModel>> GetProductsByKeyword(string keyword);
-
         Task<ProductsViewModel<SearchViewModel>> GetSearchModel(string keyword);
 
         Task<ProductDetailsModel> GetProductDetails(int productId);

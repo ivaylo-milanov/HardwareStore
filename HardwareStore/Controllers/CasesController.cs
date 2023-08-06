@@ -23,9 +23,10 @@
             {
                 model = await this.productService.GetModel<CaseViewModel>();
             }
-            catch (Exception)
+            catch (ArgumentException ex)
             {
-                this.logger.LogError()
+                this.logger.LogError(ex, ex.Message);
+                return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
             return View(model);
@@ -38,9 +39,10 @@
             {
                 filtered = this.productService.FilterProducts<CaseViewModel, CaseFilterOptions>(filter);
             }
-            catch (ArgumentNullException)
+            catch (ArgumentNullException ex)
             {
-                throw;
+                this.logger.LogError(ex, ex.Message);
+                return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
             return PartialView("_ProductsPartialView", filtered);

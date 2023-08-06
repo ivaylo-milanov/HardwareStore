@@ -4,6 +4,7 @@ using HardwareStore.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HardwareStore.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(HardwareStoreDbContext))]
-    partial class HardwareStoreDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230806081425_ChangedShoppingCarCustomerProperty")]
+    partial class ChangedShoppingCarCustomerProperty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -211,13 +213,13 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                         .HasColumnType("int")
                         .HasComment("favorite product id");
 
-                    b.Property<string>("CustomerId")
+                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)")
                         .HasComment("favorite user id");
 
-                    b.HasKey("ProductId", "CustomerId");
+                    b.HasKey("ProductId", "UserId");
 
-                    b.HasIndex("CustomerId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Favorites", (string)null);
 
@@ -599,21 +601,21 @@ namespace HardwareStore.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("HardwareStore.Infrastructure.Models.Favorite", b =>
                 {
-                    b.HasOne("HardwareStore.Infrastructure.Models.Customer", "Customer")
-                        .WithMany("Favorites")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.HasOne("HardwareStore.Infrastructure.Models.Product", "Product")
                         .WithMany("Favorites")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("Customer");
+                    b.HasOne("HardwareStore.Infrastructure.Models.Customer", "User")
+                        .WithMany("Favorites")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.Navigation("Product");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("HardwareStore.Infrastructure.Models.Order", b =>

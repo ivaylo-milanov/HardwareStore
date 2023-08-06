@@ -8,10 +8,12 @@
     public class SearchController : Controller
     {
         private readonly IProductService productService;
+        private readonly ILogger<SearchController> logger;
 
-        public SearchController(IProductService productService)
+        public SearchController(IProductService productService, ILogger<SearchController> logger)
         {
             this.productService = productService;
+            this.logger = logger;
         }
 
         [HttpPost]
@@ -22,9 +24,10 @@
             {
                 model = await this.productService.GetSearchModel(keyword);
             }
-            catch (Exception)
+            catch (ArgumentException ex)
             {
-                throw;
+                this.logger.LogError(ex, ex.Message);
+                return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
             return View(model);
@@ -37,9 +40,10 @@
             {
                 filtered = this.productService.FilterProducts<SearchViewModel, SearchFilterOptions>(filter);
             }
-            catch (ArgumentNullException)
+            catch (ArgumentNullException ex)
             {
-                throw;
+                this.logger.LogError(ex, ex.Message);
+                return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
             return PartialView("_ProductsPartialView", filtered);

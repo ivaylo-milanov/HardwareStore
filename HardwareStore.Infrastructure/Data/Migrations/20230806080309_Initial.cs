@@ -324,17 +324,11 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                 {
                     ProductId = table.Column<int>(type: "int", nullable: false, comment: "product order product id"),
                     OrderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false, comment: "product order order id"),
-                    Quantity = table.Column<int>(type: "int", nullable: false, comment: "product order quantity"),
-                    CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    Quantity = table.Column<int>(type: "int", nullable: false, comment: "product order quantity")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ProductsOrders", x => new { x.OrderId, x.ProductId });
-                    table.ForeignKey(
-                        name: "FK_ProductsOrders_AspNetUsers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_ProductsOrders_Orders_OrderId",
                         column: x => x.OrderId,
@@ -440,11 +434,6 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                 name: "IX_Products_ManufacturerId",
                 table: "Products",
                 column: "ManufacturerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ProductsOrders_CustomerId",
-                table: "ProductsOrders",
-                column: "CustomerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductsOrders_ProductId",

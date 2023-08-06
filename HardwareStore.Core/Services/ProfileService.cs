@@ -3,27 +3,22 @@
     using HardwareStore.Common;
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Profile;
+    using HardwareStore.Infrastructure.Common;
     using HardwareStore.Infrastructure.Models;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Identity;
     using System.Threading.Tasks;
 
     public class ProfileService : IProfileService
     {
-        private readonly IHttpContextAccessor httpContextAccessor;
-        private readonly UserManager<Customer> userManager;
+        private readonly IRepository repository;
 
-        public ProfileService(IHttpContextAccessor httpContextAccessor, UserManager<Customer> userManager)
+        public ProfileService(IRepository repository)
         {
-            this.httpContextAccessor = httpContextAccessor;
-            this.userManager = userManager;
+            this.repository = repository;
         }
 
-        public async Task<ProfileViewModel> GetProfileModel()
+        public async Task<ProfileViewModel> GetProfileModel(string userId)
         {
-            var userPrincipal = httpContextAccessor.HttpContext.User;
-
-            var user = await userManager.GetUserAsync(userPrincipal);
+            var user = await GetCustomer(userId);
 
             if (user == null)
             {
@@ -40,5 +35,8 @@
 
             return model;
         }
+
+        private async Task<Customer> GetCustomer(string userId)
+            => await this.repository.FindAsync<Customer>(userId);
     }
 }

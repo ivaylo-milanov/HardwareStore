@@ -10,12 +10,12 @@
         {
             builder.ToTable("Favorites");
             builder
-                .HasKey(f => new { f.ProductId, f.UserId });
+                .HasKey(f => new { f.ProductId, f.CustomerId });
 
             builder
-                .HasOne(f => f.User)
+                .HasOne(f => f.Customer)
                 .WithMany(c => c.Favorites)
-                .HasForeignKey(f => f.UserId)
+                .HasForeignKey(f => f.CustomerId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder

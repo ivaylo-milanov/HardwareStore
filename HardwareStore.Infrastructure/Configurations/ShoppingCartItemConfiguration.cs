@@ -10,12 +10,12 @@
         {
             builder.ToTable("ShoppingCartItems");
             builder
-                .HasKey(sci => new { sci.ProductId, sci.UserId });
+                .HasKey(sci => new { sci.ProductId, sci.CustomerId });
 
             builder
-                .HasOne(sci => sci.User)
+                .HasOne(sci => sci.Customer)
                 .WithMany(c => c.ShoppingCartItems)
-                .HasForeignKey(sci => sci.UserId)
+                .HasForeignKey(sci => sci.CustomerId)
                 .OnDelete(DeleteBehavior.NoAction);
 
             builder
