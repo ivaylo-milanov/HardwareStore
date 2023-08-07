@@ -3,7 +3,7 @@
     using Microsoft.AspNetCore.Http;
     using Newtonsoft.Json;
 
-    public static class SessionExtensions
+    public static class SessionExtension
     {
         public static T? Get<T>(this ISession session, string name)
         {

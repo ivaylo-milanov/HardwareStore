@@ -4,9 +4,6 @@ namespace HardwareStore.Tests
     using HardwareStore.Core.Enum;
     using HardwareStore.Core.Services;
     using HardwareStore.Core.ViewModels.Product;
-    using HardwareStore.Infrastructure.Common;
-    using HardwareStore.Infrastructure.Data;
-    using HardwareStore.Infrastructure.Models;
     using HardwareStore.Tests.Mocking;
     using HardwareStore.Tests.Mocking.MoqViewModels.MoqProduct;
     using Microsoft.EntityFrameworkCore;

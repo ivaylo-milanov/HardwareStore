@@ -25,7 +25,8 @@
             {
                 model = await this.productService.GetProductDetails(productId);
 
-                model.IsFavorite = await IsFavorite(model.Id);
+                var userId = HttpContext.User.GetUserId();
+                model.IsFavorite = await userService.IsFavorite(model.Id, userId, GetFavorites());
             }
             catch (ArgumentNullException ex)
             {
@@ -34,20 +35,6 @@
             }
 
             return View(model);
-        }
-
-        private async Task<bool> IsFavorite(int productId)
-        {
-            var userId = HttpContext.User.GetUserId();
-
-            if (userId != null)
-            {
-                var dbFavorites = await userService.GetCustomerFavorites(userId);
-                return dbFavorites.Any(f => f.ProductId == productId);
-            }
-
-            var favorites = GetFavorites();
-            return favorites.Contains(productId);
         }
 
         private ICollection<int> GetFavorites()

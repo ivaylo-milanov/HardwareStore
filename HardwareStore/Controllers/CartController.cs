@@ -8,8 +8,8 @@
 
     public class CartController : Controller
     {
-        private readonly ILogger<CartController> logger;
         private readonly IShoppingCartService shoppingCartService;
+        private readonly ILogger<CartController> logger;
 
         public CartController(IShoppingCartService shoppingCartService, ILogger<CartController> logger)
         {

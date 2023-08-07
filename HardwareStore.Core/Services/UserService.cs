@@ -17,7 +17,6 @@
         {
             this.repository = repository;
         }
-
         private async Task AddToFavoritesAsync(string userId, ICollection<int> favorites)
         {
             ICollection<Favorite> dbFavorites = new List<Favorite>();
@@ -156,6 +155,17 @@
             }
 
             return customer;
+        }
+
+        public async Task<bool> IsFavorite(int productId, string userId, ICollection<int> favorites)
+        {
+            if (userId != null)
+            {
+                var dbFavorites = await GetCustomerFavorites(userId);
+                return dbFavorites.Any(f => f.ProductId == productId);
+            }
+
+            return favorites.Contains(productId);
         }
     }
 }

@@ -19,5 +19,7 @@
         Task<Customer> GetCustomerWithOrders(string userId);
 
         Task<Customer> GetCustomerWithFavorites(string userId);
+
+        Task<bool> IsFavorite(int productId, string userId, ICollection<int> favorites);
     }
 }

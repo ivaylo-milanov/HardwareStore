@@ -1,6 +1,5 @@
 namespace HardwareStore
 {
-    using HardwareStore.Infrastructure.Data;
     using HardwareStore.Extensions;
 
     public class Program

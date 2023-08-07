@@ -69,13 +69,11 @@
 
             var cartItem = favorites.FirstOrDefault(p => p.ProductId == productId);
 
-            if (cartItem == null)
+            if (cartItem != null)
             {
-                throw new ArgumentNullException(ExceptionMessages.CartItemNotFound);
+                this.repository.Remove(cartItem);
+                await this.repository.SaveChangesAsync();
             }
-
-            this.repository.Remove(cartItem);
-            await this.repository.SaveChangesAsync();
         }
 
         public async Task<ICollection<int>> RemoveFromSessionFavoriteAsync(int productId, ICollection<int> favorites)
@@ -85,12 +83,10 @@
                 throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
             }
             
-            if (!favorites.Contains(productId))
+            if (favorites.Contains(productId))
             {
-                throw new ArgumentNullException(ExceptionMessages.CartItemNotFound);
+                favorites.Remove(productId);
             }
-
-            favorites.Remove(productId);
 
             return favorites;
         }

@@ -155,7 +155,7 @@
                 throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
             }
 
-            var cartItem = cart.FirstOrDefault(p => p.ProductId == quantity);
+            var cartItem = cart.FirstOrDefault(p => p.ProductId == productId);
 
             if (cartItem == null)
             {
@@ -164,7 +164,7 @@
 
             if (cartItem.Quantity == 1)
             {
-                await this.RemoveFromSessionShoppingCartAsync(quantity, cart);
+                await this.RemoveFromSessionShoppingCartAsync(productId, cart);
             }
             else
             {

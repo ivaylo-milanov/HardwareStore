@@ -129,29 +129,44 @@
                 }
             });
 
-            var user = new Customer
+            var users = new List<Customer>()
             {
-                Id = "TestCustomer",
-                UserName = "Customer1",
-                Email = "customer@mail.com",
-                FirstName = "FirstName1",
-                LastName = "LastNam1",
-                Phone = "Phone1",
-                Area = "Area1",
-                City = "City1",
-                Address = "Address1",
-                Favorites = new List<Favorite>()
+                new Customer
                 {
-                    new Favorite
+                    Id = "TestCustomer1",
+                    UserName = "Customer1",
+                    Email = "customer@mail.com",
+                    FirstName = "FirstName1",
+                    LastName = "LastNam1",
+                    Phone = "Phone1",
+                    Area = "Area1",
+                    City = "City1",
+                    Address = "Address1",
+                    Favorites = new List<Favorite>()
                     {
-                        CustomerId = "TestCustomer",
-                        ProductId = 13
-                    }, 
-                    new Favorite
-                    {
-                        CustomerId = "TestCustomer",
-                        ProductId = 14
+                        new Favorite
+                        {
+                            CustomerId = "TestCustomer1",
+                            ProductId = 13
+                        },
+                        new Favorite
+                        {
+                            CustomerId = "TestCustomer1",
+                            ProductId = 14
+                        }
                     }
+                },
+                new Customer
+                {
+                    Id = "TestCustomer2",
+                    UserName = "Customer2",
+                    Email = "customer@mail.com",
+                    FirstName = "FirstName2",
+                    LastName = "LastNam2",
+                    Phone = "Phone2",
+                    Area = "Area2",
+                    City = "City2",
+                    Address = "Address2"
                 }
             };
 
@@ -159,7 +174,7 @@
             context.CharacteristicsNames.AddRange(characteristicNames);
             context.Categories.AddRange(categories);
             context.Products.AddRange(products);
-            context.Users.Add(user);
+            context.Users.AddRange(users);
 
             await context.SaveChangesAsync();
         }
