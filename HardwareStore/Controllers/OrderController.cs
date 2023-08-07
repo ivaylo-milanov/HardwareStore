@@ -2,9 +2,9 @@
 {
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Order;
+    using HardwareStore.Extensions;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using System.Security.Claims;
 
     [Authorize]
     public class OrderController : Controller
@@ -23,7 +23,7 @@
             OrderFormModel model;
             try
             {
-                model = await this.orderService.GetOrderModel(GetUserId());
+                model = await this.orderService.GetOrderModel(HttpContext.User.GetUserId());
             }
             catch (ArgumentNullException ex)
             {
@@ -44,7 +44,7 @@
 
             try
             {
-                await this.orderService.OrderAsync(model, GetUserId());
+                await this.orderService.OrderAsync(model, HttpContext.User.GetUserId());
             }
             catch (ArgumentNullException ex)
             {
@@ -56,7 +56,5 @@
         }
 
         public IActionResult Success() => View();
-
-        private string GetUserId() => HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
     }
 }

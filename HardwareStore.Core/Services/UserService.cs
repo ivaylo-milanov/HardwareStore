@@ -2,91 +2,20 @@
 {
     using HardwareStore.Common;
     using HardwareStore.Core.Services.Contracts;
+    using HardwareStore.Core.ViewModels.Profile;
     using HardwareStore.Core.ViewModels.ShoppingCart;
-    using HardwareStore.Core.ViewModels.User;
     using HardwareStore.Infrastructure.Common;
     using HardwareStore.Infrastructure.Models;
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
     using System.Threading.Tasks;
 
     public class UserService : IUserService
     {
-        private readonly SignInManager<Customer> signInManager;
-        private readonly UserManager<Customer> userManager;
         private readonly IRepository repository;
 
-        public UserService(SignInManager<Customer> signInManager, UserManager<Customer> userManager, IRepository repository)
+        public UserService(IRepository repository)
         {
-            this.signInManager = signInManager;
-            this.userManager = userManager;
             this.repository = repository;
-        }
-
-        public async Task<SignInResult> LoginAsync(LoginFormModel model, ICollection<ShoppingCartExportModel> cart, ICollection<int> favorites)
-        {
-            var user = await userManager.FindByEmailAsync(model.Email);
-
-            if (user == null)
-            {
-                throw new InvalidOperationException(ExceptionMessages.AccountNotFound);
-            }
-
-            var result = await signInManager.PasswordSignInAsync(user, model.Password, false, false);
-
-            if (result.Succeeded)
-            {
-                if (cart != null)
-                {
-                    await AddToCartAsync(user.Id, cart);
-                }
-
-                if (favorites != null)
-                {
-                    await AddToFavoritesAsync(user.Id, favorites);
-                }
-            }
-
-            return result;
-        }
-
-        public async Task LogoutAsync()
-        {
-            await signInManager.SignOutAsync();
-        }
-
-        public async Task<IdentityResult> RegisterAsync(RegisterFormModel model, ICollection<ShoppingCartExportModel> cart, ICollection<int> favorites)
-        {
-            Customer user = new Customer
-            {
-                UserName = model.Email,
-                Email = model.Email,
-                FirstName = model.FirstName,
-                LastName = model.LastName,
-                Phone = model.Phone,
-                City = model.City,
-                Area = model.Area,
-                Address = model.Address
-            };
-
-            var result = await userManager.CreateAsync(user, model.Password);
-
-            if (result.Succeeded)
-            {
-                await signInManager.SignInAsync(user, isPersistent: false);
-
-                if (cart != null)
-                {
-                    await AddToCartAsync(user.Id, cart);
-                }
-
-                if (favorites != null)
-                {
-                    await AddToFavoritesAsync(user.Id, favorites);
-                }
-            }
-
-            return result;
         }
 
         private async Task AddToFavoritesAsync(string userId, ICollection<int> favorites)
@@ -106,14 +35,13 @@
                     };
 
                     dbFavorites.Add(favoriteProduct);
-                }   
+                }
             }
 
             this.repository.AddRange(dbFavorites);
-            await this.repository.SaveChangesAsync();
         }
 
-        private async Task AddToCartAsync(string userId, ICollection<ShoppingCartExportModel> cart)
+        private async Task AddToShoppingCartAsync(string userId, ICollection<ShoppingCartExportModel> cart)
         {
             ICollection<ShoppingCartItem> shoppings = new List<ShoppingCartItem>();
             foreach (var item in cart)
@@ -139,10 +67,82 @@
             }
 
             this.repository.AddRange(shoppings);
+        }
+
+        public async Task AddToDatabase(string userId, ICollection<int> favorites, ICollection<ShoppingCartExportModel> cart)
+        {
+            await this.AddToFavoritesAsync(userId, favorites);
+            await this.AddToShoppingCartAsync(userId, cart);
+
             await this.repository.SaveChangesAsync();
         }
 
         public async Task<ICollection<Favorite>> GetCustomerFavorites(string userId)
+        {
+            var customer = await GetCustomerWithFavorites(userId); 
+
+            return customer.Favorites;
+        }
+
+        public async Task<ICollection<ShoppingCartItem>> GetCustomerShoppingCart(string userId)
+        {
+            var customer = await GetCustomerWithShoppingCart(userId);
+
+            return customer.ShoppingCartItems;
+        }
+
+        public async Task<ProfileViewModel> GetCustomerProfile(string userId)
+        {
+            var customer = await this.repository.FindAsync<Customer>(userId);
+
+            if (customer == null)
+            {
+                throw new ArgumentNullException(ExceptionMessages.UserNotFound);
+            }
+
+            ProfileViewModel model = new ProfileViewModel
+            {
+                FullName = customer.FirstName + ' ' + customer.LastName,
+                City = customer.City,
+                Address = customer.Address,
+                Email = customer.Email
+            };
+
+            return model;
+        }
+
+        public async Task<Customer> GetCustomerWithShoppingCart(string userId)
+        {
+            var customer = await repository.All<Customer>()
+                .Include(c => c.ShoppingCartItems)
+                .ThenInclude(c => c.Product)
+                .FirstOrDefaultAsync(c => c.Id == userId);
+
+            if (customer == null)
+            {
+                throw new ArgumentNullException(ExceptionMessages.UserNotFound);
+            }
+
+            return customer;
+        }
+
+        public async Task<Customer> GetCustomerWithOrders(string userId)
+        {
+            var customer = await this.repository
+                .All<Customer>()
+                .Include(p => p.Orders)
+                .ThenInclude(p => p.Order)
+                .FirstOrDefaultAsync(p => p.Id == userId);
+
+            if (customer == null)
+            {
+                throw new ArgumentNullException(ExceptionMessages.UserNotFound);
+            }
+
+            return customer;
+        }
+
+        public async Task<Customer> GetCustomerWithFavorites(string userId)
         {
             var customer = await this.repository
                 .All<Customer>()
@@ -155,7 +155,7 @@
                 throw new ArgumentNullException(ExceptionMessages.UserNotFound);
             }
 
-            return customer.Favorites;
+            return customer;
         }
     }
 }

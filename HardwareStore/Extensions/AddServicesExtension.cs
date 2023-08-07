@@ -16,10 +16,10 @@
             services.AddScoped<IFavoriteService, FavoriteService>();
             services.AddScoped<IShoppingCartService, ShoppingCartService>();
             services.AddScoped<IUserService, UserService>();
-            services.AddScoped<IProfileService, ProfileService>();
             services.AddScoped<IFileReader, FileReader>();
             services.AddScoped<IDataSeeder, DataSeeder>();
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
 
             services.AddControllers().AddNewtonsoftJson();
             services.AddHttpContextAccessor();

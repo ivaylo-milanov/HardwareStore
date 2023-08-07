@@ -1,156 +1,31 @@
 namespace HardwareStore.Tests
 {
     using HardwareStore.Core.Attributes;
+    using HardwareStore.Core.Enum;
     using HardwareStore.Core.Services;
-    using HardwareStore.Core.Services.Contracts;
+    using HardwareStore.Core.ViewModels.Product;
     using HardwareStore.Infrastructure.Common;
     using HardwareStore.Infrastructure.Data;
     using HardwareStore.Infrastructure.Models;
     using HardwareStore.Tests.Mocking;
+    using HardwareStore.Tests.Mocking.MoqViewModels.MoqProduct;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Caching.Memory;
-    using Moq;
 
-    public class Tests
+    [TestFixture]
+    public class ProductServiceTest
     {
-        private HardwareStoreDbContext context;
         private ProductService productService;
 
         [SetUp]
         public async Task SetUp()
         {
-            var options = new DbContextOptionsBuilder<HardwareStoreDbContext>()
-                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
-                .Options;
+            var repository = await TestRepository.GetRepository();
 
-            context = new HardwareStoreDbContext(options);
-            await context.Database.EnsureDeletedAsync();
-            await context.Database.EnsureCreatedAsync(); 
+            var cacheOptions = new MemoryCacheOptions();
+            var cache = new MemoryCache(cacheOptions);
 
-            var repository = new Repository(context);
-
-            await SeedDatabase();
-
-            var memoryCacheMock = new Mock<IMemoryCache>();
-            var cacheEntry = new Mock<ICacheEntry>();
-
-            memoryCacheMock.Setup(x => x.TryGetValue(It.IsAny<object>(), out It.Ref<object>.IsAny)).Returns(false);
-            memoryCacheMock.Setup(m => m.CreateEntry(It.IsAny<object>())).Returns(cacheEntry.Object);
-
-            productService = new ProductService(repository, memoryCacheMock.Object);
-        }
-
-        private async Task SeedDatabase()
-        {
-            var manufacturers = Enumerable.Range(1, 3)
-                .Select(i => new Manufacturer { Id = i, Name = $"Manufacturer{i}" }).ToList();
-
-            var characteristicNames = Enumerable.Range(1, 4)
-                .Select(i => new CharacteristicName { Id = i, Name = $"CharacteristicName{i}" }).ToList();
-
-            var categories = Enumerable.Range(1, 5)
-                .Select(i => new Category { Id = i, Name = $"Category{i}" }).ToList();
-
-            var products = Enumerable.Range(1, 12)
-                .Select(i => new Product
-                {
-                    Id = i,
-                    Name = $"Product{i}",
-                    Price = 10 * i,
-                    Quantity = 100 * i,
-                    AddDate = DateTime.Now,
-                    Warranty = 1,
-                    ManufacturerId = manufacturers[i % manufacturers.Count].Id,
-                    ReferenceNumber = $"Ref00{i}",
-                    CategoryId = categories[i % categories.Count].Id,
-                    Model = $"Model{i}",
-                    Characteristics = Enumerable.Range(1, 3)
-                        .Select(j => new Characteristic
-                        {
-                            Id = (i - 1) * 3 + j,
-                            CharacteristicNameId = characteristicNames[(j - 1) % characteristicNames.Count].Id,
-                            Value = $"Value{(i - 1) * 3 + j}"
-                        }).ToList()
-                }).ToList();
-
-            products.Add(new Product
-            {
-                Id = 13,
-                Name = "Product13",
-                Price = 130,
-                Quantity = 100 * 13,
-                AddDate = DateTime.Now,
-                Warranty = 1,
-                ManufacturerId = null,
-                ReferenceNumber = "Ref0013",
-                CategoryId = 4,
-                Model = "Model13",
-                Characteristics = new[]
-                {
-                    new Characteristic
-                    {
-                        Id = 37,
-                        CharacteristicNameId = 2,
-                        Value = "Value37"
-                    },
-                    new Characteristic
-                    {
-                        Id = 38,
-                        CharacteristicNameId = 4,
-                        Value = "1"
-                    }
-                }
-            });
-
-            products.Add(new Product
-            {
-                Id = 14,
-                Name = "Product14",
-                Price = 140,
-                Quantity = 100 * 14,
-                AddDate = DateTime.Now,
-                Warranty = 1,
-                ManufacturerId = 2,
-                ReferenceNumber = "Ref0014",
-                Model = "Model14",
-                CategoryId = 2
-            });
-
-            products.Add(new Product
-            {
-                Id = 15,
-                Name = "Product15",
-                Price = 150,
-                Quantity = 100 * 15,
-                AddDate = DateTime.Now,
-                Warranty = 1,
-                ManufacturerId = 2,
-                ReferenceNumber = "Ref0015",
-                CategoryId = 5,
-                Model = "Model15",
-                Characteristics = new[]
-                {
-                    new Characteristic
-                    {
-                        Id = 39,
-                        CharacteristicNameId = 2,
-                        Value = "Value39"
-                    },
-                    new Characteristic
-                    {
-                        Id = 40,
-                        CharacteristicNameId = 4,
-                        Value = "Value40, Value41"
-                    }
-                }
-            });
-
-            context.Manufacturers.AddRange(manufacturers);
-            context.CharacteristicsNames.AddRange(characteristicNames);
-            context.Categories.AddRange(categories);
-            context.Products.AddRange(products);
-
-            await context.SaveChangesAsync();
+            productService = new ProductService(repository, cache);
         }
 
         [Test]
@@ -441,9 +316,249 @@ namespace HardwareStore.Tests
             }, "The product does not exist.");
         }
 
-        public async Task TheProducIsNotFromFavorite()
+        [Test]
+        public async Task FilterProductsWhenCacheContainsProductsReturnsCorrectProducts()
         {
-            
+            // Arrange
+            var products = await this.productService.GetModel<MoqProductModelWIthCategory4>();
+
+            var filter = new ProductFilterOptions { Order = (int)ProductOrdering.LowestPrice };
+
+            // Act
+            var result = productService.FilterProducts<MoqProductModelWIthCategory4, ProductFilterOptions>(filter);
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.That(result.Count() == 3);
+            Assert.That(result.First().Price == 30);
+        }
+
+        [Test]
+        public async Task FilterProductsReturnsEmptyCollection()
+        {
+            //Arrange
+            var products = await this.productService.GetModel<MoqProductModelWithInvalidCategory>();
+
+            var filter = new ProductFilterOptions { Order = (int)ProductOrdering.LowestPrice };
+
+            //Act
+            var result = productService.FilterProducts<MoqProductModelWithInvalidCategory, ProductFilterOptions>(filter);
+
+            //Assert
+            Assert.IsNotNull(result);
+            Assert.That(result.Count() == 0);
+        }
+
+        [Test]
+        public async Task FilterProductsSuccessfullyByManufacturer()
+        {
+            //Arrange
+            var products = await this.productService.GetModel<MoqProductModelWIthCategory4>();
+
+            var filter = new ProductFilterOptions
+            {
+                Manufacturer = new List<string>() { "Manufacturer1" },
+                Order = (int)ProductOrdering.Default
+            };
+
+            //Act
+            var result = productService.FilterProducts<MoqProductModelWIthCategory4, ProductFilterOptions>(filter);
+
+            //Assert
+            Assert.IsTrue(result.Any());
+
+            foreach (var item in result)
+            {
+                Assert.IsTrue(item.Manufacturer == "Manufacturer1");
+            }
+        }
+
+        [Test]
+        public async Task FilterProductsReturnsOneProductByCharacteristicName1AndCharacteristicName2()
+        {
+            //Arrange
+            var products = await this.productService.GetModel<MoqProductModelWithProperCategory>();
+
+            var filter = new MoqProductFilterOptionsCategory1
+            {
+                CharacteristicName1 = new List<string>() { "Value13" },
+                CharacteristicName2 = new List<string>() { "Value14" },
+                Order = (int)ProductOrdering.Default
+            };
+
+            //Act
+            var result = productService.FilterProducts<MoqProductModelWithProperCategory, MoqProductFilterOptionsCategory1>(filter);
+
+            //Assert
+            Assert.That(result.Count() == 1);
+        }
+
+        [Test]
+        public async Task FilterProductsRDontReturnAllProductsIfOneOfTheProductHaveNullValueInThisFilterCategory()
+        {
+            //Arrange
+            var products = await this.productService.GetModel<MoqProductModelWIthCategory4>();
+
+            var filter = new ProductFilterOptions
+            {
+                Manufacturer = new List<string>() { "Manufacturer1", "Manufacturer3" },
+                Order = (int)ProductOrdering.Default
+            };
+
+            //Act
+            var result = productService.FilterProducts<MoqProductModelWIthCategory4, ProductFilterOptions>(filter);
+
+            //Assert
+            Assert.That(result.Count() == 2);
+        }
+
+        [Test]
+        public async Task FilterProductsReturnsAllProductsIfTheFilterHasAllValuesOfFilterCategory()
+        {
+            //Arrange
+            var products = await this.productService.GetModel<MoqProductModelWithProperCategory>();
+
+            var filter = new MoqProductFilterOptionsCategory1
+            {
+                CharacteristicName1 = new List<string>() { "Value13", "Value28" },
+                Order = (int)ProductOrdering.Default
+            };
+
+            //Act
+            var result = productService.FilterProducts<MoqProductModelWithProperCategory, MoqProductFilterOptionsCategory1>(filter);
+
+            //Assert
+            Assert.That(result.Count() == products.Products.Count());
+        }
+
+        [Test]
+        public async Task FilterProductsReturnsOneProductIfTheProductCharacteristicValueHasMoreThenOneValues()
+        {
+            //Arrange
+            var products = await this.productService.GetModel<MoqProductModelWithMoreThenOneValueInProperty>();
+
+            var filter = new MoqProductFilterOptionsCategory5
+            {
+                CharacteristicName4 = new List<string>() { "Value40", "Value41" },
+                Order = (int)ProductOrdering.Default
+            };
+
+            //Act
+            var result = productService.FilterProducts<MoqProductModelWithMoreThenOneValueInProperty, MoqProductFilterOptionsCategory5>(filter);
+
+            //Assert
+            Assert.That(result.Count() == 1);
+        }
+
+        [Test]
+        public async Task FilterProductsReturnsNoProductsIfItDoesNotMatchAnyOfTheValues()
+        {
+            //Arrange
+            var products = await this.productService.GetModel<MoqProductModelWithMoreThenOneValueInProperty>();
+
+            var filter = new MoqProductFilterOptionsCategory5
+            {
+                CharacteristicName4 = new List<string>() { "Value100" },
+                Order = (int)ProductOrdering.Default
+            };
+
+            //Act
+            var result = productService.FilterProducts<MoqProductModelWithMoreThenOneValueInProperty, MoqProductFilterOptionsCategory5>(filter);
+
+            //Assert
+            Assert.That(result.Count() == 0);
+        }
+
+        [Test]
+        public async Task FilterProductsReturnsOrderedProductsByPriceAscending()
+        {
+            //Arrange
+            var products = await this.productService.GetModel<MoqProductModelWithProperCategory>();
+
+            var filter = new MoqProductFilterOptionsCategory1
+            {
+                Order = (int)ProductOrdering.LowestPrice
+            };
+
+            //Act
+            var result = productService.FilterProducts<MoqProductModelWithProperCategory, MoqProductFilterOptionsCategory1>(filter).ToList();
+
+            //Assert
+            Assert.AreEqual(50, result[0].Price);
+            Assert.AreEqual(100, result[1].Price);
+        }
+
+        [Test]
+        public async Task FilterProductsReturnsOrderedProductsByPriceDescending()
+        {
+            //Arrange
+            var products = await this.productService.GetModel<MoqProductModelWithProperCategory>();
+
+            var filter = new MoqProductFilterOptionsCategory1
+            {
+                Order = (int)ProductOrdering.HighestPrice
+            };
+
+            //Act
+            var result = productService.FilterProducts<MoqProductModelWithProperCategory, MoqProductFilterOptionsCategory1>(filter).ToList();
+
+            //Assert
+            Assert.AreEqual(100, result[0].Price);
+            Assert.AreEqual(50, result[1].Price);
+        }
+
+        [Test]
+        public async Task FilterProductsReturnsProductsAsTheyAreRetrievedByTheDatabase()
+        {
+            //Arrange
+            var products = await this.productService.GetModel<MoqProductModelWithProperCategory>();
+
+            var filter = new MoqProductFilterOptionsCategory1
+            {
+                Order = (int)ProductOrdering.Default
+            };
+
+            //Act
+            var result = productService.FilterProducts<MoqProductModelWithProperCategory, MoqProductFilterOptionsCategory1>(filter).ToList();
+
+            //Assert
+            Assert.AreEqual(products.Products, result);
+        }
+
+        [Test]
+        public async Task FilterProductsReturnsOrderedProductsByAddDateAscending()
+        {
+            //Arrange
+            var products = await this.productService.GetModel<MoqProductModelWithMoreThenOneValueInProperty>();
+
+            var filter = new MoqProductFilterOptionsCategory5
+            {
+                Order = (int)ProductOrdering.Oldest
+            };
+
+            //Act
+            var result = productService.FilterProducts<MoqProductModelWithMoreThenOneValueInProperty, MoqProductFilterOptionsCategory5>(filter).ToList();
+
+            //Assert
+            Assert.That(result[0].AddDate < result[1].AddDate);
+        }
+
+        [Test]
+        public async Task FilterProductsReturnsOrderedProductsByAddDateDescending()
+        {
+            //Arrange
+            var products = await this.productService.GetModel<MoqProductModelWithMoreThenOneValueInProperty>();
+
+            var filter = new MoqProductFilterOptionsCategory5
+            {
+                Order = (int)ProductOrdering.Newest
+            };
+
+            //Act
+            var result = productService.FilterProducts<MoqProductModelWithMoreThenOneValueInProperty, MoqProductFilterOptionsCategory5>(filter).ToList();
+
+            //Assert
+            Assert.That(result[1].AddDate > result[2].AddDate);
         }
     }
 }

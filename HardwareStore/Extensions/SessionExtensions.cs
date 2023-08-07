@@ -1,4 +1,4 @@
-﻿namespace HardwareStore.Core.Extensions
+﻿namespace HardwareStore.Extensions
 {
     using Microsoft.AspNetCore.Http;
     using Newtonsoft.Json;

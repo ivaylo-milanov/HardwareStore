@@ -1,32 +1,26 @@
 ﻿namespace HardwareStore.Core.Services
 {
     using HardwareStore.Common;
-    using HardwareStore.Core.Extensions;
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.ShoppingCart;
     using HardwareStore.Infrastructure.Common;
     using HardwareStore.Infrastructure.Models;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
-    using System.Security.Claims;
     using System.Threading.Tasks;
 
     public class ShoppingCartService : IShoppingCartService
     {
         private readonly IRepository repository;
-        private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly IUserService userService;
 
-        public ShoppingCartService(IRepository repository, IHttpContextAccessor httpContextAccessor)
+        public ShoppingCartService(IRepository repository, IUserService userService)
         {
             this.repository = repository;
-            this.httpContextAccessor = httpContextAccessor;
+            this.userService = userService;
         }
 
-        public async Task AddToSessionShoppingCartAsync(int productId, int quantity)
+        public async Task<ICollection<ShoppingCartExportModel>> AddToSessionShoppingCartAsync(int productId, int quantity, ICollection<ShoppingCartExportModel> cart)
         {
-            var shoppings = GetShoppingCart();
-
             var product = await this.repository.FindAsync<Product>(productId);
 
             if (product == null)
@@ -34,7 +28,7 @@
                 throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
             }
 
-            var cartItem = shoppings.FirstOrDefault(p => p.ProductId == productId);
+            var cartItem = cart.FirstOrDefault(p => p.ProductId == productId);
 
             if (cartItem == null)
             {
@@ -44,7 +38,7 @@
                     Quantity = quantity,
                 };
 
-                shoppings.Add(model);
+                cart.Add(model);
             }
             else
             {
@@ -56,19 +50,17 @@
                 cartItem.Quantity += quantity;
             }
 
-            SetShoppingCart(shoppings);
+            return cart;
         }
 
-        public async Task DecreaseSessionItemQuantityAsync(int productId)
+        public async Task<ICollection<ShoppingCartExportModel>> DecreaseSessionItemQuantityAsync(int productId, ICollection<ShoppingCartExportModel> cart)
         {
-            var shoppings = GetShoppingCart();
-
             if (!await this.repository.AnyAsync<Product>(p => p.Id == productId))
             {
                 throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
             }
 
-            var cartItem = shoppings.FirstOrDefault(p => p.ProductId == productId);
+            var cartItem = cart.FirstOrDefault(p => p.ProductId == productId);
 
             if (cartItem == null)
             {
@@ -80,15 +72,14 @@
                 cartItem.Quantity--;
             }
 
-            SetShoppingCart(shoppings);
+            return cart;
         }
 
-        public async Task<ShoppingCartViewModel> GetSessionShoppingCartAsync()
+        public async Task<ShoppingCartViewModel> GetSessionShoppingCartAsync(ICollection<ShoppingCartExportModel> cart)
         {
-            var shoppings = GetShoppingCart();
             var shoppingItems = new List<ShoppingCartItemViewModel>();
 
-            foreach (var shopping in shoppings)
+            foreach (var shopping in cart)
             {
                 var product = await repository.FindAsync<Product>(shopping.ProductId);
 
@@ -119,37 +110,33 @@
             return model;
         }
 
-        public async Task RemoveFromSessionShoppingCartAsync(int productId)
+        public async Task<ICollection<ShoppingCartExportModel>> RemoveFromSessionShoppingCartAsync(int productId, ICollection<ShoppingCartExportModel> cart)
         {
-            var shoppings = GetShoppingCart();
-
             if (!await this.repository.AnyAsync<Product>(p => p.Id == productId))
             {
                 throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
             }
 
-            var cartItem = shoppings.FirstOrDefault(p => p.ProductId == productId);
+            var cartItem = cart.FirstOrDefault(p => p.ProductId == productId);
 
             if (cartItem == null)
             {
                 throw new ArgumentNullException(ExceptionMessages.CartItemNotFound);
             }
 
-            shoppings.Remove(cartItem);
+            cart.Remove(cartItem);
 
-            SetShoppingCart(shoppings);
+            return cart;
         }
 
-        public async Task IncreaseSessionItemQuantityAsync(int productId)
+        public async Task<ICollection<ShoppingCartExportModel>> IncreaseSessionItemQuantityAsync(int productId, ICollection<ShoppingCartExportModel> cart)
         {
-            var shoppings = GetShoppingCart();
-
             if (!await this.repository.AnyAsync<Product>(p => p.Id == productId))
             {
                 throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
             }
 
-            var cartItem = shoppings.FirstOrDefault(p => p.ProductId == productId);
+            var cartItem = cart.FirstOrDefault(p => p.ProductId == productId);
 
             if (cartItem == null)
             {
@@ -158,19 +145,17 @@
 
             cartItem.Quantity++;
 
-            SetShoppingCart(shoppings);
+            return cart;
         }
 
-        public async Task UpdateSessionItemQuantityAsync(int quantity, int productId)
+        public async Task<ICollection<ShoppingCartExportModel>> UpdateSessionItemQuantityAsync(int quantity, int productId, ICollection<ShoppingCartExportModel> cart)
         {
-            var shoppings = GetShoppingCart();
-
             if (!await this.repository.AnyAsync<Product>(p => p.Id == quantity))
             {
                 throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
             }
 
-            var cartItem = shoppings.FirstOrDefault(p => p.ProductId == quantity);
+            var cartItem = cart.FirstOrDefault(p => p.ProductId == quantity);
 
             if (cartItem == null)
             {
@@ -179,7 +164,7 @@
 
             if (cartItem.Quantity == 1)
             {
-                await this.RemoveFromSessionShoppingCartAsync(quantity);
+                await this.RemoveFromSessionShoppingCartAsync(quantity, cart);
             }
             else
             {
@@ -191,19 +176,14 @@
                 {
                     cartItem.Quantity = quantity;
                 }
-
-                SetShoppingCart(shoppings);
             }
+
+            return cart;
         }
 
-        public async Task AddToDatabaseShoppingCartAsync(int productId, int quantity)
+        public async Task AddToDatabaseShoppingCartAsync(int productId, int quantity, string userId)
         {
-            var user = await GetUser(GetUserId());
-
-            if (user == null)
-            {
-                throw new ArgumentNullException(ExceptionMessages.UserNotFound);
-            }
+            var cart = await this.userService.GetCustomerShoppingCart(userId);
 
             var product = await this.repository.FindAsync<Product>(productId);
 
@@ -212,13 +192,13 @@
                 throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
             }
 
-            var cartItem = user.ShoppingCartItems.FirstOrDefault(p => p.ProductId == productId);
+            var cartItem = cart.FirstOrDefault(p => p.ProductId == productId);
 
             if (cartItem == null)
             {
                 var model = new ShoppingCartItem
                 {
-                    CustomerId = user.Id,
+                    CustomerId = userId,
                     ProductId = productId,
                     Quantity = quantity,
                 };
@@ -238,21 +218,16 @@
             await this.repository.SaveChangesAsync();
         }
 
-        public async Task RemoveFromDatabaseShoppingCartAsync(int productId)
+        public async Task RemoveFromDatabaseShoppingCartAsync(int productId, string userId)
         {
-            var user = await GetUser(GetUserId());
-
-            if (user == null)
-            {
-                throw new ArgumentNullException(ExceptionMessages.UserNotFound);
-            }
+            var cart = await this.userService.GetCustomerShoppingCart(userId);
 
             if (!await this.repository.AnyAsync<Product>(p => p.Id == productId))
             {
                 throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
             }
 
-            var cartItem = user.ShoppingCartItems
+            var cartItem = cart
                 .FirstOrDefault(i => i.ProductId == productId);
 
             if (cartItem == null)
@@ -265,16 +240,11 @@
             await repository.SaveChangesAsync();
         }
 
-        public async Task<ShoppingCartViewModel> GetDatabaseShoppingCartAsync()
+        public async Task<ShoppingCartViewModel> GetDatabaseShoppingCartAsync(string userId)
         {
-            var user = await GetUser(GetUserId());
+            var cart = await this.userService.GetCustomerShoppingCart(userId);
 
-            if (user == null)
-            {
-                throw new ArgumentNullException(ExceptionMessages.UserNotFound);
-            }
-
-            var shoppings = user.ShoppingCartItems
+            var shoppings = cart
                 .Select(sci => new ShoppingCartItemViewModel
                 {
                     ProductId = sci.Product.Id,
@@ -295,21 +265,16 @@
             return model;
         }
 
-        public async Task DecreaseDatabaseItemQuantityAsync(int productId)
+        public async Task DecreaseDatabaseItemQuantityAsync(int productId, string userId)
         {
-            var user = await GetUser(GetUserId());
-
-            if (user == null)
-            {
-                throw new ArgumentNullException(ExceptionMessages.UserNotFound);
-            }
+            var cart = await this.userService.GetCustomerShoppingCart(userId);
 
             if (!await this.repository.AnyAsync<Product>(p => p.Id == productId))
             {
                 throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
             }
 
-            var cartItem = user.ShoppingCartItems
+            var cartItem = cart
                 .FirstOrDefault(i => i.ProductId == productId);
 
             if (cartItem == null)
@@ -325,21 +290,16 @@
             await this.repository.SaveChangesAsync();
         }
 
-        public async Task IncreaseDatabaseItemQuantityAsync(int productId)
+        public async Task IncreaseDatabaseItemQuantityAsync(int productId, string userId)
         {
-            var user = await GetUser(GetUserId());
-
-            if (user == null)
-            {
-                throw new ArgumentNullException(ExceptionMessages.UserNotFound);
-            }
+            var cart = await this.userService.GetCustomerShoppingCart(userId);
 
             if (!await this.repository.AnyAsync<Product>(p => p.Id == productId))
             {
                 throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
             }
 
-            var cartItem = user.ShoppingCartItems
+            var cartItem = cart
                 .FirstOrDefault(i => i.ProductId == productId);
 
             if (cartItem == null)
@@ -352,21 +312,16 @@
             await this.repository.SaveChangesAsync();
         }
 
-        public async Task UpdateDatabaseItemQuantityAsync(int quantity, int productId)
+        public async Task UpdateDatabaseItemQuantityAsync(int quantity, int productId, string userId)
         {
-            var user = await GetUser(GetUserId());
-
-            if (user == null)
-            {
-                throw new ArgumentNullException(ExceptionMessages.UserNotFound);
-            }
+            var cart = await this.userService.GetCustomerShoppingCart(userId);
 
             if (!await this.repository.AnyAsync<Product>(p => p.Id == productId))
             {
                 throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
             }
 
-            var cartItem = user.ShoppingCartItems
+            var cartItem = cart
                .FirstOrDefault(i => i.ProductId == productId);
 
             if (cartItem == null)
@@ -376,7 +331,7 @@
 
             if (quantity == 0)
             {
-                await this.RemoveFromDatabaseShoppingCartAsync(productId);
+                await this.RemoveFromDatabaseShoppingCartAsync(productId, userId);
             }
             else
             {
@@ -392,20 +347,5 @@
                 await this.repository.SaveChangesAsync();
             }
         }
-
-        private void SetShoppingCart(ICollection<ShoppingCartExportModel> shoppings)
-            => httpContextAccessor.HttpContext.Session.Set("Shopping Cart", shoppings);
-
-        private ICollection<ShoppingCartExportModel> GetShoppingCart()
-            => httpContextAccessor.HttpContext.Session.Get<ICollection<ShoppingCartExportModel>>("Shopping Cart") ?? new List<ShoppingCartExportModel>();
-
-        private async Task<Customer> GetUser(string userId)
-            => await repository.All<Customer>()
-                .Include(c => c.ShoppingCartItems)
-                .ThenInclude(c => c.Product)
-                .FirstOrDefaultAsync(c => c.Id == userId);
-
-        private string GetUserId()
-            => httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
     }
 }

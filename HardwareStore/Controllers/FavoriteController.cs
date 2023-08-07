@@ -1,11 +1,10 @@
 ﻿namespace HardwareStore.Controllers
 {
-    using HardwareStore.Core.Extensions;
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Favorite;
+    using HardwareStore.Extensions;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using System.Security.Claims;
 
     public class FavoriteController : Controller
     {
@@ -25,7 +24,7 @@
             {
                 if (User?.Identity?.IsAuthenticated ?? false)
                 {
-                    favorites = await this.favoriteService.GetDatabaseFavoriteAsync(GetUserId());
+                    favorites = await this.favoriteService.GetDatabaseFavoriteAsync(HttpContext.User.GetUserId());
                 }
                 else
                 {
@@ -47,7 +46,7 @@
             {
                 if (User?.Identity?.IsAuthenticated ?? false)
                 {
-                    await this.favoriteService.AddToDatabaseFavoriteAsync(productId, GetUserId());
+                    await this.favoriteService.AddToDatabaseFavoriteAsync(productId, HttpContext.User.GetUserId());
                 }
                 else
                 {
@@ -70,7 +69,7 @@
             {
                 if (User?.Identity?.IsAuthenticated ?? false)
                 {
-                    await this.favoriteService.RemoveFromDatabaseFavoriteAsync(productId, GetUserId());
+                    await this.favoriteService.RemoveFromDatabaseFavoriteAsync(productId, HttpContext.User.GetUserId());
                 }
                 else
                 {
@@ -91,8 +90,5 @@
 
         private ICollection<int> GetFavorites()
             => HttpContext.Session.Get<ICollection<int>>("Favorite") ?? new List<int>();
-
-        private string GetUserId()
-            => HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
     }
 }

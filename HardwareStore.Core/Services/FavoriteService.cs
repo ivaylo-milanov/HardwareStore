@@ -113,7 +113,7 @@
 
         public async Task<ICollection<FavoriteExportModel>> GetSessionFavoriteAsync(ICollection<int> favorites)
         {
-            var favoriteItems = new List<FavoriteExportModel>();
+            ICollection<FavoriteExportModel> favoriteItems = new List<FavoriteExportModel>();
 
             foreach (var favoriteId in favorites)
             {

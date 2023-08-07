@@ -6,41 +6,33 @@
     using HardwareStore.Infrastructure.Common;
     using HardwareStore.Infrastructure.Models;
     using HardwareStore.Infrastructure.Models.Enums;
-    using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
     public class OrderService : IOrderService
     {
         private readonly IRepository repository;
+        private readonly IUserService userService;
 
-        public OrderService(IRepository repository)
+        public OrderService(IRepository repository, IUserService userService)
         {
             this.repository = repository;
+            this.userService = userService;
         }
 
         public async Task<OrderFormModel> GetOrderModel(string userId)
         {
-            var user = await this.repository
-                .All<Customer>()
-                .Include(c => c.ShoppingCartItems)
-                .ThenInclude(sc => sc.Product)
-                .FirstOrDefaultAsync(p => p.Id == userId);
+            var customer = await this.userService.GetCustomerWithShoppingCart(userId);
 
-            if (user == null)
-            {
-                throw new ArgumentNullException(ExceptionMessages.UserNotFound);
-            }
-
-            var totalAmount = GetTotalAmount(user.ShoppingCartItems);
+            var totalAmount = GetTotalAmount(customer.ShoppingCartItems);
             OrderFormModel model = new OrderFormModel
             {
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                Phone = user.PhoneNumber,
-                City = user.City,
-                Area = user.Area,
-                Address = user.Address,
+                FirstName = customer.FirstName,
+                LastName = customer.LastName,
+                Phone = customer.PhoneNumber,
+                City = customer.City,
+                Area = customer.Area,
+                Address = customer.Address,
                 TotalAmount = totalAmount
             };
 
@@ -49,18 +41,9 @@
 
         public async Task<IEnumerable<OrderViewModel>> GetUserOrders(string userId)
         {
-            var user = await this.repository
-                .All<Customer>()
-                .Include(p => p.Orders)
-                .ThenInclude(p => p.Order)
-                .FirstOrDefaultAsync(p => p.Id == userId);
+            var customer = await userService.GetCustomerWithShoppingCart(userId);
 
-            if (user == null)
-            {
-                throw new ArgumentNullException(ExceptionMessages.UserNotFound);
-            }
-
-            var orders = user
+            var orders = customer
                 .Orders
                 .Select(o => new OrderViewModel
                 {
@@ -75,18 +58,9 @@
 
         public async Task OrderAsync(OrderFormModel model, string userId)
         {
-            var user = await this.repository
-                .All<Customer>()
-                .Include(p => p.ShoppingCartItems)
-                .ThenInclude(p => p.Product)
-                .FirstOrDefaultAsync(p => p.Id == userId);
+            var cart = await this.userService.GetCustomerShoppingCart(userId);
 
-            if (user == null)
-            {
-                throw new ArgumentNullException(ExceptionMessages.UserNotFound);
-            }
-
-            var totalAmount = GetTotalAmount(user.ShoppingCartItems);
+            var totalAmount = GetTotalAmount(cart);
             Order order = new Order
             {
                 FirstName = model.FirstName,
@@ -105,7 +79,7 @@
 
             var orderProducts = new List<ProductOrder>();
 
-            foreach (var item in user.ShoppingCartItems)
+            foreach (var item in cart)
             {
                 if (!await this.repository.AnyAsync<Product>(p => p.Id == item.ProductId))
                 {
@@ -124,7 +98,7 @@
             order.ProductsOrders = orderProducts;
             await this.repository.AddAsync(order);
 
-            this.repository.RemoveRange(user.ShoppingCartItems);
+            this.repository.RemoveRange(cart);
 
             await this.repository.SaveChangesAsync();
         }

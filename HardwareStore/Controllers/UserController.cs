@@ -1,20 +1,22 @@
 ﻿namespace HardwareStore.Controllers
 {
-    using HardwareStore.Core.Extensions;
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.ShoppingCart;
     using HardwareStore.Core.ViewModels.User;
+    using HardwareStore.Extensions;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
     public class UserController : Controller
     {
         private readonly IUserService userService;
+        private readonly IAuthenticationService authenticationService;
         private readonly ILogger<UserController> logger;
 
-        public UserController(IUserService userService, ILogger<UserController> logger)
+        public UserController(IUserService userService, IAuthenticationService authenticationService, ILogger<UserController> logger)
         {
             this.userService = userService;
+            this.authenticationService = authenticationService;
             this.logger = logger;
         }
 
@@ -31,12 +33,12 @@
 
             try
             {
-                var result = await userService.LoginAsync(model, cartItems, favorites);
+                var result = await authenticationService.LoginAsync(model);
 
                 if (result.Succeeded)
                 {
-                    RemoveShoppingCart();
-                    RemoveFavorites();
+                    await this.userService.AddToDatabase(HttpContext.User.GetUserId(), favorites, cartItems);
+                    RemoveFromSession();
                     return RedirectToAction("Index", "Home");
                 }
             }
@@ -74,12 +76,12 @@
 
             try
             {
-                var result = await userService.LoginAsync(model, cartItems, favorites);
+                var result = await authenticationService.LoginAsync(model);
 
                 if (result.Succeeded)
                 {
-                    RemoveShoppingCart();
-                    RemoveFavorites();
+                    await this.userService.AddToDatabase(HttpContext.User.GetUserId(), favorites, cartItems);
+                    RemoveFromSession();
                     return RedirectToAction("Index", "Home");
                 }
             }
@@ -119,7 +121,7 @@
             IdentityResult result;
             try
             {
-                result = await this.userService.RegisterAsync(model, cartItems, favorites);
+                result = await authenticationService.RegisterAsync(model);
             }
             catch (ArgumentNullException ex)
             {
@@ -129,8 +131,8 @@
 
             if (result.Succeeded)
             {
-                RemoveShoppingCart();
-                RemoveFavorites();
+                await this.userService.AddToDatabase(HttpContext.User.GetUserId(), favorites, cartItems);
+                RemoveFromSession();
                 return RedirectToAction("Index", "Home");
             }
 
@@ -144,7 +146,7 @@
 
         public async Task<IActionResult> Logout()
         {
-            await userService.LogoutAsync();
+            await authenticationService.LogoutAsync();
 
             return RedirectToAction("Index", "Home");
         }
@@ -155,10 +157,10 @@
         private ICollection<int> GetFavorites()
             => HttpContext.Session.Get<ICollection<int>>("Favorite") ?? new List<int>();
 
-        private void RemoveShoppingCart()
-            => HttpContext.Session.Remove("Shopping Cart");
-
-        private void RemoveFavorites()
-            => HttpContext.Session.Remove("Favorite");
+        private void RemoveFromSession()
+        {
+            HttpContext.Session.Remove("Shopping Cart");
+            HttpContext.Session.Remove("Favorite");
+        }
     }
 }

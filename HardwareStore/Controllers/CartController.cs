@@ -2,6 +2,8 @@
 {
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.ShoppingCart;
+    using HardwareStore.Extensions;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
     public class CartController : Controller
@@ -22,11 +24,11 @@
             {
                 if (User?.Identity?.IsAuthenticated ?? false)
                 {
-                    shoppingCart = await this.shoppingCartService.GetDatabaseShoppingCartAsync();
+                    shoppingCart = await this.shoppingCartService.GetDatabaseShoppingCartAsync(HttpContext.User.GetUserId());
                 }
                 else
                 {
-                    shoppingCart = await this.shoppingCartService.GetSessionShoppingCartAsync();
+                    shoppingCart = await this.shoppingCartService.GetSessionShoppingCartAsync(GetShoppingCart());
                 }
             }
             catch (ArgumentNullException ex)
@@ -54,11 +56,12 @@
             {
                 if (User?.Identity?.IsAuthenticated ?? false)
                 {
-                    await this.shoppingCartService.AddToDatabaseShoppingCartAsync(productId, quantity);
+                    await this.shoppingCartService.AddToDatabaseShoppingCartAsync(productId, quantity, HttpContext.User.GetUserId());
                 }
                 else
                 {
-                    await this.shoppingCartService.AddToSessionShoppingCartAsync(productId, quantity);
+                    var cart = await this.shoppingCartService.AddToSessionShoppingCartAsync(productId, quantity, GetShoppingCart());
+                    SetShoppingCart(cart);
                 }
             }
             catch (ArgumentNullException ex)
@@ -82,11 +85,12 @@
             {
                 if (User?.Identity?.IsAuthenticated ?? false)
                 {
-                    await this.shoppingCartService.RemoveFromDatabaseShoppingCartAsync(productId);
+                    await this.shoppingCartService.RemoveFromDatabaseShoppingCartAsync(productId, HttpContext.User.GetUserId());
                 }
                 else
                 {
-                    await this.shoppingCartService.RemoveFromSessionShoppingCartAsync(productId);
+                    var cart = await this.shoppingCartService.RemoveFromSessionShoppingCartAsync(productId, GetShoppingCart());
+                    SetShoppingCart(cart);
                 }
             }
             catch (ArgumentNullException ex)
@@ -104,11 +108,12 @@
             {
                 if (User?.Identity?.IsAuthenticated ?? false)
                 {
-                    await this.shoppingCartService.DecreaseDatabaseItemQuantityAsync(productId);
+                    await this.shoppingCartService.DecreaseDatabaseItemQuantityAsync(productId, HttpContext.User.GetUserId());
                 }
                 else
                 {
-                    await this.shoppingCartService.DecreaseSessionItemQuantityAsync(productId);
+                    var cart = await this.shoppingCartService.DecreaseSessionItemQuantityAsync(productId, GetShoppingCart());
+                    SetShoppingCart(cart);
                 }
             }
             catch (ArgumentNullException ex)
@@ -126,11 +131,12 @@
             {
                 if (User?.Identity?.IsAuthenticated ?? false)
                 {
-                    await this.shoppingCartService.IncreaseDatabaseItemQuantityAsync(productId);
+                    await this.shoppingCartService.IncreaseDatabaseItemQuantityAsync(productId, HttpContext.User.GetUserId());
                 }
                 else
                 {
-                    await this.shoppingCartService.IncreaseSessionItemQuantityAsync(productId);
+                    var cart = await this.shoppingCartService.IncreaseSessionItemQuantityAsync(productId, GetShoppingCart());
+                    SetShoppingCart(cart);
                 }
             }
             catch (ArgumentNullException ex)
@@ -148,11 +154,12 @@
             {
                 if (User?.Identity?.IsAuthenticated ?? false)
                 {
-                    await this.shoppingCartService.UpdateDatabaseItemQuantityAsync(quantity, productId);
+                    await this.shoppingCartService.UpdateDatabaseItemQuantityAsync(quantity, productId, HttpContext.User.GetUserId());
                 }
                 else
                 {
-                    await this.shoppingCartService.UpdateSessionItemQuantityAsync(quantity, productId);
+                    var cart = await this.shoppingCartService.UpdateSessionItemQuantityAsync(quantity, productId, GetShoppingCart());
+                    SetShoppingCart(cart);
                 }
             }
             catch (ArgumentNullException ex)
@@ -163,5 +170,11 @@
 
             return RedirectToAction(nameof(Index));
         }
+
+        private void SetShoppingCart(ICollection<ShoppingCartExportModel> shoppings)
+            => HttpContext.Session.Set("Shopping Cart", shoppings);
+
+        private ICollection<ShoppingCartExportModel> GetShoppingCart()
+            => HttpContext.Session.Get<ICollection<ShoppingCartExportModel>>("Shopping Cart") ?? new List<ShoppingCartExportModel>();
     }
 }

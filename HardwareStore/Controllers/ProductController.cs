@@ -1,10 +1,9 @@
 ﻿namespace HardwareStore.Controllers
 {
-    using HardwareStore.Core.Extensions;
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Product;
+    using HardwareStore.Extensions;
     using Microsoft.AspNetCore.Mvc;
-    using System.Security.Claims;
 
     public class ProductController : Controller
     {
@@ -39,7 +38,7 @@
 
         private async Task<bool> IsFavorite(int productId)
         {
-            var userId = GetUserId();
+            var userId = HttpContext.User.GetUserId();
 
             if (userId != null)
             {
@@ -50,8 +49,6 @@
             var favorites = GetFavorites();
             return favorites.Contains(productId);
         }
-
-        private string GetUserId() => HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
         private ICollection<int> GetFavorites()
             => HttpContext.Session.Get<ICollection<int>>("Favorite") ?? new List<int>();

@@ -1,19 +1,23 @@
 ﻿namespace HardwareStore.Core.Services.Contracts
 {
-    using HardwareStore.Core.ViewModels.Favorite;
+    using HardwareStore.Core.ViewModels.Profile;
     using HardwareStore.Core.ViewModels.ShoppingCart;
-    using HardwareStore.Core.ViewModels.User;
     using HardwareStore.Infrastructure.Models;
-    using Microsoft.AspNetCore.Identity;
 
     public interface IUserService
     {
-        Task<SignInResult> LoginAsync(LoginFormModel model, ICollection<ShoppingCartExportModel> cart, ICollection<int> favorites);
-
-        Task<IdentityResult> RegisterAsync(RegisterFormModel model, ICollection<ShoppingCartExportModel> cart, ICollection<int> favorites);
-
-        Task LogoutAsync();
-
         Task<ICollection<Favorite>> GetCustomerFavorites(string userId);
+
+        Task<ICollection<ShoppingCartItem>> GetCustomerShoppingCart(string userId);
+
+        Task<ProfileViewModel> GetCustomerProfile(string userId);
+
+        Task AddToDatabase(string userId, ICollection<int> favorites, ICollection<ShoppingCartExportModel> cart);
+
+        Task<Customer> GetCustomerWithShoppingCart(string userId);
+
+        Task<Customer> GetCustomerWithOrders(string userId);
+
+        Task<Customer> GetCustomerWithFavorites(string userId);
     }
 }
