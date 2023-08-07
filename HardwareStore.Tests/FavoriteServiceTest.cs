@@ -3,15 +3,12 @@
     using HardwareStore.Core.Services;
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Favorite;
-    using HardwareStore.Infrastructure.Models;
     using HardwareStore.Tests.Mocking;
-    using static Dropbox.Api.Sharing.ListFileMembersIndividualResult;
 
     [TestFixture]
     public class FavoriteServiceTest
     {
         private IFavoriteService favoriteService;
-        private IUserService userService;
         private IList<int> favoriteSession;
 
         [SetUp]
@@ -19,7 +16,7 @@
         {
             var repository = await TestRepository.GetRepository();
 
-            userService = new UserService(repository);
+            var userService = new UserService(repository);
 
             favoriteService = new FavoriteService(repository, userService);
 
@@ -160,7 +157,7 @@
             //Act
             await this.favoriteService.AddToDatabaseFavoriteAsync(13, "TestCustomer1");
 
-            var favorites = await this.userService.GetCustomerFavorites("TestCustomer1");
+            var favorites = await this.favoriteService.GetDatabaseFavoriteAsync("TestCustomer1");
 
             //Assert
             Assert.That(favorites.Count == 2);
@@ -172,11 +169,11 @@
             //Act
             await this.favoriteService.AddToDatabaseFavoriteAsync(13, "TestCustomer2");
 
-            var favorites = await this.userService.GetCustomerFavorites("TestCustomer2");
+            var favorites = await this.favoriteService.GetDatabaseFavoriteAsync("TestCustomer2");
 
             //Assert
             Assert.That(favorites.Count > 0);
-            Assert.That(favorites.Any(f => f.ProductId == 13));
+            Assert.That(favorites.Any(f => f.Id == 13));
         }
 
         [Test]
@@ -185,10 +182,10 @@
             //Act
             await this.favoriteService.AddToDatabaseFavoriteAsync(15, "TestCustomer1");
 
-            var favorites = await this.userService.GetCustomerFavorites("TestCustomer1");
+            var favorites = await this.favoriteService.GetDatabaseFavoriteAsync("TestCustomer1");
 
             //Assert
-            Assert.That(favorites.Any(f => f.ProductId == 15));
+            Assert.That(favorites.Any(f => f.Id == 15));
         }
 
         [Test]
