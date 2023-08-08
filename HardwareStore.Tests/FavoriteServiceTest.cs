@@ -60,7 +60,7 @@
         }
 
         [Test]
-        public async Task FavoriteSessionThrowsErrorIfTheProductsIsInvalid()
+        public void FavoriteSessionThrowsErrorIfTheProductsIsInvalid()
         {
             //Arrange
             ICollection<int> favoritesTooBig = new List<int>() { 20 };
@@ -122,7 +122,7 @@
         }
 
         [Test]
-        public async Task AddToDatabaseAsyncThrowsExceptionIfTheUserIdIsInvalid()
+        public void AddToDatabaseAsyncThrowsExceptionIfTheUserIdIsInvalid()
         {
             //Act and Assert
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
@@ -132,7 +132,7 @@
         }
 
         [Test]
-        public async Task AddToDatabaseAsyncThrowsExceptionIfTheProductIdIsInvalid()
+        public void AddToDatabaseAsyncThrowsExceptionIfTheProductIdIsInvalid()
         {
             //Act and Assert
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
@@ -189,7 +189,7 @@
         }
 
         [Test]
-        public async Task AddToSessionAsyncThrowsExceptionIfProductIsInvalid()
+        public void AddToSessionAsyncThrowsExceptionIfProductIsInvalid()
         {
             //Act and Assert
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
@@ -254,7 +254,7 @@
         }
 
         [Test]
-        public async Task RemoveFromSessionAsyncShouldThrowExceptionIfTheProductIdIsInvalid()
+        public void RemoveFromSessionAsyncShouldThrowExceptionIfTheProductIdIsInvalid()
         {
             //Act and Assert
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
@@ -298,7 +298,7 @@
         }
 
         [Test]
-        public async Task RemoveFromDatabaseAsyncShouldThrowExceptionIfTheUserIsInvalid()
+        public void RemoveFromDatabaseAsyncShouldThrowExceptionIfTheUserIsInvalid()
         {
             //Act and Assert
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
@@ -308,7 +308,7 @@
         }
 
         [Test]
-        public async Task RemoveFromDatabaseAsyncShouldThrowExceptionIfTheProductIsInvalid()
+        public void RemoveFromDatabaseAsyncShouldThrowExceptionIfTheProductIsInvalid()
         {
             //Act and Assert
             Assert.ThrowsAsync<ArgumentNullException>(async () =>

@@ -271,27 +271,23 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                 name: "Characteristics",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false, comment: "characteristic id")
-                        .Annotation("SqlServer:Identity", "1, 1"),
                     ProductId = table.Column<int>(type: "int", nullable: false, comment: "characteristic product id"),
                     CharacteristicNameId = table.Column<int>(type: "int", nullable: false, comment: "characteristic name id"),
                     Value = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false, comment: "characteristic value")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Characteristics", x => x.Id);
+                    table.PrimaryKey("PK_Characteristics", x => new { x.ProductId, x.CharacteristicNameId });
                     table.ForeignKey(
                         name: "FK_Characteristics_CharacteristicsNames_CharacteristicNameId",
                         column: x => x.CharacteristicNameId,
                         principalTable: "CharacteristicsNames",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Characteristics_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 },
                 comment: "characteristic table");
 
@@ -299,15 +295,15 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                 name: "Favorites",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false, comment: "favorite user id"),
+                    CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: false, comment: "favorite user id"),
                     ProductId = table.Column<int>(type: "int", nullable: false, comment: "favorite product id")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Favorites", x => new { x.ProductId, x.UserId });
+                    table.PrimaryKey("PK_Favorites", x => new { x.ProductId, x.CustomerId });
                     table.ForeignKey(
-                        name: "FK_Favorites_AspNetUsers_UserId",
-                        column: x => x.UserId,
+                        name: "FK_Favorites_AspNetUsers_CustomerId",
+                        column: x => x.CustomerId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
@@ -346,16 +342,16 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                 name: "ShoppingCartItems",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false, comment: "shopping cart item user id"),
+                    CustomerId = table.Column<string>(type: "nvarchar(450)", nullable: false, comment: "shopping cart item customer id"),
                     ProductId = table.Column<int>(type: "int", nullable: false, comment: "shopping cart item product id"),
                     Quantity = table.Column<int>(type: "int", nullable: false, comment: "shopping cart item quantity")
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ShoppingCartItems", x => new { x.ProductId, x.UserId });
+                    table.PrimaryKey("PK_ShoppingCartItems", x => new { x.ProductId, x.CustomerId });
                     table.ForeignKey(
-                        name: "FK_ShoppingCartItems_AspNetUsers_UserId",
-                        column: x => x.UserId,
+                        name: "FK_ShoppingCartItems_AspNetUsers_CustomerId",
+                        column: x => x.CustomerId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
@@ -411,14 +407,9 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                 column: "CharacteristicNameId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Characteristics_ProductId",
-                table: "Characteristics",
-                column: "ProductId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Favorites_UserId",
+                name: "IX_Favorites_CustomerId",
                 table: "Favorites",
-                column: "UserId");
+                column: "CustomerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_CustomerId",
@@ -441,9 +432,9 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ShoppingCartItems_UserId",
+                name: "IX_ShoppingCartItems_CustomerId",
                 table: "ShoppingCartItems",
-                column: "UserId");
+                column: "CustomerId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

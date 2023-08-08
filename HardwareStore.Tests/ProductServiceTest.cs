@@ -51,7 +51,7 @@ namespace HardwareStore.Tests
             var resultWithAttribute = await productService.GetModel<MoqProductModelWithProperCategory>();
 
             //Assert
-            Assert.AreEqual(2, resultWithAttribute.Products.Count());
+            Assert.That(resultWithAttribute.Products.Count(), Is.EqualTo(2));
             foreach (var model in resultWithAttribute.Products)
             {
                 Assert.IsTrue(model.Name.StartsWith("Product"));
@@ -135,7 +135,7 @@ namespace HardwareStore.Tests
             var product = result.Products.First();
 
             //Assert
-            Assert.AreNotEqual(product.Id, product.MockId);
+            Assert.That(product.MockId, Is.Not.EqualTo(product.Id));
         }
 
         [Test]
@@ -145,7 +145,7 @@ namespace HardwareStore.Tests
             var result = await productService.GetSearchModel(null);
 
             //Assert
-            Assert.AreEqual(15, result.Products.Count());
+            Assert.That(result.Products.Count(), Is.EqualTo(15));
         }
 
         [Test]
@@ -155,7 +155,7 @@ namespace HardwareStore.Tests
             var result = await productService.GetSearchModel("");
 
             //Assert
-            Assert.AreEqual(15, result.Products.Count());
+            Assert.That(result.Products.Count(), Is.EqualTo(15));
         }
 
         [Test]
@@ -165,7 +165,7 @@ namespace HardwareStore.Tests
             var result = await productService.GetSearchModel(" ");
 
             //Assert
-            Assert.AreEqual(15, result.Products.Count());
+            Assert.That(result.Products.Count(), Is.EqualTo(15));
         }
 
         [Test]
@@ -175,7 +175,7 @@ namespace HardwareStore.Tests
             var result = await productService.GetSearchModel("   ");
 
             //Assert
-            Assert.AreEqual(15, result.Products.Count());
+            Assert.That(result.Products.Count(), Is.EqualTo(15));
         }
 
         [Test]
@@ -185,8 +185,8 @@ namespace HardwareStore.Tests
             var result = await productService.GetModel<MoqProductModelWithInvalidCategory>();
 
             //Assert
-            Assert.AreEqual(1, result.Filters.Count());
-            Assert.AreEqual(0, result.Filters.First().Values.Count());
+            Assert.That(result.Filters.Count(), Is.EqualTo(1));
+            Assert.That(result.Filters.First().Values.Count(), Is.EqualTo(0));
         }
 
         [Test]
@@ -196,10 +196,10 @@ namespace HardwareStore.Tests
             var result = await productService.GetModel<MoqProductModelWithProperCategory>();
 
             //Assert
-            Assert.AreEqual(4, result.Filters.Count());
+            Assert.That(result.Filters.Count(), Is.EqualTo(4));
             foreach (var filter in result.Filters)
             {
-                Assert.AreEqual(2, filter.Values.Count());
+                Assert.That(filter.Values.Count(), Is.EqualTo(2));
             }
         }
 
@@ -296,7 +296,7 @@ namespace HardwareStore.Tests
         }
 
         [Test]
-        public async Task TheProductDetailsThrowsExceptionAboutInvalidProduct()
+        public void TheProductDetailsThrowsExceptionAboutInvalidProduct()
         {
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {
@@ -305,7 +305,7 @@ namespace HardwareStore.Tests
         }
 
         [Test]
-        public async Task TheProductDetailsThrowsExceptionAboutInvalidProductWithProductIdMoreThanTheProductsCount()
+        public void TheProductDetailsThrowsExceptionAboutInvalidProductWithProductIdMoreThanTheProductsCount()
         {
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {
@@ -481,8 +481,8 @@ namespace HardwareStore.Tests
             var result = productService.FilterProducts<MoqProductModelWithProperCategory, MoqProductFilterOptionsCategory1>(filter).ToList();
 
             //Assert
-            Assert.AreEqual(50, result[0].Price);
-            Assert.AreEqual(100, result[1].Price);
+            Assert.That(result[0].Price, Is.EqualTo(50));
+            Assert.That(result[1].Price, Is.EqualTo(100));
         }
 
         [Test]
@@ -500,8 +500,8 @@ namespace HardwareStore.Tests
             var result = productService.FilterProducts<MoqProductModelWithProperCategory, MoqProductFilterOptionsCategory1>(filter).ToList();
 
             //Assert
-            Assert.AreEqual(100, result[0].Price);
-            Assert.AreEqual(50, result[1].Price);
+            Assert.That(result[0].Price, Is.EqualTo(100));
+            Assert.That(result[1].Price, Is.EqualTo(50));
         }
 
         [Test]
@@ -519,7 +519,7 @@ namespace HardwareStore.Tests
             var result = productService.FilterProducts<MoqProductModelWithProperCategory, MoqProductFilterOptionsCategory1>(filter).ToList();
 
             //Assert
-            Assert.AreEqual(products.Products, result);
+            Assert.That(result, Is.EqualTo(products.Products));
         }
 
         [Test]

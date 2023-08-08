@@ -10,7 +10,7 @@
     {
         public Customer()
         {
-            this.Orders = new HashSet<ProductOrder>();
+            this.Orders = new HashSet<Order>();
             this.ShoppingCartItems = new HashSet<ShoppingCartItem>();
             this.Favorites = new HashSet<Favorite>();
         }
@@ -45,7 +45,7 @@
         [MaxLength(GlobalConstants.CustomerAddressMaxLength)]
         public string Address { get; set; } = null!; 
  
-        public ICollection<ProductOrder> Orders { get; set; } = null!;
+        public ICollection<Order> Orders { get; set; } = null!;
 
         public ICollection<ShoppingCartItem> ShoppingCartItems { get; set; } = null!;
 

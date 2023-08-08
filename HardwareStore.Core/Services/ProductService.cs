@@ -37,7 +37,7 @@
             var properties = filter
                 .GetType()
                 .GetProperties()
-                .Where(p => p.GetValue(filter) != null && typeof(IEnumerable<string>).IsAssignableFrom(p.GetValue(filter).GetType()));
+                .Where(p => p.GetValue(filter) != null && typeof(IEnumerable<string>).IsAssignableFrom(p.GetValue(filter)?.GetType()));
 
             foreach (var property in properties)
             {
@@ -190,20 +190,19 @@
                     .ToListAsync();
             }
 
-            var sql = @"SELECT p.* FROM Products p
+            var sql = @"
+                SELECT p.* 
+                FROM Products p
                 LEFT JOIN Manufacturers m ON m.Id = p.ManufacturerId
                 WHERE (
                     FREETEXT((p.Name, p.Description, p.Model), @keyword) OR
-                    FREETEXT((m.Name), @keyword) OR
-                    EXISTS (
-                        SELECT 1 FROM Characteristics c 
-                        WHERE c.ProductId = p.Id 
-                        AND FREETEXT((c.Value), @keyword)
-                    )
+                    FREETEXT((m.Name), @keyword)
                 )";
 
             var filtered = await this.repository
                 .FromSqlRawAsync<Product>(sql, new SqlParameter("@keyword", keyword));
+
+            var sqlResult = filtered.Where(p => p.Characteristics.Any(c => c.Value.Contains(keyword)));
 
             var productIds = filtered.Select(p => p.Id).ToList();
 
@@ -211,7 +210,7 @@
                 .Where(m => m.Products.Any(p => productIds.Contains(p.Id)))
                 .ToDictionaryAsync(m => m.Id, m => m.Name);
 
-            var result = filtered
+            var finalResult = filtered
                 .Select(p => new SearchViewModel
                 {
                     Id = p.Id,
@@ -222,7 +221,7 @@
                 })
                 .ToList();
 
-            return result;
+            return finalResult;
         }
 
         public async Task<ProductDetailsModel> GetProductDetails(int productId)

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HardwareStore.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(HardwareStoreDbContext))]
-    [Migration("20230806080309_Initial")]
+    [Migration("20230808105450_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -48,20 +48,13 @@ namespace HardwareStore.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("HardwareStore.Infrastructure.Models.Characteristic", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("ProductId")
                         .HasColumnType("int")
-                        .HasComment("characteristic id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasComment("characteristic product id");
 
                     b.Property<int>("CharacteristicNameId")
                         .HasColumnType("int")
                         .HasComment("characteristic name id");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int")
-                        .HasComment("characteristic product id");
 
                     b.Property<string>("Value")
                         .IsRequired()
@@ -69,13 +62,11 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                         .HasColumnType("nvarchar(120)")
                         .HasComment("characteristic value");
 
-                    b.HasKey("Id");
+                    b.HasKey("ProductId", "CharacteristicNameId");
 
                     b.HasIndex("CharacteristicNameId");
 
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("Characteristics");
+                    b.ToTable("Characteristics", (string)null);
 
                     b.HasComment("characteristic table");
                 });
@@ -213,13 +204,13 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                         .HasColumnType("int")
                         .HasComment("favorite product id");
 
-                    b.Property<string>("UserId")
+                    b.Property<string>("CustomerId")
                         .HasColumnType("nvarchar(450)")
                         .HasComment("favorite user id");
 
-                    b.HasKey("ProductId", "UserId");
+                    b.HasKey("ProductId", "CustomerId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("Favorites", (string)null);
 
@@ -402,16 +393,11 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                         .HasColumnType("int")
                         .HasComment("product order product id");
 
-                    b.Property<string>("CustomerId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("Quantity")
                         .HasColumnType("int")
                         .HasComment("product order quantity");
 
                     b.HasKey("OrderId", "ProductId");
-
-                    b.HasIndex("CustomerId");
 
                     b.HasIndex("ProductId");
 
@@ -426,17 +412,17 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                         .HasColumnType("int")
                         .HasComment("shopping cart item product id");
 
-                    b.Property<string>("UserId")
+                    b.Property<string>("CustomerId")
                         .HasColumnType("nvarchar(450)")
-                        .HasComment("shopping cart item user id");
+                        .HasComment("shopping cart item customer id");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int")
                         .HasComment("shopping cart item quantity");
 
-                    b.HasKey("ProductId", "UserId");
+                    b.HasKey("ProductId", "CustomerId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("ShoppingCartItems", (string)null);
 
@@ -585,13 +571,13 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                     b.HasOne("HardwareStore.Infrastructure.Models.CharacteristicName", "CharacteristicName")
                         .WithMany("Characteristics")
                         .HasForeignKey("CharacteristicNameId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("HardwareStore.Infrastructure.Models.Product", "Product")
                         .WithMany("Characteristics")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("CharacteristicName");
@@ -601,27 +587,27 @@ namespace HardwareStore.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("HardwareStore.Infrastructure.Models.Favorite", b =>
                 {
+                    b.HasOne("HardwareStore.Infrastructure.Models.Customer", "Customer")
+                        .WithMany("Favorites")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("HardwareStore.Infrastructure.Models.Product", "Product")
                         .WithMany("Favorites")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("HardwareStore.Infrastructure.Models.Customer", "User")
-                        .WithMany("Favorites")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                    b.Navigation("Customer");
 
                     b.Navigation("Product");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("HardwareStore.Infrastructure.Models.Order", b =>
                 {
                     b.HasOne("HardwareStore.Infrastructure.Models.Customer", "Customer")
-                        .WithMany()
+                        .WithMany("Orders")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -648,10 +634,6 @@ namespace HardwareStore.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("HardwareStore.Infrastructure.Models.ProductOrder", b =>
                 {
-                    b.HasOne("HardwareStore.Infrastructure.Models.Customer", null)
-                        .WithMany("Orders")
-                        .HasForeignKey("CustomerId");
-
                     b.HasOne("HardwareStore.Infrastructure.Models.Order", "Order")
                         .WithMany("ProductsOrders")
                         .HasForeignKey("OrderId")
@@ -671,21 +653,21 @@ namespace HardwareStore.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("HardwareStore.Infrastructure.Models.ShoppingCartItem", b =>
                 {
+                    b.HasOne("HardwareStore.Infrastructure.Models.Customer", "Customer")
+                        .WithMany("ShoppingCartItems")
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("HardwareStore.Infrastructure.Models.Product", "Product")
                         .WithMany("ShoppingCartItems")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("HardwareStore.Infrastructure.Models.Customer", "User")
-                        .WithMany("ShoppingCartItems")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                    b.Navigation("Customer");
 
                     b.Navigation("Product");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

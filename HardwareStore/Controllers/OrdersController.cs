@@ -12,9 +12,10 @@
         private readonly IOrderService orderService;
         private readonly ILogger<OrdersController> logger;
 
-        public OrdersController(IOrderService orderService)
+        public OrdersController(IOrderService orderService, ILogger<OrdersController> logger)
         {
             this.orderService = orderService;
+            this.logger = logger;
         }
 
         public async Task<IActionResult> Index()

@@ -47,10 +47,10 @@
                 .Orders
                 .Select(o => new OrderViewModel
                 {
-                    OrderId = o.OrderId.ToString(),
-                    OrderDate = o.Order.OrderDate.ToString("yyyy-MM-dd"),
-                    Status = o.Order.OrderStatus.ToString(),
-                    TotalAmount = o.Order.TotalAmount
+                    OrderId = o.Id.ToString(),
+                    OrderDate = o.OrderDate.ToString("yyyy-MM-dd"),
+                    Status = o.OrderStatus.ToString(),
+                    TotalAmount = o.TotalAmount
                 });
 
             return orders;

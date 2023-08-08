@@ -13,3 +13,19 @@ export async function sendFilterData(form, data) {
 
     document.querySelector('#products').innerHTML = html;
 }
+
+export async function decreaseItemQuantity(productId) {
+    await request.post(endpoint.decreaseQuantity, JSON.stringify(productId));
+}
+
+export async function increaseItemQuantity(productId) {
+    await request.post(endpoint.increaseQuantity, JSON.stringify(productId));
+}
+
+export async function updateItemQuantity(productId) {
+    await request.post(endpoint.updateQuantity, JSON.stringify(productId));
+}
+
+export async function removeItemFromCart(productId) {
+    await request.post(endpoint.removeItem, JSON.stringify(productId));
+}

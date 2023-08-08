@@ -72,10 +72,10 @@
 
         [Comment("order customer id")]
         [Required]
-        [ForeignKey(nameof(Customer))]
         public string CustomerId { get; set; } = null!;
 
         [Comment("order customer")]
+        [ForeignKey(nameof(CustomerId))]
         public Customer Customer { get; set; } = null!;
 
         public ICollection<ProductOrder> ProductsOrders { get; set; } = null!;

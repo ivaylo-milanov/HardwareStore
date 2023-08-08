@@ -21,6 +21,8 @@
 
         public async Task<ICollection<ShoppingCartExportModel>> AddToSessionShoppingCartAsync(int productId, int quantity, ICollection<ShoppingCartExportModel> cart)
         {
+            if (quantity <= 0) quantity = 1;
+
             var product = await this.repository.FindAsync<Product>(productId);
 
             if (product == null)
@@ -32,6 +34,11 @@
 
             if (cartItem == null)
             {
+                if (quantity > product.Quantity)
+                {
+                    throw new InvalidOperationException(String.Format(ExceptionMessages.NotManyItemsLeftInStock, product.Quantity, product.Name));
+                }
+
                 var model = new ShoppingCartExportModel
                 {
                     ProductId = productId,
@@ -52,6 +59,8 @@
 
             return cart;
         }
+
+
 
         public async Task<ICollection<ShoppingCartExportModel>> DecreaseSessionItemQuantityAsync(int productId, ICollection<ShoppingCartExportModel> cart)
         {
@@ -162,21 +171,7 @@
                 throw new ArgumentNullException(ExceptionMessages.CartItemNotFound);
             }
 
-            if (cartItem.Quantity == 1)
-            {
-                await this.RemoveFromSessionShoppingCartAsync(productId, cart);
-            }
-            else
-            {
-                if (cartItem.Quantity < 0)
-                {
-                    cartItem.Quantity = 1;
-                }
-                else
-                {
-                    cartItem.Quantity = quantity;
-                }
-            }
+            cartItem.Quantity = quantity;
 
             return cart;
         }
@@ -184,6 +179,8 @@
         public async Task AddToDatabaseShoppingCartAsync(int productId, int quantity, string userId)
         {
             var cart = await this.userService.GetCustomerShoppingCart(userId);
+
+            if (quantity <= 0) quantity = 1;
 
             var product = await this.repository.FindAsync<Product>(productId);
 
@@ -196,6 +193,11 @@
 
             if (cartItem == null)
             {
+                if (quantity > product.Quantity)
+                {
+                    throw new InvalidOperationException(String.Format(ExceptionMessages.NotManyItemsLeftInStock, product.Quantity, product.Name));
+                }
+
                 var model = new ShoppingCartItem
                 {
                     CustomerId = userId,
@@ -236,7 +238,6 @@
             }
 
             this.repository.Remove(cartItem);
-
             await repository.SaveChangesAsync();
         }
 
@@ -285,9 +286,8 @@
             if (cartItem.Quantity > 1)
             {
                 cartItem.Quantity--;
+                await this.repository.SaveChangesAsync();
             }
-
-            await this.repository.SaveChangesAsync();
         }
 
         public async Task IncreaseDatabaseItemQuantityAsync(int productId, string userId)
@@ -321,31 +321,15 @@
                 throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
             }
 
-            var cartItem = cart
-               .FirstOrDefault(i => i.ProductId == productId);
+            var cartItem = cart.FirstOrDefault(i => i.ProductId == productId);
 
             if (cartItem == null)
             {
                 throw new ArgumentNullException(ExceptionMessages.CartItemNotFound);
             }
 
-            if (quantity == 0)
-            {
-                await this.RemoveFromDatabaseShoppingCartAsync(productId, userId);
-            }
-            else
-            {
-                if (quantity < 0)
-                {
-                    cartItem.Quantity = 1;
-                }
-                else
-                {
-                    cartItem.Quantity = quantity;
-                }
-
-                await this.repository.SaveChangesAsync();
-            }
+            cartItem.Quantity = quantity;
+            await this.repository.SaveChangesAsync();
         }
     }
 }

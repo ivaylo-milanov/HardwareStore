@@ -130,7 +130,6 @@
             var customer = await this.repository
                 .All<Customer>()
                 .Include(p => p.Orders)
-                .ThenInclude(p => p.Order)
                 .FirstOrDefaultAsync(p => p.Id == userId);
 
             if (customer == null)

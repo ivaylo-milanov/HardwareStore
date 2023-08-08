@@ -79,7 +79,7 @@
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> RemoveFromShoppingCart(int productId)
+        public async Task<IActionResult> RemoveFromShoppingCart([FromBody] int productId)
         {
             try
             {
@@ -102,7 +102,7 @@
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> DecreaseItemQuantity(int productId)
+        public async Task<IActionResult> DecreaseItemQuantity([FromBody] int productId)
         {
             try
             {
@@ -125,7 +125,7 @@
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> IncreaseItemQuantity(int productId)
+        public async Task<IActionResult> IncreaseItemQuantity([FromBody] int productId)
         {
             try
             {
@@ -148,17 +148,17 @@
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> UpdateItemQuantity(int quantity, int productId)
+        public async Task<IActionResult> UpdateItemQuantity([FromBody] ShoppingCartUpdateModel model)
         {
             try
             {
                 if (User?.Identity?.IsAuthenticated ?? false)
                 {
-                    await this.shoppingCartService.UpdateDatabaseItemQuantityAsync(quantity, productId, HttpContext.User.GetUserId());
+                    await this.shoppingCartService.UpdateDatabaseItemQuantityAsync(model.Quantity, model.ProductId, HttpContext.User.GetUserId());
                 }
                 else
                 {
-                    var cart = await this.shoppingCartService.UpdateSessionItemQuantityAsync(quantity, productId, GetShoppingCart());
+                    var cart = await this.shoppingCartService.UpdateSessionItemQuantityAsync(model.Quantity, model.ProductId, GetShoppingCart());
                     SetShoppingCart(cart);
                 }
             }

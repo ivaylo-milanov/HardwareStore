@@ -47,10 +47,10 @@
         public int Warranty { get; set; }
 
         [Comment("product manufacturer id")]
-        [ForeignKey(nameof(Manufacturer))]
         public int? ManufacturerId { get; set; }
 
         [Comment("product manufacturer")]
+        [ForeignKey(nameof(ManufacturerId))]
         public Manufacturer? Manufacturer { get; set; }
 
         [Comment("product model")]
@@ -65,18 +65,18 @@
 
         [Comment("product category id")]
         [Required]
-        [ForeignKey(nameof(Category))]
         public int CategoryId { get; set; }
 
         [Comment("product category")]
+        [ForeignKey(nameof(CategoryId))]
         public Category Category { get; set; } = null!;
 
         public ICollection<Characteristic> Characteristics { get; set; }
 
         public ICollection<ProductOrder> ProductsOrders { get; set; } = null!;
 
-        public virtual ICollection<ShoppingCartItem> ShoppingCartItems { get; set; } = null!;
+        public ICollection<ShoppingCartItem> ShoppingCartItems { get; set; } = null!;
 
-        public virtual ICollection<Favorite> Favorites { get; set; } = null!;
+        public ICollection<Favorite> Favorites { get; set; } = null!;
     }
 }

@@ -51,7 +51,7 @@
                     Characteristics = Enumerable.Range(1, 3)
                         .Select(j => new Characteristic
                         {
-                            Id = (i - 1) * 3 + j,
+                            ProductId = i,
                             CharacteristicNameId = characteristicNames[(j - 1) % characteristicNames.Count].Id,
                             Value = $"Value{(i - 1) * 3 + j}"
                         }).ToList()
@@ -62,7 +62,7 @@
                 Id = 13,
                 Name = "Product13",
                 Price = 130,
-                Quantity = 100 * 13,
+                Quantity = 13,
                 AddDate = DateTime.Now,
                 Warranty = 1,
                 ManufacturerId = null,
@@ -73,13 +73,13 @@
                 {
                     new Characteristic
                     {
-                        Id = 37,
+                        ProductId = 13,
                         CharacteristicNameId = 2,
                         Value = "Value37"
                     },
                     new Characteristic
                     {
-                        Id = 38,
+                        ProductId = 13,
                         CharacteristicNameId = 4,
                         Value = "1"
                     }
@@ -91,7 +91,7 @@
                 Id = 14,
                 Name = "Product14",
                 Price = 140,
-                Quantity = 100 * 14,
+                Quantity = 14,
                 AddDate = DateTime.Now,
                 Warranty = 1,
                 ManufacturerId = 2,
@@ -105,7 +105,7 @@
                 Id = 15,
                 Name = "Product15",
                 Price = 150,
-                Quantity = 100 * 15,
+                Quantity = 15,
                 AddDate = new DateTime(2022, 11, 22),
                 Warranty = 1,
                 ManufacturerId = 2,
@@ -116,13 +116,13 @@
                 {
                     new Characteristic
                     {
-                        Id = 39,
+                        ProductId = 15,
                         CharacteristicNameId = 2,
                         Value = "Value39"
                     },
                     new Characteristic
                     {
-                        Id = 40,
+                        ProductId = 15,
                         CharacteristicNameId = 4,
                         Value = "Value40, Value41"
                     }
@@ -153,6 +153,21 @@
                         {
                             CustomerId = "TestCustomer1",
                             ProductId = 14
+                        }
+                    },
+                    ShoppingCartItems = new List<ShoppingCartItem>()
+                    {
+                        new ShoppingCartItem
+                        {
+                            ProductId = 13,
+                            CustomerId = "TestCustomer1",
+                            Quantity = 2
+                        },
+                        new ShoppingCartItem
+                        {
+                            ProductId = 14,
+                            CustomerId = "TestCustomer1",
+                            Quantity = 3
                         }
                     }
                 },

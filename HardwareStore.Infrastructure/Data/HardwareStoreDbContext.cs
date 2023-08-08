@@ -14,8 +14,6 @@
 
         public DbSet<Product> Products { get; set; } = null!;
 
-        public DbSet<Characteristic> Characteristics { get; set; } = null!;
-
         public DbSet<Category> Categories { get; set; } = null!;
 
         public DbSet<Order> Orders { get; set; } = null!;
@@ -30,6 +28,7 @@
             builder.ApplyConfiguration(new CustomerConfiguration());
             builder.ApplyConfiguration(new ShoppingCartItemConfiguration());
             builder.ApplyConfiguration(new FavoriteConfiguration());
+            builder.ApplyConfiguration(new CharacteristicConfiguraion());
             
             base.OnModelCreating(builder);
         }

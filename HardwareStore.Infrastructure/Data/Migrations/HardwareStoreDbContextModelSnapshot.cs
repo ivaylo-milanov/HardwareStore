@@ -46,20 +46,13 @@ namespace HardwareStore.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("HardwareStore.Infrastructure.Models.Characteristic", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("ProductId")
                         .HasColumnType("int")
-                        .HasComment("characteristic id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                        .HasComment("characteristic product id");
 
                     b.Property<int>("CharacteristicNameId")
                         .HasColumnType("int")
                         .HasComment("characteristic name id");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int")
-                        .HasComment("characteristic product id");
 
                     b.Property<string>("Value")
                         .IsRequired()
@@ -67,13 +60,11 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                         .HasColumnType("nvarchar(120)")
                         .HasComment("characteristic value");
 
-                    b.HasKey("Id");
+                    b.HasKey("ProductId", "CharacteristicNameId");
 
                     b.HasIndex("CharacteristicNameId");
 
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("Characteristics");
+                    b.ToTable("Characteristics", (string)null);
 
                     b.HasComment("characteristic table");
                 });
@@ -400,16 +391,11 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                         .HasColumnType("int")
                         .HasComment("product order product id");
 
-                    b.Property<string>("CustomerId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("Quantity")
                         .HasColumnType("int")
                         .HasComment("product order quantity");
 
                     b.HasKey("OrderId", "ProductId");
-
-                    b.HasIndex("CustomerId");
 
                     b.HasIndex("ProductId");
 
@@ -583,13 +569,13 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                     b.HasOne("HardwareStore.Infrastructure.Models.CharacteristicName", "CharacteristicName")
                         .WithMany("Characteristics")
                         .HasForeignKey("CharacteristicNameId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("HardwareStore.Infrastructure.Models.Product", "Product")
                         .WithMany("Characteristics")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("CharacteristicName");
@@ -619,7 +605,7 @@ namespace HardwareStore.Infrastructure.Data.Migrations
             modelBuilder.Entity("HardwareStore.Infrastructure.Models.Order", b =>
                 {
                     b.HasOne("HardwareStore.Infrastructure.Models.Customer", "Customer")
-                        .WithMany()
+                        .WithMany("Orders")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -646,10 +632,6 @@ namespace HardwareStore.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("HardwareStore.Infrastructure.Models.ProductOrder", b =>
                 {
-                    b.HasOne("HardwareStore.Infrastructure.Models.Customer", null)
-                        .WithMany("Orders")
-                        .HasForeignKey("CustomerId");
-
                     b.HasOne("HardwareStore.Infrastructure.Models.Order", "Order")
                         .WithMany("ProductsOrders")
                         .HasForeignKey("OrderId")

@@ -10,10 +10,6 @@
     [Comment("characteristic table")]
     public class Characteristic
     {
-        [Comment("characteristic id")]
-        [Key]
-        public int Id { get; set; }
-
         [Comment("characteristic product id")]
         [ForeignKey(nameof(Product))]
         public int ProductId { get; set; }
