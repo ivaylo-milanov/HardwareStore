@@ -224,44 +224,6 @@
             return finalResult;
         }
 
-        public async Task<ProductDetailsModel> GetProductDetails(int productId)
-        {
-            var product = await this.repository
-                .AllReadonly<Product>()
-                .Include(p => p.Manufacturer)
-                .Include(p => p.Characteristics)
-                .ThenInclude(p => p.CharacteristicName)
-                .Where(p => p.Id == productId)
-                .FirstOrDefaultAsync();
-
-            if (product == null)
-            {
-                throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
-            }
-
-            var model = new ProductDetailsModel
-            {
-                Id = product.Id,
-                Price = product.Price,
-                Name = product.Name,
-                AddDate = product.AddDate,
-                Manufacturer = product.Manufacturer?.Name,
-                ReferenceNumber = product.ReferenceNumber,
-                Description = product.Description,
-                Warranty = product.Warranty,
-                IsFavorite = false,
-                Attributes = product.Characteristics
-                        .Select(pa => new ProductAttributeExportModel
-                        {
-                            Name = pa.CharacteristicName.Name,
-                            Value = pa.Value
-                        })
-                        .ToList()
-            };
-
-            return model;
-        }
-
         private IEnumerable<FilterCategoryModel> GetFilterCategories<TModel>(IEnumerable<TModel> products) where TModel : ProductViewModel
         {
             var modelType = typeof(TModel);

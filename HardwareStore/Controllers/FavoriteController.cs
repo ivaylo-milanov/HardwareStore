@@ -3,6 +3,7 @@
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Favorite;
     using HardwareStore.Extensions;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
@@ -24,7 +25,7 @@
             {
                 if (User?.Identity?.IsAuthenticated ?? false)
                 {
-                    favorites = await this.favoriteService.GetDatabaseFavoriteAsync(HttpContext.User.GetUserId());
+                    favorites = await this.favoriteService.GetDatabaseFavoriteAsync(User.GetUserId());
                 }
                 else
                 {
@@ -40,13 +41,13 @@
             return View(favorites);
         }
 
-        public async Task<IActionResult> AddToFavorite(int productId)
+        public async Task<IActionResult> AddToFavorite([FromBody] int productId)
         {
             try
             {
                 if (User?.Identity?.IsAuthenticated ?? false)
                 {
-                    await this.favoriteService.AddToDatabaseFavoriteAsync(productId, HttpContext.User.GetUserId());
+                    await this.favoriteService.AddToDatabaseFavoriteAsync(productId, User.GetUserId());
                 }
                 else
                 {
@@ -63,13 +64,13 @@
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> RemoveFromFavorite(int productId)
+        public async Task<IActionResult> RemoveFromFavorite([FromBody] int productId)
         {
             try
             {
                 if (User?.Identity?.IsAuthenticated ?? false)
                 {
-                    await this.favoriteService.RemoveFromDatabaseFavoriteAsync(productId, HttpContext.User.GetUserId());
+                    await this.favoriteService.RemoveFromDatabaseFavoriteAsync(productId, User.GetUserId());
                 }
                 else
                 {

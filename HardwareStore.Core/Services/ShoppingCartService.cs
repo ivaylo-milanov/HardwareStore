@@ -5,18 +5,17 @@
     using HardwareStore.Core.ViewModels.ShoppingCart;
     using HardwareStore.Infrastructure.Common;
     using HardwareStore.Infrastructure.Models;
+    using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
     public class ShoppingCartService : IShoppingCartService
     {
         private readonly IRepository repository;
-        private readonly IUserService userService;
 
-        public ShoppingCartService(IRepository repository, IUserService userService)
+        public ShoppingCartService(IRepository repository)
         {
             this.repository = repository;
-            this.userService = userService;
         }
 
         public async Task<ICollection<ShoppingCartExportModel>> AddToSessionShoppingCartAsync(int productId, int quantity, ICollection<ShoppingCartExportModel> cart)
@@ -178,7 +177,7 @@
 
         public async Task AddToDatabaseShoppingCartAsync(int productId, int quantity, string userId)
         {
-            var cart = await this.userService.GetCustomerShoppingCart(userId);
+            var customer = await GetCartCustomer(userId);
 
             if (quantity <= 0) quantity = 1;
 
@@ -189,7 +188,7 @@
                 throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
             }
 
-            var cartItem = cart.FirstOrDefault(p => p.ProductId == productId);
+            var cartItem = customer.ShoppingCartItems.FirstOrDefault(p => p.ProductId == productId);
 
             if (cartItem == null)
             {
@@ -200,12 +199,11 @@
 
                 var model = new ShoppingCartItem
                 {
-                    CustomerId = userId,
                     ProductId = productId,
-                    Quantity = quantity,
+                    Quantity = quantity
                 };
 
-                await this.repository.AddAsync(model);
+                customer.ShoppingCartItems.Add(model);
             }
             else
             {
@@ -222,14 +220,14 @@
 
         public async Task RemoveFromDatabaseShoppingCartAsync(int productId, string userId)
         {
-            var cart = await this.userService.GetCustomerShoppingCart(userId);
+            var customer = await GetCartCustomer(userId);
 
             if (!await this.repository.AnyAsync<Product>(p => p.Id == productId))
             {
                 throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
             }
 
-            var cartItem = cart
+            var cartItem = customer.ShoppingCartItems
                 .FirstOrDefault(i => i.ProductId == productId);
 
             if (cartItem == null)
@@ -243,9 +241,9 @@
 
         public async Task<ShoppingCartViewModel> GetDatabaseShoppingCartAsync(string userId)
         {
-            var cart = await this.userService.GetCustomerShoppingCart(userId);
+            var customer = await GetCartCustomer(userId);
 
-            var shoppings = cart
+            var shoppings = customer.ShoppingCartItems
                 .Select(sci => new ShoppingCartItemViewModel
                 {
                     ProductId = sci.Product.Id,
@@ -268,14 +266,14 @@
 
         public async Task DecreaseDatabaseItemQuantityAsync(int productId, string userId)
         {
-            var cart = await this.userService.GetCustomerShoppingCart(userId);
+            var customer = await GetCartCustomer(userId);
 
             if (!await this.repository.AnyAsync<Product>(p => p.Id == productId))
             {
                 throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
             }
 
-            var cartItem = cart
+            var cartItem = customer.ShoppingCartItems
                 .FirstOrDefault(i => i.ProductId == productId);
 
             if (cartItem == null)
@@ -292,14 +290,14 @@
 
         public async Task IncreaseDatabaseItemQuantityAsync(int productId, string userId)
         {
-            var cart = await this.userService.GetCustomerShoppingCart(userId);
+            var customer = await GetCartCustomer(userId);
 
             if (!await this.repository.AnyAsync<Product>(p => p.Id == productId))
             {
                 throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
             }
 
-            var cartItem = cart
+            var cartItem = customer.ShoppingCartItems
                 .FirstOrDefault(i => i.ProductId == productId);
 
             if (cartItem == null)
@@ -314,14 +312,14 @@
 
         public async Task UpdateDatabaseItemQuantityAsync(int quantity, int productId, string userId)
         {
-            var cart = await this.userService.GetCustomerShoppingCart(userId);
+            var customer = await GetCartCustomer(userId);
 
             if (!await this.repository.AnyAsync<Product>(p => p.Id == productId))
             {
                 throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
             }
 
-            var cartItem = cart.FirstOrDefault(i => i.ProductId == productId);
+            var cartItem = customer.ShoppingCartItems.FirstOrDefault(i => i.ProductId == productId);
 
             if (cartItem == null)
             {
@@ -330,6 +328,22 @@
 
             cartItem.Quantity = quantity;
             await this.repository.SaveChangesAsync();
+        }
+
+        private async Task<Customer> GetCartCustomer(string userId)
+        {
+            var customer = await this.repository
+                .All<Customer>()
+                .Include(c => c.ShoppingCartItems)
+                .ThenInclude(c => c.Product)
+                .FirstOrDefaultAsync(c => c.Id == userId);
+
+            if (customer == null)
+            {
+                throw new ArgumentNullException(ExceptionMessages.UserNotFound);
+            }
+
+            return customer;
         }
     }
 }

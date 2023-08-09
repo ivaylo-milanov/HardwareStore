@@ -3,6 +3,7 @@
     using HardwareStore.Infrastructure.Common;
     using HardwareStore.Infrastructure.Data;
     using HardwareStore.Infrastructure.Models;
+    using HardwareStore.Infrastructure.Models.Enums;
     using Microsoft.EntityFrameworkCore;
 
     public static class TestRepository
@@ -73,13 +74,11 @@
                 {
                     new Characteristic
                     {
-                        ProductId = 13,
                         CharacteristicNameId = 2,
                         Value = "Value37"
                     },
                     new Characteristic
                     {
-                        ProductId = 13,
                         CharacteristicNameId = 4,
                         Value = "1"
                     }
@@ -116,13 +115,11 @@
                 {
                     new Characteristic
                     {
-                        ProductId = 15,
                         CharacteristicNameId = 2,
                         Value = "Value39"
                     },
                     new Characteristic
                     {
-                        ProductId = 15,
                         CharacteristicNameId = 4,
                         Value = "Value40, Value41"
                     }
@@ -135,9 +132,9 @@
                 {
                     Id = "TestCustomer1",
                     UserName = "Customer1",
-                    Email = "customer@mail.com",
+                    Email = "customer1@mail.com",
                     FirstName = "FirstName1",
-                    LastName = "LastNam1",
+                    LastName = "LastName1",
                     Phone = "Phone1",
                     Area = "Area1",
                     City = "City1",
@@ -146,12 +143,10 @@
                     {
                         new Favorite
                         {
-                            CustomerId = "TestCustomer1",
                             ProductId = 13
                         },
                         new Favorite
                         {
-                            CustomerId = "TestCustomer1",
                             ProductId = 14
                         }
                     },
@@ -160,14 +155,41 @@
                         new ShoppingCartItem
                         {
                             ProductId = 13,
-                            CustomerId = "TestCustomer1",
                             Quantity = 2
                         },
                         new ShoppingCartItem
                         {
                             ProductId = 14,
-                            CustomerId = "TestCustomer1",
                             Quantity = 3
+                        }
+                    },
+                    Orders = new List<Order>() {
+                        new Order
+                        {
+                            OrderDate = DateTime.Now,
+                            TotalAmount = 400,
+                            OrderStatus = OrderStatus.Pending,
+                            PaymentMethod = PaymentMethod.Cash,
+                            AdditionalNotes = null,
+                            FirstName = "FirstName1",
+                            LastName = "LastName1",
+                            Phone = "Phone1",
+                            Area = "Area1",
+                            City = "City1",
+                            Address = "Address1",
+                            ProductsOrders = new List<ProductOrder>()
+                            {
+                                new ProductOrder
+                                {
+                                    ProductId = 13,
+                                    Quantity = 2
+                                },
+                                new ProductOrder
+                                {
+                                    ProductId = 14,
+                                    Quantity = 1
+                                }
+                            }
                         }
                     }
                 },
@@ -175,9 +197,9 @@
                 {
                     Id = "TestCustomer2",
                     UserName = "Customer2",
-                    Email = "customer@mail.com",
+                    Email = "customer2@mail.com",
                     FirstName = "FirstName2",
-                    LastName = "LastNam2",
+                    LastName = "LastName2",
                     Phone = "Phone2",
                     Area = "Area2",
                     City = "City2",

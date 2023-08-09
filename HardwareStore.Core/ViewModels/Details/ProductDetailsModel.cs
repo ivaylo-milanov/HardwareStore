@@ -1,4 +1,6 @@
-﻿namespace HardwareStore.Core.ViewModels.Product
+﻿using HardwareStore.Core.ViewModels.Product;
+
+namespace HardwareStore.Core.ViewModels.Details
 {
     public class ProductDetailsModel : ProductViewModel
     {

@@ -4,7 +4,9 @@ const endpoint = {
     decreaseQuantity: '/Cart/DecreaseItemQuantity',
     removeItem: '/Cart/RemoveFromShoppingCart',
     increaseQuantity: '/Cart/IncreaseItemQuantity',
-    updateQuantity: '/Cart/UpdateItemQuantity'
+    updateQuantity: '/Cart/UpdateItemQuantity',
+    addFavorite: '/Favorite/AddToFavorite',
+    removeFavorite: '/Favorite/RemoveFromFavorite'
 }
 
 export async function sendFilterData(form, data) {
@@ -28,4 +30,12 @@ export async function updateItemQuantity(productId) {
 
 export async function removeItemFromCart(productId) {
     await request.post(endpoint.removeItem, JSON.stringify(productId));
+}
+
+export async function addToFavorite(productId) {
+    await request.post(endpoint.addFavorite, JSON.stringify(productId));
+}
+
+export async function removeFromFavorite(productId) {
+    await request.post(endpoint.removeFavorite, JSON.stringify(productId));
 }

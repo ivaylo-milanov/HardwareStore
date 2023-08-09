@@ -11,8 +11,6 @@
 
         Task<ProductsViewModel<SearchViewModel>> GetSearchModel(string keyword);
 
-        Task<ProductDetailsModel> GetProductDetails(int productId);
-
         Task<ProductsViewModel<TModel>> GetModel<TModel>() where TModel : ProductViewModel;
     }
 }

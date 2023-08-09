@@ -1,21 +1,19 @@
 ﻿namespace HardwareStore.Controllers
 {
     using HardwareStore.Core.Services.Contracts;
-    using HardwareStore.Core.ViewModels.Product;
+    using HardwareStore.Core.ViewModels.Details;
     using HardwareStore.Extensions;
     using Microsoft.AspNetCore.Mvc;
 
     public class ProductController : Controller
     {
-        private readonly IProductService productService;
-        private readonly IUserService userService;
+        private readonly IDetailsService detailsService;
         private readonly ILogger<ProductController> logger;
 
-        public ProductController(IProductService productService, ILogger<ProductController> logger, IUserService userService)
+        public ProductController(IDetailsService detailsService, ILogger<ProductController> logger)
         {
-            this.productService = productService;
-            this.userService = userService;
             this.logger = logger;
+            this.detailsService = detailsService;
         }
 
         public async Task<IActionResult> Details(int productId)
@@ -23,10 +21,7 @@
             ProductDetailsModel model;
             try
             {
-                model = await this.productService.GetProductDetails(productId);
-
-                var userId = HttpContext.User.GetUserId();
-                model.IsFavorite = await userService.IsFavorite(model.Id, userId, GetFavorites());
+                model = await this.detailsService.GetProductDetails(productId);
             }
             catch (ArgumentNullException ex)
             {
@@ -36,8 +31,5 @@
 
             return View(model);
         }
-
-        private ICollection<int> GetFavorites()
-            => HttpContext.Session.Get<ICollection<int>>("Favorite") ?? new List<int>();
     }
 }

@@ -281,39 +281,6 @@ namespace HardwareStore.Tests
         }
 
         [Test]
-        public async Task TheProductDetialsReturnsDetailsAboutValidProduct()
-        {
-            var result = await productService.GetProductDetails(13);
-
-            Assert.That(result.Id == 13);
-            Assert.That(result.Name == "Product13");
-            Assert.That(result.Manufacturer == null);
-            Assert.That(result.Description == null);
-            Assert.That(result.Warranty == 1);
-            Assert.That(result.Attributes.Count() == 2);
-            Assert.That(result.IsFavorite == false);
-            Assert.That(result.Price == 130);
-        }
-
-        [Test]
-        public void TheProductDetailsThrowsExceptionAboutInvalidProduct()
-        {
-            Assert.ThrowsAsync<ArgumentNullException>(async () =>
-            {
-                var result = await productService.GetProductDetails(0);
-            }, "The product does not exist.");
-        }
-
-        [Test]
-        public void TheProductDetailsThrowsExceptionAboutInvalidProductWithProductIdMoreThanTheProductsCount()
-        {
-            Assert.ThrowsAsync<ArgumentNullException>(async () =>
-            {
-                var result = await productService.GetProductDetails(20);
-            }, "The product does not exist.");
-        }
-
-        [Test]
         public async Task FilterProductsWhenCacheContainsProductsReturnsCorrectProducts()
         {
             // Arrange

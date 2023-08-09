@@ -3,18 +3,16 @@
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Profile;
     using HardwareStore.Extensions;
-    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    [Authorize]
-    public class ProfileController : Controller
+    public class ProfileController : SecureController
     {
-        private readonly IUserService userService;
+        private readonly IProfileService profileService;
         private readonly ILogger<ProfileController> logger;
 
-        public ProfileController(IUserService userService, ILogger<ProfileController> logger)
+        public ProfileController(IProfileService profileService, ILogger<ProfileController> logger)
         {
-            this.userService = userService;
+            this.profileService = profileService;
             this.logger = logger;
         }
 
@@ -23,7 +21,7 @@
             ProfileViewModel model;
             try
             {
-                model = await this.userService.GetCustomerProfile(HttpContext.User.GetUserId());
+                model = await this.profileService.GetProfileModel(User.GetUserId());
             }
             catch (ArgumentNullException ex)
             {

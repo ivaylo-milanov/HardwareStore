@@ -16,9 +16,9 @@
         {
             var repository = await TestRepository.GetRepository();
 
-            var userService = new UserService(repository);
+            var userService = new SessionService(repository);
 
-            favoriteService = new FavoriteService(repository, userService);
+            favoriteService = new FavoriteService(repository);
 
             this.favoriteSession = new List<int> { 13, 14 };
         }

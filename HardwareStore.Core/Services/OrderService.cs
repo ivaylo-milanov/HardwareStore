@@ -6,23 +6,22 @@
     using HardwareStore.Infrastructure.Common;
     using HardwareStore.Infrastructure.Models;
     using HardwareStore.Infrastructure.Models.Enums;
+    using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
     public class OrderService : IOrderService
     {
         private readonly IRepository repository;
-        private readonly IUserService userService;
 
-        public OrderService(IRepository repository, IUserService userService)
+        public OrderService(IRepository repository)
         {
             this.repository = repository;
-            this.userService = userService;
         }
 
         public async Task<OrderFormModel> GetOrderModel(string userId)
         {
-            var customer = await this.userService.GetCustomerWithShoppingCart(userId);
+            var customer = await GetOrdersCustomer(userId);
 
             var totalAmount = GetTotalAmount(customer.ShoppingCartItems);
             OrderFormModel model = new OrderFormModel
@@ -41,9 +40,9 @@
 
         public async Task<IEnumerable<OrderViewModel>> GetUserOrders(string userId)
         {
-            var customer = await userService.GetCustomerWithShoppingCart(userId);
+            var customer = await GetOrdersCustomer(userId);
 
-            var orders = customer
+            var ordersModels = customer
                 .Orders
                 .Select(o => new OrderViewModel
                 {
@@ -53,14 +52,14 @@
                     TotalAmount = o.TotalAmount
                 });
 
-            return orders;
+            return ordersModels;
         }
 
         public async Task OrderAsync(OrderFormModel model, string userId)
         {
-            var cart = await this.userService.GetCustomerShoppingCart(userId);
+            var customer = await GetOrdersCustomer(userId);
 
-            var totalAmount = GetTotalAmount(cart);
+            var totalAmount = GetTotalAmount(customer.ShoppingCartItems);
             Order order = new Order
             {
                 FirstName = model.FirstName,
@@ -79,9 +78,11 @@
 
             var orderProducts = new List<ProductOrder>();
 
-            foreach (var item in cart)
+            foreach (var item in customer.ShoppingCartItems)
             {
-                if (!await this.repository.AnyAsync<Product>(p => p.Id == item.ProductId))
+                var product = await this.repository.FindAsync<Product>(item.ProductId);
+
+                if (product == null)
                 {
                     throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
                 }
@@ -93,16 +94,33 @@
                 };
 
                 orderProducts.Add(productOrder);
+
+                product.Quantity -= item.Quantity;
             }
 
             order.ProductsOrders = orderProducts;
             await this.repository.AddAsync(order);
 
-            this.repository.RemoveRange(cart);
+            this.repository.RemoveRange(customer.ShoppingCartItems);
 
             await this.repository.SaveChangesAsync();
         }
 
         private decimal GetTotalAmount(ICollection<ShoppingCartItem> cart) => cart.Sum(sc => sc.Quantity * sc.Product.Price);
+
+        private async Task<Customer> GetOrdersCustomer(string userId)
+        {
+            var customer = await this.repository
+                .All<Customer>()
+                .Include(c => c.Orders)
+                .FirstOrDefaultAsync(c => c.Id == userId);
+
+            if (customer == null)
+            {
+                throw new ArgumentNullException(ExceptionMessages.UserNotFound);
+            }
+
+            return customer;
+        }
     }
 }

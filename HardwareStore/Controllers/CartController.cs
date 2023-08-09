@@ -24,7 +24,7 @@
             {
                 if (User?.Identity?.IsAuthenticated ?? false)
                 {
-                    shoppingCart = await this.shoppingCartService.GetDatabaseShoppingCartAsync(HttpContext.User.GetUserId());
+                    shoppingCart = await this.shoppingCartService.GetDatabaseShoppingCartAsync(User.GetUserId());
                 }
                 else
                 {
@@ -56,7 +56,7 @@
             {
                 if (User?.Identity?.IsAuthenticated ?? false)
                 {
-                    await this.shoppingCartService.AddToDatabaseShoppingCartAsync(productId, quantity, HttpContext.User.GetUserId());
+                    await this.shoppingCartService.AddToDatabaseShoppingCartAsync(productId, quantity, User.GetUserId());
                 }
                 else
                 {
@@ -85,7 +85,7 @@
             {
                 if (User?.Identity?.IsAuthenticated ?? false)
                 {
-                    await this.shoppingCartService.RemoveFromDatabaseShoppingCartAsync(productId, HttpContext.User.GetUserId());
+                    await this.shoppingCartService.RemoveFromDatabaseShoppingCartAsync(productId, User.GetUserId());
                 }
                 else
                 {
@@ -108,7 +108,7 @@
             {
                 if (User?.Identity?.IsAuthenticated ?? false)
                 {
-                    await this.shoppingCartService.DecreaseDatabaseItemQuantityAsync(productId, HttpContext.User.GetUserId());
+                    await this.shoppingCartService.DecreaseDatabaseItemQuantityAsync(productId, User.GetUserId());
                 }
                 else
                 {
@@ -131,7 +131,7 @@
             {
                 if (User?.Identity?.IsAuthenticated ?? false)
                 {
-                    await this.shoppingCartService.IncreaseDatabaseItemQuantityAsync(productId, HttpContext.User.GetUserId());
+                    await this.shoppingCartService.IncreaseDatabaseItemQuantityAsync(productId, User.GetUserId());
                 }
                 else
                 {
@@ -154,7 +154,7 @@
             {
                 if (User?.Identity?.IsAuthenticated ?? false)
                 {
-                    await this.shoppingCartService.UpdateDatabaseItemQuantityAsync(model.Quantity, model.ProductId, HttpContext.User.GetUserId());
+                    await this.shoppingCartService.UpdateDatabaseItemQuantityAsync(model.Quantity, model.ProductId, User.GetUserId());
                 }
                 else
                 {

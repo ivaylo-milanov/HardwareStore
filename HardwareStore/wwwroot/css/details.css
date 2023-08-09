@@ -144,6 +144,11 @@
     color: #4CAF50;
 }
 
+.like-error-message {
+    display: none;
+    color: red;
+}
+
 
 
 

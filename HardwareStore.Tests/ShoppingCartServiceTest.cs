@@ -17,9 +17,7 @@
         {
             var repository = await TestRepository.GetRepository();
 
-            var userService = new UserService(repository);
-
-            shoppingCartService = new ShoppingCartService(repository, userService);
+            shoppingCartService = new ShoppingCartService(repository);
 
             this.shoppingCartSession = new List<ShoppingCartExportModel>
             {
@@ -1315,8 +1313,10 @@
             string userId = "TestCustomer1";
             await this.shoppingCartService.RemoveFromDatabaseShoppingCartAsync(13, userId);
 
+            //Act
             var cart = await this.shoppingCartService.GetDatabaseShoppingCartAsync(userId);
 
+            //Assert
             Assert.That(!cart.Shoppings.Any(i => i.ProductId == 13));
         }
     }

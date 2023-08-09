@@ -13,12 +13,7 @@
             <div>
                 <div>$@Model.Price.ToString("F2")</div>
             </div>
-            <div class="like-container" data-is-favorite="@Model.IsFavorite">
-                <a asp-action="AddToFavorite" asp-controller="Favorite" asp-route-productId="@Model.Id" class="button button-like">
-                    <i class="fa fa-heart"></i>
-                </a>
-                <span class="like-text"></span>
-            </div>
+            @await Component.InvokeAsync("Favorite", new { productId = Model.Id })
             <span>
                 <form asp-action="AddToShoppingCart" asp-controller="Cart" method="post">
                     <input type="hidden" name="productId" value="@Model.Id" />
@@ -50,5 +45,5 @@
 </div>
 
 @section Scripts {
-    <script src="~/js/details.js"></script>
+    <script type="module" src="~/js/details.js"></script>
 }

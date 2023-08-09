@@ -1,0 +1,9 @@
+﻿@model DetailsFavoriteModel
+
+<div class="like-container" data-is-favorite="@Model.IsFavorite" data-product-id="@Model.ProductId">
+    <a class="button button-like">
+        <i class="fa fa-heart"></i>
+    </a>
+    <span class="like-text"></span>
+    <span class="like-error-message">An error occurred. Please try again.</span>
+</div>

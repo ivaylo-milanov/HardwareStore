@@ -12,7 +12,7 @@
                         <p class="product-price">$@favorite.Price</p>
                         <div class="product-buttons">
                             <a asp-action="AddToShoppingCart" asp-controller="Cart" asp-route-productId="@favorite.Id" asp-route-quantity="1" class="product-button">Buy</a>
-                            <span>Remove from favorite <a asp-action="RemoveFromFavorite" asp-controller="Favorite" asp-route-productId="@favorite.Id" class="remove-favorite">x</a></span>
+                            <span>Remove from favorite <a data-product-id="@favorite.Id" class="remove-favorite">x</a></span>
                         </div>
                         <a class="hiddenLink" asp-action="Details" asp-controller="Product" asp-route-productId="@favorite.Id" hidden></a>
                     </div>

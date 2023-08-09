@@ -72,11 +72,9 @@ cartItems.forEach(item => {
         const removePrice = multiplyPriceAndQuantity(getQuantity());
         updateTotalAndSubtotal(-removePrice);
 
-        var result = await removeItemFromCart(productId);
+        await removeItemFromCart(productId);
 
-        if (result.success) {
-            location.reload();
-        }
+        location.reload();
     }
 
     item.querySelector('.btn-remove').addEventListener('click', removeItemHandler);
@@ -103,6 +101,7 @@ cartItems.forEach(item => {
             if (quantity == 0) {
                 item.remove();
                 await removeItemFromCart(productId);
+                location.reload();
                 return;
             } 
 

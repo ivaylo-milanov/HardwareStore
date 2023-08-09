@@ -5,40 +5,38 @@
     using HardwareStore.Core.ViewModels.Favorite;
     using HardwareStore.Infrastructure.Common;
     using HardwareStore.Infrastructure.Models;
+    using Microsoft.EntityFrameworkCore;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
     public class FavoriteService : IFavoriteService
     {
         private readonly IRepository repository;
-        private readonly IUserService userService;
 
-        public FavoriteService(IRepository repository, IUserService userService)
+        public FavoriteService(IRepository repository)
         {
             this.repository = repository;
-            this.userService = userService;
         }
 
         public async Task AddToDatabaseFavoriteAsync(int productId, string userId)
         {
-            var favorites = await userService.GetCustomerFavorites(userId);
+            var customer = await GetFavoritesCustomer(userId);
 
             if (!await this.repository.AnyAsync<Product>(p => p.Id == productId))
             {
                 throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
             }
 
-            var cartItem = favorites.FirstOrDefault(p => p.ProductId == productId);
+            var cartItem = customer.Favorites.FirstOrDefault(p => p.ProductId == productId);
 
             if (cartItem == null)
             {
                 Favorite favorite = new Favorite
                 {
-                    ProductId = productId,
-                    CustomerId = userId
+                    ProductId = productId
                 };
 
-                favorites.Add(favorite);
+                customer.Favorites.Add(favorite);
                 await this.repository.SaveChangesAsync();
             }
         }
@@ -60,14 +58,14 @@
 
         public async Task RemoveFromDatabaseFavoriteAsync(int productId, string userId)
         {
-            var favorites = await userService.GetCustomerFavorites(userId);
+            var customer = await GetFavoritesCustomer(userId);
 
             if (!await this.repository.AnyAsync<Product>(p => p.Id == productId))
             {
                 throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
             }
 
-            var cartItem = favorites.FirstOrDefault(p => p.ProductId == productId);
+            var cartItem = customer.Favorites.FirstOrDefault(p => p.ProductId == productId);
 
             if (cartItem != null)
             {
@@ -93,9 +91,11 @@
 
         public async Task<ICollection<FavoriteExportModel>> GetDatabaseFavoriteAsync(string userId)
         {
-            var favorites = await userService.GetCustomerFavorites(userId);
+            var customer = await GetFavoritesCustomer(userId);
+            ICollection<FavoriteExportModel> favoriteItems = new List<FavoriteExportModel>();
 
-            var favoritesModels = favorites
+            var favoritesModels = customer
+                .Favorites
                 .Select(f => new FavoriteExportModel
                 {
                     Id = f.ProductId,
@@ -131,6 +131,22 @@
             }
 
             return favoriteItems;
+        }
+
+        private async Task<Customer> GetFavoritesCustomer(string userId)
+        {
+            var customer = await this.repository
+                .All<Customer>()
+                .Include(c => c.Favorites)
+                .ThenInclude(c => c.Product)
+                .FirstOrDefaultAsync(c => c.Id == userId);
+
+            if (customer == null)
+            {
+                throw new ArgumentNullException(ExceptionMessages.UserNotFound);
+            }
+
+            return customer;
         }
     }
 }

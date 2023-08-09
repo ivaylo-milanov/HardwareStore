@@ -6,8 +6,7 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    [Authorize]
-    public class OrdersController : Controller
+    public class OrdersController : SecureController
     {
         private readonly IOrderService orderService;
         private readonly ILogger<OrdersController> logger;
@@ -23,7 +22,7 @@
             IEnumerable<OrderViewModel> orders;
             try
             {
-                orders = await this.orderService.GetUserOrders(HttpContext.User.GetUserId());
+                orders = await this.orderService.GetUserOrders(User.GetUserId());
             }
             catch (ArgumentNullException ex)
             {

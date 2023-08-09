@@ -15,11 +15,13 @@
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IFavoriteService, FavoriteService>();
             services.AddScoped<IShoppingCartService, ShoppingCartService>();
-            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<ISessionService, SessionService>();
             services.AddScoped<IFileReader, FileReader>();
             services.AddScoped<IDataSeeder, DataSeeder>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IProfileService, ProfileService>();
+            services.AddScoped<IDetailsService, DetailsService>();
 
             services.AddControllers().AddNewtonsoftJson();
             services.AddHttpContextAccessor();
