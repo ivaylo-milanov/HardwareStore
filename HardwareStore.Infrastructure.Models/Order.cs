@@ -52,7 +52,6 @@
 
         [Comment("order phone")]
         [Required]
-        [MaxLength(GlobalConstants.CustomerPhoneMaxLength)]
         public string Phone { get; set; } = null!;
 
         [Comment("order city")]

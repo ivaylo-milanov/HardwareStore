@@ -106,6 +106,24 @@
                 var favorites = new List<int>() { 20 };
                 await this.sessionService.AddToDatabase(userId, favorites, this.cartSession);
             });
+
+            Assert.ThrowsAsync<ArgumentNullException>(async () =>
+            {
+                var favorites = new List<int>() { -1 };
+                await this.sessionService.AddToDatabase(userId, favorites, this.cartSession);
+            });
+
+            Assert.ThrowsAsync<ArgumentNullException>(async () =>
+            {
+                var favorites = new List<int>() { 0 };
+                await this.sessionService.AddToDatabase(userId, favorites, this.cartSession);
+            });
+
+            Assert.ThrowsAsync<ArgumentNullException>(async () =>
+            {
+                var favorites = new List<int>() { 16 };
+                await this.sessionService.AddToDatabase(userId, favorites, this.cartSession);
+            });
         }
 
         [Test]
@@ -127,6 +145,45 @@
                 };
                 await this.sessionService.AddToDatabase(userId, this.favoritesSession, cart);
             });
+
+            Assert.ThrowsAsync<ArgumentNullException>(async () =>
+            {
+                var cart = new List<ShoppingCartExportModel>()
+                {
+                    new ShoppingCartExportModel
+                    {
+                        ProductId = 0,
+                        Quantity = 2
+                    }
+                };
+                await this.sessionService.AddToDatabase(userId, this.favoritesSession, cart);
+            });
+            Assert.ThrowsAsync<ArgumentNullException>(async () =>
+            {
+                var cart = new List<ShoppingCartExportModel>()
+                {
+                    new ShoppingCartExportModel
+                    {
+                        ProductId = -1,
+                        Quantity = 2
+                    }
+                };
+                await this.sessionService.AddToDatabase(userId, this.favoritesSession, cart);
+            });
+            Assert.ThrowsAsync<ArgumentNullException>(async () =>
+            {
+                var cart = new List<ShoppingCartExportModel>()
+                {
+                    new ShoppingCartExportModel
+                    {
+                        ProductId = 16,
+                        Quantity = 2
+                    }
+                };
+                await this.sessionService.AddToDatabase(userId, this.favoritesSession, cart);
+            });
+
+
         }
 
         [Test]
@@ -193,7 +250,7 @@
         public async Task AddToDatabaseShouldUpdateTheQuantityOfTheProductsInTheCartIfTheyExistAlready()
         {
             //Arrange
-            var userId = "TestCustomer2";
+            var userId = "TestCustomer1";
 
             //Act
             await this.sessionService.AddToDatabase(userId, this.favoritesSession, this.cartSession);
@@ -215,7 +272,7 @@
         public async Task AddToDatabaseShouldAddTheFavoritesAndShoppingCartToTheEmptyCollectionsOfTheCustomer()
         {
             //Arrange
-            var userId = "TestCustomer1";
+            var userId = "TestCustomer2";
 
             //Act
             await this.sessionService.AddToDatabase(userId, this.favoritesSession, this.cartSession);
@@ -228,8 +285,8 @@
 
             //Assert
             Assert.That(customer.ShoppingCartItems.Count == 2);
-            Assert.That(customer.ShoppingCartItems.Any(c => c.ProductId == 13 && c.Quantity == 4));
-            Assert.That(customer.ShoppingCartItems.Any(c => c.ProductId == 14 && c.Quantity == 6));
+            Assert.That(customer.ShoppingCartItems.Any(c => c.ProductId == 13 && c.Quantity == 2));
+            Assert.That(customer.ShoppingCartItems.Any(c => c.ProductId == 14 && c.Quantity == 3));
             Assert.That(customer.Favorites.Any(c => c.ProductId == 14));
             Assert.That(customer.Favorites.Any(c => c.ProductId == 14));
         }

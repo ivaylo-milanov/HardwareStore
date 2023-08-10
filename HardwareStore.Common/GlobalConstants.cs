@@ -36,7 +36,6 @@
         public const int CustomerPasswordMaxLength = 30;
         public const int CustomerFirstNameMaxLength = 60;
         public const int CustomerLastNameMaxLength = 60;
-        public const int CustomerPhoneMaxLength = 10;
         public const int CustomerCityMaxLength = 20;
         public const int CustomerAreaMaxLength = 20;
         public const int CustomerAddressMaxLength = 50;

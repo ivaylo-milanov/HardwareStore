@@ -25,11 +25,6 @@
         [MaxLength(GlobalConstants.CustomerLastNameMaxLength)]
         public string LastName { get; set; } = null!;
 
-        [Comment("customer phone")]
-        [Required]
-        [MaxLength(GlobalConstants.CustomerPhoneMaxLength)]
-        public string Phone { get; set; } = null!;
-
         [Comment("customer city")]
         [Required]
         [MaxLength(GlobalConstants.CustomerCityMaxLength)]

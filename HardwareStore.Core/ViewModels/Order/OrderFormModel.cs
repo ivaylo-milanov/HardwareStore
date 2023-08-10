@@ -15,7 +15,6 @@
         public string LastName { get; set; } = null!;
 
         [Required]
-        [MaxLength(GlobalConstants.CustomerPhoneMaxLength)]
         public string Phone { get; set; } = null!;
 
         [Required]

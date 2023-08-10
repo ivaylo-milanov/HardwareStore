@@ -113,6 +113,8 @@
             var customer = await this.repository
                 .All<Customer>()
                 .Include(c => c.Orders)
+                .Include(c => c.ShoppingCartItems)
+                .ThenInclude(sc => sc.Product)
                 .FirstOrDefaultAsync(c => c.Id == userId);
 
             if (customer == null)

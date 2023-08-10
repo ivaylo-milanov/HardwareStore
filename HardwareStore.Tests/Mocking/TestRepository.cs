@@ -135,7 +135,7 @@
                     Email = "customer1@mail.com",
                     FirstName = "FirstName1",
                     LastName = "LastName1",
-                    Phone = "Phone1",
+                    PhoneNumber = "Phone1",
                     Area = "Area1",
                     City = "City1",
                     Address = "Address1",
@@ -200,7 +200,7 @@
                     Email = "customer2@mail.com",
                     FirstName = "FirstName2",
                     LastName = "LastName2",
-                    Phone = "Phone2",
+                    PhoneNumber = "Phone2",
                     Area = "Area2",
                     City = "City2",
                     Address = "Address2"

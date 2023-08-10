@@ -33,7 +33,9 @@
         }
 
         private async Task<IEnumerable<ProductViewModel>> GetMostBoughtProducts()
-            => await this.repository.All<Product>(p => p.ProductsOrders.Count > 3)
+            => await this.repository.All<Product>(p => p.ProductsOrders.Count > 0)
+                .OrderByDescending(p => p.ProductsOrders.Count)
+                .Take(4)
                 .Select(p => new ProductViewModel
                 {
                     Id = p.Id,

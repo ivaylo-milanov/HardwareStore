@@ -45,7 +45,7 @@
                 Email = model.Email,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
-                Phone = model.Phone,
+                PhoneNumber = model.Phone,
                 City = model.City,
                 Area = model.Area,
                 Address = model.Address
