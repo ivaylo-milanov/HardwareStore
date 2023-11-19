@@ -25,7 +25,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HardwareStore.Core.Infrastr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B8CF3F13-CA6F-438B-A18F-91758BFA45DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HardwareStore.Web.Mvc", "HardwareStore.Web.Mvc\HardwareStore.Web.Mvc.csproj", "{C6A6DD2D-B29C-44DA-865A-D0A3F899358E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HardwareStore.Web.Mvc", "HardwareStore.Web.Mvc\HardwareStore.Web.Mvc.csproj", "{C6A6DD2D-B29C-44DA-865A-D0A3F899358E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HardwareStore.Web.WebApi", "HardwareStore.Web.WebApi\HardwareStore.Web.WebApi.csproj", "{E3CCC432-FE01-4263-B948-397364C6F619}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +67,10 @@ Global
 		{C6A6DD2D-B29C-44DA-865A-D0A3F899358E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C6A6DD2D-B29C-44DA-865A-D0A3F899358E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C6A6DD2D-B29C-44DA-865A-D0A3F899358E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3CCC432-FE01-4263-B948-397364C6F619}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3CCC432-FE01-4263-B948-397364C6F619}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3CCC432-FE01-4263-B948-397364C6F619}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3CCC432-FE01-4263-B948-397364C6F619}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -77,6 +83,7 @@ Global
 		{D9DBA2E3-A634-4FF9-9F99-D389F42FB358} = {B8EC4E18-DC1F-4415-BBAA-7A74E53B526C}
 		{37E7C093-02DA-4C08-BD27-F98DB9E48F4F} = {B8EC4E18-DC1F-4415-BBAA-7A74E53B526C}
 		{C6A6DD2D-B29C-44DA-865A-D0A3F899358E} = {63376DE6-1C4C-42B0-BE22-1AF9C48E71F0}
+		{E3CCC432-FE01-4263-B948-397364C6F619} = {63376DE6-1C4C-42B0-BE22-1AF9C48E71F0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7E1A3754-13E9-413C-A952-019FE3DE5322}
