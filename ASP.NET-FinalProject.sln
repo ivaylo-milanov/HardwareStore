@@ -4,6 +4,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HardwareStore", "HardwareStore\HardwareStore.csproj", "{671BBA0C-B358-49E7-B79D-C12D13E62C9A}"
+<<<<<<< Updated upstream
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HardwareStore.Infrastructure", "HardwareStore.Infrastructure\HardwareStore.Infrastructure.csproj", "{F8B058D2-DE77-41D1-A5F3-A2CD758A7F07}"
 EndProject
@@ -14,6 +15,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HardwareStore.Common", "HardwareStore.Common\HardwareStore.Common.csproj", "{1F53ECFC-A574-432D-9410-6DF76407C564}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HardwareStore.Tests", "HardwareStore.Tests\HardwareStore.Tests.csproj", "{4E35621F-177B-4D75-84BE-80149637C665}"
+=======
+>>>>>>> Stashed changes
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HardwareStore.Common", "HardwareStore.Common\HardwareStore.Common.csproj", "{1F53ECFC-A574-432D-9410-6DF76407C564}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +30,7 @@ Global
 		{671BBA0C-B358-49E7-B79D-C12D13E62C9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{671BBA0C-B358-49E7-B79D-C12D13E62C9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{671BBA0C-B358-49E7-B79D-C12D13E62C9A}.Release|Any CPU.Build.0 = Release|Any CPU
+<<<<<<< Updated upstream
 		{F8B058D2-DE77-41D1-A5F3-A2CD758A7F07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F8B058D2-DE77-41D1-A5F3-A2CD758A7F07}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8B058D2-DE77-41D1-A5F3-A2CD758A7F07}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -37,14 +43,19 @@ Global
 		{3FAF44C3-DC28-4C4D-8E24-133824225117}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3FAF44C3-DC28-4C4D-8E24-133824225117}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3FAF44C3-DC28-4C4D-8E24-133824225117}.Release|Any CPU.Build.0 = Release|Any CPU
+=======
+>>>>>>> Stashed changes
 		{1F53ECFC-A574-432D-9410-6DF76407C564}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1F53ECFC-A574-432D-9410-6DF76407C564}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F53ECFC-A574-432D-9410-6DF76407C564}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F53ECFC-A574-432D-9410-6DF76407C564}.Release|Any CPU.Build.0 = Release|Any CPU
+<<<<<<< Updated upstream
 		{4E35621F-177B-4D75-84BE-80149637C665}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4E35621F-177B-4D75-84BE-80149637C665}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E35621F-177B-4D75-84BE-80149637C665}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E35621F-177B-4D75-84BE-80149637C665}.Release|Any CPU.Build.0 = Release|Any CPU
+=======
+>>>>>>> Stashed changes
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
