@@ -1,6 +1,5 @@
 ﻿namespace HardwareStore.Core.Services.Contracts
 {
-    using HardwareStore.Core.ViewModels.ShoppingCart;
     using HardwareStore.Core.ViewModels.User;
     using Microsoft.AspNetCore.Identity;
 

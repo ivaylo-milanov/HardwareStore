@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HardwareStore.Core.ViewModels\HardwareStore.Core.ViewModels.csproj" />
     <ProjectReference Include="..\HardwareStore.Infrastructure\HardwareStore.Infrastructure.csproj" />
   </ItemGroup>
 

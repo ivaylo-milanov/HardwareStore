@@ -1,6 +1,6 @@
 ﻿namespace HardwareStore.Tests.Mocking
 {
-    using HardwareStore.Core.Attributes;
+    using HardwareStore.Core.Infrastructure.Attributes;
     using HardwareStore.Core.ViewModels.Product;
 
     [Category("Category5")]

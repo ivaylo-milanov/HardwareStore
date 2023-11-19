@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HardwareStore.Common\HardwareStore.Common.csproj" />
+    <ProjectReference Include="..\HardwareStore.Core.Infrastructure\HardwareStore.Core.Infrastructure.csproj" />
+    <ProjectReference Include="..\HardwareStore.Infrastructure.Models\HardwareStore.Infrastructure.Models.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,7 +1,5 @@
 ﻿namespace HardwareStore.Tests.Mocking.MoqViewModels.MoqProduct
 {
-    using Dropbox.Api.Users;
-    using HardwareStore.Core.Attributes;
     using HardwareStore.Core.ViewModels.Product;
 
     public class MoqProductFilterOptionsCategory5 : ProductFilterOptions
