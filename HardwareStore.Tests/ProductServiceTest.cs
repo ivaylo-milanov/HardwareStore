@@ -1,7 +1,7 @@
 namespace HardwareStore.Tests
 {
-    using HardwareStore.Core.Attributes;
-    using HardwareStore.Core.Enum;
+    using HardwareStore.Core.Infrastructure.Attributes;
+    using HardwareStore.Core.Infrastructure.Enum;
     using HardwareStore.Core.Services;
     using HardwareStore.Core.ViewModels.Product;
     using HardwareStore.Tests.Mocking;
