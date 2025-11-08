@@ -44,7 +44,7 @@
                 var value = property.GetValue(filter);
                 var list = value as IEnumerable<string>;
 
-                products = products.Where(p => IsValid(list, p.GetType().GetProperty(property.Name).GetValue(p)));
+                products = products.Where(p => IsValid(list!, p.GetType().GetProperty(property.Name)?.GetValue(p)!));
             }
 
             products = this.OrderProducts(products, filter.Order);
@@ -64,7 +64,7 @@
 
             foreach (var item in list)
             {
-                if (value.ToString().Contains(item))
+                if (value.ToString()!.Contains(item))
                 {
                     isValid = true;
                     break;
@@ -92,7 +92,7 @@
 
         private async Task<IEnumerable<TModel>> GetProductsAsync<TModel>() where TModel : ProductViewModel
         {
-            var categoryNameAttribute = (CategoryAttribute)Attribute.GetCustomAttribute(typeof(TModel), typeof(CategoryAttribute));
+            var categoryNameAttribute = (CategoryAttribute)Attribute.GetCustomAttribute(typeof(TModel), typeof(CategoryAttribute))!;
 
             if (categoryNameAttribute == null)
             {
@@ -141,7 +141,7 @@
                         ? prop.Name
                         : productAttribute.Name;
 
-                    object characteristicValue = product.Attributes.FirstOrDefault(a => a.Name == name)?.Value;
+                    object characteristicValue = product.Attributes.FirstOrDefault(a => a.Name == name)?.Value!;
 
                     if (characteristicValue == null && prop.Name != "Manufacturer")
                     {
@@ -184,7 +184,7 @@
                         Id = p.Id,
                         Name = p.Name,
                         Price = p.Price,
-                        Manufacturer = p.Manufacturer.Name,
+                        Manufacturer = p.Manufacturer!.Name,
                         AddDate = p.AddDate
                     })
                     .ToListAsync();
@@ -216,7 +216,7 @@
                     Id = p.Id,
                     Name = p.Name,
                     Price = p.Price,
-                    Manufacturer = p.ManufacturerId.HasValue && manufacturers.ContainsKey(p.ManufacturerId.Value) ? manufacturers[p.ManufacturerId.Value] : null,
+                    Manufacturer = p.ManufacturerId.HasValue && manufacturers.ContainsKey(p.ManufacturerId.Value) ? manufacturers[p.ManufacturerId.Value] : null!,
                     AddDate = p.AddDate
                 })
                 .ToList();
@@ -237,7 +237,7 @@
                 var values = products
                     .Select(m => property.GetValue(m))
                     .Where(v => v != null)
-                    .Select(v => v.ToString())
+                    .Select(v => v?.ToString())
                     .Distinct()
                     .ToList();
 
@@ -248,7 +248,7 @@
 
                 var attribute = property.GetCustomAttribute<CharacteristicAttribute>();
 
-                var title = attribute.Name == null ? property.Name : attribute.Name;
+                var title = attribute?.Name == null ? property.Name : attribute.Name;
 
                 var model = new FilterCategoryModel
                 {

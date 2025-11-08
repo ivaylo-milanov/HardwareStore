@@ -1,12 +1,10 @@
-﻿@model ProductsViewModel<CaseViewModel>
-
 <div class="page-title">
     <h1>Cases</h1>
 </div>
 <div class="page-body">
     <form class="page-layout" method="get" data-url="@Url.Action("FilterCases", "Cases")">
-        <partial name="_FilterPartialView" model="@Model.Filters"/>
-        <partial name="_ProductsContentPartialView" model="@Model.Products"/>
+        <partial name="_FilterPartialView" model="@ViewBag.Model.Filters as IEnumerable<FilterCategoryModel>"/>
+        <partial name="_ProductsContentPartialView" model="@ViewBag.Model.Products as IEnumerable<ProductViewModel>"/>
     </form>
 </div>
 

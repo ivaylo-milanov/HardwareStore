@@ -1,0 +1,58 @@
+{
+    "Peripherals": [
+        {
+            "title": "Monitors",
+            "name": "Monitor"
+        },
+        {
+            "title": "Keyboards",
+            "name": "Keyboard"
+        },
+        {
+            "title": "Mice",
+            "name": "Mouse"
+        },
+        {
+            "title": "Headsets",
+            "name": "Headset"
+        },
+        {
+            "title": "Mouse Pads",
+            "name": "MousePad"
+        }
+    ],
+    "Hardware": [
+        {
+            "title": "Cases",
+            "name": "Case"
+        },
+        {
+            "title": "Video Cards",
+            "name": "VideoCard"
+        },
+        {
+            "title": "Processors",
+            "name": "Processor"
+        },
+        {
+            "title": "Motherboards",
+            "name": "Motherboard"
+        },
+        {
+            "title": "Power Supplies",
+            "name": "PowerSupply"
+        },
+        {
+            "title": "RAM",
+            "name": "RAM"
+        },
+        {
+            "title": "Internal Drives",
+            "name": "InternalDrive"
+        },
+        {
+            "title": "Coolers",
+            "name": "Cooler"
+        }
+    ]
+}

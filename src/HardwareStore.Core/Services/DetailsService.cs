@@ -41,9 +41,9 @@
                 Price = product.Price,
                 Name = product.Name,
                 AddDate = product.AddDate,
-                Manufacturer = product.Manufacturer?.Name,
+                Manufacturer = product.Manufacturer?.Name!,
                 ReferenceNumber = product.ReferenceNumber,
-                Description = product.Description,
+                Description = product.Description!,
                 Warranty = product.Warranty,
                 Attributes = product.Characteristics
                         .Select(pa => new ProductAttributeExportModel

@@ -1,4 +1,7 @@
-﻿@model HomeViewModel
+﻿@{
+    var mostBoughtProducts = (IEnumerable<ProductViewModel>)ViewBag.Model.MostBoughtProducts;
+    var newestProducts = (IEnumerable<ProductViewModel>)ViewBag.Model.NewestProducts;
+}
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
@@ -7,7 +10,7 @@
 <section>
     <div class="container">
         <h2 class="section-title">Most bought products</h2>
-        <partial name="_HomePartialView" model="@Model.MostBoughtProducts"/>
+        <partial name="_HomePartialView" model="@mostBoughtProducts"/>
     </div>
 </section>
 
@@ -16,6 +19,6 @@
 <section>
     <div class="container">
         <h2 class="section-title">Newest products</h2>
-        <partial name="_HomePartialView" model="@Model.NewestProducts"/>
+        <partial name="_HomePartialView" model="@newestProducts"/>
     </div>
 </section>

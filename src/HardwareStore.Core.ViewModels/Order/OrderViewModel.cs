@@ -2,7 +2,7 @@
 {
     public class OrderViewModel
     {
-        public string OrderId { get; set; }
+        public string OrderId { get; set; } = null!;
 
         public string OrderDate { get; set; } = null!;
 

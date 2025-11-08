@@ -46,8 +46,8 @@
                 .AsNoTracking();
 
         public async Task<T> FindAsync<T>(object id) where T : class
-            => await this.Set<T>()
-                .FindAsync(id);
+            => (await this.Set<T>()
+                .FindAsync(id))!;
 
         public async Task SaveChangesAsync()
             => await this.context.SaveChangesAsync();
@@ -70,10 +70,10 @@
             => this.Set<T>().AddRange(entities);
 
         public T FirstOrDefault<T>(Expression<Func<T, bool>> search) where T : class
-            => this.Set<T>().FirstOrDefault(search);
+            => this.Set<T>().FirstOrDefault(search)!;
 
         public async Task<T> FirstOrDefaultAsync<T>(Expression<Func<T, bool>> search) where T : class
-            => await this.Set<T>().FirstOrDefaultAsync(search);
+            => (await this.Set<T>().FirstOrDefaultAsync(search))!;
 
         public async Task<ICollection<T>> FromSqlRawAsync<T>(string sql, params object[] parameters) where T : class
             => await this.Set<T>().FromSqlRaw(sql, parameters).ToListAsync();
