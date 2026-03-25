@@ -14,6 +14,8 @@ namespace HardwareStore.Core.Services
 
     public class ProductService : IProductService
     {
+        #region Fields and construction
+
         private static readonly JsonSerializerOptions JsonOptions = new()
         {
             PropertyNamingPolicy = null,
@@ -27,6 +29,10 @@ namespace HardwareStore.Core.Services
         {
             this.repository = repository;
         }
+
+        #endregion
+
+        #region IProductService
 
         public Task<bool> CategoryExistsAsync(string categoryName) =>
             this.repository.AnyAsync<Category>(c => c.Name == categoryName);
@@ -107,6 +113,7 @@ namespace HardwareStore.Core.Services
                 ReferenceNumber = product.ReferenceNumber,
                 Description = product.Description!,
                 Warranty = product.Warranty,
+                ImageUrl = "/images/product-placeholder.svg",
                 Attributes = opts.Select(kv => new ProductAttributeExportModel { Name = kv.Key, Value = kv.Value }).ToList(),
             };
         }
@@ -124,6 +131,10 @@ namespace HardwareStore.Core.Services
                 .AnyAsync<Favorite>(f => f.CustomerId == customerId && f.ProductId == productId)
                 .ConfigureAwait(false);
         }
+
+        #endregion
+
+        #region Data loading
 
         private async Task<List<Product>> LoadProductsForCategoryAsync(string categoryName)
         {
@@ -168,6 +179,10 @@ namespace HardwareStore.Core.Services
                 .ToListAsync()
                 .ConfigureAwait(false);
         }
+
+        #endregion
+
+        #region Catalog building
 
         private static CatalogProductViewModel MapToCatalog(Product p)
         {
@@ -260,6 +275,10 @@ namespace HardwareStore.Core.Services
             return filters;
         }
 
+        #endregion
+
+        #region Filtering and ordering
+
         private static IEnumerable<CatalogProductViewModel> ApplyParsedFilter(
             IEnumerable<CatalogProductViewModel> products,
             ParsedFilter filter)
@@ -301,6 +320,10 @@ namespace HardwareStore.Core.Services
                 _ => products,
             };
         }
+
+        #endregion
+
+        #region Filter JSON parsing
 
         private static ParsedFilter ParseFilterJson(string json)
         {
@@ -352,5 +375,7 @@ namespace HardwareStore.Core.Services
 
             public Dictionary<string, List<string>> OptionSelections { get; } = new(StringComparer.OrdinalIgnoreCase);
         }
+
+        #endregion
     }
 }

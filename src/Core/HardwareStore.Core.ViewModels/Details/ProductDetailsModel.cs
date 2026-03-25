@@ -1,4 +1,4 @@
-﻿using HardwareStore.Core.ViewModels.Product;
+using HardwareStore.Core.ViewModels.Product;
 
 namespace HardwareStore.Core.ViewModels.Details
 {
@@ -11,6 +11,8 @@ namespace HardwareStore.Core.ViewModels.Details
         public int Warranty { get; set; }
 
         public bool IsFavorite { get; set; }
+
+        public string ImageUrl { get; set; } = null!;
 
         public IEnumerable<ProductAttributeExportModel> Attributes { get; set; } = null!;
     }
