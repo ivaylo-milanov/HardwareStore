@@ -11,12 +11,18 @@ namespace HardwareStore.Core.Services
 
     public class OrderService : IOrderService
     {
+        #region Fields and construction
+
         private readonly IRepository repository;
 
         public OrderService(IRepository repository)
         {
             this.repository = repository;
         }
+
+        #endregion
+
+        #region IOrderService
 
         public async Task<OrderFormModel> GetOrderModel(string userId)
         {
@@ -72,10 +78,15 @@ namespace HardwareStore.Core.Services
                 var totalAmount = this.GetTotalAmount(cartItems);
                 var orderProducts = new List<ProductOrder>();
 
+                var productIds = cartItems.Select(c => c.ProductId).Distinct().ToList();
+                var products = await this.repository
+                    .All<Product>()
+                    .Where(p => productIds.Contains(p.Id))
+                    .ToDictionaryAsync(p => p.Id);
+
                 foreach (var item in cartItems)
                 {
-                    var product = await this.repository.FindAsync<Product>(item.ProductId);
-                    if (product == null)
+                    if (!products.TryGetValue(item.ProductId, out var product))
                     {
                         throw new InvalidOperationException(ExceptionMessages.ProductNotFound);
                     }
@@ -124,6 +135,10 @@ namespace HardwareStore.Core.Services
             }
         }
 
+        #endregion
+
+        #region Private helpers
+
         private decimal GetTotalAmount(ICollection<ShoppingCartItem> cart) =>
             cart.Sum(sc => sc.Quantity * sc.Product.Price);
 
@@ -142,5 +157,7 @@ namespace HardwareStore.Core.Services
 
             return customer;
         }
+
+        #endregion
     }
 }
