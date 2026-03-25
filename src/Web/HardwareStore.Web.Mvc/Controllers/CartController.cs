@@ -1,5 +1,6 @@
 namespace HardwareStore.Web.Mvc.Controllers
 {
+    using HardwareStore.Common;
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.ShoppingCart;
     using HardwareStore.Extensions;
@@ -9,6 +10,8 @@ namespace HardwareStore.Web.Mvc.Controllers
     [Authorize]
     public class CartController : Controller
     {
+        #region Fields and construction
+
         private readonly IShoppingCartService shoppingCartService;
         private readonly ILogger<CartController> logger;
 
@@ -17,6 +20,10 @@ namespace HardwareStore.Web.Mvc.Controllers
             this.shoppingCartService = shoppingCartService;
             this.logger = logger;
         }
+
+        #endregion
+
+        #region Cart view
 
         public async Task<IActionResult> Index()
         {
@@ -27,7 +34,7 @@ namespace HardwareStore.Web.Mvc.Controllers
             }
             catch (ArgumentNullException ex)
             {
-                this.logger.LogError(ex, $"An error occured: {ex.Message}");
+                this.logger.LogError(ex, LogMessages.CartOperationFailed);
                 return this.RedirectToAction("Error", "Home");
             }
 
@@ -52,12 +59,12 @@ namespace HardwareStore.Web.Mvc.Controllers
             }
             catch (ArgumentNullException ex)
             {
-                this.logger.LogError(ex, $"An error occured: {ex.Message}");
+                this.logger.LogError(ex, LogMessages.CartOperationFailed);
                 return this.RedirectToAction("Error", "Home");
             }
             catch (InvalidOperationException ex)
             {
-                this.logger.LogError(ex, ex.Message);
+                this.logger.LogError(ex, LogMessages.CartOperationFailed);
                 this.TempData["ErrorMessage"] = ex.Message;
                 return this.RedirectToAction(nameof(this.Index));
             }
@@ -74,7 +81,7 @@ namespace HardwareStore.Web.Mvc.Controllers
             }
             catch (ArgumentNullException ex)
             {
-                this.logger.LogError(ex, ex.Message);
+                this.logger.LogError(ex, LogMessages.CartOperationFailed);
                 return this.RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
@@ -90,7 +97,7 @@ namespace HardwareStore.Web.Mvc.Controllers
             }
             catch (ArgumentNullException ex)
             {
-                this.logger.LogError(ex, ex.Message);
+                this.logger.LogError(ex, LogMessages.CartOperationFailed);
                 return this.RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
@@ -106,12 +113,12 @@ namespace HardwareStore.Web.Mvc.Controllers
             }
             catch (ArgumentNullException ex)
             {
-                this.logger.LogError(ex, $"An error occured: {ex.Message}");
+                this.logger.LogError(ex, LogMessages.CartOperationFailed);
                 return this.RedirectToAction("Error", "Home", new { message = ex.Message });
             }
             catch (InvalidOperationException ex)
             {
-                this.logger.LogError(ex, ex.Message);
+                this.logger.LogError(ex, LogMessages.CartOperationFailed);
                 this.TempData["ErrorMessage"] = ex.Message;
                 return this.RedirectToAction(nameof(this.Index));
             }
@@ -128,17 +135,19 @@ namespace HardwareStore.Web.Mvc.Controllers
             }
             catch (ArgumentNullException ex)
             {
-                this.logger.LogError(ex, $"An error occured: {ex.Message}");
+                this.logger.LogError(ex, LogMessages.CartOperationFailed);
                 return this.RedirectToAction("Error", "Home", new { message = ex.Message });
             }
             catch (InvalidOperationException ex)
             {
-                this.logger.LogError(ex, ex.Message);
+                this.logger.LogError(ex, LogMessages.CartOperationFailed);
                 this.TempData["ErrorMessage"] = ex.Message;
                 return this.RedirectToAction(nameof(this.Index));
             }
 
             return this.RedirectToAction(nameof(this.Index));
         }
+
+        #endregion
     }
 }

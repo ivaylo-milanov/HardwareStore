@@ -1,5 +1,6 @@
 namespace HardwareStore.Web.Mvc.Controllers
 {
+    using HardwareStore.Common;
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Extensions;
     using Microsoft.AspNetCore.Authorization;
@@ -8,6 +9,8 @@ namespace HardwareStore.Web.Mvc.Controllers
     [Authorize]
     public class FavoriteController : Controller
     {
+        #region Fields and construction
+
         private readonly IFavoriteService favoriteService;
         private readonly ILogger<FavoriteController> logger;
 
@@ -16,6 +19,10 @@ namespace HardwareStore.Web.Mvc.Controllers
             this.favoriteService = favoriteService;
             this.logger = logger;
         }
+
+        #endregion
+
+        #region Favorites
 
         public async Task<IActionResult> Index()
         {
@@ -26,7 +33,7 @@ namespace HardwareStore.Web.Mvc.Controllers
             }
             catch (ArgumentNullException ex)
             {
-                this.logger.LogError(ex, ex.Message);
+                this.logger.LogError(ex, LogMessages.FavoriteOperationFailed);
                 return this.RedirectToAction("Error", "Home", new { message = ex.Message });
             }
         }
@@ -40,7 +47,7 @@ namespace HardwareStore.Web.Mvc.Controllers
             }
             catch (ArgumentNullException ex)
             {
-                this.logger.LogError(ex, ex.Message);
+                this.logger.LogError(ex, LogMessages.FavoriteOperationFailed);
                 return this.RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
@@ -61,7 +68,7 @@ namespace HardwareStore.Web.Mvc.Controllers
             }
             catch (ArgumentNullException ex)
             {
-                this.logger.LogError(ex, ex.Message);
+                this.logger.LogError(ex, LogMessages.FavoriteOperationFailed);
                 return this.RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
@@ -72,5 +79,7 @@ namespace HardwareStore.Web.Mvc.Controllers
 
             return this.RedirectToAction(nameof(this.Index));
         }
+
+        #endregion
     }
 }

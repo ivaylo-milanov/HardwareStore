@@ -1,5 +1,6 @@
 namespace HardwareStore.Web.Mvc.Controllers
 {
+    using HardwareStore.Common;
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Details;
     using HardwareStore.Core.ViewModels.Product;
@@ -9,6 +10,8 @@ namespace HardwareStore.Web.Mvc.Controllers
 
     public class ProductController : Controller
     {
+        #region Fields and construction
+
         private readonly IProductService productService;
         private readonly ILogger<ProductController> logger;
 
@@ -18,11 +21,15 @@ namespace HardwareStore.Web.Mvc.Controllers
             this.productService = productService;
         }
 
+        #endregion
+
+        #region Category catalog
+
         public async Task<IActionResult> Index(string category, string title)
         {
             if (!await this.productService.CategoryExistsAsync(category).ConfigureAwait(false))
             {
-                this.logger.LogWarning("Unknown category: {Category}", category);
+                this.logger.LogWarning(LogMessages.UnknownCategory, category);
                 return RedirectToAction("Error", "Home", new { message = "Invalid category." });
             }
 
@@ -40,7 +47,7 @@ namespace HardwareStore.Web.Mvc.Controllers
             }
             catch (ArgumentException ex)
             {
-                this.logger.LogError(ex, ex.Message);
+                this.logger.LogError(ex, LogMessages.ProductRequestFailed);
                 return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
         }
@@ -50,7 +57,7 @@ namespace HardwareStore.Web.Mvc.Controllers
         {
             if (!await this.productService.CategoryExistsAsync(category).ConfigureAwait(false))
             {
-                this.logger.LogWarning("Unknown category: {Category}", category);
+                this.logger.LogWarning(LogMessages.UnknownCategory, category);
                 return this.RedirectToAction("Error", "Home", new { message = "Invalid category." });
             }
 
@@ -85,10 +92,14 @@ namespace HardwareStore.Web.Mvc.Controllers
             }
             catch (Exception ex)
             {
-                this.logger.LogError(ex, "Filter failed for category {Category}", category);
+                this.logger.LogError(ex, LogMessages.FilterFailedForCategory, category);
                 return this.RedirectToAction("Error", "Home", new { message = "Could not apply filters." });
             }
         }
+
+        #endregion
+
+        #region Product details
 
         public async Task<IActionResult> Details(int productId)
         {
@@ -99,7 +110,7 @@ namespace HardwareStore.Web.Mvc.Controllers
             }
             catch (ArgumentNullException ex)
             {
-                this.logger.LogError(ex, ex.Message);
+                this.logger.LogError(ex, LogMessages.ProductRequestFailed);
                 return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
@@ -107,6 +118,10 @@ namespace HardwareStore.Web.Mvc.Controllers
 
             return this.View(model);
         }
+
+        #endregion
+
+        #region Private helpers
 
         private async Task<bool> ResolveFavoriteStateAsync(int productId)
         {
@@ -123,10 +138,11 @@ namespace HardwareStore.Web.Mvc.Controllers
             }
             catch (ArgumentNullException ex)
             {
-                this.logger.LogError(ex, ex.Message);
+                this.logger.LogError(ex, LogMessages.ProductRequestFailed);
                 return false;
             }
         }
 
+        #endregion
     }
 }

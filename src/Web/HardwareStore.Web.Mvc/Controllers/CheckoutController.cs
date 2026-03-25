@@ -1,5 +1,6 @@
 namespace HardwareStore.Web.Mvc.Controllers
 {
+    using HardwareStore.Common;
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Order;
     using HardwareStore.Extensions;
@@ -9,6 +10,8 @@ namespace HardwareStore.Web.Mvc.Controllers
     [Authorize]
     public class CheckoutController : Controller
     {
+        #region Fields and construction
+
         private readonly IOrderService orderService;
         private readonly ILogger<CheckoutController> logger;
 
@@ -17,6 +20,10 @@ namespace HardwareStore.Web.Mvc.Controllers
             this.orderService = orderService;
             this.logger = logger;
         }
+
+        #endregion
+
+        #region Checkout flow
 
         public async Task<IActionResult> Index()
         {
@@ -27,7 +34,7 @@ namespace HardwareStore.Web.Mvc.Controllers
             }
             catch (InvalidOperationException ex)
             {
-                this.logger.LogError(ex, ex.Message);
+                this.logger.LogError(ex, LogMessages.CheckoutOperationFailed);
                 return this.RedirectToAction("Error", "Home", new { message = ex.Message });
             }
         }
@@ -54,7 +61,7 @@ namespace HardwareStore.Web.Mvc.Controllers
                 }
                 catch (InvalidOperationException ex)
                 {
-                    this.logger.LogError(ex, ex.Message);
+                    this.logger.LogError(ex, LogMessages.CheckoutOperationFailed);
                     return this.RedirectToAction("Error", "Home", new { message = ex.Message });
                 }
 
@@ -67,7 +74,7 @@ namespace HardwareStore.Web.Mvc.Controllers
             }
             catch (InvalidOperationException ex)
             {
-                this.logger.LogError(ex, ex.Message);
+                this.logger.LogError(ex, LogMessages.CheckoutOperationFailed);
                 return this.RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
@@ -75,5 +82,7 @@ namespace HardwareStore.Web.Mvc.Controllers
         }
 
         public IActionResult Success() => this.View();
+
+        #endregion
     }
 }

@@ -8,6 +8,8 @@ namespace HardwareStore.Core.Services
 
     public class AuthenticationService : IAuthenticationService
     {
+        #region Fields and construction
+
         private readonly SignInManager<Customer> signInManager;
         private readonly UserManager<Customer> userManager;
 
@@ -16,6 +18,10 @@ namespace HardwareStore.Core.Services
             this.signInManager = signInManager;
             this.userManager = userManager;
         }
+
+        #endregion
+
+        #region IAuthenticationService
 
         public async Task<SignInResult> LoginAsync(LoginFormModel model)
         {
@@ -59,5 +65,7 @@ namespace HardwareStore.Core.Services
 
             return result;
         }
+
+        #endregion
     }
 }

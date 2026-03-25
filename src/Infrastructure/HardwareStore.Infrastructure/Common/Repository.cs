@@ -11,12 +11,18 @@ namespace HardwareStore.Infrastructure.Common
 
     public class Repository : IRepository
     {
+        #region Fields and construction
+
         private readonly HardwareStoreDbContext context;
 
         public Repository(HardwareStoreDbContext context)
         {
             this.context = context;
         }
+
+        #endregion
+
+        #region Query operations
 
         public IQueryable<T> AllReadonly<T>() where T : class
             => this
@@ -50,15 +56,6 @@ namespace HardwareStore.Infrastructure.Common
             => (await this.Set<T>()
                 .FindAsync(id))!;
 
-        public async Task SaveChangesAsync()
-            => await this.context.SaveChangesAsync();
-
-        public void Remove<T>(T model) where T : class
-            => this.Set<T>().Remove(model);
-
-        public async Task AddAsync<T>(T model) where T : class
-            => await this.Set<T>().AddAsync(model);
-
         public async Task<bool> AnyAsync<T>(Expression<Func<T, bool>> search) where T : class
             => await this.Set<T>()
                 .AnyAsync(search);
@@ -66,9 +63,6 @@ namespace HardwareStore.Infrastructure.Common
         public async Task<bool> AnyAsync<T>() where T : class
             => await this.Set<T>()
                 .AnyAsync();
-
-        public void AddRange<T>(IEnumerable<T> entities) where T : class
-            => this.Set<T>().AddRange(entities);
 
         public T FirstOrDefault<T>(Expression<Func<T, bool>> search) where T : class
             => this.Set<T>().FirstOrDefault(search)!;
@@ -79,8 +73,28 @@ namespace HardwareStore.Infrastructure.Common
         public async Task<ICollection<T>> FromSqlRawAsync<T>(string sql, params object[] parameters) where T : class
             => await this.Set<T>().FromSqlRaw(sql, parameters).ToListAsync();
 
+        #endregion
+
+        #region Persistence
+
+        public async Task SaveChangesAsync()
+            => await this.context.SaveChangesAsync();
+
+        public void Remove<T>(T model) where T : class
+            => this.Set<T>().Remove(model);
+
+        public async Task AddAsync<T>(T model) where T : class
+            => await this.Set<T>().AddAsync(model);
+
+        public void AddRange<T>(IEnumerable<T> entities) where T : class
+            => this.Set<T>().AddRange(entities);
+
         public void RemoveRange<T>(ICollection<T> items) where T : class
             => this.Set<T>().RemoveRange(items);
+
+        #endregion
+
+        #region Transactions
 
         public Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default)
         {
@@ -91,5 +105,7 @@ namespace HardwareStore.Infrastructure.Common
 
             return this.context.Database.BeginTransactionAsync(cancellationToken);
         }
+
+        #endregion
     }
 }

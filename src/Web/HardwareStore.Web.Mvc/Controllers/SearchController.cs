@@ -1,5 +1,6 @@
 namespace HardwareStore.Web.Mvc.Controllers
 {
+    using HardwareStore.Common;
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Product;
     using HardwareStore.Web.Mvc.Helpers;
@@ -7,6 +8,8 @@ namespace HardwareStore.Web.Mvc.Controllers
 
     public class SearchController : Controller
     {
+        #region Fields and construction
+
         private readonly IProductService productService;
         private readonly ILogger<SearchController> logger;
 
@@ -15,6 +18,10 @@ namespace HardwareStore.Web.Mvc.Controllers
             this.productService = productService;
             this.logger = logger;
         }
+
+        #endregion
+
+        #region Search catalog
 
         [AcceptVerbs("GET", "POST")]
         public async Task<IActionResult> Index(string keyword)
@@ -26,7 +33,7 @@ namespace HardwareStore.Web.Mvc.Controllers
             }
             catch (ArgumentException ex)
             {
-                this.logger.LogError(ex, ex.Message);
+                this.logger.LogError(ex, LogMessages.SearchCatalogFailed);
                 return this.RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
@@ -40,6 +47,10 @@ namespace HardwareStore.Web.Mvc.Controllers
             };
             return this.View("~/Views/Product/Catalog.cshtml", page);
         }
+
+        #endregion
+
+        #region Search filter (POST)
 
         [HttpPost]
         public async Task<IActionResult> FilterSearch()
@@ -76,9 +87,11 @@ namespace HardwareStore.Web.Mvc.Controllers
             }
             catch (Exception ex)
             {
-                this.logger.LogError(ex, "Search filter failed");
+                this.logger.LogError(ex, LogMessages.SearchFilterFailed);
                 return this.RedirectToAction("Error", "Home", new { message = "Could not apply filters." });
             }
         }
+
+        #endregion
     }
 }

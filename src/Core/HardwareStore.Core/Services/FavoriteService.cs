@@ -9,12 +9,18 @@ namespace HardwareStore.Core.Services
 
     public class FavoriteService : IFavoriteService
     {
+        #region Fields and construction
+
         private readonly IRepository repository;
 
         public FavoriteService(IRepository repository)
         {
             this.repository = repository;
         }
+
+        #endregion
+
+        #region IFavoriteService
 
         public async Task AddToDatabaseFavoriteAsync(int productId, string userId)
         {
@@ -74,6 +80,10 @@ namespace HardwareStore.Core.Services
             return favoritesModels;
         }
 
+        #endregion
+
+        #region Private helpers
+
         private async Task<Customer> GetFavoritesCustomer(string userId)
         {
             var customer = await this.repository
@@ -89,5 +99,7 @@ namespace HardwareStore.Core.Services
 
             return customer;
         }
+
+        #endregion
     }
 }

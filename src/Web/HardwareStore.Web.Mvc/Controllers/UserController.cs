@@ -1,5 +1,6 @@
 namespace HardwareStore.Web.Mvc.Controllers
 {
+    using HardwareStore.Common;
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.User;
     using Microsoft.AspNetCore.Identity;
@@ -7,6 +8,8 @@ namespace HardwareStore.Web.Mvc.Controllers
 
     public class UserController : Controller
     {
+        #region Fields and construction
+
         private readonly IAuthenticationService authenticationService;
         private readonly ILogger<UserController> logger;
 
@@ -15,6 +18,10 @@ namespace HardwareStore.Web.Mvc.Controllers
             this.authenticationService = authenticationService;
             this.logger = logger;
         }
+
+        #endregion
+
+        #region Login
 
         [HttpPost]
         public async Task<IActionResult> EasyLogin(LoginFormModel model)
@@ -35,7 +42,7 @@ namespace HardwareStore.Web.Mvc.Controllers
             }
             catch (ArgumentNullException ex)
             {
-                this.logger.LogError(ex, ex.Message);
+                this.logger.LogError(ex, LogMessages.AuthenticationOperationFailed);
                 return this.RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
@@ -72,12 +79,16 @@ namespace HardwareStore.Web.Mvc.Controllers
             catch (ArgumentNullException ex)
             {
                 this.ModelState.AddModelError("", "Invalid Login!");
-                this.logger.LogError(ex, ex.Message);
+                this.logger.LogError(ex, LogMessages.AuthenticationOperationFailed);
                 return this.RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
             return this.View(model);
         }
+
+        #endregion
+
+        #region Registration
 
         public IActionResult Register()
         {
@@ -104,7 +115,7 @@ namespace HardwareStore.Web.Mvc.Controllers
             }
             catch (ArgumentNullException ex)
             {
-                this.logger.LogError(ex, ex.Message);
+                this.logger.LogError(ex, LogMessages.AuthenticationOperationFailed);
                 return this.RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
@@ -121,11 +132,17 @@ namespace HardwareStore.Web.Mvc.Controllers
             return this.View(model);
         }
 
+        #endregion
+
+        #region Session
+
         public async Task<IActionResult> Logout()
         {
             await this.authenticationService.LogoutAsync();
 
             return this.RedirectToAction("Index", "Home");
         }
+
+        #endregion
     }
 }

@@ -9,12 +9,18 @@ namespace HardwareStore.Core.Services
 
     public class ShoppingCartService : IShoppingCartService
     {
+        #region Fields and construction
+
         private readonly IRepository repository;
 
         public ShoppingCartService(IRepository repository)
         {
             this.repository = repository;
         }
+
+        #endregion
+
+        #region IShoppingCartService
 
         public async Task AddToDatabaseShoppingCartAsync(int productId, int quantity, string userId)
         {
@@ -171,6 +177,10 @@ namespace HardwareStore.Core.Services
             await this.repository.SaveChangesAsync();
         }
 
+        #endregion
+
+        #region Private helpers
+
         private async Task<Customer> GetCartCustomer(string userId)
         {
             var customer = await this.repository
@@ -186,5 +196,7 @@ namespace HardwareStore.Core.Services
 
             return customer;
         }
+
+        #endregion
     }
 }
