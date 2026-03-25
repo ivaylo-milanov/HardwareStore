@@ -1,10 +1,14 @@
 using HardwareStore.Extensions;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-builder.Services.AddControllersWithViews()
+builder.Services.AddControllersWithViews(options =>
+    {
+        options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+    })
     .AddCookieTempDataProvider()
     .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
 
@@ -42,3 +46,7 @@ app.MapControllerRoute(
 app.MapRazorPages();
 
 await app.RunAsync();
+
+public partial class Program
+{
+}
