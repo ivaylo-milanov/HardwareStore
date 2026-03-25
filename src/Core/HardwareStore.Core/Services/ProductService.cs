@@ -5,6 +5,7 @@ namespace HardwareStore.Core.Services
     using HardwareStore.Core.Enums;
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Details;
+    using HardwareStore.Core.ViewModels.Home;
     using HardwareStore.Core.ViewModels.Product;
     using HardwareStore.Infrastructure.Common;
     using HardwareStore.Infrastructure.Models;
@@ -29,6 +30,29 @@ namespace HardwareStore.Core.Services
 
         public Task<bool> CategoryExistsAsync(string categoryName) =>
             this.repository.AnyAsync<Category>(c => c.Name == categoryName);
+
+        public async Task<HomeViewModel> GetHomeViewModelAsync()
+        {
+            var newestProducts = await this.repository.All<Product>()
+                .OrderByDescending(p => p.AddDate)
+                .Select(p => new ProductViewModel { Id = p.Id, Name = p.Name, Price = p.Price })
+                .Take(4)
+                .ToListAsync()
+                .ConfigureAwait(false);
+
+            var mostBoughtProducts = await this.repository.All<Product>(p => p.ProductsOrders.Count > 0)
+                .OrderByDescending(p => p.ProductsOrders.Count)
+                .Take(4)
+                .Select(p => new ProductViewModel { Id = p.Id, Name = p.Name, Price = p.Price })
+                .ToListAsync()
+                .ConfigureAwait(false);
+
+            return new HomeViewModel
+            {
+                NewestProducts = newestProducts,
+                MostBoughtProducts = mostBoughtProducts,
+            };
+        }
 
         public async Task<ProductsViewModel<CatalogProductViewModel>> GetCategoryCatalogAsync(string categoryName)
         {
@@ -99,14 +123,6 @@ namespace HardwareStore.Core.Services
             return await this.repository
                 .AnyAsync<Favorite>(f => f.CustomerId == customerId && f.ProductId == productId)
                 .ConfigureAwait(false);
-        }
-
-        public async Task<bool> IsProductInSessionFavorites(ICollection<int> sessionFavorites, int productId)
-        {
-            if (!await this.repository.AnyAsync<Product>(p => p.Id == productId).ConfigureAwait(false))
-                throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
-
-            return sessionFavorites != null && sessionFavorites.Contains(productId);
         }
 
         private async Task<List<Product>> LoadProductsForCategoryAsync(string categoryName)

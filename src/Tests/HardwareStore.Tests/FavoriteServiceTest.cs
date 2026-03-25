@@ -8,78 +8,14 @@ namespace HardwareStore.Tests
     [TestFixture]
     public class FavoriteServiceTest
     {
-        private IFavoriteService favoriteService;
-        private IList<int> favoriteSession;
+        private IFavoriteService favoriteService = null!;
 
         [SetUp]
         public async Task Setup()
         {
             var repository = await TestRepository.GetRepository();
 
-            favoriteService = new FavoriteService(repository);
-
-            this.favoriteSession = new List<int> { 13, 14 };
-        }
-
-        [Test]
-        public async Task FavoriteSessionReturnsTheCorrectData()
-        {
-            //Act
-            ICollection<FavoriteExportModel> result = await this.favoriteService.GetSessionFavoriteAsync(this.favoriteSession);
-
-            ICollection<FavoriteExportModel> expectedData = new List<FavoriteExportModel>()
-            {
-                new FavoriteExportModel
-                {
-                    Id = 13,
-                    Name = "Product13",
-                    Price = 130
-                },
-                new FavoriteExportModel
-                {
-                    Id = 14,
-                    Name = "Product14",
-                    Price = 140
-                }
-            };
-
-            //Assert
-            Assert.That(result, Is.EquivalentTo(expectedData).Using(new FavoriteExportModelComparer()));
-        }
-
-        [Test]
-        public async Task FavoriteSessionReturnsEmptyCollection()
-        {
-            //Act
-            ICollection<FavoriteExportModel> result = await this.favoriteService.GetSessionFavoriteAsync(new List<int>());
-
-            //Assert
-            Assert.That(result, Is.Empty);
-        }
-
-        [Test]
-        public void FavoriteSessionThrowsErrorIfTheProductsIsInvalid()
-        {
-            //Arrange
-            ICollection<int> favoritesTooBig = new List<int>() { 20 };
-
-            //Act and Assert
-            Assert.ThrowsAsync<ArgumentNullException>(async () =>
-            {
-                ICollection<FavoriteExportModel> result = await this.favoriteService.GetSessionFavoriteAsync(favoritesTooBig);
-            }, "The product does not exist.");
-
-            ICollection<int> favoritesZero = new List<int>() { 0 };
-            Assert.ThrowsAsync<ArgumentNullException>(async () =>
-            {
-                ICollection<FavoriteExportModel> result = await this.favoriteService.GetSessionFavoriteAsync(favoritesZero);
-            }, "The product does not exist.");
-
-            ICollection<int> favoritesNegative = new List<int>() { -1 };
-            Assert.ThrowsAsync<ArgumentNullException>(async () =>
-            {
-                ICollection<FavoriteExportModel> result = await this.favoriteService.GetSessionFavoriteAsync(favoritesNegative);
-            }, "The product does not exist.");
+            this.favoriteService = new FavoriteService(repository);
         }
 
         [Test]
@@ -184,115 +120,6 @@ namespace HardwareStore.Tests
 
             //Assert
             Assert.That(favorites.Any(f => f.Id == 15));
-        }
-
-        [Test]
-        public void AddToSessionAsyncThrowsExceptionIfProductIsInvalid()
-        {
-            //Act and Assert
-            Assert.ThrowsAsync<ArgumentNullException>(async () =>
-            {
-                var favorites = new List<int> { 2, 4 };
-                await this.favoriteService.AddToSessionFavoriteAsync(20, favorites);
-            }, "The product does not exist.");
-
-            Assert.ThrowsAsync<ArgumentNullException>(async () =>
-            {
-                var favorites = new List<int> { 2, 4 };
-                await this.favoriteService.AddToSessionFavoriteAsync(0, favorites);
-            }, "The product does not exist.");
-
-            Assert.ThrowsAsync<ArgumentNullException>(async () =>
-            {
-                var favorites = new List<int> { 2, 4 };
-                await this.favoriteService.AddToSessionFavoriteAsync(-1, favorites);
-            }, "The product does not exist.");
-        }
-
-        [Test]
-        public async Task AddToSessionAsyncReturnsTheSameCollectionBecauseTheProductIdIsAlreadyAdded()
-        {
-            //Act
-            var favorites = await this.favoriteService.AddToSessionFavoriteAsync(3, this.favoriteSession);
-
-            //Assert
-            CollectionAssert.AreEqual(this.favoriteSession, favorites);
-        }
-
-        [Test]
-        public async Task AddToSessionAsyncReturnsCollectionWithOneItemBecauseItWasEmpty()
-        {
-            //Act
-            var favorites = await this.favoriteService.AddToSessionFavoriteAsync(3, new List<int>());
-
-            //Assert
-            Assert.That(favorites.Count == 1);
-            Assert.That(favorites.Contains(3));
-        }
-
-        [Test]
-        public async Task AddToSessionAsyncReturnsCollectionWithOneItemMoreBecauseItWasNotEmpty()
-        {
-            //Act
-            var favorites = await this.favoriteService.AddToSessionFavoriteAsync(5, this.favoriteSession);
-
-            //Assert
-            Assert.That(favorites.Count == 3);
-            Assert.That(favorites.Contains(5));
-        }
-
-        [Test]
-        public async Task RemoveFromSessionAsyncShouldReturnTheSameCollectionIfTheProductIdIsNotInTheCollection()
-        {
-            //Act
-            var favorites = await this.favoriteService.RemoveFromSessionFavoriteAsync(5, this.favoriteSession);
-
-            //Assert
-            CollectionAssert.AreEqual(this.favoriteSession, favorites);
-        }
-
-        [Test]
-        public void RemoveFromSessionAsyncShouldThrowExceptionIfTheProductIdIsInvalid()
-        {
-            //Act and Assert
-            Assert.ThrowsAsync<ArgumentNullException>(async () =>
-            {
-                var favorites = new List<int> { 2, 4 };
-                await this.favoriteService.RemoveFromSessionFavoriteAsync(20, favorites);
-            }, "The product does not exist.");
-
-            Assert.ThrowsAsync<ArgumentNullException>(async () =>
-            {
-                var favorites = new List<int> { 2, 4 };
-                await this.favoriteService.RemoveFromSessionFavoriteAsync(0, favorites);
-            }, "The product does not exist.");
-
-            Assert.ThrowsAsync<ArgumentNullException>(async () =>
-            {
-                var favorites = new List<int> { 2, 4 };
-                await this.favoriteService.RemoveFromSessionFavoriteAsync(-1, favorites);
-            }, "The product does not exist.");
-        }
-
-        [Test]
-        public async Task RemoveFromSessionAsyncShouldReturnEmptyCollectionIfTheCollectionAsParameterIsEmpty()
-        {
-            //Act
-            var favorites = await this.favoriteService.RemoveFromSessionFavoriteAsync(5, new List<int>());
-
-            //Assert
-            CollectionAssert.AreEqual(new List<int>(), favorites);
-        }
-
-        [Test]
-        public async Task RemoveFromSessionAsyncShouldRemoveTheProductIdCorrectly()
-        {
-            //Act
-            var favorites = await this.favoriteService.RemoveFromSessionFavoriteAsync(13, this.favoriteSession);
-
-            //Assert
-            Assert.That(favorites.Count == 1);
-            Assert.That(!favorites.Contains(13));
         }
 
         [Test]

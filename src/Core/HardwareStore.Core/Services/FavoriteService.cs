@@ -1,4 +1,4 @@
-﻿namespace HardwareStore.Core.Services
+namespace HardwareStore.Core.Services
 {
     using HardwareStore.Common;
     using HardwareStore.Core.Services.Contracts;
@@ -6,8 +6,6 @@
     using HardwareStore.Infrastructure.Common;
     using HardwareStore.Infrastructure.Models;
     using Microsoft.EntityFrameworkCore;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
 
     public class FavoriteService : IFavoriteService
     {
@@ -41,21 +39,6 @@
             }
         }
 
-        public async Task<ICollection<int>> AddToSessionFavoriteAsync(int productId, ICollection<int> favorites)
-        {
-            if (!await this.repository.AnyAsync<Product>(p => p.Id == productId))
-            {
-                throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
-            }
-
-            if (!favorites.Contains(productId))
-            {
-                favorites.Add(productId);
-            }
-
-            return favorites;
-        }
-
         public async Task RemoveFromDatabaseFavoriteAsync(int productId, string userId)
         {
             var customer = await GetFavoritesCustomer(userId);
@@ -74,25 +57,9 @@
             }
         }
 
-        public async Task<ICollection<int>> RemoveFromSessionFavoriteAsync(int productId, ICollection<int> favorites)
-        {
-            if (!await this.repository.AnyAsync<Product>(p => p.Id == productId))
-            {
-                throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
-            }
-            
-            if (favorites.Contains(productId))
-            {
-                favorites.Remove(productId);
-            }
-
-            return favorites;
-        }
-
         public async Task<ICollection<FavoriteExportModel>> GetDatabaseFavoriteAsync(string userId)
         {
             var customer = await GetFavoritesCustomer(userId);
-            ICollection<FavoriteExportModel> favoriteItems = new List<FavoriteExportModel>();
 
             var favoritesModels = customer
                 .Favorites
@@ -105,32 +72,6 @@
                 .ToList();
 
             return favoritesModels;
-        }
-
-        public async Task<ICollection<FavoriteExportModel>> GetSessionFavoriteAsync(ICollection<int> favorites)
-        {
-            ICollection<FavoriteExportModel> favoriteItems = new List<FavoriteExportModel>();
-
-            foreach (var favoriteId in favorites)
-            {
-                var product = await this.repository.FindAsync<Product>(favoriteId);
-
-                if (product == null)
-                {
-                    throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
-                }
-
-                var favoriteItem = new FavoriteExportModel
-                {
-                    Id = favoriteId,
-                    Name = product.Name,
-                    Price = product.Price
-                };
-
-                favoriteItems.Add(favoriteItem);
-            }
-
-            return favoriteItems;
         }
 
         private async Task<Customer> GetFavoritesCustomer(string userId)

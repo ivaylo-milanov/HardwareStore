@@ -69,5 +69,14 @@ namespace HardwareStore.Tests
             Assert.That(filtered.Count, Is.GreaterThan(1));
             Assert.That(filtered[0].Price, Is.LessThanOrEqualTo(filtered[1].Price));
         }
+
+        [Test]
+        public async Task GetHomeViewModelAsync_ReturnsNewestAndMostBoughtCounts()
+        {
+            var model = await this.productService.GetHomeViewModelAsync();
+
+            Assert.That(model.NewestProducts.Count(), Is.EqualTo(4));
+            Assert.That(model.MostBoughtProducts.Count(), Is.EqualTo(2));
+        }
     }
 }

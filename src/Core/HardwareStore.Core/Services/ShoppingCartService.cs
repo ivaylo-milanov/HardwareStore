@@ -1,4 +1,4 @@
-﻿namespace HardwareStore.Core.Services
+namespace HardwareStore.Core.Services
 {
     using HardwareStore.Common;
     using HardwareStore.Core.Services.Contracts;
@@ -6,8 +6,6 @@
     using HardwareStore.Infrastructure.Common;
     using HardwareStore.Infrastructure.Models;
     using Microsoft.EntityFrameworkCore;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
 
     public class ShoppingCartService : IShoppingCartService
     {
@@ -16,163 +14,6 @@
         public ShoppingCartService(IRepository repository)
         {
             this.repository = repository;
-        }
-
-        public async Task<ICollection<ShoppingCartExportModel>> AddToSessionShoppingCartAsync(int productId, int quantity, ICollection<ShoppingCartExportModel> cart)
-        {
-            if (quantity <= 0) quantity = 1;
-
-            var product = await this.repository.FindAsync<Product>(productId);
-
-            if (product == null)
-            {
-                throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
-            }
-
-            var cartItem = cart.FirstOrDefault(p => p.ProductId == productId);
-
-            if (cartItem == null)
-            {
-                if (quantity > product.Quantity)
-                {
-                    throw new InvalidOperationException(String.Format(ExceptionMessages.NotManyItemsLeftInStock, product.Quantity, product.Name));
-                }
-
-                var model = new ShoppingCartExportModel
-                {
-                    ProductId = productId,
-                    Quantity = quantity,
-                };
-
-                cart.Add(model);
-            }
-            else
-            {
-                if (cartItem.Quantity + quantity > product.Quantity)
-                {
-                    throw new InvalidOperationException(String.Format(ExceptionMessages.NotManyItemsLeftInStock, product.Quantity, product.Name));
-                }
-
-                cartItem.Quantity += quantity;
-            }
-
-            return cart;
-        }
-
-
-
-        public async Task<ICollection<ShoppingCartExportModel>> DecreaseSessionItemQuantityAsync(int productId, ICollection<ShoppingCartExportModel> cart)
-        {
-            if (!await this.repository.AnyAsync<Product>(p => p.Id == productId))
-            {
-                throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
-            }
-
-            var cartItem = cart.FirstOrDefault(p => p.ProductId == productId);
-
-            if (cartItem == null)
-            {
-                throw new ArgumentNullException(ExceptionMessages.CartItemNotFound);
-            }
-
-            if (cartItem.Quantity > 1)
-            {
-                cartItem.Quantity--;
-            }
-
-            return cart;
-        }
-
-        public async Task<ShoppingCartViewModel> GetSessionShoppingCartAsync(ICollection<ShoppingCartExportModel> cart)
-        {
-            var shoppingItems = new List<ShoppingCartItemViewModel>();
-
-            foreach (var shopping in cart)
-            {
-                var product = await repository.FindAsync<Product>(shopping.ProductId);
-
-                if (product == null)
-                {
-                    throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
-                }
-
-                ShoppingCartItemViewModel item = new ShoppingCartItemViewModel
-                {
-                    ProductId = shopping.ProductId,
-                    Quantity = shopping.Quantity,
-                    Name = product.Name,
-                    Price = product.Price,
-                    TotalPrice = product.Price * shopping.Quantity,
-                    ProductQuantity = product.Quantity
-                };
-
-                shoppingItems.Add(item);
-            }
-
-            ShoppingCartViewModel model = new ShoppingCartViewModel
-            {
-                Shoppings = shoppingItems,
-                TotalCartPrice = shoppingItems.Sum(x => x.TotalPrice)
-            };
-
-            return model;
-        }
-
-        public async Task<ICollection<ShoppingCartExportModel>> RemoveFromSessionShoppingCartAsync(int productId, ICollection<ShoppingCartExportModel> cart)
-        {
-            if (!await this.repository.AnyAsync<Product>(p => p.Id == productId))
-            {
-                throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
-            }
-
-            var cartItem = cart.FirstOrDefault(p => p.ProductId == productId);
-
-            if (cartItem == null)
-            {
-                throw new ArgumentNullException(ExceptionMessages.CartItemNotFound);
-            }
-
-            cart.Remove(cartItem);
-
-            return cart;
-        }
-
-        public async Task<ICollection<ShoppingCartExportModel>> IncreaseSessionItemQuantityAsync(int productId, ICollection<ShoppingCartExportModel> cart)
-        {
-            if (!await this.repository.AnyAsync<Product>(p => p.Id == productId))
-            {
-                throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
-            }
-
-            var cartItem = cart.FirstOrDefault(p => p.ProductId == productId);
-
-            if (cartItem == null)
-            {
-                throw new ArgumentNullException(ExceptionMessages.CartItemNotFound);
-            }
-
-            cartItem.Quantity++;
-
-            return cart;
-        }
-
-        public async Task<ICollection<ShoppingCartExportModel>> UpdateSessionItemQuantityAsync(int quantity, int productId, ICollection<ShoppingCartExportModel> cart)
-        {
-            if (!await this.repository.AnyAsync<Product>(p => p.Id == quantity))
-            {
-                throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
-            }
-
-            var cartItem = cart.FirstOrDefault(p => p.ProductId == productId);
-
-            if (cartItem == null)
-            {
-                throw new ArgumentNullException(ExceptionMessages.CartItemNotFound);
-            }
-
-            cartItem.Quantity = quantity;
-
-            return cart;
         }
 
         public async Task AddToDatabaseShoppingCartAsync(int productId, int quantity, string userId)

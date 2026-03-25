@@ -106,50 +106,5 @@ namespace HardwareStore.Tests
             Assert.That(result, Is.False);
         }
 
-        [Test]
-        public void IsProductInSessionFavoritesShouldThrowExceptionIfTheProductIdIsInvalid()
-        {
-            var favorites = new List<int>() { 13, 14 };
-
-            Assert.ThrowsAsync<ArgumentNullException>(async () =>
-            {
-                await this.productService.IsProductInSessionFavorites(favorites, 20);
-            });
-
-            Assert.ThrowsAsync<ArgumentNullException>(async () =>
-            {
-                await this.productService.IsProductInSessionFavorites(favorites, 0);
-            });
-
-            Assert.ThrowsAsync<ArgumentNullException>(async () =>
-            {
-                await this.productService.IsProductInSessionFavorites(favorites, -1);
-            });
-
-            Assert.ThrowsAsync<ArgumentNullException>(async () =>
-            {
-                await this.productService.IsProductInSessionFavorites(favorites, 16);
-            });
-        }
-
-        [Test]
-        public async Task IsProductInSessionFavoritesReturnTrueIfTheProductIdIsInTheFavorites()
-        {
-            var favorites = new List<int>() { 13, 14 };
-
-            var result = await this.productService.IsProductInSessionFavorites(favorites, 13);
-
-            Assert.That(result, Is.True);
-        }
-
-        [Test]
-        public async Task IsProductInSessionFavoritesReturnFalseIfTheProductIdIsNotInTheFavorites()
-        {
-            var favorites = new List<int>() { 13, 14 };
-
-            var result = await this.productService.IsProductInSessionFavorites(favorites, 15);
-
-            Assert.That(result, Is.False);
-        }
     }
 }
