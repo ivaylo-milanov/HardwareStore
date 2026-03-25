@@ -22,6 +22,8 @@ namespace HardwareStore.Tests
             this.orderService = new OrderService(this.repository);
         }
 
+        #region GetOrderModel
+
         [Test]
         public void GetOrderModelShouldThrowExceptionIfTheUserIdIsInvalid()
         {
@@ -52,6 +54,10 @@ namespace HardwareStore.Tests
             Assert.That(model.PaymentMethod, Is.EqualTo(PaymentMethod.CreditCard));
         }
 
+        #endregion
+
+        #region GetUserOrders
+
         [Test]
         public void GetUsersOrdersShouldThrowExceptionIfTheUserIdIsInvalid()
         {
@@ -73,6 +79,10 @@ namespace HardwareStore.Tests
             Assert.That(orders, Is.Not.Null);
             Assert.That(orders.Count(), Is.EqualTo(1));
         }
+
+        #endregion
+
+        #region OrderAsync
 
         [Test]
         public void OrderAsyncShouldThrowExceptionIfTheUserIdIsInvalid()
@@ -202,5 +212,7 @@ namespace HardwareStore.Tests
 
             Assert.That(newOrder.TotalAmount, Is.EqualTo(680));
         }
+
+        #endregion
     }
 }

@@ -18,6 +18,8 @@ namespace HardwareStore.Tests
             this.productService = new ProductService(repository);
         }
 
+        #region Category
+
         [Test]
         public async Task CategoryExists_ReturnsTrue_ForSeededCategory()
         {
@@ -31,6 +33,10 @@ namespace HardwareStore.Tests
             var exists = await this.productService.CategoryExistsAsync("NotARealCategory");
             Assert.That(exists, Is.False);
         }
+
+        #endregion
+
+        #region Catalog search and filter
 
         [Test]
         public async Task GetCategoryCatalog_ReturnsProductsWithOptions()
@@ -70,6 +76,10 @@ namespace HardwareStore.Tests
             Assert.That(filtered[0].Price, Is.LessThanOrEqualTo(filtered[1].Price));
         }
 
+        #endregion
+
+        #region Home
+
         [Test]
         public async Task GetHomeViewModelAsync_ReturnsNewestAndMostBoughtCounts()
         {
@@ -78,5 +88,7 @@ namespace HardwareStore.Tests
             Assert.That(model.NewestProducts.Count(), Is.EqualTo(4));
             Assert.That(model.MostBoughtProducts.Count(), Is.EqualTo(2));
         }
+
+        #endregion
     }
 }

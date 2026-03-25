@@ -1,4 +1,4 @@
-﻿namespace HardwareStore.Tests
+namespace HardwareStore.Tests
 {
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.Services;
@@ -18,6 +18,8 @@
 
             this.shoppingCartService = new ShoppingCartService(repository);
         }
+
+        #region GetDatabaseShoppingCartAsync
 
         [Test]
         public void GetDatabaseThrowsExceptionIfTheUserIdIsIncorrect()
@@ -78,6 +80,10 @@
 
             Assert.That(model.Shoppings, Is.EqualTo(expectedResult.Shoppings).Using(new ShoppingCartItemViewModelComparer()));
         }
+
+        #endregion
+
+        #region AddToDatabaseShoppingCartAsync
 
         [Test]
         public void AddToDatabaseShouldThrowExceptionIfTheUserIdIsInvalid()
@@ -328,6 +334,10 @@
             Assert.That(cart.Shoppings.Any(p => p.ProductId == 13 && p.Quantity == 1));
         }
 
+        #endregion
+
+        #region IncreaseDatabaseItemQuantityAsync
+
         [Test]
         public void IncreaseQuantityDatabaseShouldThrowExceptionIfTheUserIdIsInvalid()
         {
@@ -399,6 +409,10 @@
             //Assert
             Assert.That(cart.Shoppings.Any(p => p.ProductId == 13 && p.Quantity == 4));
         }
+
+        #endregion
+
+        #region DecreaseDatabaseItemQuantityAsync
 
         [Test]
         public void DecreaseQuantityDatabaseShouldThrowExceptionIfTheUserIdIsInvalid()
@@ -511,6 +525,10 @@
             Assert.That(cart.Shoppings.Any(i => i.ProductId == 13 && i.Quantity == 1));
         }
 
+        #endregion
+
+        #region UpdateDatabaseItemQuantityAsync
+
         [Test]
         public void UpdateQuantityDatabaseShouldThrowExceptionIfTheUserIdIsInvalid()
         {
@@ -620,6 +638,10 @@
             Assert.That(cart.Shoppings.Any(i => i.ProductId == 13 && i.Quantity == 13));
         }
 
+        #endregion
+
+        #region RemoveFromDatabaseShoppingCartAsync
+
         [Test]
         public void RemoveItemDatabaseShouldThrowExceptionIfTheUserIdIsInvalid()
         {
@@ -697,5 +719,7 @@
             //Assert
             Assert.That(!cart.Shoppings.Any(i => i.ProductId == 13));
         }
+
+        #endregion
     }
 }

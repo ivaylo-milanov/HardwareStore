@@ -1,5 +1,6 @@
 namespace HardwareStore.Tests
 {
+    using HardwareStore.Common;
     using HardwareStore.Core.Services;
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Favorite;
@@ -17,6 +18,8 @@ namespace HardwareStore.Tests
 
             this.favoriteService = new FavoriteService(repository);
         }
+
+        #region GetDatabaseFavoriteAsync
 
         [Test]
         public async Task FavoriteDatabaseReturnsTheCorrectData()
@@ -55,6 +58,10 @@ namespace HardwareStore.Tests
             Assert.That(result, Is.Empty);
         }
 
+        #endregion
+
+        #region AddToDatabaseFavoriteAsync
+
         [Test]
         public void AddToDatabaseAsyncThrowsExceptionIfTheUserIdIsInvalid()
         {
@@ -62,7 +69,7 @@ namespace HardwareStore.Tests
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {
                 await this.favoriteService.AddToDatabaseFavoriteAsync(2, "TestCustomer3");
-            }, "The user does not exist.");
+            }, ExceptionMessages.UserNotFound);
         }
 
         [Test]
@@ -72,17 +79,17 @@ namespace HardwareStore.Tests
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {
                 await this.favoriteService.AddToDatabaseFavoriteAsync(20, "TestCustomer2");
-            }, "The user does not exist.");
+            }, ExceptionMessages.ProductNotFound);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {
                 await this.favoriteService.AddToDatabaseFavoriteAsync(0, "TestCustomer2");
-            }, "The user does not exist.");
+            }, ExceptionMessages.ProductNotFound);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {
                 await this.favoriteService.AddToDatabaseFavoriteAsync(-1, "TestCustomer2");
-            }, "The user does not exist.");
+            }, ExceptionMessages.ProductNotFound);
         }
 
         [Test]
@@ -122,6 +129,10 @@ namespace HardwareStore.Tests
             Assert.That(favorites.Any(f => f.Id == 15));
         }
 
+        #endregion
+
+        #region RemoveFromDatabaseFavoriteAsync
+
         [Test]
         public void RemoveFromDatabaseAsyncShouldThrowExceptionIfTheUserIsInvalid()
         {
@@ -129,7 +140,7 @@ namespace HardwareStore.Tests
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {
                 await this.favoriteService.RemoveFromDatabaseFavoriteAsync(20, "TestCustomer3");
-            }, "The user does not exist.");
+            }, ExceptionMessages.UserNotFound);
         }
 
         [Test]
@@ -139,17 +150,17 @@ namespace HardwareStore.Tests
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {
                 await this.favoriteService.RemoveFromDatabaseFavoriteAsync(20, "TestCustomer2");
-            }, "The product does not exist.");
+            }, ExceptionMessages.ProductNotFound);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {
                 await this.favoriteService.RemoveFromDatabaseFavoriteAsync(0, "TestCustomer2");
-            }, "The product does not exist.");
+            }, ExceptionMessages.ProductNotFound);
 
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {
                 await this.favoriteService.RemoveFromDatabaseFavoriteAsync(-1, "TestCustomer2");
-            }, "The product does not exist.");
+            }, ExceptionMessages.ProductNotFound);
         }
 
         [Test]
@@ -213,5 +224,7 @@ namespace HardwareStore.Tests
             //Assert
             Assert.That(favorites, Is.EquivalentTo(expectedData).Using(new FavoriteExportModelComparer()));
         }
+
+        #endregion
     }
 }

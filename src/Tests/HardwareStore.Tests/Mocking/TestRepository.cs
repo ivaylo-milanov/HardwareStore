@@ -9,6 +9,8 @@ namespace HardwareStore.Tests.Mocking
 
     public static class TestRepository
     {
+        #region Test database factory
+
         private static readonly JsonSerializerOptions JsonOptions = new() { PropertyNamingPolicy = null };
 
         public static async Task<IRepository> GetRepository()
@@ -27,6 +29,10 @@ namespace HardwareStore.Tests.Mocking
 
             return repository;
         }
+
+        #endregion
+
+        #region Seed data
 
         private static string OptionsJson(Dictionary<string, string> pairs) =>
             JsonSerializer.Serialize(pairs, JsonOptions);
@@ -200,5 +206,7 @@ namespace HardwareStore.Tests.Mocking
 
             await context.SaveChangesAsync();
         }
+
+        #endregion
     }
 }

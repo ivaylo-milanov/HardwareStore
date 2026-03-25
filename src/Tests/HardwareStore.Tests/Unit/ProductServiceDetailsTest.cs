@@ -1,5 +1,6 @@
 namespace HardwareStore.Tests
 {
+    using HardwareStore.Common;
     using HardwareStore.Core.Services;
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Tests.Mocking;
@@ -15,6 +16,8 @@ namespace HardwareStore.Tests
             var repository = await TestRepository.GetRepository();
             this.productService = new ProductService(repository);
         }
+
+        #region GetProductDetails
 
         [Test]
         public async Task TheProductDetialsReturnsDetailsAboutValidProduct()
@@ -37,7 +40,7 @@ namespace HardwareStore.Tests
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {
                 await this.productService.GetProductDetails(0);
-            }, "The product does not exist.");
+            }, ExceptionMessages.ProductNotFound);
         }
 
         [Test]
@@ -46,8 +49,12 @@ namespace HardwareStore.Tests
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {
                 await this.productService.GetProductDetails(20);
-            }, "The product does not exist.");
+            }, ExceptionMessages.ProductNotFound);
         }
+
+        #endregion
+
+        #region IsProductInDbFavorites
 
         [Test]
         public void IsProductInDbFavoritesShouldThrowExceptionIfTheUserIdIsInvalid()
@@ -106,5 +113,6 @@ namespace HardwareStore.Tests
             Assert.That(result, Is.False);
         }
 
+        #endregion
     }
 }
