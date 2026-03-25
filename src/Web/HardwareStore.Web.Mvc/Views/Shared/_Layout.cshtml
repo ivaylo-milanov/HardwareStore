@@ -1,4 +1,4 @@
-﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Identity
 @inject SignInManager<Customer> SignInManager
 @inject UserManager<Customer> UserManager
 
@@ -28,7 +28,7 @@
                         <button class="dropbtn">Products</button>
 
                         <div class="dropdown-content">
-                            @await Component.InvokeAsync("Categories")
+                            @await Html.PartialAsync("_CategoriesNav")
                         </div>
                     </div>
 
@@ -61,7 +61,7 @@
                                     <a asp-action="Login" asp-controller="User">Login</a>
                                 </div>
                                 <div class="login-menu">
-                                    @await Component.InvokeAsync("Login")
+                                    @await Html.PartialAsync("_LoginFormPartial", new LoginFormModel())
                                 </div>
                             }
                         </div>

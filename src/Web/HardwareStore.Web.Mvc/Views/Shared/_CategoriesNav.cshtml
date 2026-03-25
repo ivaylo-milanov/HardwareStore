@@ -1,0 +1,23 @@
+@using System.IO
+@using System.Text.Json
+@inject IWebHostEnvironment HostingEnvironment
+@{
+    var path = System.IO.Path.Combine(HostingEnvironment.WebRootPath, "data", "categories-nav.json");
+    var json = System.IO.File.ReadAllText(path);
+    var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+    var nav = JsonSerializer.Deserialize<CategoriesNavModel>(json)
+        ?? throw new InvalidOperationException("Invalid categories navigation JSON.");
+}
+
+@foreach (var group in new (string Title, NavCategoryItem[] Items)[] { ("Peripherals", nav.Peripherals), ("Hardware", nav.Hardware) })
+{
+    <div class="has-submenu">
+        <a>@group.Title</a>
+        <div class="submenu">
+            @foreach (var category in group.Items)
+            {
+                <a href="/Product/Index?category=@category.Name&title=@category.Title">@category.Title</a>
+            }
+        </div>
+    </div>
+}

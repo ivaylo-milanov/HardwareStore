@@ -1,4 +1,4 @@
-﻿namespace HardwareStore.Extensions
+namespace HardwareStore.Extensions
 {
     using Microsoft.AspNetCore.Mvc.Razor;
 
@@ -8,8 +8,7 @@
         {
             services.Configure<RazorViewEngineOptions>(options =>
             {
-                options.ViewLocationFormats.Add("/Views/Shared/Product/{0}.cshtml");
-                options.ViewLocationFormats.Add("/Views/Shared/Search/{0}.cshtml");
+                options.ViewLocationFormats.Add("/Views/Shared/Catalog/{0}.cshtml");
             });
 
             return services;

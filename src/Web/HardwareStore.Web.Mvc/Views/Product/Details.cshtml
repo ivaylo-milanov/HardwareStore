@@ -1,4 +1,4 @@
-﻿@model ProductDetailsModel
+@model ProductDetailsModel
 
 <div class="details-container">
     <div class="image">
@@ -13,7 +13,7 @@
             <div>
                 <div>$@Model.Price.ToString("F2")</div>
             </div>
-            @await Component.InvokeAsync("Favorite", new { productId = Model.Id })
+            @await Html.PartialAsync("_ProductFavoritePartial", new DetailsFavoriteModel { ProductId = Model.Id, IsFavorite = Model.IsFavorite })
             <span>
                 <form asp-action="AddToShoppingCart" asp-controller="Cart" method="post">
                     <input type="hidden" name="productId" value="@Model.Id" />

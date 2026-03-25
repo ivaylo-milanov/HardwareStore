@@ -1,4 +1,4 @@
-﻿@model ICollection<FavoriteExportModel>
+@model ICollection<FavoriteExportModel>
 
 <div class="products-container">
     @if (Model.Any())
@@ -22,9 +22,7 @@
     }
     else
     {
-        <div class="center-content">
-            <p class="paragraph-style">There are no products.</p>
-        </div>
+        <partial name="_CatalogEmptyProductsMessage" />
     }
 </div>
 

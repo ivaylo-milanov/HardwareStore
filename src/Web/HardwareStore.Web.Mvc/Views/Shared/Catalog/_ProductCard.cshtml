@@ -1,0 +1,10 @@
+@model ProductViewModel
+
+<div class="product-card">
+    <div class="product-details">
+        <h3 class="product-title">@Model.Name</h3>
+        <p class="product-price">$@Model.Price</p>
+        <a asp-action="AddToShoppingCart" asp-controller="Cart" asp-route-productId="@Model.Id" asp-route-quantity="1" class="product-button">Buy</a>
+    </div>
+    <a class="hiddenLink" asp-action="Details" asp-controller="Product" asp-route-productId="@Model.Id" hidden></a>
+</div>

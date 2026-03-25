@@ -1,4 +1,4 @@
-﻿const select = document.querySelector('.order select');
+const select = document.querySelector('#catalog-order-by');
 
 export function getURL(data) {
     return window.location.pathname + buildQueryString(data);
@@ -14,7 +14,9 @@ export function returnFilterState(data) {
         }
     });
 
-    select.value = data.Order;
+    if (select) {
+        select.value = data.Order;
+    }
 
     for (const key of distinctNames) {
         var nameCheckboxes = Array.from(checkboxes).filter(ch => ch.name === key);

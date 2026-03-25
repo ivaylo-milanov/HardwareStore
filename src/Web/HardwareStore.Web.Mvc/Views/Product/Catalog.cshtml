@@ -4,7 +4,7 @@
     <h1>@Model.PageTitle</h1>
 </div>
 <div class="page-body">
-    <form class="page-layout" method="get" data-url="@Url.Action("FilterSearchedProducts", "Search", new { keyword = Model.SearchKeyword })">
+    <form class="page-layout" method="get" data-url="@Model.FilterPostUrl">
         <partial name="_FilterPartialView" model="@Model.Catalog.Filters"/>
         <partial name="_ProductsContentPartialView" model="@Model.Catalog.Products as IEnumerable<ProductViewModel>"/>
     </form>

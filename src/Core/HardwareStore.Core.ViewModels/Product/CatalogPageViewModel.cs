@@ -11,6 +11,9 @@ namespace HardwareStore.Core.ViewModels.Product
         /// <summary>Search keyword for search filter POST.</summary>
         public string? SearchKeyword { get; set; }
 
+        /// <summary>Absolute URL used by the catalog filter script (<c>data-url</c>).</summary>
+        public string FilterPostUrl { get; set; } = null!;
+
         public ProductsViewModel<CatalogProductViewModel> Catalog { get; set; } = null!;
     }
 }

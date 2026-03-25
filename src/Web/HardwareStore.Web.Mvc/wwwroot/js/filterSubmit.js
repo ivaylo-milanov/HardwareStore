@@ -1,4 +1,4 @@
-﻿import { sendFilterData } from './data.js';
+import { sendFilterData } from './data.js';
 import { getURL } from './state.js';
 
 export async function onFormChange(ev) {
@@ -26,8 +26,8 @@ function getData(ev) {
         data[key].push(value);
     });
 
-    const order = document.querySelector('select').value;
-    data.Order = order;
+    const orderSelect = ev.currentTarget.querySelector('#catalog-order-by');
+    data.Order = orderSelect ? orderSelect.value : '1';
 
     return data;
 }

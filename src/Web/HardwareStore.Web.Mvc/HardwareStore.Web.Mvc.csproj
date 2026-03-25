@@ -33,19 +33,23 @@
     <_ContentIncludedByDefault Remove="Views\Home\Error.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Home\Index.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Orders\Index.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Order\Index.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Order\Success.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Checkout\Index.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Checkout\Success.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Product\Details.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Profile\Index.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Search\Index.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Shared\Components\Favorite\Default.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Shared\Components\Login\Default.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Shared\Product\_FavoritePartialView.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Shared\Product\_FilterPartialView.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Shared\Product\_HomePartialView.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Shared\Product\_OrderPartialView.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Shared\Product\_ProductsContentPartialView.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Shared\Product\_ProductsPartialView.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Product\Catalog.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Shared\_CategoriesNav.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Shared\_LoginFormPartial.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Shared\_ProductFavoritePartial.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Shared\Catalog\_CatalogEmptyProductsMessage.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Shared\Catalog\_FavoritePartialView.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Shared\Catalog\_FilterPartialView.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Shared\Catalog\_HomePartialView.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Shared\Catalog\_OrderPartialView.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Shared\Catalog\_ProductCard.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Shared\Catalog\_ProductCardsRow.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Shared\Catalog\_ProductsContentPartialView.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Shared\Catalog\_ProductsPartialView.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Shared\_ValidationScriptsPartial.cshtml" />
     <_ContentIncludedByDefault Remove="Views\User\Login.cshtml" />
     <_ContentIncludedByDefault Remove="Views\User\Register.cshtml" />
@@ -66,11 +70,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Views\Order\Index.cshtml" />
+    <UpToDateCheckInput Remove="Views\Checkout\Index.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Views\Order\Success.cshtml" />
+    <UpToDateCheckInput Remove="Views\Checkout\Success.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -86,39 +90,46 @@
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Views\Search\Index.cshtml" />
+    <UpToDateCheckInput Remove="Views\Product\Catalog.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Views\Shared\Components\Favorite\Default.cshtml" />
+    <UpToDateCheckInput Remove="Views\Shared\_CategoriesNav.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Views\Shared\Components\Login\Default.cshtml" />
+    <UpToDateCheckInput Remove="Views\Shared\_LoginFormPartial.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Views\Shared\Product\_FavoritePartialView.cshtml" />
+    <UpToDateCheckInput Remove="Views\Shared\_ProductFavoritePartial.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Views\Shared\Product\_FilterPartialView.cshtml" />
+    <UpToDateCheckInput Remove="Views\Shared\Catalog\_CatalogEmptyProductsMessage.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Views\Shared\Product\_HomePartialView.cshtml" />
+    <UpToDateCheckInput Remove="Views\Shared\Catalog\_FavoritePartialView.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Views\Shared\Product\_OrderPartialView.cshtml" />
+    <UpToDateCheckInput Remove="Views\Shared\Catalog\_FilterPartialView.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Views\Shared\Product\_ProductsContentPartialView.cshtml" />
+    <UpToDateCheckInput Remove="Views\Shared\Catalog\_HomePartialView.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <UpToDateCheckInput Remove="Views\Shared\Product\_ProductsPartialView.cshtml" />
+    <UpToDateCheckInput Remove="Views\Shared\Catalog\_OrderPartialView.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Views\Shared\Catalog\_ProductCard.cshtml" />
+    <UpToDateCheckInput Remove="Views\Shared\Catalog\_ProductCardsRow.cshtml" />
+    <UpToDateCheckInput Remove="Views\Shared\Catalog\_ProductsContentPartialView.cshtml" />
+    <UpToDateCheckInput Remove="Views\Shared\Catalog\_ProductsPartialView.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

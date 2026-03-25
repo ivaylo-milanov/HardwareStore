@@ -29,13 +29,15 @@ namespace HardwareStore.Web.Mvc.Controllers
                 return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
+            var kw = keyword ?? string.Empty;
             var page = new CatalogPageViewModel
             {
                 PageTitle = "Search",
-                SearchKeyword = keyword ?? string.Empty,
+                SearchKeyword = kw,
                 Catalog = model,
+                FilterPostUrl = this.Url.Action("FilterSearchedProducts", "Search", new { keyword = kw })!,
             };
-            return View(page);
+            return this.View("~/Views/Product/Catalog.cshtml", page);
         }
 
         [HttpPost]

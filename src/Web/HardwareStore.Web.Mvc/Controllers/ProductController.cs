@@ -3,6 +3,7 @@ namespace HardwareStore.Web.Mvc.Controllers
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Details;
     using HardwareStore.Core.ViewModels.Product;
+    using HardwareStore.Extensions;
     using Microsoft.AspNetCore.Mvc;
 
     public class ProductController : Controller
@@ -32,8 +33,9 @@ namespace HardwareStore.Web.Mvc.Controllers
                     PageTitle = title,
                     CategoryKey = category,
                     Catalog = catalog,
+                    FilterPostUrl = this.Url.Action("Filter", "Product", new { category })!,
                 };
-                return View(page);
+                return this.View("Catalog", page);
             }
             catch (ArgumentException ex)
             {
@@ -78,7 +80,32 @@ namespace HardwareStore.Web.Mvc.Controllers
                 return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
-            return View(model);
+            model.IsFavorite = await this.ResolveFavoriteStateAsync(productId).ConfigureAwait(false);
+
+            return this.View(model);
+        }
+
+        private async Task<bool> ResolveFavoriteStateAsync(int productId)
+        {
+            try
+            {
+                var sessionFavorites = this.HttpContext.Session.Get<ICollection<int>>("Favorite") ?? new List<int>();
+                if (this.User?.Identity?.IsAuthenticated ?? false)
+                {
+                    return await this.productService
+                        .IsProductInDbFavorites(this.User.GetUserId(), productId)
+                        .ConfigureAwait(false);
+                }
+
+                return await this.productService
+                    .IsProductInSessionFavorites(sessionFavorites, productId)
+                    .ConfigureAwait(false);
+            }
+            catch (ArgumentNullException ex)
+            {
+                this.logger.LogError(ex, ex.Message);
+                return false;
+            }
         }
 
         private PartialViewResult EmptyProductsPartial() =>

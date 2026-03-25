@@ -1,4 +1,4 @@
-﻿@model IEnumerable<FilterCategoryModel>
+@model IEnumerable<FilterCategoryModel>
 
 <div class="filter-categories">
     @foreach (var filter in Model)
@@ -15,13 +15,13 @@
                         {
                             <li>
                                 <label>
-                                    <input type="checkbox" name="@filter.Name" value="@value"/> @value
+                                    <input type="checkbox" name="@filter.Name" value="@value" /> @value
                                 </label>
                             </li>
                         }
                     }
                 </ul>
             </div>
-    </div>
+        </div>
     }
 </div>
