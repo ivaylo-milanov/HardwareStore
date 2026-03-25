@@ -94,6 +94,6 @@ ON product_catalog;
 ## Getting Started
 
 1. **Setup**: Ensure SQL Server is up and running and connection strings are correctly configured.
-2. **Migration**: On startup the web app applies pending EF Core migrations (`MigrateDatabaseAsync`). You can also run `dotnet ef database update` from the Infrastructure project if you prefer.
+2. **Migration**: Apply the database schema with `dotnet ef database update` from the Infrastructure project (or your usual EF workflow) before running the site.
 3. **Search-Functionality**: Create the necessary indexes to make the full-text search works.
 4. **Run**: Launch the website and begin exploring the hardware collection.
