@@ -1,16 +1,19 @@
-﻿namespace HardwareStore.Core.Services.Contracts
+namespace HardwareStore.Core.Services.Contracts
 {
     using HardwareStore.Core.ViewModels.Product;
     using HardwareStore.Core.ViewModels.Search;
 
     public interface IProductService
     {
-        IEnumerable<TModel> FilterProducts<TModel, TFilter>(TFilter filter)
+        Task<IEnumerable<TModel>> FilterProductsAsync<TModel, TFilter>(TFilter filter)
             where TFilter : ProductFilterOptions
             where TModel : ProductViewModel;
 
-        Task<ProductsViewModel<SearchViewModel>> GetSearchModel(string keyword);
+        Task<IEnumerable<SearchViewModel>> FilterSearchProductsAsync(string keyword, SearchFilterOptions filter);
 
-        Task<ProductsViewModel<TModel>> GetModel<TModel>() where TModel : ProductViewModel;
+        /// <summary>
+        /// Category pages: call without <paramref name="keyword"/>. Search: use <see cref="SearchViewModel"/> and pass the keyword (null/whitespace = all products).
+        /// </summary>
+        Task<ProductsViewModel<TModel>> GetModel<TModel>(string? keyword = null) where TModel : ProductViewModel;
     }
 }

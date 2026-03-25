@@ -1,6 +1,6 @@
-﻿namespace HardwareStore.Core.Services
+namespace HardwareStore.Core.Services
 {
-    using HardwareStore.Common;
+    using System.Reflection;
     using HardwareStore.Core.Infrastructure.Attributes;
     using HardwareStore.Core.Infrastructure.Enum;
     using HardwareStore.Core.Services.Contracts;
@@ -10,101 +10,119 @@
     using HardwareStore.Infrastructure.Models;
     using Microsoft.Data.SqlClient;
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Caching.Memory;
-    using System.Linq;
-    using System.Reflection;
 
     public class ProductService : IProductService
     {
         private readonly IRepository repository;
-        private readonly IMemoryCache memoryCache;
 
-        public ProductService(IRepository repository, IMemoryCache memoryCache)
+        public ProductService(IRepository repository)
         {
             this.repository = repository;
-            this.memoryCache = memoryCache;
         }
 
-        public IEnumerable<TModel> FilterProducts<TModel, TFilter>(TFilter filter)
-            where TFilter : ProductFilterOptions
+        public async Task<ProductsViewModel<TModel>> GetModel<TModel>(string? keyword = null)
             where TModel : ProductViewModel
         {
-            if (!this.memoryCache.TryGetValue("Products", out IEnumerable<TModel> products))
-            {
-                throw new ArgumentNullException(ExceptionMessages.NoProductsFound);
-            }
-
-            var properties = filter
-                .GetType()
-                .GetProperties()
-                .Where(p => p.GetValue(filter) != null && typeof(IEnumerable<string>).IsAssignableFrom(p.GetValue(filter)?.GetType()));
-
-            foreach (var property in properties)
-            {
-                var value = property.GetValue(filter);
-                var list = value as IEnumerable<string>;
-
-                products = products.Where(p => IsValid(list!, p.GetType().GetProperty(property.Name)?.GetValue(p)!));
-            }
-
-            products = this.OrderProducts(products, filter.Order);
-
-            return products;
+            var products = await GetProductsAsync<TModel>(keyword).ConfigureAwait(false);
+            return BuildProductsViewModel(products);
         }
 
-        private bool IsValid(IEnumerable<string> list, object value)
+        public async Task<IEnumerable<TModel>> FilterProductsAsync<TModel, TFilter>(TFilter filter)
+            where TModel : ProductViewModel
+            where TFilter : ProductFilterOptions
         {
-            bool isValid = false;
+            var products = await GetProductsAsync<TModel>().ConfigureAwait(false);
+            return ApplyFilters(products, filter);
+        }
 
+        public async Task<IEnumerable<SearchViewModel>> FilterSearchProductsAsync(string keyword, SearchFilterOptions filter)
+        {
+            var products = await GetProductsAsync<SearchViewModel>(keyword).ConfigureAwait(false);
+            return ApplyFilters(products, filter);
+        }
 
-            if (value == null)
+        private static ProductsViewModel<TModel> BuildProductsViewModel<TModel>(IEnumerable<TModel> products)
+            where TModel : ProductViewModel
+        {
+            return new ProductsViewModel<TModel>
             {
+                Filters = BuildFilterCategories(products),
+                Products = products,
+            };
+        }
+
+        private static IEnumerable<TModel> ApplyFilters<TModel, TFilter>(IEnumerable<TModel> products, TFilter filter)
+            where TModel : ProductViewModel
+            where TFilter : ProductFilterOptions
+        {
+            foreach (var prop in filter.GetType().GetProperties())
+            {
+                var raw = prop.GetValue(filter);
+                if (raw is not IEnumerable<string> list)
+                    continue;
+
+                products = products.Where(p =>
+                    MatchesFilter(list, p.GetType().GetProperty(prop.Name)?.GetValue(p)));
+            }
+
+            return OrderBySelection(products, filter.Order);
+        }
+
+        private static bool MatchesFilter(IEnumerable<string> selectedValues, object? productField)
+        {
+            if (productField == null)
                 return false;
-            }
 
-            foreach (var item in list)
-            {
-                if (value.ToString()!.Contains(item))
-                {
-                    isValid = true;
-                    break;
-                }
-            }
-
-            return isValid;
+            var text = productField.ToString()!;
+            return selectedValues.Any(selected => text.Contains(selected));
         }
 
-        private IEnumerable<TModel> OrderProducts<TModel>(IEnumerable<TModel> products, int order) where TModel : ProductViewModel
+        private static IEnumerable<TModel> OrderBySelection<TModel>(IEnumerable<TModel> products, int order)
+            where TModel : ProductViewModel
         {
-            ProductOrdering ordering = (ProductOrdering)order;
-
-            var orderedProducts = ordering switch
+            return (ProductOrdering)order switch
             {
                 ProductOrdering.LowestPrice => products.OrderBy(p => p.Price),
                 ProductOrdering.HighestPrice => products.OrderByDescending(p => p.Price),
                 ProductOrdering.Newest => products.OrderByDescending(p => p.AddDate),
                 ProductOrdering.Oldest => products.OrderBy(p => p.AddDate),
-                _=> products
+                _ => products,
             };
-
-            return orderedProducts;
         }
 
-        private async Task<IEnumerable<TModel>> GetProductsAsync<TModel>() where TModel : ProductViewModel
+        /// <summary>
+        /// Loads products for a category view model, or for <see cref="SearchViewModel"/> when <paramref name="keyword"/> is used (including empty = all products).
+        /// </summary>
+        private async Task<IEnumerable<TModel>> GetProductsAsync<TModel>(string? keyword = null)
+            where TModel : ProductViewModel
         {
-            var categoryNameAttribute = (CategoryAttribute)Attribute.GetCustomAttribute(typeof(TModel), typeof(CategoryAttribute))!;
-
-            if (categoryNameAttribute == null)
+            if (typeof(TModel) == typeof(SearchViewModel))
             {
-                throw new ArgumentException($"The model type {typeof(TModel).Name} does not have a Category attribute");
+                if (!string.IsNullOrWhiteSpace(keyword))
+                    return (IEnumerable<TModel>)(object)await LoadSearchByKeywordAsync(keyword).ConfigureAwait(false);
+
+                return (IEnumerable<TModel>)(object)await LoadAllForSearchAsync().ConfigureAwait(false);
             }
 
-            var query = await this.repository
+            if (!string.IsNullOrWhiteSpace(keyword))
+                throw new ArgumentException("A search keyword only applies to SearchViewModel.", nameof(keyword));
+
+            return await LoadByCategoryAsync<TModel>().ConfigureAwait(false);
+        }
+
+        private async Task<IEnumerable<TModel>> LoadByCategoryAsync<TModel>()
+            where TModel : ProductViewModel
+        {
+            var categoryAttr = typeof(TModel).GetCustomAttribute<CategoryAttribute>();
+            if (categoryAttr == null)
+                throw new ArgumentException($"The model type {typeof(TModel).Name} does not have a Category attribute");
+
+            var rows = await this.repository
                 .All<Product>()
                 .Include(p => p.Manufacturer)
                 .Include(p => p.Characteristics)
-                .ThenInclude(p => p.CharacteristicName)
-                .Where(p => p.Category.Name == categoryNameAttribute.CategoryName)
+                .ThenInclude(c => c.CharacteristicName)
+                .Where(p => p.Category.Name == categoryAttr.CategoryName)
                 .Select(p => new ProductExportModel
                 {
                     Id = p.Id,
@@ -116,81 +134,35 @@
                         .Select(pa => new ProductAttributeExportModel
                         {
                             Name = pa.CharacteristicName.Name,
-                            Value = pa.Value
+                            Value = pa.Value,
                         })
-                        .ToList()
+                        .ToList(),
                 })
-                .ToListAsync();
+                .ToListAsync()
+                .ConfigureAwait(false);
 
-            var products = query.Select(q => CreateModelInstance<TModel>(q)).ToList();
-
-            return products;
+            return rows.Select(MapToViewModel<TModel>).ToList();
         }
 
-        private TModel CreateModelInstance<TModel>(ProductExportModel product)
+        private async Task<IEnumerable<SearchViewModel>> LoadAllForSearchAsync()
         {
-            var model = Activator.CreateInstance<TModel>();
-
-            foreach (var prop in typeof(TModel).GetProperties())
-            {
-                var productAttribute = prop.GetCustomAttribute<CharacteristicAttribute>();
-
-                if (productAttribute != null)
+            return await this.repository.All<Product>()
+                .Include(p => p.Manufacturer)
+                .Select(p => new SearchViewModel
                 {
-                    string name = productAttribute.Name == null
-                        ? prop.Name
-                        : productAttribute.Name;
-
-                    object characteristicValue = product.Attributes.FirstOrDefault(a => a.Name == name)?.Value!;
-
-                    if (characteristicValue == null && prop.Name != "Manufacturer")
-                    {
-                        continue;
-                    }
-
-                    if (prop.Name == "Manufacturer")
-                    {
-                        characteristicValue = product.Manufacturer;
-                    }
-
-                    if (characteristicValue != null && prop.PropertyType != characteristicValue.GetType())
-                    {
-                        characteristicValue = Convert.ChangeType(characteristicValue, prop.PropertyType);
-                    }
-
-                    prop.SetValue(model, characteristicValue);
-                }
-                else
-                {
-                    var productProperty = product.GetType().GetProperty(prop.Name);
-                    if (productProperty != null)
-                    {
-                        prop.SetValue(model, productProperty.GetValue(product));
-                    }
-                }
-            }
-
-            return model;
+                    Id = p.Id,
+                    Name = p.Name,
+                    Price = p.Price,
+                    Manufacturer = p.Manufacturer!.Name,
+                    AddDate = p.AddDate,
+                })
+                .ToListAsync()
+                .ConfigureAwait(false);
         }
 
-        private async Task<IEnumerable<SearchViewModel>> GetProductsByKeyword(string keyword)
+        private async Task<IEnumerable<SearchViewModel>> LoadSearchByKeywordAsync(string keyword)
         {
-            if (string.IsNullOrWhiteSpace(keyword))
-            {
-                return await this.repository.All<Product>()
-                    .Include(p => p.Manufacturer)
-                    .Select(p => new SearchViewModel
-                    {
-                        Id = p.Id,
-                        Name = p.Name,
-                        Price = p.Price,
-                        Manufacturer = p.Manufacturer!.Name,
-                        AddDate = p.AddDate
-                    })
-                    .ToListAsync();
-            }
-
-            var sql = @"
+            const string sql = @"
                 SELECT p.* 
                 FROM Products p
                 LEFT JOIN Manufacturers m ON m.Id = p.ManufacturerId
@@ -199,99 +171,97 @@
                     FREETEXT((m.Name), @keyword)
                 )";
 
-            var filtered = await this.repository
+            var matches = await this.repository
                 .FromSqlRawAsync<Product>(sql, new SqlParameter("@keyword", keyword));
 
-            var sqlResult = filtered.Where(p => p.Characteristics.Any(c => c.Value.Contains(keyword)));
-
-            var productIds = filtered.Select(p => p.Id).ToList();
+            var productIds = matches.Select(p => p.Id).ToList();
 
             var manufacturers = await this.repository.All<Manufacturer>()
                 .Where(m => m.Products.Any(p => productIds.Contains(p.Id)))
-                .ToDictionaryAsync(m => m.Id, m => m.Name);
+                .ToDictionaryAsync(m => m.Id, m => m.Name)
+                .ConfigureAwait(false);
 
-            var finalResult = filtered
+            return matches
                 .Select(p => new SearchViewModel
                 {
                     Id = p.Id,
                     Name = p.Name,
                     Price = p.Price,
-                    Manufacturer = p.ManufacturerId.HasValue && manufacturers.ContainsKey(p.ManufacturerId.Value) ? manufacturers[p.ManufacturerId.Value] : null!,
-                    AddDate = p.AddDate
+                    Manufacturer = p.ManufacturerId is { } mid && manufacturers.TryGetValue(mid, out var name)
+                        ? name
+                        : null!,
+                    AddDate = p.AddDate,
                 })
                 .ToList();
-
-            return finalResult;
         }
 
-        private IEnumerable<FilterCategoryModel> GetFilterCategories<TModel>(IEnumerable<TModel> products) where TModel : ProductViewModel
+        private static TModel MapToViewModel<TModel>(ProductExportModel product)
+            where TModel : ProductViewModel
         {
-            var modelType = typeof(TModel);
+            var model = Activator.CreateInstance<TModel>();
 
-            var properties = modelType.GetProperties().Where(p => Attribute.IsDefined(p, typeof(CharacteristicAttribute)));
+            foreach (var prop in typeof(TModel).GetProperties())
+            {
+                var ch = prop.GetCustomAttribute<CharacteristicAttribute>();
+                if (ch != null)
+                {
+                    var attrName = ch.Name ?? prop.Name;
+                    object? value = prop.Name == "Manufacturer"
+                        ? product.Manufacturer
+                        : product.Attributes.FirstOrDefault(a => a.Name == attrName)?.Value;
 
+                    if (value == null && prop.Name != "Manufacturer")
+                        continue;
+
+                    if (value != null && prop.PropertyType != value.GetType())
+                        value = Convert.ChangeType(value, prop.PropertyType);
+
+                    prop.SetValue(model, value);
+                }
+                else
+                {
+                    var src = typeof(ProductExportModel).GetProperty(prop.Name);
+                    if (src != null)
+                        prop.SetValue(model, src.GetValue(product));
+                }
+            }
+
+            return model;
+        }
+
+        private static IEnumerable<FilterCategoryModel> BuildFilterCategories<TModel>(IEnumerable<TModel> products)
+            where TModel : ProductViewModel
+        {
             var filters = new List<FilterCategoryModel>();
 
-            foreach (var property in properties)
+            foreach (var prop in typeof(TModel).GetProperties().Where(p => Attribute.IsDefined(p, typeof(CharacteristicAttribute))))
             {
                 var values = products
-                    .Select(m => property.GetValue(m))
+                    .Select(m => prop.GetValue(m)?.ToString())
                     .Where(v => v != null)
-                    .Select(v => v?.ToString())
+                    .Cast<string>()
                     .Distinct()
                     .ToList();
 
-                var filterValues = string.Join(", ", values)
+                var splitValues = string.Join(", ", values)
                     .Split(", ")
                     .Select(v => v.Trim())
                     .Distinct();
 
-                var attribute = property.GetCustomAttribute<CharacteristicAttribute>();
+                var ch = prop.GetCustomAttribute<CharacteristicAttribute>();
+                var title = ch?.Name ?? prop.Name;
 
-                var title = attribute?.Name == null ? property.Name : attribute.Name;
-
-                var model = new FilterCategoryModel
+                filters.Add(new FilterCategoryModel
                 {
-                    Name = property.Name,
-                    Values = filterValues.First() == "" ? new List<string>() : filterValues.OrderByDescending(p => p),
-                    Title = title
-                };
-
-                filters.Add(model);
+                    Name = prop.Name,
+                    Title = title,
+                    Values = splitValues.FirstOrDefault() == string.Empty
+                        ? new List<string>()
+                        : splitValues.OrderByDescending(v => v),
+                });
             }
 
             return filters;
-        }
-
-        public async Task<ProductsViewModel<TModel>> GetModel<TModel>() where TModel : ProductViewModel
-        {
-            var products = await GetProductsAsync<TModel>();
-            var model = CreateProductsModel(products);
-
-            return model;
-        }
-
-        public async Task<ProductsViewModel<SearchViewModel>> GetSearchModel(string keyword)
-        {
-            var products = await GetProductsByKeyword(keyword);
-            var model = CreateProductsModel(products);
-
-            return model;
-        }
-
-        private ProductsViewModel<TModel> CreateProductsModel<TModel>(IEnumerable<TModel> products) where TModel : ProductViewModel
-        {
-            var filters = GetFilterCategories(products);
-
-            var model = new ProductsViewModel<TModel>
-            {
-                Filters = filters,
-                Products = products
-            };
-
-            this.memoryCache.Set("Products", products);
-
-            return model;
         }
     }
 }

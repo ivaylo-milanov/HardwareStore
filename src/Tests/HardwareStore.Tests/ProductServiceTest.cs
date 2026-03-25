@@ -4,25 +4,21 @@ namespace HardwareStore.Tests
     using HardwareStore.Core.Infrastructure.Enum;
     using HardwareStore.Core.Services;
     using HardwareStore.Core.ViewModels.Product;
+    using HardwareStore.Core.ViewModels.Search;
     using HardwareStore.Tests.Mocking;
     using HardwareStore.Tests.Mocking.MoqViewModels.MoqProduct;
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Caching.Memory;
 
     [TestFixture]
     public class ProductServiceTest
     {
-        private ProductService productService;
+        private ProductService productService = null!;
 
         [SetUp]
         public async Task SetUp()
         {
             var repository = await TestRepository.GetRepository();
-
-            var cacheOptions = new MemoryCacheOptions();
-            var cache = new MemoryCache(cacheOptions);
-
-            productService = new ProductService(repository, cache);
+            this.productService = new ProductService(repository);
         }
 
         [Test]
@@ -142,7 +138,7 @@ namespace HardwareStore.Tests
         public async Task Get0ProductsIfTheKeywordIsNullInGetProductsByKeyword()
         {
             //Act
-            var result = await productService.GetSearchModel(null);
+            var result = await productService.GetModel<SearchViewModel>(null);
 
             //Assert
             Assert.That(result.Products.Count(), Is.EqualTo(15));
@@ -152,7 +148,7 @@ namespace HardwareStore.Tests
         public async Task Get0ProductsIfTheKeywordIsEmptySpaceInGetProductsByKeyword()
         {
             //Act
-            var result = await productService.GetSearchModel("");
+            var result = await productService.GetModel<SearchViewModel>("");
 
             //Assert
             Assert.That(result.Products.Count(), Is.EqualTo(15));
@@ -162,7 +158,7 @@ namespace HardwareStore.Tests
         public async Task Get0ProductsIfTheKeywordIsWhiteSpaceInGetProductsByKeyword()
         {
             //Act
-            var result = await productService.GetSearchModel(" ");
+            var result = await productService.GetModel<SearchViewModel>(" ");
 
             //Assert
             Assert.That(result.Products.Count(), Is.EqualTo(15));
@@ -172,7 +168,7 @@ namespace HardwareStore.Tests
         public async Task Get0ProductsIfTheKeywordIsContinuousWhiteSpaceInGetProductsByKeyword()
         {
             //Act
-            var result = await productService.GetSearchModel("   ");
+            var result = await productService.GetModel<SearchViewModel>("   ");
 
             //Assert
             Assert.That(result.Products.Count(), Is.EqualTo(15));
@@ -281,15 +277,15 @@ namespace HardwareStore.Tests
         }
 
         [Test]
-        public async Task FilterProductsWhenCacheContainsProductsReturnsCorrectProducts()
+        public async Task FilterProductsReturnsCorrectProductsForCategory()
         {
             // Arrange
-            var products = await this.productService.GetModel<MoqProductModelWIthCategory4>();
+            await this.productService.GetModel<MoqProductModelWIthCategory4>();
 
             var filter = new ProductFilterOptions { Order = (int)ProductOrdering.LowestPrice };
 
             // Act
-            var result = productService.FilterProducts<MoqProductModelWIthCategory4, ProductFilterOptions>(filter);
+            var result = await this.productService.FilterProductsAsync<MoqProductModelWIthCategory4, ProductFilterOptions>(filter);
 
             // Assert
             Assert.IsNotNull(result);
@@ -306,7 +302,7 @@ namespace HardwareStore.Tests
             var filter = new ProductFilterOptions { Order = (int)ProductOrdering.LowestPrice };
 
             //Act
-            var result = productService.FilterProducts<MoqProductModelWithInvalidCategory, ProductFilterOptions>(filter);
+            var result = await this.productService.FilterProductsAsync<MoqProductModelWithInvalidCategory, ProductFilterOptions>(filter);
 
             //Assert
             Assert.IsNotNull(result);
@@ -326,7 +322,7 @@ namespace HardwareStore.Tests
             };
 
             //Act
-            var result = productService.FilterProducts<MoqProductModelWIthCategory4, ProductFilterOptions>(filter);
+            var result = await this.productService.FilterProductsAsync<MoqProductModelWIthCategory4, ProductFilterOptions>(filter);
 
             //Assert
             Assert.IsTrue(result.Any());
@@ -351,7 +347,7 @@ namespace HardwareStore.Tests
             };
 
             //Act
-            var result = productService.FilterProducts<MoqProductModelWithProperCategory, MoqProductFilterOptionsCategory1>(filter);
+            var result = await this.productService.FilterProductsAsync<MoqProductModelWithProperCategory, MoqProductFilterOptionsCategory1>(filter);
 
             //Assert
             Assert.That(result.Count() == 1);
@@ -370,7 +366,7 @@ namespace HardwareStore.Tests
             };
 
             //Act
-            var result = productService.FilterProducts<MoqProductModelWIthCategory4, ProductFilterOptions>(filter);
+            var result = await this.productService.FilterProductsAsync<MoqProductModelWIthCategory4, ProductFilterOptions>(filter);
 
             //Assert
             Assert.That(result.Count() == 2);
@@ -389,7 +385,7 @@ namespace HardwareStore.Tests
             };
 
             //Act
-            var result = productService.FilterProducts<MoqProductModelWithProperCategory, MoqProductFilterOptionsCategory1>(filter);
+            var result = await this.productService.FilterProductsAsync<MoqProductModelWithProperCategory, MoqProductFilterOptionsCategory1>(filter);
 
             //Assert
             Assert.That(result.Count() == products.Products.Count());
@@ -408,7 +404,7 @@ namespace HardwareStore.Tests
             };
 
             //Act
-            var result = productService.FilterProducts<MoqProductModelWithMoreThenOneValueInProperty, MoqProductFilterOptionsCategory5>(filter);
+            var result = await this.productService.FilterProductsAsync<MoqProductModelWithMoreThenOneValueInProperty, MoqProductFilterOptionsCategory5>(filter);
 
             //Assert
             Assert.That(result.Count() == 1);
@@ -427,7 +423,7 @@ namespace HardwareStore.Tests
             };
 
             //Act
-            var result = productService.FilterProducts<MoqProductModelWithMoreThenOneValueInProperty, MoqProductFilterOptionsCategory5>(filter);
+            var result = await this.productService.FilterProductsAsync<MoqProductModelWithMoreThenOneValueInProperty, MoqProductFilterOptionsCategory5>(filter);
 
             //Assert
             Assert.That(result.Count() == 0);
@@ -445,7 +441,7 @@ namespace HardwareStore.Tests
             };
 
             //Act
-            var result = productService.FilterProducts<MoqProductModelWithProperCategory, MoqProductFilterOptionsCategory1>(filter).ToList();
+            var result = (await this.productService.FilterProductsAsync<MoqProductModelWithProperCategory, MoqProductFilterOptionsCategory1>(filter)).ToList();
 
             //Assert
             Assert.That(result[0].Price, Is.EqualTo(50));
@@ -464,7 +460,7 @@ namespace HardwareStore.Tests
             };
 
             //Act
-            var result = productService.FilterProducts<MoqProductModelWithProperCategory, MoqProductFilterOptionsCategory1>(filter).ToList();
+            var result = (await this.productService.FilterProductsAsync<MoqProductModelWithProperCategory, MoqProductFilterOptionsCategory1>(filter)).ToList();
 
             //Assert
             Assert.That(result[0].Price, Is.EqualTo(100));
@@ -483,10 +479,10 @@ namespace HardwareStore.Tests
             };
 
             //Act
-            var result = productService.FilterProducts<MoqProductModelWithProperCategory, MoqProductFilterOptionsCategory1>(filter).ToList();
+            var result = (await this.productService.FilterProductsAsync<MoqProductModelWithProperCategory, MoqProductFilterOptionsCategory1>(filter)).ToList();
 
-            //Assert
-            Assert.That(result, Is.EqualTo(products.Products));
+            //Assert — filter reloads from the database, so compare identities rather than reference equality
+            Assert.That(result.Select(p => p.Id).ToList(), Is.EqualTo(products.Products.Select(p => p.Id).ToList()));
         }
 
         [Test]
@@ -501,7 +497,7 @@ namespace HardwareStore.Tests
             };
 
             //Act
-            var result = productService.FilterProducts<MoqProductModelWithMoreThenOneValueInProperty, MoqProductFilterOptionsCategory5>(filter).ToList();
+            var result = (await this.productService.FilterProductsAsync<MoqProductModelWithMoreThenOneValueInProperty, MoqProductFilterOptionsCategory5>(filter)).ToList();
 
             //Assert
             Assert.That(result[0].AddDate < result[1].AddDate);
@@ -519,7 +515,7 @@ namespace HardwareStore.Tests
             };
 
             //Act
-            var result = productService.FilterProducts<MoqProductModelWithMoreThenOneValueInProperty, MoqProductFilterOptionsCategory5>(filter).ToList();
+            var result = (await this.productService.FilterProductsAsync<MoqProductModelWithMoreThenOneValueInProperty, MoqProductFilterOptionsCategory5>(filter)).ToList();
 
             //Assert
             Assert.That(result[1].AddDate > result[2].AddDate);
