@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33122.133
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HardwareStore.Common", "HardwareStore.Common\HardwareStore.Common.csproj", "{1F53ECFC-A574-432D-9410-6DF76407C564}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{C5A1F2E3-7B4D-4A6C-9E8F-1A2B3C4D5E6F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HardwareStore.Common", "Common\HardwareStore.Common\HardwareStore.Common.csproj", "{1F53ECFC-A574-432D-9410-6DF76407C564}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{180827DF-E5CE-4F45-A79E-BFCBA7601A35}"
 EndProject
@@ -138,6 +140,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{1F53ECFC-A574-432D-9410-6DF76407C564} = {C5A1F2E3-7B4D-4A6C-9E8F-1A2B3C4D5E6F}
 		{338441D5-80A2-4061-B094-C9FF638CEAE3} = {63376DE6-1C4C-42B0-BE22-1AF9C48E71F0}
 		{2843FE2D-3E67-4801-9214-09BE75FB99ED} = {B8CF3F13-CA6F-438B-A18F-91758BFA45DA}
 		{74F143B0-5FB0-4BFA-A389-1557D68F7B33} = {180827DF-E5CE-4F45-A79E-BFCBA7601A35}

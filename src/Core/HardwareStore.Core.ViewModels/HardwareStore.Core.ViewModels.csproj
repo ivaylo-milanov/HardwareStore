@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../../HardwareStore.Common\HardwareStore.Common.csproj" />
+    <ProjectReference Include="../../Common/HardwareStore.Common/HardwareStore.Common.csproj" />
     <ProjectReference Include="../../Infrastructure/HardwareStore.Infrastructure.Models\HardwareStore.Infrastructure.Models.csproj" />
   </ItemGroup>
 

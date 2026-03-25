@@ -25,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="../../HardwareStore.Common/HardwareStore.Common.csproj" />
+    <ProjectReference Include="../../Common/HardwareStore.Common/HardwareStore.Common.csproj" />
     <ProjectReference Include="../../Core/HardwareStore.Core/HardwareStore.Core.csproj" />
     <ProjectReference Include="../../Infrastructure/HardwareStore.Infrastructure/HardwareStore.Infrastructure.csproj" />
     <ProjectReference Include="../../Web/HardwareStore.Web.Mvc/HardwareStore.Web.Mvc.csproj" />
