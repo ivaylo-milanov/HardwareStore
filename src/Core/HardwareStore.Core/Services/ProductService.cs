@@ -9,7 +9,6 @@ namespace HardwareStore.Core.Services
     using HardwareStore.Core.ViewModels.Product;
     using HardwareStore.Infrastructure.Common;
     using HardwareStore.Infrastructure.Models;
-    using Microsoft.Data.SqlClient;
     using Microsoft.EntityFrameworkCore;
 
     public class ProductService : IProductService
@@ -158,27 +157,27 @@ namespace HardwareStore.Core.Services
 
         private async Task<List<Product>> LoadSearchByKeywordAsync(string keyword)
         {
-            const string sql = @"
-                SELECT p.* 
-                FROM Products p
-                LEFT JOIN Manufacturers m ON m.Id = p.ManufacturerId
-                WHERE (
-                    FREETEXT((p.Name, p.Description, p.Model), @keyword) OR
-                    FREETEXT((m.Name), @keyword)
-                )";
+            var term = EscapeLikePattern(keyword.Trim());
+            var pattern = $"%{term}%";
 
-            var matches = await this.repository
-                .FromSqlRawAsync<Product>(sql, new SqlParameter("@keyword", keyword));
-
-            var productIds = matches.Select(p => p.Id).ToList();
-
-            return await this.repository
+            var list = await this.repository
                 .All<Product>()
                 .Include(p => p.Manufacturer)
-                .Where(p => productIds.Contains(p.Id))
+                .Where(p =>
+                    EF.Functions.Like(p.Name, pattern) ||
+                    (p.Description != null && EF.Functions.Like(p.Description, pattern)) ||
+                    (p.Model != null && EF.Functions.Like(p.Model, pattern)) ||
+                    (p.Manufacturer != null && EF.Functions.Like(p.Manufacturer.Name, pattern)))
                 .ToListAsync()
                 .ConfigureAwait(false);
+
+            return list;
         }
+
+        private static string EscapeLikePattern(string s) =>
+            s.Replace("[", "[[]", StringComparison.Ordinal)
+                .Replace("%", "[%]", StringComparison.Ordinal)
+                .Replace("_", "[_]", StringComparison.Ordinal);
 
         #endregion
 
