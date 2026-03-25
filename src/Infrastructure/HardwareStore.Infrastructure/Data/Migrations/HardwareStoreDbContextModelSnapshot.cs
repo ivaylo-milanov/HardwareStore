@@ -17,10 +17,10 @@ namespace HardwareStore.Infrastructure.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.24")
+                .HasAnnotation("ProductVersion", "8.0.11")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
             modelBuilder.Entity("HardwareStore.Infrastructure.Models.Category", b =>
                 {
@@ -29,7 +29,7 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                         .HasColumnType("int")
                         .HasComment("category id");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -39,9 +39,10 @@ namespace HardwareStore.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
-
-                    b.HasComment("category table");
+                    b.ToTable("Categories", t =>
+                        {
+                            t.HasComment("category table");
+                        });
                 });
 
             modelBuilder.Entity("HardwareStore.Infrastructure.Models.Customer", b =>
@@ -138,9 +139,10 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("AspNetUsers", (string)null);
-
-                    b.HasComment("customer table");
+                    b.ToTable("AspNetUsers", null, t =>
+                        {
+                            t.HasComment("customer table");
+                        });
                 });
 
             modelBuilder.Entity("HardwareStore.Infrastructure.Models.Favorite", b =>
@@ -157,9 +159,10 @@ namespace HardwareStore.Infrastructure.Data.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Favorites", (string)null);
-
-                    b.HasComment("favorite table");
+                    b.ToTable("Favorites", null, t =>
+                        {
+                            t.HasComment("favorite table");
+                        });
                 });
 
             modelBuilder.Entity("HardwareStore.Infrastructure.Models.Manufacturer", b =>
@@ -169,7 +172,7 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                         .HasColumnType("int")
                         .HasComment("manufacturer id");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -179,9 +182,10 @@ namespace HardwareStore.Infrastructure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Manufacturers");
-
-                    b.HasComment("manufacturer table");
+                    b.ToTable("Manufacturers", t =>
+                        {
+                            t.HasComment("manufacturer table");
+                        });
                 });
 
             modelBuilder.Entity("HardwareStore.Infrastructure.Models.Order", b =>
@@ -256,9 +260,10 @@ namespace HardwareStore.Infrastructure.Data.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("Orders");
-
-                    b.HasComment("order table");
+                    b.ToTable("Orders", t =>
+                        {
+                            t.HasComment("order table");
+                        });
                 });
 
             modelBuilder.Entity("HardwareStore.Infrastructure.Models.Product", b =>
@@ -268,7 +273,7 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                         .HasColumnType("int")
                         .HasComment("product id");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("AddDate")
                         .HasColumnType("datetime2")
@@ -327,9 +332,10 @@ namespace HardwareStore.Infrastructure.Data.Migrations
 
                     b.HasIndex("ManufacturerId");
 
-                    b.ToTable("Products");
-
-                    b.HasComment("product table");
+                    b.ToTable("Products", t =>
+                        {
+                            t.HasComment("product table");
+                        });
                 });
 
             modelBuilder.Entity("HardwareStore.Infrastructure.Models.ProductOrder", b =>
@@ -350,9 +356,10 @@ namespace HardwareStore.Infrastructure.Data.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductsOrders", (string)null);
-
-                    b.HasComment("product order table");
+                    b.ToTable("ProductsOrders", null, t =>
+                        {
+                            t.HasComment("product order table");
+                        });
                 });
 
             modelBuilder.Entity("HardwareStore.Infrastructure.Models.ShoppingCartItem", b =>
@@ -373,9 +380,10 @@ namespace HardwareStore.Infrastructure.Data.Migrations
 
                     b.HasIndex("CustomerId");
 
-                    b.ToTable("ShoppingCartItems", (string)null);
-
-                    b.HasComment("shopping cart item table");
+                    b.ToTable("ShoppingCartItems", null, t =>
+                        {
+                            t.HasComment("shopping cart item table");
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -411,7 +419,7 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");
@@ -436,7 +444,7 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("ClaimType")
                         .HasColumnType("nvarchar(max)");

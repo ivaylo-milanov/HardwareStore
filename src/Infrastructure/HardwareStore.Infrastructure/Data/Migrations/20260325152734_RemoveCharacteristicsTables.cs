@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -8,6 +8,14 @@ namespace HardwareStore.Infrastructure.Data.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.AddColumn<string>(
+                name: "Options",
+                table: "Products",
+                type: "nvarchar(max)",
+                nullable: false,
+                defaultValue: "{}",
+                comment: "product options json");
+
             migrationBuilder.DropTable(
                 name: "Characteristics");
 
@@ -59,6 +67,10 @@ namespace HardwareStore.Infrastructure.Data.Migrations
                 name: "IX_Characteristics_CharacteristicNameId",
                 table: "Characteristics",
                 column: "CharacteristicNameId");
+
+            migrationBuilder.DropColumn(
+                name: "Options",
+                table: "Products");
         }
     }
 }
