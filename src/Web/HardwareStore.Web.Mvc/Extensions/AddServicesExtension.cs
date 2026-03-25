@@ -13,7 +13,6 @@ namespace HardwareStore.Extensions
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IFavoriteService, FavoriteService>();
             services.AddScoped<IShoppingCartService, ShoppingCartService>();
-            services.AddScoped<ISessionService, SessionService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
             services.AddScoped<IProfileService, ProfileService>();

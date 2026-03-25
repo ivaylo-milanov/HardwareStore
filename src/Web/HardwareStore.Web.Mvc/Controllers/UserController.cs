@@ -1,7 +1,9 @@
 namespace HardwareStore.Web.Mvc.Controllers
 {
     using HardwareStore.Core.Services.Contracts;
+    using HardwareStore.Core.ViewModels.ShoppingCart;
     using HardwareStore.Core.ViewModels.User;
+    using HardwareStore.Extensions;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
@@ -14,6 +16,27 @@ namespace HardwareStore.Web.Mvc.Controllers
         {
             this.authenticationService = authenticationService;
             this.logger = logger;
+        }
+
+        private async Task<IActionResult> RedirectHomeAfterMergingSessionAsync()
+        {
+            var userId = this.User.GetUserId();
+            var favorites = this.HttpContext.Session.Get<ICollection<int>>("Favorite") ?? new List<int>();
+            var cart = this.HttpContext.Session.Get<ICollection<ShoppingCartExportModel>>("Shopping Cart") ?? new List<ShoppingCartExportModel>();
+
+            try
+            {
+                await this.authenticationService.MergeSessionCartAndFavoritesAsync(userId, favorites, cart);
+                this.HttpContext.Session.Remove("Shopping Cart");
+                this.HttpContext.Session.Remove("Favorite");
+            }
+            catch (ArgumentNullException ex)
+            {
+                this.logger.LogError(ex, ex.Message);
+                return this.RedirectToAction("Error", "Home", new { message = ex.Message });
+            }
+
+            return this.RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
@@ -30,7 +53,7 @@ namespace HardwareStore.Web.Mvc.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("AddFromSessionToDb", "Session");
+                    return await this.RedirectHomeAfterMergingSessionAsync();
                 }
             }
             catch (ArgumentNullException ex)
@@ -68,7 +91,7 @@ namespace HardwareStore.Web.Mvc.Controllers
 
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("AddFromSessionToDb", "Session");
+                    return await this.RedirectHomeAfterMergingSessionAsync();
                 }
             }
             catch (ArgumentNullException ex)
@@ -114,7 +137,7 @@ namespace HardwareStore.Web.Mvc.Controllers
 
             if (result.Succeeded)
             {
-                return RedirectToAction("AddFromSessionToDb", "Session");
+                return await this.RedirectHomeAfterMergingSessionAsync();
             }
 
             foreach (var item in result.Errors)

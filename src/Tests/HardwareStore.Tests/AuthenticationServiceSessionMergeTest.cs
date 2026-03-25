@@ -1,18 +1,17 @@
 namespace HardwareStore.Tests
 {
-    using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.Services;
-    using HardwareStore.Tests.Mocking;
+    using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.ShoppingCart;
-    using System.ComponentModel.DataAnnotations;
     using HardwareStore.Infrastructure.Common;
-    using Microsoft.EntityFrameworkCore;
     using HardwareStore.Infrastructure.Models;
+    using HardwareStore.Tests.Mocking;
+    using Microsoft.EntityFrameworkCore;
 
     [TestFixture]
-    public class SessionServiceTest
+    public class AuthenticationServiceSessionMergeTest
     {
-        private ISessionService sessionService;
+        private IAuthenticationService authenticationService;
         private ICollection<int> favoritesSession;
         private ICollection<ShoppingCartExportModel> cartSession;
         private IRepository repository;
@@ -22,7 +21,10 @@ namespace HardwareStore.Tests
         {
             repository = await TestRepository.GetRepository();
 
-            sessionService = new SessionService(repository);
+            this.authenticationService = new AuthenticationService(
+                null!,
+                null!,
+                repository);
 
             this.favoritesSession = new List<int> { 13, 14 };
             this.cartSession = new List<ShoppingCartExportModel>
@@ -49,7 +51,7 @@ namespace HardwareStore.Tests
             //Act and Assert
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {
-                await this.sessionService.AddToDatabase(userId, this.favoritesSession, this.cartSession);
+                await this.authenticationService.MergeSessionCartAndFavoritesAsync(userId, this.favoritesSession, this.cartSession);
             });
         }
 
@@ -60,7 +62,7 @@ namespace HardwareStore.Tests
             var userId = "TestCustomer1";
 
             //Act
-            await this.sessionService.AddToDatabase(userId, new List<int>(), new List<ShoppingCartExportModel>());
+            await this.authenticationService.MergeSessionCartAndFavoritesAsync(userId, new List<int>(), new List<ShoppingCartExportModel>());
 
             var customer = await this.repository
                 .All<Customer>()
@@ -80,7 +82,7 @@ namespace HardwareStore.Tests
             var userId = "TestCustomer1";
 
             //Act
-            await this.sessionService.AddToDatabase(userId, this.favoritesSession, this.cartSession);
+            await this.authenticationService.MergeSessionCartAndFavoritesAsync(userId, this.favoritesSession, this.cartSession);
 
             var customer = await this.repository
                 .All<Customer>()
@@ -103,25 +105,25 @@ namespace HardwareStore.Tests
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {
                 var favorites = new List<int>() { 20 };
-                await this.sessionService.AddToDatabase(userId, favorites, this.cartSession);
+                await this.authenticationService.MergeSessionCartAndFavoritesAsync(userId, favorites, this.cartSession);
             });
 
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {
                 var favorites = new List<int>() { -1 };
-                await this.sessionService.AddToDatabase(userId, favorites, this.cartSession);
+                await this.authenticationService.MergeSessionCartAndFavoritesAsync(userId, favorites, this.cartSession);
             });
 
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {
                 var favorites = new List<int>() { 0 };
-                await this.sessionService.AddToDatabase(userId, favorites, this.cartSession);
+                await this.authenticationService.MergeSessionCartAndFavoritesAsync(userId, favorites, this.cartSession);
             });
 
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {
                 var favorites = new List<int>() { 16 };
-                await this.sessionService.AddToDatabase(userId, favorites, this.cartSession);
+                await this.authenticationService.MergeSessionCartAndFavoritesAsync(userId, favorites, this.cartSession);
             });
         }
 
@@ -142,7 +144,7 @@ namespace HardwareStore.Tests
                         Quantity = 2
                     }
                 };
-                await this.sessionService.AddToDatabase(userId, this.favoritesSession, cart);
+                await this.authenticationService.MergeSessionCartAndFavoritesAsync(userId, this.favoritesSession, cart);
             });
 
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
@@ -155,7 +157,7 @@ namespace HardwareStore.Tests
                         Quantity = 2
                     }
                 };
-                await this.sessionService.AddToDatabase(userId, this.favoritesSession, cart);
+                await this.authenticationService.MergeSessionCartAndFavoritesAsync(userId, this.favoritesSession, cart);
             });
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {
@@ -167,7 +169,7 @@ namespace HardwareStore.Tests
                         Quantity = 2
                     }
                 };
-                await this.sessionService.AddToDatabase(userId, this.favoritesSession, cart);
+                await this.authenticationService.MergeSessionCartAndFavoritesAsync(userId, this.favoritesSession, cart);
             });
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {
@@ -179,7 +181,7 @@ namespace HardwareStore.Tests
                         Quantity = 2
                     }
                 };
-                await this.sessionService.AddToDatabase(userId, this.favoritesSession, cart);
+                await this.authenticationService.MergeSessionCartAndFavoritesAsync(userId, this.favoritesSession, cart);
             });
 
 
@@ -194,7 +196,7 @@ namespace HardwareStore.Tests
             var favorites = new List<int>() { 2, 3 };
 
             //Act
-            await this.sessionService.AddToDatabase(userId, favorites, this.cartSession);
+            await this.authenticationService.MergeSessionCartAndFavoritesAsync(userId, favorites, this.cartSession);
 
             var customer = await this.repository
                 .All<Customer>()
@@ -230,7 +232,7 @@ namespace HardwareStore.Tests
             };
 
             //Act
-            await this.sessionService.AddToDatabase(userId, this.favoritesSession, cart);
+            await this.authenticationService.MergeSessionCartAndFavoritesAsync(userId, this.favoritesSession, cart);
 
             var customer = await this.repository
                 .All<Customer>()
@@ -252,7 +254,7 @@ namespace HardwareStore.Tests
             var userId = "TestCustomer1";
 
             //Act
-            await this.sessionService.AddToDatabase(userId, this.favoritesSession, this.cartSession);
+            await this.authenticationService.MergeSessionCartAndFavoritesAsync(userId, this.favoritesSession, this.cartSession);
 
             var customer = await this.repository
                 .All<Customer>()
@@ -274,7 +276,7 @@ namespace HardwareStore.Tests
             var userId = "TestCustomer2";
 
             //Act
-            await this.sessionService.AddToDatabase(userId, this.favoritesSession, this.cartSession);
+            await this.authenticationService.MergeSessionCartAndFavoritesAsync(userId, this.favoritesSession, this.cartSession);
 
             var customer = await this.repository
                 .All<Customer>()

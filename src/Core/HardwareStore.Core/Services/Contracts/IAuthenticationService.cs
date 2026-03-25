@@ -1,5 +1,6 @@
-﻿namespace HardwareStore.Core.Services.Contracts
+namespace HardwareStore.Core.Services.Contracts
 {
+    using HardwareStore.Core.ViewModels.ShoppingCart;
     using HardwareStore.Core.ViewModels.User;
     using Microsoft.AspNetCore.Identity;
 
@@ -10,5 +11,7 @@
         Task<IdentityResult> RegisterAsync(RegisterFormModel model);
 
         Task LogoutAsync();
+
+        Task MergeSessionCartAndFavoritesAsync(string userId, ICollection<int> favorites, ICollection<ShoppingCartExportModel> cart);
     }
 }

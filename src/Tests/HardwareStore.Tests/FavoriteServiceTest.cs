@@ -1,4 +1,4 @@
-﻿namespace HardwareStore.Tests
+namespace HardwareStore.Tests
 {
     using HardwareStore.Core.Services;
     using HardwareStore.Core.Services.Contracts;
@@ -15,8 +15,6 @@
         public async Task Setup()
         {
             var repository = await TestRepository.GetRepository();
-
-            var userService = new SessionService(repository);
 
             favoriteService = new FavoriteService(repository);
 
