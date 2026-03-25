@@ -1,10 +1,10 @@
-﻿namespace HardwareStore.Tests.Mocking
+namespace HardwareStore.Tests.Mocking
 {
     using HardwareStore.Core.ViewModels.Favorite;
 
     public class FavoriteExportModelComparer : IEqualityComparer<FavoriteExportModel>
     {
-        public bool Equals(FavoriteExportModel x, FavoriteExportModel y)
+        public bool Equals(FavoriteExportModel? x, FavoriteExportModel? y)
         {
             if (x == null || y == null)
                 return false;

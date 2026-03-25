@@ -1,4 +1,4 @@
-﻿namespace HardwareStore.Tests
+namespace HardwareStore.Tests
 {
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.Services;
@@ -8,7 +8,6 @@
     using HardwareStore.Infrastructure.Common;
     using Microsoft.EntityFrameworkCore;
     using HardwareStore.Infrastructure.Models;
-    using Castle.Core.Resource;
 
     [TestFixture]
     public class SessionServiceTest

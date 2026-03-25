@@ -45,7 +45,8 @@ This is my project which is a e-commerce hardware platform.
 1. **Product**:
    - Id, Name, Price, Quantity, Description
    - ManufacturerId, Model, Warranty
-   - AddDate, CategoryId, Reference Number
+   - AddDate, CategoryId, ReferenceNumber
+   - **Options** (JSON): key/value pairs for filters and product details (replaces former characteristic rows)
 
 2. **Category**:
    - Id, Name
@@ -53,27 +54,21 @@ This is my project which is a e-commerce hardware platform.
 3. **Manufacturer**:
    - Id, Name
    
-4. **Characteristics Mapping Table**:
-   - ProductId, CharacteristicNameId, Value
-   
-5. **CharacteristicName**:
-   - Id, Name
-   
-6. **Favorites Mapping Table**:
+4. **Favorites Mapping Table**:
    - ProductId, CustomerId
    
-7. **Shopping Cart Item Mapping Table**:
+5. **Shopping Cart Item Mapping Table**:
    - ProductId, CustomerId, Quantity
    
-8. **ProductOrder Mapping Table**:
+6. **ProductOrder Mapping Table**:
    - ProductId, OrderId, Quantity
    
-9. **Order**:
+7. **Order**:
    - Id (GUID type), OrderDate, TotalAmount
    - OrderStatus, PaymentMethod, AdditionalNotes
    - Personal and Address details: FirstName, LastName, Phone, City, Area, Address, CustomerId
 
-10. **Customer (Inherited from IdentityUser)**:
+8. **Customer (Inherited from IdentityUser)**:
    - FirstName, LastName, City, Area, Address
    
 ## Tech Stack
@@ -87,13 +82,9 @@ This is my project which is a e-commerce hardware platform.
 ```
 CREATE FULLTEXT CATALOG product_catalog;
 
-CREATE FULLTEXT INDEX ON Products(Name, Manufacturer, Description, Model) 
+CREATE FULLTEXT INDEX ON Products(Name, Description, Model) 
 KEY INDEX PK_Products
 ON product_catalog;
-
-CREATE FULLTEXT INDEX ON Characteristics(Value) 
-KEY INDEX PK_Characteristics
-ON product_catalog
 
 CREATE FULLTEXT INDEX ON Manufacturers(Name) 
 KEY INDEX PK_Manufacturers
@@ -103,6 +94,6 @@ ON product_catalog;
 ## Getting Started
 
 1. **Setup**: Ensure SQL Server is up and running and connection strings are correctly configured.
-2. **Migration**: Run the necessary migrations to set up the database.
+2. **Migration**: On startup the web app applies pending EF Core migrations (`MigrateDatabaseAsync`). You can also run `dotnet ef database update` from the Infrastructure project if you prefer.
 3. **Search-Functionality**: Create the necessary indexes to make the full-text search works.
 4. **Run**: Launch the website and begin exploring the hardware collection.

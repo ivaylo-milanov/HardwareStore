@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33122.133
@@ -22,8 +22,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HardwareStore.Infrastructure.Models", "Infrastructure\HardwareStore.Infrastructure.Models\HardwareStore.Infrastructure.Models.csproj", "{702EEEF2-1520-4BAD-BDF1-5220F2109853}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HardwareStore.Core", "Core\HardwareStore.Core\HardwareStore.Core.csproj", "{218E45C5-7210-43B5-8A5E-F478A31FC8CA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HardwareStore.Core.Infrastructure", "Core\HardwareStore.Core.Infrastructure\HardwareStore.Core.Infrastructure.csproj", "{17AC5C4B-AE00-4DD9-BDCC-8CE22D1B1FAE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HardwareStore.Core.ViewModels", "Core\HardwareStore.Core.ViewModels\HardwareStore.Core.ViewModels.csproj", "{4B0B15A6-0113-4152-96D9-E324A87DB97B}"
 EndProject
@@ -109,18 +107,6 @@ Global
 		{218E45C5-7210-43B5-8A5E-F478A31FC8CA}.Release|x64.Build.0 = Release|Any CPU
 		{218E45C5-7210-43B5-8A5E-F478A31FC8CA}.Release|x86.ActiveCfg = Release|Any CPU
 		{218E45C5-7210-43B5-8A5E-F478A31FC8CA}.Release|x86.Build.0 = Release|Any CPU
-		{17AC5C4B-AE00-4DD9-BDCC-8CE22D1B1FAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{17AC5C4B-AE00-4DD9-BDCC-8CE22D1B1FAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{17AC5C4B-AE00-4DD9-BDCC-8CE22D1B1FAE}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{17AC5C4B-AE00-4DD9-BDCC-8CE22D1B1FAE}.Debug|x64.Build.0 = Debug|Any CPU
-		{17AC5C4B-AE00-4DD9-BDCC-8CE22D1B1FAE}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{17AC5C4B-AE00-4DD9-BDCC-8CE22D1B1FAE}.Debug|x86.Build.0 = Debug|Any CPU
-		{17AC5C4B-AE00-4DD9-BDCC-8CE22D1B1FAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{17AC5C4B-AE00-4DD9-BDCC-8CE22D1B1FAE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{17AC5C4B-AE00-4DD9-BDCC-8CE22D1B1FAE}.Release|x64.ActiveCfg = Release|Any CPU
-		{17AC5C4B-AE00-4DD9-BDCC-8CE22D1B1FAE}.Release|x64.Build.0 = Release|Any CPU
-		{17AC5C4B-AE00-4DD9-BDCC-8CE22D1B1FAE}.Release|x86.ActiveCfg = Release|Any CPU
-		{17AC5C4B-AE00-4DD9-BDCC-8CE22D1B1FAE}.Release|x86.Build.0 = Release|Any CPU
 		{4B0B15A6-0113-4152-96D9-E324A87DB97B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4B0B15A6-0113-4152-96D9-E324A87DB97B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B0B15A6-0113-4152-96D9-E324A87DB97B}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -143,7 +129,6 @@ Global
 		{74F143B0-5FB0-4BFA-A389-1557D68F7B33} = {180827DF-E5CE-4F45-A79E-BFCBA7601A35}
 		{702EEEF2-1520-4BAD-BDF1-5220F2109853} = {180827DF-E5CE-4F45-A79E-BFCBA7601A35}
 		{218E45C5-7210-43B5-8A5E-F478A31FC8CA} = {B8EC4E18-DC1F-4415-BBAA-7A74E53B526C}
-		{17AC5C4B-AE00-4DD9-BDCC-8CE22D1B1FAE} = {B8EC4E18-DC1F-4415-BBAA-7A74E53B526C}
 		{4B0B15A6-0113-4152-96D9-E324A87DB97B} = {B8EC4E18-DC1F-4415-BBAA-7A74E53B526C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

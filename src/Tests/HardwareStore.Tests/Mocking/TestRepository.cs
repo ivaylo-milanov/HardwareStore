@@ -1,5 +1,6 @@
-﻿namespace HardwareStore.Tests.Mocking
+namespace HardwareStore.Tests.Mocking
 {
+    using System.Text.Json;
     using HardwareStore.Infrastructure.Common;
     using HardwareStore.Infrastructure.Data;
     using HardwareStore.Infrastructure.Models;
@@ -8,6 +9,8 @@
 
     public static class TestRepository
     {
+        private static readonly JsonSerializerOptions JsonOptions = new() { PropertyNamingPolicy = null };
+
         public static async Task<IRepository> GetRepository()
         {
             var options = new DbContextOptionsBuilder<HardwareStoreDbContext>()
@@ -25,13 +28,13 @@
             return repository;
         }
 
+        private static string OptionsJson(Dictionary<string, string> pairs) =>
+            JsonSerializer.Serialize(pairs, JsonOptions);
+
         private static async Task SeedDatabase(HardwareStoreDbContext context)
         {
             var manufacturers = Enumerable.Range(1, 3)
                 .Select(i => new Manufacturer { Id = i, Name = $"Manufacturer{i}" }).ToList();
-
-            var characteristicNames = Enumerable.Range(1, 4)
-                .Select(i => new CharacteristicName { Id = i, Name = $"CharacteristicName{i}" }).ToList();
 
             var categories = Enumerable.Range(1, 5)
                 .Select(i => new Category { Id = i, Name = $"Category{i}" }).ToList();
@@ -49,13 +52,12 @@
                     ReferenceNumber = $"Ref00{i}",
                     CategoryId = categories[i % categories.Count].Id,
                     Model = $"Model{i}",
-                    Characteristics = Enumerable.Range(1, 3)
-                        .Select(j => new Characteristic
-                        {
-                            ProductId = i,
-                            CharacteristicNameId = characteristicNames[(j - 1) % characteristicNames.Count].Id,
-                            Value = $"Value{(i - 1) * 3 + j}"
-                        }).ToList()
+                    Options = OptionsJson(new Dictionary<string, string>
+                    {
+                        ["CharacteristicName1"] = $"Value{(i - 1) * 3 + 1}",
+                        ["CharacteristicName2"] = $"Value{(i - 1) * 3 + 2}",
+                        ["CharacteristicName3"] = $"Value{(i - 1) * 3 + 3}",
+                    }),
                 }).ToList();
 
             products.Add(new Product
@@ -70,19 +72,11 @@
                 ReferenceNumber = "Ref0013",
                 CategoryId = 4,
                 Model = "Model13",
-                Characteristics = new[]
+                Options = OptionsJson(new Dictionary<string, string>
                 {
-                    new Characteristic
-                    {
-                        CharacteristicNameId = 2,
-                        Value = "Value37"
-                    },
-                    new Characteristic
-                    {
-                        CharacteristicNameId = 4,
-                        Value = "1"
-                    }
-                }
+                    ["CharacteristicName2"] = "Value37",
+                    ["CharacteristicName4"] = "1",
+                }),
             });
 
             products.Add(new Product
@@ -96,7 +90,7 @@
                 ManufacturerId = 2,
                 ReferenceNumber = "Ref0014",
                 Model = "Model14",
-                CategoryId = 2
+                CategoryId = 2,
             });
 
             products.Add(new Product
@@ -111,19 +105,11 @@
                 ReferenceNumber = "Ref0015",
                 CategoryId = 5,
                 Model = "Model15",
-                Characteristics = new[]
+                Options = OptionsJson(new Dictionary<string, string>
                 {
-                    new Characteristic
-                    {
-                        CharacteristicNameId = 2,
-                        Value = "Value39"
-                    },
-                    new Characteristic
-                    {
-                        CharacteristicNameId = 4,
-                        Value = "Value40, Value41"
-                    }
-                }
+                    ["CharacteristicName2"] = "Value39",
+                    ["CharacteristicName4"] = "Value40, Value41",
+                }),
             });
 
             var users = new List<Customer>()
@@ -208,7 +194,6 @@
             };
 
             context.Manufacturers.AddRange(manufacturers);
-            context.CharacteristicsNames.AddRange(characteristicNames);
             context.Categories.AddRange(categories);
             context.Products.AddRange(products);
             context.Users.AddRange(users);
