@@ -1,7 +1,7 @@
 namespace HardwareStore.Extensions
 {
-    using Core.Services;
-    using Core.Services.Contracts;
+    using HardwareStore.Core.Services;
+    using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Infrastructure.Common;
 
     public static class AddServicesExtension
@@ -13,7 +13,6 @@ namespace HardwareStore.Extensions
             services.AddScoped<IFavoriteService, FavoriteService>();
             services.AddScoped<IShoppingCartService, ShoppingCartService>();
             services.AddScoped<IOrderService, OrderService>();
-            services.AddScoped<IAuthenticationService, AuthenticationService>();
 
             services.AddHttpContextAccessor();
 

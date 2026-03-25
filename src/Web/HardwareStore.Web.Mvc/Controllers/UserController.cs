@@ -1,8 +1,8 @@
 namespace HardwareStore.Web.Mvc.Controllers
 {
     using HardwareStore.Common;
-    using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.User;
+    using HardwareStore.Infrastructure.Models;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
@@ -10,12 +10,17 @@ namespace HardwareStore.Web.Mvc.Controllers
     {
         #region Fields and construction
 
-        private readonly IAuthenticationService authenticationService;
+        private readonly SignInManager<Customer> signInManager;
+        private readonly UserManager<Customer> userManager;
         private readonly ILogger<UserController> logger;
 
-        public UserController(IAuthenticationService authenticationService, ILogger<UserController> logger)
+        public UserController(
+            SignInManager<Customer> signInManager,
+            UserManager<Customer> userManager,
+            ILogger<UserController> logger)
         {
-            this.authenticationService = authenticationService;
+            this.signInManager = signInManager;
+            this.userManager = userManager;
             this.logger = logger;
         }
 
@@ -33,14 +38,14 @@ namespace HardwareStore.Web.Mvc.Controllers
 
             try
             {
-                var result = await this.authenticationService.LoginAsync(model);
+                var result = await this.LoginInternalAsync(model);
 
                 if (result.Succeeded)
                 {
                     return this.RedirectToAction("Index", "Home");
                 }
             }
-            catch (ArgumentNullException ex)
+            catch (InvalidOperationException ex)
             {
                 this.logger.LogError(ex, LogMessages.AuthenticationOperationFailed);
                 return this.RedirectToAction("Error", "Home", new { message = ex.Message });
@@ -69,14 +74,14 @@ namespace HardwareStore.Web.Mvc.Controllers
 
             try
             {
-                var result = await this.authenticationService.LoginAsync(model);
+                var result = await this.LoginInternalAsync(model);
 
                 if (result.Succeeded)
                 {
                     return this.RedirectToAction("Index", "Home");
                 }
             }
-            catch (ArgumentNullException ex)
+            catch (InvalidOperationException ex)
             {
                 this.ModelState.AddModelError("", "Invalid Login!");
                 this.logger.LogError(ex, LogMessages.AuthenticationOperationFailed);
@@ -111,9 +116,9 @@ namespace HardwareStore.Web.Mvc.Controllers
             IdentityResult result;
             try
             {
-                result = await this.authenticationService.RegisterAsync(model);
+                result = await this.RegisterInternalAsync(model);
             }
-            catch (ArgumentNullException ex)
+            catch (InvalidOperationException ex)
             {
                 this.logger.LogError(ex, LogMessages.AuthenticationOperationFailed);
                 return this.RedirectToAction("Error", "Home", new { message = ex.Message });
@@ -138,9 +143,47 @@ namespace HardwareStore.Web.Mvc.Controllers
 
         public async Task<IActionResult> Logout()
         {
-            await this.authenticationService.LogoutAsync();
+            await this.signInManager.SignOutAsync();
 
             return this.RedirectToAction("Index", "Home");
+        }
+
+        #endregion
+
+        #region Private helpers
+
+        private async Task<Microsoft.AspNetCore.Identity.SignInResult> LoginInternalAsync(LoginFormModel model)
+        {
+            var user = await this.userManager.FindByEmailAsync(model.Email);
+            if (user == null)
+            {
+                throw new InvalidOperationException(ExceptionMessages.AccountNotFound);
+            }
+
+            return await this.signInManager.PasswordSignInAsync(user, model.Password, false, false);
+        }
+
+        private async Task<IdentityResult> RegisterInternalAsync(RegisterFormModel model)
+        {
+            var user = new Customer
+            {
+                UserName = model.Email,
+                Email = model.Email,
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                PhoneNumber = model.Phone,
+                City = model.City,
+                Area = model.Area,
+                Address = model.Address,
+            };
+
+            var result = await this.userManager.CreateAsync(user, model.Password);
+            if (result.Succeeded)
+            {
+                await this.signInManager.SignInAsync(user, isPersistent: false);
+            }
+
+            return result;
         }
 
         #endregion

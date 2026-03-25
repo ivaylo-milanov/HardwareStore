@@ -156,6 +156,7 @@
     <ProjectReference Include="../../HardwareStore.Common/HardwareStore.Common.csproj" />
     <ProjectReference Include="../../Core/HardwareStore.Core.ViewModels/HardwareStore.Core.ViewModels.csproj" />
     <ProjectReference Include="../../Core/HardwareStore.Core/HardwareStore.Core.csproj" />
+    <ProjectReference Include="../../Infrastructure/HardwareStore.Infrastructure/HardwareStore.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

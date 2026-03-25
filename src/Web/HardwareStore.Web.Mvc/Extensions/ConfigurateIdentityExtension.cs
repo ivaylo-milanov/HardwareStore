@@ -1,4 +1,4 @@
-﻿namespace HardwareStore.Extensions
+namespace HardwareStore.Extensions
 {
     using HardwareStore.Common;
     using HardwareStore.Infrastructure.Data;

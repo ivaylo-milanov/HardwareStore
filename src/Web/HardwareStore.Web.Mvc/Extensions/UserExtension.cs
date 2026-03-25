@@ -1,4 +1,4 @@
-﻿namespace HardwareStore.Extensions
+namespace HardwareStore.Extensions
 {
     using System.Security.Claims;
 
