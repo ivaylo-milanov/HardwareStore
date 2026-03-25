@@ -1,0 +1,14 @@
+@model CategoryModel
+
+@foreach (var group in new (string Title, HardwareStore.Core.ViewModels.Category[] Items)[] { ("Peripherals", Model.Peripherals), ("Hardware", Model.Hardware) })
+{
+    <div class="has-submenu">
+        <a>@group.Title</a>
+        <div class="submenu">
+            @foreach (var category in group.Items)
+            {
+                <a href="/Product/Index?category=@category.Name&title=@category.Title">@category.Title</a>
+            }
+        </div>
+    </div>
+}

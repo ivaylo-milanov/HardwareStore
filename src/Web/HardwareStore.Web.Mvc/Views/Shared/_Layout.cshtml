@@ -2,10 +2,6 @@
 @inject SignInManager<Customer> SignInManager
 @inject UserManager<Customer> UserManager
 
-@{
-    CategoryModel categories = ViewBag.Model;
-}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,26 +28,7 @@
                         <button class="dropbtn">Products</button>
 
                         <div class="dropdown-content">
-                            @{
-                                foreach (var categoryGroup in categories.GetType().GetProperties())
-                                {
-                                    var groupName = categoryGroup.Name;
-                                    var groupCategories = categoryGroup.GetValue(categories) as IEnumerable<dynamic>;
-
-                                    if (groupCategories != null)
-                                    {
-                                        <div class="has-submenu">
-                                            <a>@groupName</a>
-                                            <div class="submenu">
-                                                @foreach (var category in groupCategories)
-                                                {
-                                                    <a href="/Product/Index?category=@category.Name.ToLower()">@category.Title</a>
-                                                }
-                                            </div>
-                                        </div>
-                                    }
-                                }
-                            }
+                            @await Component.InvokeAsync("Categories")
                         </div>
                     </div>
 

@@ -1,4 +1,4 @@
-﻿namespace HardwareStore.Controllers
+﻿namespace HardwareStore.Web.Mvc.Controllers
 {
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels;
@@ -12,13 +12,11 @@
     {
         private readonly IHomeService homeService;
         private readonly ILogger<HomeController> logger;
-        private readonly IWebHostEnvironment _hostingEnvironment;
 
-        public HomeController(IHomeService homeService, ILogger<HomeController> logger, IWebHostEnvironment environment)
+        public HomeController(IHomeService homeService, ILogger<HomeController> logger)
         {
             this.homeService = homeService;
             this.logger = logger;
-            _hostingEnvironment = environment;
         }
 
         public async Task<IActionResult> Index()
@@ -26,7 +24,6 @@
             try
             {
                 ViewBag.Model = await this.homeService.GetHomeModel();
-                ViewBag.Categories = JsonConvert.DeserializeObject<CategoryModel>(IOFile.ReadAllText(_hostingEnvironment.WebRootPath + "/data/categories-nav.json"));
             }
             catch (Exception ex)
             {
