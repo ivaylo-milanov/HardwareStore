@@ -9,5 +9,9 @@ namespace HardwareStore.Common
         public const string AccountNotFound = "The account does not exist.";
 
         public const string EmptyShoppingCart = "Your shopping cart is empty.";
+
+        public const string DefaultConnectionNotFound = "Connection string 'DefaultConnection' not found.";
+
+        public const string InvalidCategoriesNavigationJson = "Invalid categories navigation JSON.";
     }
 }

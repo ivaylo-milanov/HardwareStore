@@ -1,12 +1,13 @@
 @using System.IO
 @using System.Text.Json
+@using HardwareStore.Common
 @inject IWebHostEnvironment HostingEnvironment
 @{
     var path = System.IO.Path.Combine(HostingEnvironment.WebRootPath, "data", "categories-nav.json");
     var json = System.IO.File.ReadAllText(path);
     var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
     var nav = JsonSerializer.Deserialize<CategoriesNavModel>(json)
-        ?? throw new InvalidOperationException("Invalid categories navigation JSON.");
+        ?? throw new InvalidOperationException(ExceptionMessages.InvalidCategoriesNavigationJson);
 }
 
 @foreach (var group in new (string Title, NavCategoryItem[] Items)[] { ("Peripherals", nav.Peripherals), ("Hardware", nav.Hardware) })
