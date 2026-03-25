@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
@@ -12,8 +12,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HardwareStore.Core.ViewModels\HardwareStore.Core.ViewModels.csproj" />
-    <ProjectReference Include="..\HardwareStore.Infrastructure\HardwareStore.Infrastructure.csproj" />
+    <ProjectReference Include="../../Infrastructure/HardwareStore.Infrastructure/HardwareStore.Infrastructure.csproj" />
+    <ProjectReference Include="../../Core/HardwareStore.Core.ViewModels\HardwareStore.Core.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

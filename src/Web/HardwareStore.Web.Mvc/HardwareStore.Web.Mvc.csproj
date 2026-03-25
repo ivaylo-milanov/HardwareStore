@@ -147,8 +147,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HardwareStore.Core.ViewModels\HardwareStore.Core.ViewModels.csproj" />
-    <ProjectReference Include="..\HardwareStore.Core\HardwareStore.Core.csproj" />
+    <ProjectReference Include="../../Core/HardwareStore.Core.ViewModels/HardwareStore.Core.ViewModels.csproj" />
+    <ProjectReference Include="../../Core/HardwareStore.Core/HardwareStore.Core.csproj" />
   </ItemGroup>
 
 </Project>
