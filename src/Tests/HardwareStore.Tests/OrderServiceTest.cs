@@ -1,156 +1,206 @@
-﻿namespace HardwareStore.Tests
+namespace HardwareStore.Tests
 {
-    using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.Services;
-    using HardwareStore.Tests.Mocking;
+    using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Order;
-    using HardwareStore.Infrastructure.Models.Enums;
     using HardwareStore.Infrastructure.Common;
     using HardwareStore.Infrastructure.Models;
+    using HardwareStore.Infrastructure.Models.Enums;
+    using HardwareStore.Tests.Mocking;
+    using Microsoft.EntityFrameworkCore;
 
     public class OrderServiceTest
     {
-        private IOrderService orderService;
-        private IRepository repository;
+        private IOrderService orderService = null!;
+        private IRepository repository = null!;
 
         [SetUp]
         public async Task Setup()
         {
-            repository = await TestRepository.GetRepository();
+            this.repository = await TestRepository.GetRepository();
 
-            orderService = new OrderService(repository);
+            this.orderService = new OrderService(this.repository);
         }
 
         [Test]
         public void GetOrderModelShouldThrowExceptionIfTheUserIdIsInvalid()
         {
-            //Arrange
-            string userId = "TestCustomer3";
+            const string userId = "TestCustomer3";
 
-            //Act and Arrange
-            Assert.ThrowsAsync<ArgumentNullException>(async () =>
+            Assert.ThrowsAsync<InvalidOperationException>(async () =>
             {
-                var model = await orderService.GetOrderModel(userId);
+                await this.orderService.GetOrderModel(userId);
             });
         }
 
         [Test]
         public async Task GetOrderModelShouldReturnTheCorrectData()
         {
-            //Arrange
-            string userId = "TestCustomer1";
+            const string userId = "TestCustomer1";
 
-            //Act
             var model = await this.orderService.GetOrderModel(userId);
 
-            //Assert
-            Assert.That(model != null);
-            Assert.That(model.FirstName == "FirstName1");
-            Assert.That(model.LastName == "LastName1");
-            Assert.That(model.Phone == "Phone1");
-            Assert.That(model.Area == "Area1");
-            Assert.That(model.City == "City1");
-            Assert.That(model.Address == "Address1");
-            Assert.That(model.AdditionalNotes == null);
-            Assert.That(model.TotalAmount == 680);
-            Assert.That(model.PaymentMethod == 0);
+            Assert.That(model, Is.Not.Null);
+            Assert.That(model.FirstName, Is.EqualTo("FirstName1"));
+            Assert.That(model.LastName, Is.EqualTo("LastName1"));
+            Assert.That(model.Phone, Is.EqualTo("Phone1"));
+            Assert.That(model.Area, Is.EqualTo("Area1"));
+            Assert.That(model.City, Is.EqualTo("City1"));
+            Assert.That(model.Address, Is.EqualTo("Address1"));
+            Assert.That(model.AdditionalNotes, Is.Null);
+            Assert.That(model.TotalAmount, Is.EqualTo(680));
+            Assert.That(model.PaymentMethod, Is.EqualTo(PaymentMethod.CreditCard));
         }
 
         [Test]
         public void GetUsersOrdersShouldThrowExceptionIfTheUserIdIsInvalid()
         {
-            //Arrange
-            string userId = "TestCustomer3";
+            const string userId = "TestCustomer3";
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () =>
+            Assert.ThrowsAsync<InvalidOperationException>(async () =>
             {
-                var model = await orderService.GetUserOrders(userId);
+                await this.orderService.GetUserOrders(userId);
             });
         }
 
         [Test]
         public async Task GetUsersOrdersShouldReturnTheCorrectData()
         {
-            //Arrange
-            string userId = "TestCustomer1";
+            const string userId = "TestCustomer1";
 
-            //Act
             var orders = await this.orderService.GetUserOrders(userId);
 
-            Assert.That(orders != null);
-            Assert.That(orders.Count() == 1);
+            Assert.That(orders, Is.Not.Null);
+            Assert.That(orders.Count(), Is.EqualTo(1));
         }
 
         [Test]
         public void OrderAsyncShouldThrowExceptionIfTheUserIdIsInvalid()
         {
-            //Arrange
-            string userId = "TestCustomer3";
+            const string userId = "TestCustomer3";
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () =>
+            Assert.ThrowsAsync<InvalidOperationException>(async () =>
             {
                 var order = new OrderFormModel();
-                await orderService.OrderAsync(order, userId);
+                await this.orderService.OrderAsync(order, userId);
             });
         }
 
         [Test]
         public async Task OrderAsyncShouldMakeTheOrder()
         {
-            //Arrange
-            string userId = "TestCustomer1";
+            const string userId = "TestCustomer1";
 
             var model = await this.orderService.GetOrderModel(userId);
 
-            //Act
             await this.orderService.OrderAsync(model, userId);
 
             var orders = await this.orderService.GetUserOrders(userId);
-            var newOrder = orders.OrderBy(o => o.OrderDate).Last();
+            var newOrder = orders.Single(o => o.TotalAmount == 680m);
 
-            //Assert
-            Assert.That(newOrder.OrderDate == DateTime.Now.ToString("yyyy-MM-dd"));
-            Assert.That(newOrder.Status == OrderStatus.Pending.ToString());
-            Assert.That(newOrder.TotalAmount == 680);
+            var persisted = await this.repository
+                .All<Order>()
+                .FirstAsync(o => o.Id == newOrder.OrderId);
+
+            Assert.That(persisted.OrderDate.Date, Is.EqualTo(DateTime.UtcNow.Date));
+            Assert.That(newOrder.Status, Is.EqualTo(OrderStatus.Pending));
+            Assert.That(newOrder.TotalAmount, Is.EqualTo(680));
         }
 
         [Test]
         public async Task OrderAsyncShouldAddTheProductOrders()
         {
-            //Arrange
-            string userId = "TestCustomer1";
+            const string userId = "TestCustomer1";
 
             var model = await this.orderService.GetOrderModel(userId);
 
-            //Act
             await this.orderService.OrderAsync(model, userId);
 
             var orders = await this.orderService.GetUserOrders(userId);
-            var newOrder = orders.OrderBy(o => o.OrderDate).Last();
+            var newOrder = orders.Single(o => o.TotalAmount == 680m);
 
-            List<ProductOrder> productOrders = this.repository.All<ProductOrder>(o => o.OrderId.ToString() == newOrder.OrderId).ToList();
+            var productOrders = this.repository.All<ProductOrder>(o => o.OrderId == newOrder.OrderId).ToList();
 
-            //Assert
-            Assert.That(productOrders.Count() == 2);
+            Assert.That(productOrders.Count, Is.EqualTo(2));
         }
 
         [Test]
         public async Task OrderAsyncShouldLowerTheQuantityOfTheProducts()
         {
-            //Arrange
-            string userId = "TestCustomer1";
+            const string userId = "TestCustomer1";
 
             var model = await this.orderService.GetOrderModel(userId);
 
-            //Act
             await this.orderService.OrderAsync(model, userId);
 
+            var quantity1 = (await this.repository.FindAsync<Product>(13))!.Quantity;
+            var quantity2 = (await this.repository.FindAsync<Product>(14))!.Quantity;
 
-            var quantity1 = (await this.repository.FindAsync<Product>(13)).Quantity;
-            var quantity2 = (await this.repository.FindAsync<Product>(14)).Quantity;
+            Assert.That(quantity1, Is.EqualTo(11));
+            Assert.That(quantity2, Is.EqualTo(11));
+        }
 
-            Assert.That(quantity1 == 11);
-            Assert.That(quantity2 == 11);
+        [Test]
+        public void OrderAsyncShouldThrowWhenShoppingCartIsEmpty()
+        {
+            const string userId = "TestCustomer2";
+
+            var model = new OrderFormModel
+            {
+                FirstName = "FirstName2",
+                LastName = "LastName2",
+                Phone = "Phone2",
+                City = "City2",
+                Area = "Area2",
+                Address = "Address2",
+                PaymentMethod = PaymentMethod.CreditCard
+            };
+
+            Assert.ThrowsAsync<InvalidOperationException>(async () =>
+            {
+                await this.orderService.OrderAsync(model, userId);
+            });
+        }
+
+        [Test]
+        public void OrderAsyncShouldThrowWhenInsufficientStock()
+        {
+            const string userId = "TestCustomer1";
+
+            var cartItems = this.repository.All<ShoppingCartItem>().Where(i => i.CustomerId == userId).ToList();
+            this.repository.RemoveRange(cartItems);
+            this.repository.AddRange(new List<ShoppingCartItem>
+            {
+                new ShoppingCartItem
+                {
+                    CustomerId = userId,
+                    ProductId = 13,
+                    Quantity = 999
+                }
+            });
+
+            Assert.ThrowsAsync<InvalidOperationException>(async () =>
+            {
+                await this.repository.SaveChangesAsync();
+                var model = await this.orderService.GetOrderModel(userId);
+                await this.orderService.OrderAsync(model, userId);
+            });
+        }
+
+        [Test]
+        public async Task OrderAsyncUsesServerCalculatedTotalNotPostedValue()
+        {
+            const string userId = "TestCustomer1";
+
+            var model = await this.orderService.GetOrderModel(userId);
+            model.TotalAmount = 1m;
+
+            await this.orderService.OrderAsync(model, userId);
+
+            var orders = await this.orderService.GetUserOrders(userId);
+            var newOrder = orders.Single(o => o.TotalAmount == 680m);
+
+            Assert.That(newOrder.TotalAmount, Is.EqualTo(680));
         }
     }
 }

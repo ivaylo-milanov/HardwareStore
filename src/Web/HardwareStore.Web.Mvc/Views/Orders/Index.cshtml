@@ -1,4 +1,4 @@
-﻿@model IEnumerable<OrderViewModel>
+@model IEnumerable<OrderViewModel>
 
 <div class="orders-page">
     <h2 class="page-title">Orders</h2>
@@ -17,7 +17,7 @@
             {
                 <tr>
                     <td>@order.OrderId</td>
-                    <td>@order.OrderDate</td>
+                    <td>@order.OrderDate.ToString("yyyy-MM-dd")</td>
                     <td>@order.Status</td>
                     <td>$@order.TotalAmount</td>
                 </tr>

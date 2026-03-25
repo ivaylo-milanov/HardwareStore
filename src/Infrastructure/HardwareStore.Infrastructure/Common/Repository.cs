@@ -1,7 +1,8 @@
-﻿namespace HardwareStore.Infrastructure.Common
+namespace HardwareStore.Infrastructure.Common
 {
     using HardwareStore.Infrastructure.Data;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Storage;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -79,6 +80,16 @@
             => await this.Set<T>().FromSqlRaw(sql, parameters).ToListAsync();
 
         public void RemoveRange<T>(ICollection<T> items) where T : class
-            => this.Set<T>().RemoveRange(items); 
+            => this.Set<T>().RemoveRange(items);
+
+        public Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default)
+        {
+            if (this.context.Database.ProviderName?.Contains("InMemory", StringComparison.Ordinal) == true)
+            {
+                return Task.FromResult<IDbContextTransaction>(new NoOpDbContextTransaction());
+            }
+
+            return this.context.Database.BeginTransactionAsync(cancellationToken);
+        }
     }
 }

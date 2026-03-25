@@ -1,4 +1,4 @@
-﻿@model ShoppingCartViewModel
+@model ShoppingCartViewModel
 
 @if (Model.Shoppings.Any())
 {
@@ -55,7 +55,7 @@
         <p>Total: <span class="cart-total">$@Model.TotalCartPrice.ToString("F2")</span></p>
             @if (Model.TotalCartPrice > 8)
             {
-                <a class="btn-checkout" asp-action="Index" asp-controller="Order">Checkout</a>
+                <a class="btn-checkout" asp-action="Index" asp-controller="Checkout">Checkout</a>
             }
         </div>
     </div>

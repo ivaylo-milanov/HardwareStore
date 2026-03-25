@@ -1,4 +1,4 @@
-﻿namespace HardwareStore.Core.ViewModels.Order
+namespace HardwareStore.Core.ViewModels.Order
 {
     using HardwareStore.Common;
     using HardwareStore.Infrastructure.Models.Enums;
@@ -29,7 +29,7 @@
         [MaxLength(GlobalConstants.CustomerAddressMaxLength)]
         public string Address { get; set; } = null!;
 
-        [Required]
+        /// <summary>Server-computed for display; not bound from POST.</summary>
         public decimal TotalAmount { get; set; }
 
         [MaxLength(GlobalConstants.OrderAdditionalNotesMaxLength)]

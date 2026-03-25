@@ -1,12 +1,14 @@
-﻿namespace HardwareStore.Core.ViewModels.Order
+namespace HardwareStore.Core.ViewModels.Order
 {
+    using HardwareStore.Infrastructure.Models.Enums;
+
     public class OrderViewModel
     {
-        public string OrderId { get; set; } = null!;
+        public Guid OrderId { get; set; }
 
-        public string OrderDate { get; set; } = null!;
+        public DateTime OrderDate { get; set; }
 
-        public string Status { get; set; } = null!;
+        public OrderStatus Status { get; set; }
 
         public decimal TotalAmount { get; set; }
     }

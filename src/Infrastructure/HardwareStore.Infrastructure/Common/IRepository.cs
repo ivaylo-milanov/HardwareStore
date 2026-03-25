@@ -1,7 +1,8 @@
-﻿namespace HardwareStore.Infrastructure.Common
+namespace HardwareStore.Infrastructure.Common
 {
     using HardwareStore.Infrastructure.Models;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Storage;
     using System.Linq.Expressions;
 
     public interface IRepository
@@ -37,5 +38,7 @@
         Task<ICollection<T>> FromSqlRawAsync<T>(string sql, params object[] parameters) where T : class;
 
         void RemoveRange<T>(ICollection<T> items) where T : class;
+
+        Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default);
     }
 }

@@ -25,7 +25,7 @@ namespace HardwareStore.Web.Mvc.Controllers
             {
                 orders = await this.orderService.GetUserOrders(User.GetUserId());
             }
-            catch (ArgumentNullException ex)
+            catch (InvalidOperationException ex)
             {
                 this.logger.LogError(ex, ex.Message);
                 return RedirectToAction("Error", "Home", new { message = ex.Message });
