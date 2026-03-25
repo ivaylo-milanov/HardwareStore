@@ -14,7 +14,6 @@ namespace HardwareStore.Extensions
             services.AddScoped<IShoppingCartService, ShoppingCartService>();
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
-            services.AddScoped<IProfileService, ProfileService>();
 
             services.AddHttpContextAccessor();
 
