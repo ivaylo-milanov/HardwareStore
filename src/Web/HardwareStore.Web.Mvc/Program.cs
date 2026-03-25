@@ -4,7 +4,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddSessionStateTempDataProvider()
+    .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
 builder.Services.AddDistributedMemoryCache();
 
 builder.Services.ConfigurateDbContext(builder.Configuration);

@@ -1,11 +1,18 @@
-﻿namespace HardwareStore.Controllers
+namespace HardwareStore.Web.Mvc.Controllers
 {
+    using System.Text.Json;
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Details;
+    using HardwareStore.Core.ViewModels.Product;
     using Microsoft.AspNetCore.Mvc;
 
     public class ProductController : Controller
     {
+        private static readonly JsonSerializerOptions FilterJsonOptions = new()
+        {
+            PropertyNameCaseInsensitive = true,
+        };
+
         private readonly IDetailsService detailsService;
         private readonly IProductService productService;
         private readonly ILogger<ProductController> logger;
@@ -17,66 +24,52 @@
             this.productService = productService;
         }
 
-        public async Task<IActionResult> Index(string category)
+        public async Task<IActionResult> Index(string category, string title)
         {
+            if (!ProductCategoryTypes.TryResolve(category, out var viewModelType, out _))
+            {
+                this.logger.LogWarning("Unknown category: {Category}", category);
+                return RedirectToAction("Error", "Home", new { message = "Invalid category." });
+            }
+
             try
             {
-                var viewModelType = Type.GetType($"HardwareStore.Core.ViewModels.Details.{category}ViewModel", throwOnError: false, ignoreCase: true);
-
-                if (viewModelType == null)
-                {
-                    this.logger.LogWarning("Unknown category: {Category}", category);
-                    return RedirectToAction("Error", "Home", new { message = "Invalid category." });
-                }
-
-                var method = this.productService.GetType().GetMethod("GetModel")!.MakeGenericMethod(viewModelType);
-                var task = (Task)method.Invoke(this.productService, null)!;
-                await task.ConfigureAwait(false);
-
-                var resultProperty = task.GetType().GetProperty("Result");
-                ViewBag.Model = resultProperty?.GetValue(task)!;
+                ViewBag.Model = await this.InvokeGetModelAsync(viewModelType);
+                ViewBag.Title = title;
+                ViewBag.Category = category;
             }
             catch (ArgumentException ex)
             {
                 this.logger.LogError(ex, ex.Message);
                 return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
-            
+
             return View();
         }
 
-        public IActionResult Filter([FromBody] object filter, string category)
+        [HttpPost]
+        public async Task<IActionResult> Filter([FromBody] JsonElement body, string category)
         {
-            IEnumerable<object> filtered;
+            if (!ProductCategoryTypes.TryResolve(category, out var viewModelType, out var filterOptionsType))
+            {
+                this.logger.LogWarning("Unknown category: {Category}", category);
+                return this.EmptyProductsPartial();
+            }
+
             try
             {
-                // Dynamically determine the ViewModel and FilterOptions types based on the category
-                var viewModelType = Type.GetType($"HardwareStore.Core.ViewModels.Details.{category}ViewModel", throwOnError: false, ignoreCase: true);
-                var filterOptionsType = Type.GetType($"HardwareStore.Core.ViewModels.Filters.{category}FilterOptions", throwOnError: false, ignoreCase: true);
+                var filterDto = JsonSerializer.Deserialize(body.GetRawText(), filterOptionsType, FilterJsonOptions);
+                if (filterDto == null)
+                    return this.EmptyProductsPartial();
 
-                if (viewModelType == null || filterOptionsType == null)
-                {
-                    this.logger.LogWarning("Unknown category or filter options: {Category}", category);
-                    return RedirectToAction("Error", "Home", new { message = "Invalid category or filter options." });
-                }
-
-                // Deserialize the filter object into the correct filter options type
-                var deserializedFilter = System.Text.Json.JsonSerializer.Deserialize(filter.ToString()!, filterOptionsType);
-
-                // Use reflection to call the generic method with the determined types
-                var method = this.productService.GetType()?
-                    .GetMethod("FilterProducts")?
-                    .MakeGenericMethod(viewModelType, filterOptionsType);
-
-                filtered = (IEnumerable<object>)method?.Invoke(this.productService, new[] { deserializedFilter })!;
+                var filtered = await this.InvokeFilterProductsAsync(viewModelType, filterOptionsType, filterDto).ConfigureAwait(false);
+                return PartialView("_ProductsPartialView", filtered);
             }
-            catch (ArgumentNullException ex)
+            catch (Exception ex)
             {
-                this.logger.LogError(ex, ex.Message);
-                return RedirectToAction("Error", "Home", new { message = ex.Message });
+                this.logger.LogError(ex, "Filter failed for category {Category}", category);
+                return this.EmptyProductsPartial();
             }
-
-            return PartialView("_ProductsPartialView", filtered);
         }
 
         public async Task<IActionResult> Details(int productId)
@@ -94,5 +87,26 @@
 
             return View(model);
         }
+
+        private async Task<object> InvokeGetModelAsync(Type viewModelType)
+        {
+            var method = typeof(IProductService).GetMethod(nameof(IProductService.GetModel))!
+                .MakeGenericMethod(viewModelType);
+            var task = (Task)method.Invoke(this.productService, new object?[] { null })!;
+            await task.ConfigureAwait(false);
+            return task.GetType().GetProperty("Result")!.GetValue(task)!;
+        }
+
+        private async Task<object> InvokeFilterProductsAsync(Type viewModelType, Type filterOptionsType, object filterDto)
+        {
+            var method = typeof(IProductService).GetMethod(nameof(IProductService.FilterProductsAsync))!
+                .MakeGenericMethod(viewModelType, filterOptionsType);
+            var task = (Task)method.Invoke(this.productService, new[] { filterDto })!;
+            await task.ConfigureAwait(false);
+            return task.GetType().GetProperty("Result")!.GetValue(task)!;
+        }
+
+        private PartialViewResult EmptyProductsPartial() =>
+            PartialView("_ProductsPartialView", Enumerable.Empty<ProductViewModel>());
     }
 }
