@@ -1,4 +1,4 @@
-﻿namespace HardwareStore.Controllers
+namespace HardwareStore.Controllers
 {
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Product;
@@ -22,7 +22,7 @@
             ProductsViewModel<SearchViewModel> model;
             try
             {
-                model = await this.productService.GetSearchModel(keyword);
+                model = await this.productService.GetModel<SearchViewModel>(keyword);
             }
             catch (ArgumentException ex)
             {
@@ -30,23 +30,23 @@
                 return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
+            ViewBag.SearchKeyword = keyword ?? string.Empty;
             return View(model);
         }
 
-        public IActionResult FilterSearchedProducts([FromBody] SearchFilterOptions filter)
+        [HttpPost]
+        public async Task<IActionResult> FilterSearchedProducts([FromBody] SearchFilterOptions filter, string keyword)
         {
-            IEnumerable<SearchViewModel> filtered;
             try
             {
-                filtered = this.productService.FilterProducts<SearchViewModel, SearchFilterOptions>(filter);
+                var filtered = await this.productService.FilterSearchProductsAsync(keyword ?? string.Empty, filter).ConfigureAwait(false);
+                return PartialView("_ProductsPartialView", filtered);
             }
-            catch (ArgumentNullException ex)
+            catch (Exception ex)
             {
-                this.logger.LogError(ex, ex.Message);
-                return RedirectToAction("Error", "Home", new { message = ex.Message });
+                this.logger.LogError(ex, "Search filter failed");
+                return PartialView("_ProductsPartialView", Enumerable.Empty<SearchViewModel>());
             }
-
-            return PartialView("_ProductsPartialView", filtered);
         }
     }
 }
