@@ -3,6 +3,7 @@ namespace HardwareStore.Extensions
     using HardwareStore.Common;
     using HardwareStore.Infrastructure.Data;
     using HardwareStore.Infrastructure.Models;
+    using Microsoft.AspNetCore.Identity;
 
     public static class ConfigurateIdentityExtension
     {
@@ -17,7 +18,8 @@ namespace HardwareStore.Extensions
                 options.Password.RequireUppercase = false;
                 options.Password.RequireDigit = false;
             })
-               .AddEntityFrameworkStores<HardwareStoreDbContext>();
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<HardwareStoreDbContext>();
 
             services.ConfigureApplicationCookie(options =>
             {

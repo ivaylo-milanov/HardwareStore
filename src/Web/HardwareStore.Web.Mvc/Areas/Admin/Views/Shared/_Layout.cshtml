@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Admin · HardwareStore</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body class="d-flex flex-column min-vh-100">
+    <header class="border-bottom bg-white shadow-sm mb-3">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <div class="container-fluid">
+                <a class="navbar-brand fw-semibold" asp-area="Admin" asp-controller="Home" asp-action="Index">Admin</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#adminNav" aria-controls="adminNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="adminNav">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 gap-lg-1">
+                        <li class="nav-item"><a class="nav-link" asp-area="Admin" asp-controller="Categories" asp-action="Index">Categories</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-area="Admin" asp-controller="Manufacturers" asp-action="Index">Manufacturers</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-area="Admin" asp-controller="Products" asp-action="Index">Products</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-area="Admin" asp-controller="Customers" asp-action="Index">Customers</a></li>
+                    </ul>
+                    <a class="btn btn-outline-secondary btn-sm" asp-area="" asp-controller="Home" asp-action="Index">Back to storefront</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main class="container flex-grow-1 pb-5">
+        @if (TempData["StatusMessage"] is string ok && !string.IsNullOrWhiteSpace(ok))
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                @ok
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+        @if (TempData["ErrorMessage"] is string err && !string.IsNullOrWhiteSpace(err))
+        {
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                @err
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        }
+        @RenderBody()
+    </main>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
