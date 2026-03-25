@@ -1,4 +1,4 @@
-﻿namespace HardwareStore.Core.Infrastructure.Enum
+namespace HardwareStore.Core.Enums
 {
     public enum ProductOrdering
     {

@@ -1,4 +1,4 @@
-﻿namespace HardwareStore.Common
+namespace HardwareStore.Common
 {
     public class GlobalConstants
     {
@@ -23,10 +23,6 @@
         public const int ProductReferenceNumberMinLength = 8;
         public const int ProductReferenceNumberMaxLength = 100;
 
-        //Characteristic
-        public const int CharacteristicValueMinLength = 1;
-        public const int CharacteristicValueMaxLength = 120;
-
         //Customer
         public const int CustomerUserNameMinLength = 3;
         public const int CustomerUserNameMaxLength = 30;
@@ -43,9 +39,5 @@
         //Manufacturer
         public const int ManufacturerNameMinLength = 3;
         public const int ManufacturerNameMaxLength = 30;
-
-        //CharacteristicName
-        public const int CharacteristicNameMinLength = 3;
-        public const int CharacteristicNameMaxLength = 60;
     }
 }

@@ -1,7 +1,5 @@
-﻿namespace HardwareStore.Core.ViewModels.Product
+namespace HardwareStore.Core.ViewModels.Product
 {
-    using HardwareStore.Core.Infrastructure.Attributes;
-
     public class ProductViewModel
     {
         public int Id { get; set; }
@@ -12,7 +10,7 @@
 
         public DateTime AddDate { get; set; }
 
-        [Characteristic]
         public string Manufacturer { get; set; } = null!;
     }
 }
+

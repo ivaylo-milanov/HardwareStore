@@ -1,19 +1,24 @@
 namespace HardwareStore.Core.Services.Contracts
 {
+    using HardwareStore.Core.ViewModels.Details;
     using HardwareStore.Core.ViewModels.Product;
-    using HardwareStore.Core.ViewModels.Search;
 
     public interface IProductService
     {
-        Task<IEnumerable<TModel>> FilterProductsAsync<TModel, TFilter>(TFilter filter)
-            where TFilter : ProductFilterOptions
-            where TModel : ProductViewModel;
+        Task<ProductsViewModel<CatalogProductViewModel>> GetCategoryCatalogAsync(string categoryName);
 
-        Task<IEnumerable<SearchViewModel>> FilterSearchProductsAsync(string keyword, SearchFilterOptions filter);
+        Task<ProductsViewModel<CatalogProductViewModel>> GetSearchCatalogAsync(string keyword);
 
-        /// <summary>
-        /// Category pages: call without <paramref name="keyword"/>. Search: use <see cref="SearchViewModel"/> and pass the keyword (null/whitespace = all products).
-        /// </summary>
-        Task<ProductsViewModel<TModel>> GetModel<TModel>(string? keyword = null) where TModel : ProductViewModel;
+        Task<IEnumerable<CatalogProductViewModel>> FilterCategoryCatalogAsync(string categoryName, string filterJson);
+
+        Task<IEnumerable<CatalogProductViewModel>> FilterSearchCatalogAsync(string keyword, string filterJson);
+
+        Task<ProductDetailsModel> GetProductDetails(int productId);
+
+        Task<bool> IsProductInDbFavorites(string customerId, int productId);
+
+        Task<bool> IsProductInSessionFavorites(ICollection<int> sessionFavorites, int productId);
+
+        Task<bool> CategoryExistsAsync(string categoryName);
     }
 }

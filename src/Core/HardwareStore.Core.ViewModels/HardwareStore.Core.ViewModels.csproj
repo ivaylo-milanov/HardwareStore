@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="../../HardwareStore.Common\HardwareStore.Common.csproj" />
-    <ProjectReference Include="../../Core/HardwareStore.Core.Infrastructure\HardwareStore.Core.Infrastructure.csproj" />
     <ProjectReference Include="../../Infrastructure/HardwareStore.Infrastructure.Models\HardwareStore.Infrastructure.Models.csproj" />
   </ItemGroup>
 

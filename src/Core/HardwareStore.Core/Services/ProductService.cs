@@ -1,11 +1,11 @@
 namespace HardwareStore.Core.Services
 {
-    using System.Reflection;
-    using HardwareStore.Core.Infrastructure.Attributes;
-    using HardwareStore.Core.Infrastructure.Enum;
+    using System.Text.Json;
+    using HardwareStore.Common;
+    using HardwareStore.Core.Enums;
     using HardwareStore.Core.Services.Contracts;
+    using HardwareStore.Core.ViewModels.Details;
     using HardwareStore.Core.ViewModels.Product;
-    using HardwareStore.Core.ViewModels.Search;
     using HardwareStore.Infrastructure.Common;
     using HardwareStore.Infrastructure.Models;
     using Microsoft.Data.SqlClient;
@@ -13,6 +13,13 @@ namespace HardwareStore.Core.Services
 
     public class ProductService : IProductService
     {
+        private static readonly JsonSerializerOptions JsonOptions = new()
+        {
+            PropertyNamingPolicy = null,
+            ReadCommentHandling = JsonCommentHandling.Skip,
+            AllowTrailingCommas = true,
+        };
+
         private readonly IRepository repository;
 
         public ProductService(IRepository repository)
@@ -20,147 +27,109 @@ namespace HardwareStore.Core.Services
             this.repository = repository;
         }
 
-        public async Task<ProductsViewModel<TModel>> GetModel<TModel>(string? keyword = null)
-            where TModel : ProductViewModel
+        public Task<bool> CategoryExistsAsync(string categoryName) =>
+            this.repository.AnyAsync<Category>(c => c.Name == categoryName);
+
+        public async Task<ProductsViewModel<CatalogProductViewModel>> GetCategoryCatalogAsync(string categoryName)
         {
-            var products = await GetProductsAsync<TModel>(keyword).ConfigureAwait(false);
-            return BuildProductsViewModel(products);
+            var products = await LoadProductsForCategoryAsync(categoryName).ConfigureAwait(false);
+            return BuildCatalogViewModel(products);
         }
 
-        public async Task<IEnumerable<TModel>> FilterProductsAsync<TModel, TFilter>(TFilter filter)
-            where TModel : ProductViewModel
-            where TFilter : ProductFilterOptions
+        public async Task<ProductsViewModel<CatalogProductViewModel>> GetSearchCatalogAsync(string keyword)
         {
-            var products = await GetProductsAsync<TModel>().ConfigureAwait(false);
-            return ApplyFilters(products, filter);
+            var products = string.IsNullOrWhiteSpace(keyword)
+                ? await LoadAllProductsForSearchAsync().ConfigureAwait(false)
+                : await LoadSearchByKeywordAsync(keyword).ConfigureAwait(false);
+            return BuildCatalogViewModel(products);
         }
 
-        public async Task<IEnumerable<SearchViewModel>> FilterSearchProductsAsync(string keyword, SearchFilterOptions filter)
+        public async Task<IEnumerable<CatalogProductViewModel>> FilterCategoryCatalogAsync(string categoryName, string filterJson)
         {
-            var products = await GetProductsAsync<SearchViewModel>(keyword).ConfigureAwait(false);
-            return ApplyFilters(products, filter);
+            var products = await LoadProductsForCategoryAsync(categoryName).ConfigureAwait(false);
+            var vms = products.Select(MapToCatalog);
+            return ApplyParsedFilter(vms, ParseFilterJson(filterJson));
         }
 
-        private static ProductsViewModel<TModel> BuildProductsViewModel<TModel>(IEnumerable<TModel> products)
-            where TModel : ProductViewModel
+        public async Task<IEnumerable<CatalogProductViewModel>> FilterSearchCatalogAsync(string keyword, string filterJson)
         {
-            return new ProductsViewModel<TModel>
-            {
-                Filters = BuildFilterCategories(products),
-                Products = products,
-            };
+            var products = string.IsNullOrWhiteSpace(keyword)
+                ? await LoadAllProductsForSearchAsync().ConfigureAwait(false)
+                : await LoadSearchByKeywordAsync(keyword).ConfigureAwait(false);
+            var vms = products.Select(MapToCatalog);
+            return ApplyParsedFilter(vms, ParseFilterJson(filterJson));
         }
 
-        private static IEnumerable<TModel> ApplyFilters<TModel, TFilter>(IEnumerable<TModel> products, TFilter filter)
-            where TModel : ProductViewModel
-            where TFilter : ProductFilterOptions
+        public async Task<ProductDetailsModel> GetProductDetails(int productId)
         {
-            foreach (var prop in filter.GetType().GetProperties())
-            {
-                var raw = prop.GetValue(filter);
-                if (raw is not IEnumerable<string> list)
-                    continue;
-
-                products = products.Where(p =>
-                    MatchesFilter(list, p.GetType().GetProperty(prop.Name)?.GetValue(p)));
-            }
-
-            return OrderBySelection(products, filter.Order);
-        }
-
-        private static bool MatchesFilter(IEnumerable<string> selectedValues, object? productField)
-        {
-            if (productField == null)
-                return false;
-
-            var text = productField.ToString()!;
-            return selectedValues.Any(selected => text.Contains(selected));
-        }
-
-        private static IEnumerable<TModel> OrderBySelection<TModel>(IEnumerable<TModel> products, int order)
-            where TModel : ProductViewModel
-        {
-            return (ProductOrdering)order switch
-            {
-                ProductOrdering.LowestPrice => products.OrderBy(p => p.Price),
-                ProductOrdering.HighestPrice => products.OrderByDescending(p => p.Price),
-                ProductOrdering.Newest => products.OrderByDescending(p => p.AddDate),
-                ProductOrdering.Oldest => products.OrderBy(p => p.AddDate),
-                _ => products,
-            };
-        }
-
-        /// <summary>
-        /// Loads products for a category view model, or for <see cref="SearchViewModel"/> when <paramref name="keyword"/> is used (including empty = all products).
-        /// </summary>
-        private async Task<IEnumerable<TModel>> GetProductsAsync<TModel>(string? keyword = null)
-            where TModel : ProductViewModel
-        {
-            if (typeof(TModel) == typeof(SearchViewModel))
-            {
-                if (!string.IsNullOrWhiteSpace(keyword))
-                    return (IEnumerable<TModel>)(object)await LoadSearchByKeywordAsync(keyword).ConfigureAwait(false);
-
-                return (IEnumerable<TModel>)(object)await LoadAllForSearchAsync().ConfigureAwait(false);
-            }
-
-            if (!string.IsNullOrWhiteSpace(keyword))
-                throw new ArgumentException("A search keyword only applies to SearchViewModel.", nameof(keyword));
-
-            return await LoadByCategoryAsync<TModel>().ConfigureAwait(false);
-        }
-
-        private async Task<IEnumerable<TModel>> LoadByCategoryAsync<TModel>()
-            where TModel : ProductViewModel
-        {
-            var categoryAttr = typeof(TModel).GetCustomAttribute<CategoryAttribute>();
-            if (categoryAttr == null)
-                throw new ArgumentException($"The model type {typeof(TModel).Name} does not have a Category attribute");
-
-            var rows = await this.repository
+            var product = await this.repository
                 .All<Product>()
                 .Include(p => p.Manufacturer)
-                .Include(p => p.Characteristics)
-                .ThenInclude(c => c.CharacteristicName)
-                .Where(p => p.Category.Name == categoryAttr.CategoryName)
-                .Select(p => new ProductExportModel
-                {
-                    Id = p.Id,
-                    Price = p.Price,
-                    Name = p.Name,
-                    AddDate = p.AddDate,
-                    Manufacturer = p.Manufacturer!.Name,
-                    Attributes = p.Characteristics
-                        .Select(pa => new ProductAttributeExportModel
-                        {
-                            Name = pa.CharacteristicName.Name,
-                            Value = pa.Value,
-                        })
-                        .ToList(),
-                })
-                .ToListAsync()
+                .Where(p => p.Id == productId)
+                .FirstOrDefaultAsync()
                 .ConfigureAwait(false);
 
-            return rows.Select(MapToViewModel<TModel>).ToList();
+            if (product == null)
+                throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
+
+            var opts = ReadOptionsDictionary(product);
+            return new ProductDetailsModel
+            {
+                Id = product.Id,
+                Price = product.Price,
+                Name = product.Name,
+                AddDate = product.AddDate,
+                Manufacturer = product.Manufacturer?.Name!,
+                ReferenceNumber = product.ReferenceNumber,
+                Description = product.Description!,
+                Warranty = product.Warranty,
+                Attributes = opts.Select(kv => new ProductAttributeExportModel { Name = kv.Key, Value = kv.Value }).ToList(),
+            };
         }
 
-        private async Task<IEnumerable<SearchViewModel>> LoadAllForSearchAsync()
+        public async Task<bool> IsProductInDbFavorites(string customerId, int productId)
         {
-            return await this.repository.All<Product>()
+            var customer = await this.repository.FindAsync<Customer>(customerId).ConfigureAwait(false);
+            if (customer == null)
+                throw new ArgumentNullException(ExceptionMessages.UserNotFound);
+
+            if (!await this.repository.AnyAsync<Product>(p => p.Id == productId).ConfigureAwait(false))
+                throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
+
+            return await this.repository
+                .AnyAsync<Favorite>(f => f.CustomerId == customerId && f.ProductId == productId)
+                .ConfigureAwait(false);
+        }
+
+        public async Task<bool> IsProductInSessionFavorites(ICollection<int> sessionFavorites, int productId)
+        {
+            if (!await this.repository.AnyAsync<Product>(p => p.Id == productId).ConfigureAwait(false))
+                throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
+
+            return sessionFavorites != null && sessionFavorites.Contains(productId);
+        }
+
+        private async Task<List<Product>> LoadProductsForCategoryAsync(string categoryName)
+        {
+            return await this.repository
+                .All<Product>()
+                .Include(p => p.Category)
                 .Include(p => p.Manufacturer)
-                .Select(p => new SearchViewModel
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Price = p.Price,
-                    Manufacturer = p.Manufacturer!.Name,
-                    AddDate = p.AddDate,
-                })
+                .Where(p => p.Category.Name == categoryName)
                 .ToListAsync()
                 .ConfigureAwait(false);
         }
 
-        private async Task<IEnumerable<SearchViewModel>> LoadSearchByKeywordAsync(string keyword)
+        private async Task<List<Product>> LoadAllProductsForSearchAsync()
+        {
+            return await this.repository
+                .All<Product>()
+                .Include(p => p.Manufacturer)
+                .ToListAsync()
+                .ConfigureAwait(false);
+        }
+
+        private async Task<List<Product>> LoadSearchByKeywordAsync(string keyword)
         {
             const string sql = @"
                 SELECT p.* 
@@ -176,68 +145,82 @@ namespace HardwareStore.Core.Services
 
             var productIds = matches.Select(p => p.Id).ToList();
 
-            var manufacturers = await this.repository.All<Manufacturer>()
-                .Where(m => m.Products.Any(p => productIds.Contains(p.Id)))
-                .ToDictionaryAsync(m => m.Id, m => m.Name)
+            return await this.repository
+                .All<Product>()
+                .Include(p => p.Manufacturer)
+                .Where(p => productIds.Contains(p.Id))
+                .ToListAsync()
                 .ConfigureAwait(false);
-
-            return matches
-                .Select(p => new SearchViewModel
-                {
-                    Id = p.Id,
-                    Name = p.Name,
-                    Price = p.Price,
-                    Manufacturer = p.ManufacturerId is { } mid && manufacturers.TryGetValue(mid, out var name)
-                        ? name
-                        : null!,
-                    AddDate = p.AddDate,
-                })
-                .ToList();
         }
 
-        private static TModel MapToViewModel<TModel>(ProductExportModel product)
-            where TModel : ProductViewModel
+        private static CatalogProductViewModel MapToCatalog(Product p)
         {
-            var model = Activator.CreateInstance<TModel>();
-
-            foreach (var prop in typeof(TModel).GetProperties())
+            var opts = ReadOptionsDictionary(p);
+            return new CatalogProductViewModel
             {
-                var ch = prop.GetCustomAttribute<CharacteristicAttribute>();
-                if (ch != null)
-                {
-                    var attrName = ch.Name ?? prop.Name;
-                    object? value = prop.Name == "Manufacturer"
-                        ? product.Manufacturer
-                        : product.Attributes.FirstOrDefault(a => a.Name == attrName)?.Value;
+                Id = p.Id,
+                Name = p.Name,
+                Price = p.Price,
+                AddDate = p.AddDate,
+                Manufacturer = p.Manufacturer?.Name ?? string.Empty,
+                Options = opts,
+            };
+        }
 
-                    if (value == null && prop.Name != "Manufacturer")
-                        continue;
+        private static Dictionary<string, string> ReadOptionsDictionary(Product p)
+        {
+            if (string.IsNullOrWhiteSpace(p.Options) || p.Options == "{}")
+                return new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
 
-                    if (value != null && prop.PropertyType != value.GetType())
-                        value = Convert.ChangeType(value, prop.PropertyType);
-
-                    prop.SetValue(model, value);
-                }
-                else
-                {
-                    var src = typeof(ProductExportModel).GetProperty(prop.Name);
-                    if (src != null)
-                        prop.SetValue(model, src.GetValue(product));
-                }
+            try
+            {
+                var parsed = JsonSerializer.Deserialize<Dictionary<string, string>>(p.Options, JsonOptions);
+                if (parsed != null && parsed.Count > 0)
+                    return new Dictionary<string, string>(parsed, StringComparer.OrdinalIgnoreCase);
+            }
+            catch (JsonException)
+            {
+                // ignore invalid json
             }
 
-            return model;
+            return new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
         }
 
-        private static IEnumerable<FilterCategoryModel> BuildFilterCategories<TModel>(IEnumerable<TModel> products)
-            where TModel : ProductViewModel
+        private static ProductsViewModel<CatalogProductViewModel> BuildCatalogViewModel(IEnumerable<Product> rows)
+        {
+            var vms = rows.Select(MapToCatalog).ToList();
+            return new ProductsViewModel<CatalogProductViewModel>
+            {
+                Products = vms,
+                Filters = BuildFilterCategories(vms),
+            };
+        }
+
+        private static IEnumerable<FilterCategoryModel> BuildFilterCategories(IReadOnlyList<CatalogProductViewModel> products)
         {
             var filters = new List<FilterCategoryModel>();
 
-            foreach (var prop in typeof(TModel).GetProperties().Where(p => Attribute.IsDefined(p, typeof(CharacteristicAttribute))))
+            var mfrValues = products
+                .Select(p => p.Manufacturer)
+                .Where(v => !string.IsNullOrEmpty(v))
+                .Distinct()
+                .ToList();
+            var mfrSplit = string.Join(", ", mfrValues)
+                .Split(", ")
+                .Select(v => v.Trim())
+                .Where(v => v.Length > 0)
+                .Distinct();
+            filters.Add(new FilterCategoryModel
+            {
+                Name = "Manufacturer",
+                Title = "Manufacturer",
+                Values = mfrSplit.FirstOrDefault() == string.Empty ? new List<string>() : mfrSplit.OrderByDescending(v => v),
+            });
+
+            foreach (var key in products.SelectMany(p => p.Options.Keys).Distinct(StringComparer.OrdinalIgnoreCase))
             {
                 var values = products
-                    .Select(m => prop.GetValue(m)?.ToString())
+                    .Select(p => p.Options.TryGetValue(key, out var v) ? v : null)
                     .Where(v => v != null)
                     .Cast<string>()
                     .Distinct()
@@ -248,13 +231,10 @@ namespace HardwareStore.Core.Services
                     .Select(v => v.Trim())
                     .Distinct();
 
-                var ch = prop.GetCustomAttribute<CharacteristicAttribute>();
-                var title = ch?.Name ?? prop.Name;
-
                 filters.Add(new FilterCategoryModel
                 {
-                    Name = prop.Name,
-                    Title = title,
+                    Name = key,
+                    Title = key,
                     Values = splitValues.FirstOrDefault() == string.Empty
                         ? new List<string>()
                         : splitValues.OrderByDescending(v => v),
@@ -262,6 +242,99 @@ namespace HardwareStore.Core.Services
             }
 
             return filters;
+        }
+
+        private static IEnumerable<CatalogProductViewModel> ApplyParsedFilter(
+            IEnumerable<CatalogProductViewModel> products,
+            ParsedFilter filter)
+        {
+            var q = products;
+            if (filter.Manufacturer is { Count: > 0 })
+                q = q.Where(p => MatchesFilter(filter.Manufacturer, p.Manufacturer));
+
+            foreach (var kv in filter.OptionSelections)
+            {
+                var key = kv.Key;
+                var selected = kv.Value;
+                if (selected == null || selected.Count == 0)
+                    continue;
+                q = q.Where(p =>
+                    p.Options.TryGetValue(key, out var val) && MatchesFilter(selected, val));
+            }
+
+            return OrderBySelection(q, filter.Order);
+        }
+
+        private static bool MatchesFilter(IEnumerable<string> selectedValues, object? productField)
+        {
+            if (productField == null)
+                return false;
+
+            var text = productField.ToString()!;
+            return selectedValues.Any(selected => text.Contains(selected, StringComparison.Ordinal));
+        }
+
+        private static IEnumerable<CatalogProductViewModel> OrderBySelection(IEnumerable<CatalogProductViewModel> products, int order)
+        {
+            return (ProductOrdering)order switch
+            {
+                ProductOrdering.LowestPrice => products.OrderBy(p => p.Price),
+                ProductOrdering.HighestPrice => products.OrderByDescending(p => p.Price),
+                ProductOrdering.Newest => products.OrderByDescending(p => p.AddDate),
+                ProductOrdering.Oldest => products.OrderBy(p => p.AddDate),
+                _ => products,
+            };
+        }
+
+        private static ParsedFilter ParseFilterJson(string json)
+        {
+            var result = new ParsedFilter();
+            if (string.IsNullOrWhiteSpace(json))
+                return result;
+
+            using var doc = JsonDocument.Parse(json);
+            var root = doc.RootElement;
+            foreach (var prop in root.EnumerateObject())
+            {
+                if (string.Equals(prop.Name, "Order", StringComparison.OrdinalIgnoreCase))
+                {
+                    result.Order = prop.Value.ValueKind == JsonValueKind.String
+                        ? int.Parse(prop.Value.GetString() ?? "1")
+                        : prop.Value.GetInt32();
+                    continue;
+                }
+
+                if (string.Equals(prop.Name, "Manufacturer", StringComparison.OrdinalIgnoreCase))
+                {
+                    result.Manufacturer = ToStringList(prop.Value);
+                    continue;
+                }
+
+                var list = ToStringList(prop.Value);
+                if (list is { Count: > 0 })
+                    result.OptionSelections[prop.Name] = list;
+            }
+
+            return result;
+        }
+
+        private static List<string>? ToStringList(JsonElement el)
+        {
+            return el.ValueKind switch
+            {
+                JsonValueKind.Array => el.EnumerateArray().Select(e => e.GetString()).Where(s => s != null).Cast<string>().ToList(),
+                JsonValueKind.String => new List<string> { el.GetString()! },
+                _ => null,
+            };
+        }
+
+        private sealed class ParsedFilter
+        {
+            public int Order { get; set; } = 1;
+
+            public List<string>? Manufacturer { get; set; }
+
+            public Dictionary<string, List<string>> OptionSelections { get; } = new(StringComparer.OrdinalIgnoreCase);
         }
     }
 }
