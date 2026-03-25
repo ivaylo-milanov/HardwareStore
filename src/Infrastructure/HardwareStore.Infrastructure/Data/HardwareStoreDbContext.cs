@@ -1,4 +1,4 @@
-﻿namespace HardwareStore.Infrastructure.Data
+namespace HardwareStore.Infrastructure.Data
 {
     using Infrastructure.Configurations;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -20,16 +20,13 @@
 
         public DbSet<Manufacturer> Manufacturers { get; set; } = null!;
 
-        public DbSet<CharacteristicName> CharacteristicsNames { get; set; } = null!;
-
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new ProductOrderConfiguration());
             builder.ApplyConfiguration(new CustomerConfiguration());
             builder.ApplyConfiguration(new ShoppingCartItemConfiguration());
             builder.ApplyConfiguration(new FavoriteConfiguration());
-            builder.ApplyConfiguration(new CharacteristicConfiguraion());
-            
+
             base.OnModelCreating(builder);
         }
     }

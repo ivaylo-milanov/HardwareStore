@@ -1,4 +1,4 @@
-﻿namespace HardwareStore.Infrastructure.Models
+namespace HardwareStore.Infrastructure.Models
 {
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
@@ -12,7 +12,6 @@
     {
         public Product()
         {
-            this.Characteristics = new HashSet<Characteristic>();
             this.ProductsOrders = new HashSet<ProductOrder>();
             this.ShoppingCartItems = new HashSet<ShoppingCartItem>();
             this.Favorites = new HashSet<Favorite>();
@@ -71,7 +70,11 @@
         [ForeignKey(nameof(CategoryId))]
         public Category Category { get; set; } = null!;
 
-        public ICollection<Characteristic> Characteristics { get; set; }
+        /// <summary>
+        /// JSON object: option display name → value (e.g. {"Form Factor":"Mid Tower"}).
+        /// </summary>
+        [Comment("product options json")]
+        public string Options { get; set; } = "{}";
 
         public ICollection<ProductOrder> ProductsOrders { get; set; } = null!;
 
