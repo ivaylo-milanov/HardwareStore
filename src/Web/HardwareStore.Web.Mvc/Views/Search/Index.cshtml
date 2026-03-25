@@ -1,12 +1,12 @@
-@model ProductsViewModel<SearchViewModel>
+@model CatalogPageViewModel
 
 <div class="page-title">
-    <h1>Search</h1>
+    <h1>@Model.PageTitle</h1>
 </div>
 <div class="page-body">
-    <form class="page-layout" method="get" data-url="@Url.Action("FilterSearchedProducts", "Search", new { keyword = ViewBag.SearchKeyword })">
-        <partial name="_FilterPartialView" model="@Model.Filters"/>
-        <partial name="_ProductsContentPartialView" model="@Model.Products"/>
+    <form class="page-layout" method="get" data-url="@Url.Action("FilterSearchedProducts", "Search", new { keyword = Model.SearchKeyword })">
+        <partial name="_FilterPartialView" model="@Model.Catalog.Filters"/>
+        <partial name="_ProductsContentPartialView" model="@Model.Catalog.Products as IEnumerable<ProductViewModel>"/>
     </form>
 </div>
 

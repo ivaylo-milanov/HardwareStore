@@ -1,4 +1,4 @@
-﻿namespace HardwareStore.Controllers
+namespace HardwareStore.Web.Mvc.Controllers
 {
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Order;
@@ -6,7 +6,8 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    public class OrderController : SecureController
+    [Authorize]
+    public class OrderController : Controller
     {
         private readonly IOrderService orderService;
         private readonly ILogger<OrderController> logger;

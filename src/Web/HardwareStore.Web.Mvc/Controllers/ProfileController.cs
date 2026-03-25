@@ -1,11 +1,13 @@
-﻿namespace HardwareStore.Controllers
+namespace HardwareStore.Web.Mvc.Controllers
 {
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Profile;
     using HardwareStore.Extensions;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    public class ProfileController : SecureController
+    [Authorize]
+    public class ProfileController : Controller
     {
         private readonly IProfileService profileService;
         private readonly ILogger<ProfileController> logger;

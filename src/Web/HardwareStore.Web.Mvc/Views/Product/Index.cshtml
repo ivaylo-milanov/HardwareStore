@@ -1,10 +1,12 @@
+@model CatalogPageViewModel
+
 <div class="page-title">
-    <h1>@ViewBag.Title</h1>
+    <h1>@Model.PageTitle</h1>
 </div>
 <div class="page-body">
-    <form class="page-layout" method="get" data-url="@Url.Action("Filter", "Product", new { category = ViewBag.Category })">
-        <partial name="_FilterPartialView" model="@ViewBag.Model.Filters as IEnumerable<FilterCategoryModel>"/>
-        <partial name="_ProductsContentPartialView" model="@ViewBag.Model.Products as IEnumerable<ProductViewModel>"/>
+    <form class="page-layout" method="get" data-url="@Url.Action("Filter", "Product", new { category = Model.CategoryKey })">
+        <partial name="_FilterPartialView" model="@Model.Catalog.Filters"/>
+        <partial name="_ProductsContentPartialView" model="@Model.Catalog.Products as IEnumerable<ProductViewModel>"/>
     </form>
 </div>
 

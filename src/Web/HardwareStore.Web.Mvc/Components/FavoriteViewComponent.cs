@@ -1,4 +1,4 @@
-﻿namespace HardwareStore.Components
+namespace HardwareStore.Components
 {
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Details;
@@ -7,12 +7,12 @@
 
     public class FavoriteViewComponent : ViewComponent
     {
-        private readonly IDetailsService detailsService;
+        private readonly IProductService productService;
         private readonly ILogger<FavoriteViewComponent> logger;
 
-        public FavoriteViewComponent(IDetailsService detailsService, ILogger<FavoriteViewComponent> logger)
+        public FavoriteViewComponent(IProductService productService, ILogger<FavoriteViewComponent> logger)
         {
-            this.detailsService = detailsService;
+            this.productService = productService;
             this.logger = logger;
         }
 
@@ -25,11 +25,11 @@
             };
             try
             {
-                var isFavorite = await this.detailsService.IsProductInSessionFavorites(GetFavorites(), productId);
+                var isFavorite = await this.productService.IsProductInSessionFavorites(GetFavorites(), productId);
 
                 if (User?.Identity?.IsAuthenticated ?? false)
                 {
-                    isFavorite = await this.detailsService.IsProductInDbFavorites(HttpContext.User.GetUserId(), productId);
+                    isFavorite = await this.productService.IsProductInDbFavorites(HttpContext.User.GetUserId(), productId);
                 }
 
                 model.IsFavorite = isFavorite;

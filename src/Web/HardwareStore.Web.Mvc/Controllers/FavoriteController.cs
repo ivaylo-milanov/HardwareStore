@@ -1,4 +1,4 @@
-﻿namespace HardwareStore.Controllers
+namespace HardwareStore.Web.Mvc.Controllers
 {
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Favorite;

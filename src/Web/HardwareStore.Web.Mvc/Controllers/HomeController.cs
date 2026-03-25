@@ -1,12 +1,9 @@
-﻿namespace HardwareStore.Web.Mvc.Controllers
+namespace HardwareStore.Web.Mvc.Controllers
 {
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels;
     using HardwareStore.Core.ViewModels.Home;
-    using HardwareStore.Infrastructure.Models;
     using Microsoft.AspNetCore.Mvc;
-    using IOFile = System.IO.File;
-    using Newtonsoft.Json;
 
     public class HomeController : Controller
     {
@@ -23,15 +20,13 @@
         {
             try
             {
-                ViewBag.Model = await this.homeService.GetHomeModel();
+                return View(await this.homeService.GetHomeModel());
             }
             catch (Exception ex)
             {
                 this.logger.LogError(ex, ex.Message);
                 return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
-
-            return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

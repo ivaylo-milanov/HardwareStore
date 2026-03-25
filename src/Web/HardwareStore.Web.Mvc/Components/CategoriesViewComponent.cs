@@ -1,24 +1,29 @@
-using System;
+using System.Text.Json;
 using HardwareStore.Core.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace HardwareStore.Web.Mvc.Components;
 
 public class CategoriesViewComponent : ViewComponent
 {
-    private readonly IWebHostEnvironment _hostingEnvironment;
+    private static readonly JsonSerializerOptions JsonOptions = new()
+    {
+        PropertyNameCaseInsensitive = true,
+    };
+
+    private readonly IWebHostEnvironment hostingEnvironment;
 
     public CategoriesViewComponent(IWebHostEnvironment hostingEnvironment)
     {
-        _hostingEnvironment = hostingEnvironment;
+        this.hostingEnvironment = hostingEnvironment;
     }
 
     public IViewComponentResult Invoke()
     {
-        var path = Path.Combine(_hostingEnvironment.WebRootPath, "data", "categories-nav.json");
-        var json = System.IO.File.ReadAllText(path);
-        var categories = JsonConvert.DeserializeObject<CategoryModel>(json);
+        var path = Path.Combine(this.hostingEnvironment.WebRootPath, "data", "categories-nav.json");
+        var json = File.ReadAllText(path);
+        var categories = JsonSerializer.Deserialize<CategoriesNavModel>(json, JsonOptions)
+            ?? throw new InvalidOperationException("Invalid categories navigation JSON.");
 
         return View(categories);
     }

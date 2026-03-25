@@ -1,8 +1,7 @@
-namespace HardwareStore.Controllers
+namespace HardwareStore.Web.Mvc.Controllers
 {
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Product;
-    using HardwareStore.Core.ViewModels.Search;
     using Microsoft.AspNetCore.Mvc;
 
     public class SearchController : Controller
@@ -19,10 +18,10 @@ namespace HardwareStore.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(string keyword)
         {
-            ProductsViewModel<SearchViewModel> model;
+            ProductsViewModel<CatalogProductViewModel> model;
             try
             {
-                model = await this.productService.GetModel<SearchViewModel>(keyword);
+                model = await this.productService.GetSearchCatalogAsync(keyword ?? string.Empty).ConfigureAwait(false);
             }
             catch (ArgumentException ex)
             {
@@ -30,22 +29,29 @@ namespace HardwareStore.Controllers
                 return RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
-            ViewBag.SearchKeyword = keyword ?? string.Empty;
-            return View(model);
+            var page = new CatalogPageViewModel
+            {
+                PageTitle = "Search",
+                SearchKeyword = keyword ?? string.Empty,
+                Catalog = model,
+            };
+            return View(page);
         }
 
         [HttpPost]
-        public async Task<IActionResult> FilterSearchedProducts([FromBody] SearchFilterOptions filter, string keyword)
+        public async Task<IActionResult> FilterSearchedProducts([FromBody] System.Text.Json.JsonElement body, string keyword)
         {
             try
             {
-                var filtered = await this.productService.FilterSearchProductsAsync(keyword ?? string.Empty, filter).ConfigureAwait(false);
+                var filtered = await this.productService
+                    .FilterSearchCatalogAsync(keyword ?? string.Empty, body.GetRawText())
+                    .ConfigureAwait(false);
                 return PartialView("_ProductsPartialView", filtered);
             }
             catch (Exception ex)
             {
                 this.logger.LogError(ex, "Search filter failed");
-                return PartialView("_ProductsPartialView", Enumerable.Empty<SearchViewModel>());
+                return PartialView("_ProductsPartialView", Enumerable.Empty<CatalogProductViewModel>());
             }
         }
     }

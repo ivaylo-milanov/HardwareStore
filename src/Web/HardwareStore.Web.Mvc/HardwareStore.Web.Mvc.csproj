@@ -32,7 +32,6 @@
     <_ContentIncludedByDefault Remove="Views\Favorite\Index.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Home\Error.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Home\Index.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Mouses\Index.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Orders\Index.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Order\Index.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Order\Success.cshtml" />
@@ -64,10 +63,6 @@
 
   <ItemGroup>
     <UpToDateCheckInput Remove="Views\Home\Index.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Views\Mouses\Index.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
