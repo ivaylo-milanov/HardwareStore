@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>aspnet-HardwareStore.Web.Api-8c2e9f1a-4b3d-4e5f-9a0b-1c2d3e4f5a6b</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.11" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.11" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../HardwareStore.Common/HardwareStore.Common.csproj" />
+    <ProjectReference Include="../../Core/HardwareStore.Core.ViewModels/HardwareStore.Core.ViewModels.csproj" />
+    <ProjectReference Include="../../Core/HardwareStore.Core/HardwareStore.Core.csproj" />
+    <ProjectReference Include="../../Infrastructure/HardwareStore.Infrastructure/HardwareStore.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
