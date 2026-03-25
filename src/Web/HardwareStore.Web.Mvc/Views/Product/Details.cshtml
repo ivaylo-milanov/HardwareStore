@@ -1,49 +1,56 @@
 @model ProductDetailsModel
 
-<div class="details-container">
-    <div class="image">
-        <img class="product-image" src="" alt=""/>
-    </div>
-    <div>
-        <h1>@Model.Name</h1>
-        <div class="product-reference-number">
-            Ref. Number: <strong>@Model.ReferenceNumber</strong>
+<div class="row g-4 g-lg-5">
+    <div class="col-12 col-md-5 col-lg-4 text-center text-md-start">
+        <div class="ratio ratio-1x1 bg-light rounded-3 border d-flex align-items-center justify-content-center">
+            <img class="product-image img-fluid p-3" src="" alt="" />
         </div>
-        <div>
-            <div>
-                <div>$@Model.Price.ToString("F2")</div>
-            </div>
+    </div>
+    <div class="col-12 col-md-7 col-lg-8">
+        <h1 class="h2 fw-semibold mb-2">@Model.Name</h1>
+        <p class="text-muted mb-3">Ref. <span class="font-monospace">@Model.ReferenceNumber</span></p>
+        <p class="h4 text-success mb-4">$@Model.Price.ToString("F2")</p>
+
+        <div class="d-flex flex-wrap align-items-center gap-3 mb-4">
             @await Html.PartialAsync("_ProductFavoritePartial", new DetailsFavoriteModel { ProductId = Model.Id, IsFavorite = Model.IsFavorite })
-            <span>
-                <form asp-action="AddToShoppingCart" asp-controller="Cart" method="post">
-                    <input type="hidden" name="productId" value="@Model.Id" />
-                    <input type="text" name="quantity" class="quantity-input" value="1" />
-                    <button type="submit" class="buy-button">Buy</button>
-                </form>
-            </span>
         </div>
-        <div>Specifications</div>
-        <table class="specifications-table">
-            <tbody>
-                <tr>
-                    <td class="table-cell">Warranty</td>
-                    <td class="table-cell">@Model.Warranty</td>
-                </tr>
-                @foreach (var characteristic in Model.Attributes)
-                {
+
+        <form asp-action="AddToShoppingCart" asp-controller="Cart" method="post" class="row g-2 align-items-end mb-5">
+            <input type="hidden" name="productId" value="@Model.Id" />
+            <div class="col-auto">
+                <label for="qty" class="form-label small text-muted mb-0">Qty</label>
+                <input type="number" id="qty" name="quantity" class="form-control" style="width: 5rem;" value="1" min="1" />
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-success px-4">Add to cart</button>
+            </div>
+        </form>
+
+        <h2 class="h5 fw-semibold mb-3">Specifications</h2>
+        <div class="table-responsive rounded border">
+            <table class="table table-sm table-striped mb-0">
+                <tbody>
                     <tr>
-                        <td class="table-cell">@characteristic.Name</td>
-                        <td class="table-cell">@characteristic.Value</td>
+                        <th class="text-muted w-25" scope="row">Warranty</th>
+                        <td>@Model.Warranty</td>
                     </tr>
-                }
-            </tbody>
-        </table>
+                    @foreach (var characteristic in Model.Attributes)
+                    {
+                        <tr>
+                            <th class="text-muted" scope="row">@characteristic.Name</th>
+                            <td>@characteristic.Value</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
-    <div class="product-description">
-        <p>@Model.Description</p>
+    <div class="col-12">
+        <div class="card border-0 bg-light">
+            <div class="card-body">
+                <h2 class="h5 card-title">Description</h2>
+                <p class="card-text text-muted mb-0">@Model.Description</p>
+            </div>
+        </div>
     </div>
 </div>
-
-@section Scripts {
-    <script type="module" src="~/js/details.js"></script>
-}

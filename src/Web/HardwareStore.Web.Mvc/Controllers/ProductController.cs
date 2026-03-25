@@ -4,6 +4,7 @@ namespace HardwareStore.Web.Mvc.Controllers
     using HardwareStore.Core.ViewModels.Details;
     using HardwareStore.Core.ViewModels.Product;
     using HardwareStore.Extensions;
+    using HardwareStore.Web.Mvc.Helpers;
     using Microsoft.AspNetCore.Mvc;
 
     public class ProductController : Controller
@@ -33,7 +34,7 @@ namespace HardwareStore.Web.Mvc.Controllers
                     PageTitle = title,
                     CategoryKey = category,
                     Catalog = catalog,
-                    FilterPostUrl = this.Url.Action("Filter", "Product", new { category })!,
+                    SelectedOrder = 1,
                 };
                 return this.View("Catalog", page);
             }
@@ -45,25 +46,47 @@ namespace HardwareStore.Web.Mvc.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Filter([FromBody] System.Text.Json.JsonElement body, string category)
+        public async Task<IActionResult> Filter(string category)
         {
             if (!await this.productService.CategoryExistsAsync(category).ConfigureAwait(false))
             {
                 this.logger.LogWarning("Unknown category: {Category}", category);
-                return this.EmptyProductsPartial();
+                return this.RedirectToAction("Error", "Home", new { message = "Invalid category." });
+            }
+
+            var filterJson = CatalogFilterFormHelper.BuildFilterJson(this.Request.Form);
+            var selected = CatalogFilterFormHelper.ParseSelectedFilters(this.Request.Form);
+            var orderStr = this.Request.Form["Order"].FirstOrDefault();
+            var selectedOrder = 1;
+            if (!string.IsNullOrEmpty(orderStr) && int.TryParse(orderStr, out var o))
+            {
+                selectedOrder = o;
             }
 
             try
             {
+                var baseCatalog = await this.productService.GetCategoryCatalogAsync(category).ConfigureAwait(false);
                 var filtered = await this.productService
-                    .FilterCategoryCatalogAsync(category, body.GetRawText())
+                    .FilterCategoryCatalogAsync(category, filterJson)
                     .ConfigureAwait(false);
-                return PartialView("_ProductsPartialView", filtered);
+                var page = new CatalogPageViewModel
+                {
+                    PageTitle = this.Request.Form["pageTitle"].FirstOrDefault() ?? category,
+                    CategoryKey = category,
+                    Catalog = new ProductsViewModel<CatalogProductViewModel>
+                    {
+                        Filters = baseCatalog.Filters,
+                        Products = filtered.ToList(),
+                    },
+                    SelectedOrder = selectedOrder,
+                    SelectedFilterValues = selected,
+                };
+                return this.View("Catalog", page);
             }
             catch (Exception ex)
             {
                 this.logger.LogError(ex, "Filter failed for category {Category}", category);
-                return this.EmptyProductsPartial();
+                return this.RedirectToAction("Error", "Home", new { message = "Could not apply filters." });
             }
         }
 
@@ -87,18 +110,15 @@ namespace HardwareStore.Web.Mvc.Controllers
 
         private async Task<bool> ResolveFavoriteStateAsync(int productId)
         {
+            if (!(this.User?.Identity?.IsAuthenticated ?? false))
+            {
+                return false;
+            }
+
             try
             {
-                var sessionFavorites = this.HttpContext.Session.Get<ICollection<int>>("Favorite") ?? new List<int>();
-                if (this.User?.Identity?.IsAuthenticated ?? false)
-                {
-                    return await this.productService
-                        .IsProductInDbFavorites(this.User.GetUserId(), productId)
-                        .ConfigureAwait(false);
-                }
-
                 return await this.productService
-                    .IsProductInSessionFavorites(sessionFavorites, productId)
+                    .IsProductInDbFavorites(this.User.GetUserId(), productId)
                     .ConfigureAwait(false);
             }
             catch (ArgumentNullException ex)
@@ -108,7 +128,5 @@ namespace HardwareStore.Web.Mvc.Controllers
             }
         }
 
-        private PartialViewResult EmptyProductsPartial() =>
-            PartialView("_ProductsPartialView", Enumerable.Empty<CatalogProductViewModel>());
     }
 }

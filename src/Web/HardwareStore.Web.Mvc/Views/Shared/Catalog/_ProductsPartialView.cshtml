@@ -1,12 +1,10 @@
 @model IEnumerable<ProductViewModel>
 
-<div class="products-container">
-    @if (Model.Any())
-    {
-        <partial name="_ProductCardsRow" model="Model" />
-    }
-    else
-    {
-        <partial name="_CatalogEmptyProductsMessage" />
-    }
-</div>
+@if (Model.Any())
+{
+    <partial name="_ProductCardsRow" model="Model" />
+}
+else
+{
+    <partial name="_CatalogEmptyProductsMessage" />
+}

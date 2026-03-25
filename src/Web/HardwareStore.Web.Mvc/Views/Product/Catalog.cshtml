@@ -1,15 +1,52 @@
 @model CatalogPageViewModel
 
-<div class="page-title">
-    <h1>@Model.PageTitle</h1>
-</div>
-<div class="page-body">
-    <form class="page-layout" method="get" data-url="@Model.FilterPostUrl">
-        <partial name="_FilterPartialView" model="@Model.Catalog.Filters"/>
-        <partial name="_ProductsContentPartialView" model="@Model.Catalog.Products as IEnumerable<ProductViewModel>"/>
-    </form>
+<div class="text-center mb-4">
+    <h1 class="h3 fw-semibold">@Model.PageTitle</h1>
 </div>
 
-@section Scripts {
-    <script type="module" src="~/js/filter.js"></script>
+@if (Model.SearchKeyword != null)
+{
+    <form asp-controller="Search" asp-action="FilterSearch" method="post">
+        <input type="hidden" name="keyword" value="@Model.SearchKeyword" />
+        <input type="hidden" name="pageTitle" value="@Model.PageTitle" />
+        <div class="row g-4">
+            <div class="col-12 col-lg-3">
+                <div class="card border-0 shadow-sm sticky-lg-top" style="top: 1rem;">
+                    <div class="card-header bg-success text-white py-3">
+                        <span class="fw-semibold">Filters</span>
+                    </div>
+                    <div class="card-body">
+                        <partial name="_FilterPartialView" model="@(new FilterPartialViewModel { Filters = Model.Catalog.Filters, SelectedValues = Model.SelectedFilterValues })" />
+                        <button type="submit" class="btn btn-success w-100 mt-3">Apply filters</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-9">
+                <partial name="_ProductsContentPartialView" model="Model" />
+            </div>
+        </div>
+    </form>
+}
+else
+{
+    <form asp-controller="Product" asp-action="Filter" method="post">
+        <input type="hidden" name="category" value="@Model.CategoryKey" />
+        <input type="hidden" name="pageTitle" value="@Model.PageTitle" />
+        <div class="row g-4">
+            <div class="col-12 col-lg-3">
+                <div class="card border-0 shadow-sm sticky-lg-top" style="top: 1rem;">
+                    <div class="card-header bg-success text-white py-3">
+                        <span class="fw-semibold">Filters</span>
+                    </div>
+                    <div class="card-body">
+                        <partial name="_FilterPartialView" model="@(new FilterPartialViewModel { Filters = Model.Catalog.Filters, SelectedValues = Model.SelectedFilterValues })" />
+                        <button type="submit" class="btn btn-success w-100 mt-3">Apply filters</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-9">
+                <partial name="_ProductsContentPartialView" model="Model" />
+            </div>
+        </div>
+    </form>
 }

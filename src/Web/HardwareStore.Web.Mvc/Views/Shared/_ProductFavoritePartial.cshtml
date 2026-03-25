@@ -1,9 +1,30 @@
 @model DetailsFavoriteModel
 
-<div class="like-container" data-is-favorite="@Model.IsFavorite" data-product-id="@Model.ProductId">
-    <a class="button button-like">
-        <i class="fa fa-heart"></i>
-    </a>
-    <span class="like-text"></span>
-    <span class="like-error-message">An error occurred. Please try again.</span>
+@{
+    var returnUrl = Url.Action("Details", "Product", new { productId = Model.ProductId })!;
+}
+
+<div class="d-flex align-items-center gap-2 flex-wrap">
+    @if (Model.IsFavorite)
+    {
+        <form asp-action="RemoveFromFavorite" asp-controller="Favorite" method="post" class="d-inline">
+            <input type="hidden" name="productId" value="@Model.ProductId" />
+            <input type="hidden" name="returnUrl" value="@returnUrl" />
+            <button type="submit" class="btn btn-danger rounded-circle p-2 lh-1" title="Remove from favorites" aria-label="Remove from favorites">
+                <i class="fa fa-heart" aria-hidden="true"></i>
+            </button>
+        </form>
+        <span class="small text-success">In your favorites — tap heart to remove</span>
+    }
+    else
+    {
+        <form asp-action="AddToFavorite" asp-controller="Favorite" method="post" class="d-inline">
+            <input type="hidden" name="productId" value="@Model.ProductId" />
+            <input type="hidden" name="returnUrl" value="@returnUrl" />
+            <button type="submit" class="btn btn-outline-success rounded-circle p-2 lh-1" title="Add to favorites" aria-label="Add to favorites">
+                <i class="fa fa-heart" aria-hidden="true"></i>
+            </button>
+        </form>
+        <span class="small text-muted">Add to favorites</span>
+    }
 </div>

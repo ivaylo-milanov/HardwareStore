@@ -11,13 +11,15 @@
 
 @foreach (var group in new (string Title, NavCategoryItem[] Items)[] { ("Peripherals", nav.Peripherals), ("Hardware", nav.Hardware) })
 {
-    <div class="has-submenu">
-        <a>@group.Title</a>
-        <div class="submenu">
+    <li class="dropend">
+        <button type="button" class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">@group.Title</button>
+        <ul class="dropdown-menu">
             @foreach (var category in group.Items)
             {
-                <a href="/Product/Index?category=@category.Name&title=@category.Title">@category.Title</a>
+                <li>
+                    <a class="dropdown-item" href="/Product/Index?category=@category.Name&title=@category.Title">@category.Title</a>
+                </li>
             }
-        </div>
-    </div>
+        </ul>
+    </li>
 }

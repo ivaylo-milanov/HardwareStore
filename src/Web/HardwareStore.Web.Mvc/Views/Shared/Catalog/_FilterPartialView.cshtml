@@ -1,27 +1,35 @@
-@model IEnumerable<FilterCategoryModel>
+@model FilterPartialViewModel
 
 <div class="filter-categories">
-    @foreach (var filter in Model)
+    @{ var filterIndex = 0; }
+    @foreach (var filter in Model.Filters)
     {
-        <div class="filter-category">
-            <div class="filter-header">
-                <label>@filter.Title:</label>
-            </div>
-            <div class="filter-values">
-                <ul>
-                    @if (!filter.Values.Contains(""))
-                    {
-                        @foreach (var value in filter.Values)
+        @if (!filter.Values.Contains(""))
+        {
+            Model.SelectedValues.TryGetValue(filter.Name, out var selected);
+            var currentFilter = filterIndex;
+            <fieldset class="mb-3 pb-3 border-bottom">
+                <legend class="form-label fw-semibold small text-uppercase text-muted mb-2">@filter.Title</legend>
+                @{ var valueIndex = 0; }
+                @foreach (var value in filter.Values)
+                {
+                    var isChecked = selected != null && selected.Contains(value);
+                    var id = $"f_{currentFilter}_{valueIndex}";
+                    <div class="form-check">
+                        @if (isChecked)
                         {
-                            <li>
-                                <label>
-                                    <input type="checkbox" name="@filter.Name" value="@value" /> @value
-                                </label>
-                            </li>
+                            <input class="form-check-input" type="checkbox" name="@filter.Name" value="@value" id="@id" checked="checked" />
                         }
-                    }
-                </ul>
-            </div>
-        </div>
+                        else
+                        {
+                            <input class="form-check-input" type="checkbox" name="@filter.Name" value="@value" id="@id" />
+                        }
+                        <label class="form-check-label" for="@id">@value</label>
+                    </div>
+                    valueIndex++;
+                }
+            </fieldset>
+            filterIndex++;
+        }
     }
 </div>

@@ -12,88 +12,87 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/HardwareStore.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <link rel="stylesheet" href="~/css/index.css" />
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">HardwareStore</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand fw-semibold" asp-area="" asp-controller="Home" asp-action="Index">HardwareStore</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <div class="dropdown">
-                        <button class="dropbtn">Products</button>
-
-                        <div class="dropdown-content">
-                            @await Html.PartialAsync("_CategoriesNav")
-                        </div>
-                    </div>
-
-                    <div class="search-form-container .justify-content-center">
-                        <form method="post" asp-action="Index" asp-controller="Search">
-                            <div class="search-input-container">
-                                <input type="search" name="keyword" placeholder="Search..." class="search-input" />
-                                <input type="submit" value="Search" class="search-submit" />
-                            </div>
-                        </form>
-                    </div>
-
-                    <div class="login-container">
-                        <div class="profile-menu-container">
-                            @if (SignInManager.IsSignedIn(User))
-                            {
-                                <div class="profile-button">
-                                    <a asp-action="Index" asp-controller="Profile">Profile</a>
+                <div class="collapse navbar-collapse" id="mainNavbar">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-items-lg-center gap-lg-1">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="productsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Products</a>
+                            <ul class="dropdown-menu" aria-labelledby="productsDropdown">
+                                @await Html.PartialAsync("_CategoriesNav")
+                            </ul>
+                        </li>
+                        <li class="nav-item w-100 w-lg-auto my-2 my-lg-0">
+                            <form class="d-flex" method="get" asp-action="Index" asp-controller="Search" role="search">
+                                <div class="input-group input-group-sm">
+                                    <input type="search" name="keyword" class="form-control" placeholder="Search…" aria-label="Search" />
+                                    <button class="btn btn-outline-success" type="submit">Search</button>
                                 </div>
-                                <div class="profile-menu">
-                                    <a asp-action="Index" asp-controller="Profile">Profile</a>
-                                    <a asp-action="Index" asp-controller="Orders">Orders</a>
-                                    <a asp-action="Index" asp-controller="Favorite">Favorite</a>
-                                    <a asp-action="Logout" asp-controller="User">Logout</a>
-                                </div>
-                            }
-                            else
-                            {
-                                <div class="profile-button">
-                                    <a asp-action="Login" asp-controller="User">Login</a>
-                                </div>
-                                <div class="login-menu">
-                                    @await Html.PartialAsync("_LoginFormPartial", new LoginFormModel())
-                                </div>
-                            }
-                        </div>
-                        <div class="button-container">
-                            <a class="card-button" href="/Cart/Index">
-                                <i class="fas fa-shopping-cart"></i>
+                            </form>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center gap-2">
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="accountDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Account</a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="accountDropdown">
+                                    <li><a class="dropdown-item" asp-action="Index" asp-controller="Profile">Profile</a></li>
+                                    <li><a class="dropdown-item" asp-action="Index" asp-controller="Orders">Orders</a></li>
+                                    <li><a class="dropdown-item" asp-action="Index" asp-controller="Favorite">Favorites</a></li>
+                                    <li><hr class="dropdown-divider" /></li>
+                                    <li><a class="dropdown-item" asp-action="Logout" asp-controller="User">Logout</a></li>
+                                </ul>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="loginDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Login</a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="loginDropdown">
+                                    <li>
+                                        @await Html.PartialAsync("_LoginFormPartial", new LoginFormModel())
+                                    </li>
+                                </ul>
+                            </li>
+                        }
+                        <li class="nav-item">
+                            <a class="btn btn-outline-success position-relative" asp-action="Index" asp-controller="Cart" title="Shopping cart" aria-label="Shopping cart">
+                                <i class="fas fa-shopping-cart" aria-hidden="true"></i>
                             </a>
-                        </div>
-                    </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+    <div class="container flex-grow-1 d-flex flex-column">
+        <main role="main" class="pb-4 flex-grow-1">
             @RenderBody()
         </main>
     </div>
 
-    <footer>
-        <div class="footer-content">
-            <p>Copyright &copy; 2023 HardwareStore. All rights reserved.</p>
-            <ul class="footer-links">
-                <li><a href="#">Terms of Use</a></li>
-                <li><a href="#">Privacy Policy</a></li>
-                <li><a href="#">Contact Us</a></li>
-            </ul>
+    <footer class="mt-auto bg-light border-top py-4">
+        <div class="container">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3 small text-muted">
+                <p class="mb-0">Copyright &copy; 2023 HardwareStore. All rights reserved.</p>
+                <ul class="list-inline mb-0">
+                    <li class="list-inline-item"><a class="link-secondary text-decoration-none fw-semibold" href="#">Terms of Use</a></li>
+                    <li class="list-inline-item"><a class="link-secondary text-decoration-none fw-semibold" href="#">Privacy Policy</a></li>
+                    <li class="list-inline-item"><a class="link-secondary text-decoration-none fw-semibold" href="#">Contact Us</a></li>
+                </ul>
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/card.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -1,9 +1,7 @@
 namespace HardwareStore.Web.Mvc.Controllers
 {
     using HardwareStore.Core.Services.Contracts;
-    using HardwareStore.Core.ViewModels.ShoppingCart;
     using HardwareStore.Core.ViewModels.User;
-    using HardwareStore.Extensions;
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
@@ -18,17 +16,22 @@ namespace HardwareStore.Web.Mvc.Controllers
             this.logger = logger;
         }
 
-        private async Task<IActionResult> RedirectHomeAfterMergingSessionAsync()
+        [HttpPost]
+        public async Task<IActionResult> EasyLogin(LoginFormModel model)
         {
-            var userId = this.User.GetUserId();
-            var favorites = this.HttpContext.Session.Get<ICollection<int>>("Favorite") ?? new List<int>();
-            var cart = this.HttpContext.Session.Get<ICollection<ShoppingCartExportModel>>("Shopping Cart") ?? new List<ShoppingCartExportModel>();
+            if (!this.ModelState.IsValid)
+            {
+                return this.RedirectToAction(nameof(this.Login));
+            }
 
             try
             {
-                await this.authenticationService.MergeSessionCartAndFavoritesAsync(userId, favorites, cart);
-                this.HttpContext.Session.Remove("Shopping Cart");
-                this.HttpContext.Session.Remove("Favorite");
+                var result = await this.authenticationService.LoginAsync(model);
+
+                if (result.Succeeded)
+                {
+                    return this.RedirectToAction("Index", "Home");
+                }
             }
             catch (ArgumentNullException ex)
             {
@@ -36,123 +39,93 @@ namespace HardwareStore.Web.Mvc.Controllers
                 return this.RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
-            return this.RedirectToAction("Index", "Home");
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> EasyLogin(LoginFormModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return RedirectToAction(nameof(Login));
-            }
-
-            try
-            {
-                var result = await authenticationService.LoginAsync(model);
-
-                if (result.Succeeded)
-                {
-                    return await this.RedirectHomeAfterMergingSessionAsync();
-                }
-            }
-            catch (ArgumentNullException ex)
-            {
-                this.logger.LogError(ex, ex.Message);
-                return RedirectToAction("Error", "Home", new { message = ex.Message });
-            }
-
-            return RedirectToAction(nameof(Login));
+            return this.RedirectToAction(nameof(this.Login));
         }
 
         public IActionResult Login()
         {
-            if (User?.Identity?.IsAuthenticated ?? false)
+            if (this.User?.Identity?.IsAuthenticated ?? false)
             {
-                return RedirectToAction("Index", "Home");
+                return this.RedirectToAction("Index", "Home");
             }
 
-            LoginFormModel model = new LoginFormModel();
-
-            return View(model);
+            return this.View(new LoginFormModel());
         }
 
         [HttpPost]
         public async Task<IActionResult> Login(LoginFormModel model)
         {
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                return View(model);
+                return this.View(model);
             }
 
             try
             {
-                var result = await authenticationService.LoginAsync(model);
+                var result = await this.authenticationService.LoginAsync(model);
 
                 if (result.Succeeded)
                 {
-                    return await this.RedirectHomeAfterMergingSessionAsync();
+                    return this.RedirectToAction("Index", "Home");
                 }
             }
             catch (ArgumentNullException ex)
             {
-                ModelState.AddModelError("", "Invalid Login!");
+                this.ModelState.AddModelError("", "Invalid Login!");
                 this.logger.LogError(ex, ex.Message);
-                return RedirectToAction("Error", "Home", new { message = ex.Message });
+                return this.RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
-            return View(model);
+            return this.View(model);
         }
 
         public IActionResult Register()
         {
-            if (User?.Identity?.IsAuthenticated ?? false)
+            if (this.User?.Identity?.IsAuthenticated ?? false)
             {
-                return RedirectToAction("Index", "Home");
+                return this.RedirectToAction("Index", "Home");
             }
 
-            RegisterFormModel model = new RegisterFormModel();
-
-            return View(model);
+            return this.View(new RegisterFormModel());
         }
 
         [HttpPost]
         public async Task<IActionResult> Register(RegisterFormModel model)
         {
-            if (!ModelState.IsValid)
+            if (!this.ModelState.IsValid)
             {
-                return View(model);
+                return this.View(model);
             }
 
             IdentityResult result;
             try
             {
-                result = await authenticationService.RegisterAsync(model);
+                result = await this.authenticationService.RegisterAsync(model);
             }
             catch (ArgumentNullException ex)
             {
                 this.logger.LogError(ex, ex.Message);
-                return RedirectToAction("Error", "Home", new { message = ex.Message });
+                return this.RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
             if (result.Succeeded)
             {
-                return await this.RedirectHomeAfterMergingSessionAsync();
+                return this.RedirectToAction("Index", "Home");
             }
 
             foreach (var item in result.Errors)
             {
-                ModelState.AddModelError("", item.Description);
+                this.ModelState.AddModelError("", item.Description);
             }
 
-            return View(model);
+            return this.View(model);
         }
 
         public async Task<IActionResult> Logout()
         {
-            await authenticationService.LogoutAsync();
+            await this.authenticationService.LogoutAsync();
 
-            return RedirectToAction("Index", "Home");
+            return this.RedirectToAction("Index", "Home");
         }
     }
 }

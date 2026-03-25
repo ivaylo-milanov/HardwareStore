@@ -2,17 +2,16 @@ namespace HardwareStore.Web.Mvc.Controllers
 {
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels;
-    using HardwareStore.Core.ViewModels.Home;
     using Microsoft.AspNetCore.Mvc;
 
     public class HomeController : Controller
     {
-        private readonly IHomeService homeService;
+        private readonly IProductService productService;
         private readonly ILogger<HomeController> logger;
 
-        public HomeController(IHomeService homeService, ILogger<HomeController> logger)
+        public HomeController(IProductService productService, ILogger<HomeController> logger)
         {
-            this.homeService = homeService;
+            this.productService = productService;
             this.logger = logger;
         }
 
@@ -20,7 +19,7 @@ namespace HardwareStore.Web.Mvc.Controllers
         {
             try
             {
-                return View(await this.homeService.GetHomeModel());
+                return View(await this.productService.GetHomeViewModelAsync());
             }
             catch (Exception ex)
             {

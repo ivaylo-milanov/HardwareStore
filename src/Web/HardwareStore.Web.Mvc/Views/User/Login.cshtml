@@ -1,27 +1,26 @@
-﻿@model LoginFormModel
+@model LoginFormModel
 
-<div class="login-form-container">
-    <div>
-        <section>
-            <h1>Log in</h1>
-            <form method="post" asp-action="Login" asp-controller="User" class="login-form">
-                <hr />
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input asp-for="@Model.Email" id="email" class="form-control" aria-required="true" />
-                    <span asp-validation-for="@Model.Email" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input asp-for="@Model.Password" type="password" id="password" class="form-control" aria-required="true" />
-                    <span asp-validation-for="@Model.Password" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <button id="login-submit" type="submit" class="btn btn-primary">Log in</button>
-                </div>
-            </form>
-        </section>
+<div class="row justify-content-center py-4">
+    <div class="col-12 col-sm-10 col-md-8 col-lg-5">
+        <div class="card border-0 shadow-sm">
+            <div class="card-body p-4 p-md-5">
+                <h1 class="h3 fw-semibold text-center mb-4">Log in</h1>
+                <form method="post" asp-action="Login" asp-controller="User">
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input asp-for="@Model.Email" id="email" class="form-control" autocomplete="username" aria-required="true" />
+                        <span asp-validation-for="@Model.Email" class="text-danger small"></span>
+                    </div>
+                    <div class="mb-4">
+                        <label for="password" class="form-label">Password</label>
+                        <input asp-for="@Model.Password" type="password" id="password" class="form-control" autocomplete="current-password" aria-required="true" />
+                        <span asp-validation-for="@Model.Password" class="text-danger small"></span>
+                    </div>
+                    <button id="login-submit" type="submit" class="btn btn-success w-100 btn-lg">Log in</button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 

@@ -5,15 +5,13 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddControllersWithViews()
-    .AddSessionStateTempDataProvider()
+    .AddCookieTempDataProvider()
     .AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
-builder.Services.AddDistributedMemoryCache();
 
 builder.Services.ConfigurateDbContext(builder.Configuration);
 builder.Services.ConfigurateIdentity();
 builder.Services.AddServices();
 builder.Services.AddSearchPaths();
-builder.Services.AddCustomSession();
 
 var app = builder.Build();
 
@@ -38,13 +36,9 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseSession();
-
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
-
-await app.MigrateDatabaseAsync();
 
 await app.RunAsync();

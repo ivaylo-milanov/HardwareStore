@@ -2,6 +2,7 @@ namespace HardwareStore.Web.Mvc.Controllers
 {
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.Product;
+    using HardwareStore.Web.Mvc.Helpers;
     using Microsoft.AspNetCore.Mvc;
 
     public class SearchController : Controller
@@ -15,7 +16,7 @@ namespace HardwareStore.Web.Mvc.Controllers
             this.logger = logger;
         }
 
-        [HttpPost]
+        [AcceptVerbs("GET", "POST")]
         public async Task<IActionResult> Index(string keyword)
         {
             ProductsViewModel<CatalogProductViewModel> model;
@@ -26,7 +27,7 @@ namespace HardwareStore.Web.Mvc.Controllers
             catch (ArgumentException ex)
             {
                 this.logger.LogError(ex, ex.Message);
-                return RedirectToAction("Error", "Home", new { message = ex.Message });
+                return this.RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
             var kw = keyword ?? string.Empty;
@@ -35,25 +36,48 @@ namespace HardwareStore.Web.Mvc.Controllers
                 PageTitle = "Search",
                 SearchKeyword = kw,
                 Catalog = model,
-                FilterPostUrl = this.Url.Action("FilterSearchedProducts", "Search", new { keyword = kw })!,
+                SelectedOrder = 1,
             };
             return this.View("~/Views/Product/Catalog.cshtml", page);
         }
 
         [HttpPost]
-        public async Task<IActionResult> FilterSearchedProducts([FromBody] System.Text.Json.JsonElement body, string keyword)
+        public async Task<IActionResult> FilterSearch()
         {
+            var keyword = this.Request.Form["keyword"].FirstOrDefault() ?? string.Empty;
+            var filterJson = CatalogFilterFormHelper.BuildFilterJson(this.Request.Form);
+            var selected = CatalogFilterFormHelper.ParseSelectedFilters(this.Request.Form);
+            var orderStr = this.Request.Form["Order"].FirstOrDefault();
+            var selectedOrder = 1;
+            if (!string.IsNullOrEmpty(orderStr) && int.TryParse(orderStr, out var o))
+            {
+                selectedOrder = o;
+            }
+
             try
             {
+                var baseCatalog = await this.productService.GetSearchCatalogAsync(keyword).ConfigureAwait(false);
                 var filtered = await this.productService
-                    .FilterSearchCatalogAsync(keyword ?? string.Empty, body.GetRawText())
+                    .FilterSearchCatalogAsync(keyword, filterJson)
                     .ConfigureAwait(false);
-                return PartialView("_ProductsPartialView", filtered);
+                var page = new CatalogPageViewModel
+                {
+                    PageTitle = this.Request.Form["pageTitle"].FirstOrDefault() ?? "Search",
+                    SearchKeyword = keyword,
+                    Catalog = new ProductsViewModel<CatalogProductViewModel>
+                    {
+                        Filters = baseCatalog.Filters,
+                        Products = filtered.ToList(),
+                    },
+                    SelectedOrder = selectedOrder,
+                    SelectedFilterValues = selected,
+                };
+                return this.View("~/Views/Product/Catalog.cshtml", page);
             }
             catch (Exception ex)
             {
                 this.logger.LogError(ex, "Search filter failed");
-                return PartialView("_ProductsPartialView", Enumerable.Empty<CatalogProductViewModel>());
+                return this.RedirectToAction("Error", "Home", new { message = "Could not apply filters." });
             }
         }
     }

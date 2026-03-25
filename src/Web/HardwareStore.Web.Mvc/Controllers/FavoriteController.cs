@@ -1,12 +1,11 @@
 namespace HardwareStore.Web.Mvc.Controllers
 {
     using HardwareStore.Core.Services.Contracts;
-    using HardwareStore.Core.ViewModels.Favorite;
     using HardwareStore.Extensions;
     using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
+    [Authorize]
     public class FavoriteController : Controller
     {
         private readonly IFavoriteService favoriteService;
@@ -20,76 +19,58 @@ namespace HardwareStore.Web.Mvc.Controllers
 
         public async Task<IActionResult> Index()
         {
-            ICollection<FavoriteExportModel> favorites;
             try
             {
-                if (User?.Identity?.IsAuthenticated ?? false)
-                {
-                    favorites = await this.favoriteService.GetDatabaseFavoriteAsync(User.GetUserId());
-                }
-                else
-                {
-                    favorites = await this.favoriteService.GetSessionFavoriteAsync(GetFavorites());
-                }
+                var favorites = await this.favoriteService.GetDatabaseFavoriteAsync(this.User.GetUserId());
+                return this.View(favorites);
             }
             catch (ArgumentNullException ex)
             {
                 this.logger.LogError(ex, ex.Message);
-                return RedirectToAction("Error", "Home", new { message = ex.Message });
+                return this.RedirectToAction("Error", "Home", new { message = ex.Message });
             }
-
-            return View(favorites);
         }
 
-        public async Task<IActionResult> AddToFavorite([FromBody] int productId)
+        [HttpPost]
+        public async Task<IActionResult> AddToFavorite(int productId, string? returnUrl = null)
         {
             try
             {
-                if (User?.Identity?.IsAuthenticated ?? false)
-                {
-                    await this.favoriteService.AddToDatabaseFavoriteAsync(productId, User.GetUserId());
-                }
-                else
-                {
-                    var favorites = await this.favoriteService.AddToSessionFavoriteAsync(productId, GetFavorites());
-                    SetFavorites(favorites);
-                }
+                await this.favoriteService.AddToDatabaseFavoriteAsync(productId, this.User.GetUserId());
             }
             catch (ArgumentNullException ex)
             {
                 this.logger.LogError(ex, ex.Message);
-                return RedirectToAction("Error", "Home", new { message = ex.Message });
+                return this.RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
-            return RedirectToAction(nameof(Index));
+            if (!string.IsNullOrEmpty(returnUrl) && this.Url.IsLocalUrl(returnUrl))
+            {
+                return this.LocalRedirect(returnUrl);
+            }
+
+            return this.RedirectToAction(nameof(this.Index));
         }
 
-        public async Task<IActionResult> RemoveFromFavorite([FromBody] int productId)
+        [HttpPost]
+        public async Task<IActionResult> RemoveFromFavorite(int productId, string? returnUrl = null)
         {
             try
             {
-                if (User?.Identity?.IsAuthenticated ?? false)
-                {
-                    await this.favoriteService.RemoveFromDatabaseFavoriteAsync(productId, User.GetUserId());
-                }
-                else
-                {
-                    var favorites = await this.favoriteService.RemoveFromSessionFavoriteAsync(productId, GetFavorites());
-                    SetFavorites(favorites);
-                }
+                await this.favoriteService.RemoveFromDatabaseFavoriteAsync(productId, this.User.GetUserId());
             }
             catch (ArgumentNullException ex)
             {
                 this.logger.LogError(ex, ex.Message);
-                return RedirectToAction("Error", "Home", new { message = ex.Message });
+                return this.RedirectToAction("Error", "Home", new { message = ex.Message });
             }
-            return RedirectToAction(nameof(Index));
+
+            if (!string.IsNullOrEmpty(returnUrl) && this.Url.IsLocalUrl(returnUrl))
+            {
+                return this.LocalRedirect(returnUrl);
+            }
+
+            return this.RedirectToAction(nameof(this.Index));
         }
-
-        private void SetFavorites(ICollection<int> favorites)
-            => HttpContext.Session.Set("Favorite", favorites);
-
-        private ICollection<int> GetFavorites()
-            => HttpContext.Session.Get<ICollection<int>>("Favorite") ?? new List<int>();
     }
 }

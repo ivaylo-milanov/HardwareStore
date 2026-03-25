@@ -1,12 +1,7 @@
-﻿@model ICollection<FavoriteExportModel>
+@model ICollection<FavoriteExportModel>
 
-<div class="favorites-page">
-    <h2 class="favorite-title">Favorite Products</h2>
-    <div class="favorites-container">
-        <partial name="_FavoritePartialView" model="@Model"/>
-    </div>
+<div class="mb-4 text-center text-md-start">
+    <h2 class="h3 fw-semibold">Favorite products</h2>
+    <p class="text-muted mb-0">Items you saved for later</p>
 </div>
-
-@section Scripts {
-    <script type="module" src="~/js/favorite.js"></script>
-}
+<partial name="_FavoritePartialView" model="@Model" />

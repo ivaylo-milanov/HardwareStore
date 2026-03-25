@@ -1,10 +1,12 @@
-@model IEnumerable<ProductViewModel>
+@model CatalogPageViewModel
 
-<div class="content-container">
-    <div class="additional-filters">
-        <partial name="_OrderPartialView" />
+<div class="d-flex flex-column gap-4">
+    <div class="card border-0 shadow-sm">
+        <div class="card-body py-3 d-flex flex-column flex-sm-row align-items-sm-center gap-3">
+            <partial name="_OrderPartialView" model="Model.SelectedOrder" />
+        </div>
     </div>
     <div id="products">
-        <partial name="_ProductsPartialView" model="Model" />
+        <partial name="_ProductsPartialView" model="Model.Catalog.Products as IEnumerable<ProductViewModel>" />
     </div>
 </div>

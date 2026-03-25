@@ -3,9 +3,10 @@ namespace HardwareStore.Web.Mvc.Controllers
     using HardwareStore.Core.Services.Contracts;
     using HardwareStore.Core.ViewModels.ShoppingCart;
     using HardwareStore.Extensions;
-    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
+    [Authorize]
     public class CartController : Controller
     {
         private readonly IShoppingCartService shoppingCartService;
@@ -22,159 +23,122 @@ namespace HardwareStore.Web.Mvc.Controllers
             ShoppingCartViewModel shoppingCart;
             try
             {
-                if (User?.Identity?.IsAuthenticated ?? false)
-                {
-                    shoppingCart = await this.shoppingCartService.GetDatabaseShoppingCartAsync(User.GetUserId());
-                }
-                else
-                {
-                    shoppingCart = await this.shoppingCartService.GetSessionShoppingCartAsync(GetShoppingCart());
-                }
+                shoppingCart = await this.shoppingCartService.GetDatabaseShoppingCartAsync(this.User.GetUserId());
             }
             catch (ArgumentNullException ex)
             {
                 this.logger.LogError(ex, $"An error occured: {ex.Message}");
-                return RedirectToAction("Error", "Home");
+                return this.RedirectToAction("Error", "Home");
             }
 
-            if (TempData["ErrorMessage"] != null)
+            if (this.TempData["ErrorMessage"] != null)
             {
-                ModelState.AddModelError(string.Empty, TempData["ErrorMessage"]!.ToString()!);
+                this.ModelState.AddModelError(string.Empty, this.TempData["ErrorMessage"]!.ToString()!);
             }
 
             if (shoppingCart.TotalCartPrice == 0)
             {
-                ModelState.AddModelError(string.Empty, "To make an order, it is necessary that cart total amount is worth more than $8");
+                this.ModelState.AddModelError(string.Empty, "To make an order, it is necessary that cart total amount is worth more than $8");
             }
 
-            return View(shoppingCart);
+            return this.View(shoppingCart);
         }
 
         public async Task<IActionResult> AddToShoppingCart(int productId, int quantity)
         {
             try
             {
-                if (User?.Identity?.IsAuthenticated ?? false)
-                {
-                    await this.shoppingCartService.AddToDatabaseShoppingCartAsync(productId, quantity, User.GetUserId());
-                }
-                else
-                {
-                    var cart = await this.shoppingCartService.AddToSessionShoppingCartAsync(productId, quantity, GetShoppingCart());
-                    SetShoppingCart(cart);
-                }
+                await this.shoppingCartService.AddToDatabaseShoppingCartAsync(productId, quantity, this.User.GetUserId());
             }
             catch (ArgumentNullException ex)
             {
                 this.logger.LogError(ex, $"An error occured: {ex.Message}");
-                return RedirectToAction("Error", "Home");
+                return this.RedirectToAction("Error", "Home");
             }
             catch (InvalidOperationException ex)
             {
                 this.logger.LogError(ex, ex.Message);
-                TempData["ErrorMessage"] = ex.Message;
-                return RedirectToAction(nameof(Index));
+                this.TempData["ErrorMessage"] = ex.Message;
+                return this.RedirectToAction(nameof(this.Index));
             }
 
-            return RedirectToAction(nameof(Index));
+            return this.RedirectToAction(nameof(this.Index));
         }
 
-        public async Task<IActionResult> RemoveFromShoppingCart([FromBody] int productId)
+        [HttpPost]
+        public async Task<IActionResult> RemoveFromShoppingCart(int productId)
         {
             try
             {
-                if (User?.Identity?.IsAuthenticated ?? false)
-                {
-                    await this.shoppingCartService.RemoveFromDatabaseShoppingCartAsync(productId, User.GetUserId());
-                }
-                else
-                {
-                    var cart = await this.shoppingCartService.RemoveFromSessionShoppingCartAsync(productId, GetShoppingCart());
-                    SetShoppingCart(cart);
-                }
+                await this.shoppingCartService.RemoveFromDatabaseShoppingCartAsync(productId, this.User.GetUserId());
             }
             catch (ArgumentNullException ex)
             {
                 this.logger.LogError(ex, ex.Message);
-                return RedirectToAction("Error", "Home", new { message = ex.Message });
+                return this.RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
-            return RedirectToAction(nameof(Index));
+            return this.RedirectToAction(nameof(this.Index));
         }
 
-        public async Task<IActionResult> DecreaseItemQuantity([FromBody] int productId)
+        [HttpPost]
+        public async Task<IActionResult> DecreaseItemQuantity(int productId)
         {
             try
             {
-                if (User?.Identity?.IsAuthenticated ?? false)
-                {
-                    await this.shoppingCartService.DecreaseDatabaseItemQuantityAsync(productId, User.GetUserId());
-                }
-                else
-                {
-                    var cart = await this.shoppingCartService.DecreaseSessionItemQuantityAsync(productId, GetShoppingCart());
-                    SetShoppingCart(cart);
-                }
+                await this.shoppingCartService.DecreaseDatabaseItemQuantityAsync(productId, this.User.GetUserId());
             }
             catch (ArgumentNullException ex)
             {
                 this.logger.LogError(ex, ex.Message);
-                return RedirectToAction("Error", "Home", new { message = ex.Message });
+                return this.RedirectToAction("Error", "Home", new { message = ex.Message });
             }
 
-            return RedirectToAction(nameof(Index));
+            return this.RedirectToAction(nameof(this.Index));
         }
 
-        public async Task<IActionResult> IncreaseItemQuantity([FromBody] int productId)
+        [HttpPost]
+        public async Task<IActionResult> IncreaseItemQuantity(int productId)
         {
             try
             {
-                if (User?.Identity?.IsAuthenticated ?? false)
-                {
-                    await this.shoppingCartService.IncreaseDatabaseItemQuantityAsync(productId, User.GetUserId());
-                }
-                else
-                {
-                    var cart = await this.shoppingCartService.IncreaseSessionItemQuantityAsync(productId, GetShoppingCart());
-                    SetShoppingCart(cart);
-                }
+                await this.shoppingCartService.IncreaseDatabaseItemQuantityAsync(productId, this.User.GetUserId());
             }
             catch (ArgumentNullException ex)
             {
                 this.logger.LogError(ex, $"An error occured: {ex.Message}");
-                return RedirectToAction("Error", "Home", new { message = ex.Message });
+                return this.RedirectToAction("Error", "Home", new { message = ex.Message });
+            }
+            catch (InvalidOperationException ex)
+            {
+                this.logger.LogError(ex, ex.Message);
+                this.TempData["ErrorMessage"] = ex.Message;
+                return this.RedirectToAction(nameof(this.Index));
             }
 
-            return RedirectToAction(nameof(Index));
+            return this.RedirectToAction(nameof(this.Index));
         }
 
-        public async Task<IActionResult> UpdateItemQuantity([FromBody] ShoppingCartUpdateModel model)
+        [HttpPost]
+        public async Task<IActionResult> UpdateItemQuantity([FromForm] ShoppingCartUpdateModel model)
         {
             try
             {
-                if (User?.Identity?.IsAuthenticated ?? false)
-                {
-                    await this.shoppingCartService.UpdateDatabaseItemQuantityAsync(model.Quantity, model.ProductId, User.GetUserId());
-                }
-                else
-                {
-                    var cart = await this.shoppingCartService.UpdateSessionItemQuantityAsync(model.Quantity, model.ProductId, GetShoppingCart());
-                    SetShoppingCart(cart);
-                }
+                await this.shoppingCartService.UpdateDatabaseItemQuantityAsync(model.Quantity, model.ProductId, this.User.GetUserId());
             }
             catch (ArgumentNullException ex)
             {
                 this.logger.LogError(ex, $"An error occured: {ex.Message}");
-                return RedirectToAction("Error", "Home", new { message = ex.Message });
+                return this.RedirectToAction("Error", "Home", new { message = ex.Message });
+            }
+            catch (InvalidOperationException ex)
+            {
+                this.logger.LogError(ex, ex.Message);
+                this.TempData["ErrorMessage"] = ex.Message;
+                return this.RedirectToAction(nameof(this.Index));
             }
 
-            return RedirectToAction(nameof(Index));
+            return this.RedirectToAction(nameof(this.Index));
         }
-
-        private void SetShoppingCart(ICollection<ShoppingCartExportModel> shoppings)
-            => HttpContext.Session.Set("Shopping Cart", shoppings);
-
-        private ICollection<ShoppingCartExportModel> GetShoppingCart()
-            => HttpContext.Session.Get<ICollection<ShoppingCartExportModel>>("Shopping Cart") ?? new List<ShoppingCartExportModel>();
     }
 }

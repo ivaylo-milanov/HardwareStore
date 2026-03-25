@@ -1,14 +1,16 @@
 @model LoginFormModel
 
-<form class="login" method="post" asp-action="EasyLogin" asp-controller="User">
-    <div>
-        <input type="email" name="Email" placeholder="Email" class="login-input" />
+<form class="px-2 py-2" style="min-width: 260px;" method="post" asp-action="EasyLogin" asp-controller="User">
+    <div class="mb-2">
+        <label class="form-label visually-hidden" for="nav-login-email">Email</label>
+        <input type="email" id="nav-login-email" name="Email" placeholder="Email" class="form-control form-control-sm" autocomplete="username" />
     </div>
-    <div>
-        <input type="password" autocomplete="off" name="Password" placeholder="Password" class="login-input" />
+    <div class="mb-2">
+        <label class="form-label visually-hidden" for="nav-login-password">Password</label>
+        <input type="password" id="nav-login-password" name="Password" placeholder="Password" class="form-control form-control-sm" autocomplete="current-password" />
     </div>
-    <div class="button-container">
-        <a asp-action="Register" asp-controller="User">Register</a>
-        <input type="submit" value="Login" class="login-button" />
+    <div class="d-flex flex-wrap gap-2 align-items-center justify-content-between">
+        <a class="small" asp-action="Register" asp-controller="User">Register</a>
+        <input type="submit" value="Login" class="btn btn-success btn-sm" />
     </div>
 </form>

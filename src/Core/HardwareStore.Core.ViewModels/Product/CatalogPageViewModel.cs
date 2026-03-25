@@ -11,8 +11,12 @@ namespace HardwareStore.Core.ViewModels.Product
         /// <summary>Search keyword for search filter POST.</summary>
         public string? SearchKeyword { get; set; }
 
-        /// <summary>Absolute URL used by the catalog filter script (<c>data-url</c>).</summary>
-        public string FilterPostUrl { get; set; } = null!;
+        /// <summary>Sort order (<see cref="Enums.ProductOrdering"/> value as int).</summary>
+        public int SelectedOrder { get; set; } = 1;
+
+        /// <summary>Selected filter checkbox values by filter name (e.g. Manufacturer).</summary>
+        public IReadOnlyDictionary<string, IReadOnlyList<string>> SelectedFilterValues { get; set; } =
+            new Dictionary<string, IReadOnlyList<string>>(StringComparer.OrdinalIgnoreCase);
 
         public ProductsViewModel<CatalogProductViewModel> Catalog { get; set; } = null!;
     }

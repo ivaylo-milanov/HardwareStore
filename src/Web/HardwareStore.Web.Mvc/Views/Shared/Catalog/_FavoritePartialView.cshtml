@@ -1,29 +1,30 @@
 @model ICollection<FavoriteExportModel>
 
-<div class="products-container">
-    @if (Model.Any())
-    {
-        <div class="products-row">
-            @foreach (var favorite in Model)
-            {
-                <div class="product-card">
-                    <div class="product-details">
-                        <h3 class="product-title">@favorite.Name</h3>
-                        <p class="product-price">$@favorite.Price</p>
-                        <div class="product-buttons">
-                            <a asp-action="AddToShoppingCart" asp-controller="Cart" asp-route-productId="@favorite.Id" asp-route-quantity="1" class="product-button">Buy</a>
-                            <span>Remove from favorite <a data-product-id="@favorite.Id" class="remove-favorite">x</a></span>
+@if (Model.Any())
+{
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-4">
+        @foreach (var favorite in Model)
+        {
+            <div class="col">
+                <div class="card h-100 shadow-sm border-0 bg-light">
+                    <div class="card-body text-center d-flex flex-column py-4 position-relative">
+                        <h3 class="h6 card-title mb-2">@favorite.Name</h3>
+                        <p class="text-muted mb-3">$@favorite.Price.ToString("F2")</p>
+                        <a class="stretched-link" asp-action="Details" asp-controller="Product" asp-route-productId="@favorite.Id" aria-label="View @favorite.Name"></a>
+                        <div class="d-flex flex-column gap-2 mt-auto position-relative z-3">
+                            <a asp-action="AddToShoppingCart" asp-controller="Cart" asp-route-productId="@favorite.Id" asp-route-quantity="1" class="btn btn-success btn-sm">Buy</a>
+                            <form asp-action="RemoveFromFavorite" asp-controller="Favorite" method="post">
+                                <input type="hidden" name="productId" value="@favorite.Id" />
+                                <button type="submit" class="btn btn-outline-danger btn-sm w-100">Remove from favorites</button>
+                            </form>
                         </div>
-                        <a class="hiddenLink" asp-action="Details" asp-controller="Product" asp-route-productId="@favorite.Id" hidden></a>
                     </div>
                 </div>
-            }
-        </div>
-    }
-    else
-    {
-        <partial name="_CatalogEmptyProductsMessage" />
-    }
-</div>
-
-<script src="~/js/card.js"></script>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <partial name="_CatalogEmptyProductsMessage" />
+}

@@ -1,10 +1,29 @@
-<label for="catalog-order-by">Order By:</label>
-<div class="order">
-    <select id="catalog-order-by" name="Order" class="catalog-order-select" aria-label="Sort products">
-        <option value="1">Default</option>
-        <option value="2">Lowest price</option>
-        <option value="3">Highest price</option>
-        <option value="4">Oldest</option>
-        <option value="5">Newest</option>
+@model int
+
+@{
+    var options = new (int Value, string Label)[]
+    {
+        (1, "Default"),
+        (2, "Lowest price"),
+        (3, "Highest price"),
+        (4, "Oldest"),
+        (5, "Newest"),
+    };
+}
+
+<div class="flex-grow-1 w-100 w-sm-auto">
+    <label for="catalog-order-by" class="form-label fw-semibold small text-muted mb-1">Sort by</label>
+    <select id="catalog-order-by" name="Order" class="form-select" aria-label="Sort products">
+        @foreach (var opt in options)
+        {
+            if (Model == opt.Value)
+            {
+                <option value="@opt.Value" selected="selected">@opt.Label</option>
+            }
+            else
+            {
+                <option value="@opt.Value">@opt.Label</option>
+            }
+        }
     </select>
 </div>

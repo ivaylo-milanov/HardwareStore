@@ -1,17 +1,21 @@
-﻿@model ProfileViewModel
+@model ProfileViewModel
 
-<div class="profile-container">
-    <div class="page-title">
-        <h1>Profile</h1>
-    </div>
-    <div class="profile-address">
-        <p class="profile-section-title">Delivery Data</p>
-        <p class="profile-fullname">Ivaylo Milanov</p>
-        <p class="profile-city">Yambol</p>
-        <p class="profile-address-line">Cherno more 8</p>
-    </div>
-    <div class="profile-details">
-        <p class="profile-section-title">Personal Data</p>
-        <p class="profile-email">imilanov17@gmail.com</p>
+<div class="row justify-content-center">
+    <div class="col-12 col-md-8 col-lg-6">
+        <h1 class="h3 fw-semibold text-center mb-4">Profile</h1>
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-light fw-semibold">Delivery</div>
+            <div class="card-body">
+                <p class="mb-1 fw-medium">@Model.FullName</p>
+                <p class="text-muted mb-1">@Model.City</p>
+                <p class="text-muted mb-0">@Model.Address</p>
+            </div>
+        </div>
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-light fw-semibold">Contact</div>
+            <div class="card-body">
+                <p class="mb-0"><a class="link-success text-decoration-none" href="mailto:@Model.Email">@Model.Email</a></p>
+            </div>
+        </div>
     </div>
 </div>
