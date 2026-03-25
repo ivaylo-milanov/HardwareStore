@@ -13,7 +13,7 @@
 @foreach (var group in new (string Title, NavCategoryItem[] Items)[] { ("Peripherals", nav.Peripherals), ("Hardware", nav.Hardware) })
 {
     <li class="dropend">
-        <button type="button" class="dropdown-item dropdown-toggle" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">@group.Title</button>
+        <a class="dropdown-item dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">@group.Title</a>
         <ul class="dropdown-menu">
             @foreach (var category in group.Items)
             {
