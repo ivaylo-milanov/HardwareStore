@@ -10,7 +10,7 @@ namespace HardwareStore.Infrastructure.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            // CategoryGroup.Hardware = 0. Names align with assembly slot filters (AssemblyRoleMapping.CategoryNamesForFilter)
+            // CategoryGroup.Hardware = 0. AssemblySlot is set in migration AddCategoryAssemblySlot.
             // and satisfy CategoryNameMinLength (5) for admin forms.
             migrationBuilder.Sql(
                 """

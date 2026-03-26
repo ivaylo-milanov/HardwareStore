@@ -27,6 +27,9 @@ namespace HardwareStore.Infrastructure.Models
         [Comment("hardware vs peripherals segment")]
         public CategoryGroup Group { get; set; }
 
+        [Comment("assembly BOM slot filter for products in this category; None if not used for standard slots")]
+        public CategoryAssemblySlot AssemblySlot { get; set; }
+
         public ICollection<Product> Products { get; set; } = null!;
     }
 }
