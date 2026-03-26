@@ -116,7 +116,7 @@ namespace HardwareStore.Tests
 
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {
-                await this.shoppingCartService.AddToDatabaseShoppingCartAsync(16, 2, "TestCustomer1");
+                await this.shoppingCartService.AddToDatabaseShoppingCartAsync(99999, 2, "TestCustomer1");
             });
         }
 
