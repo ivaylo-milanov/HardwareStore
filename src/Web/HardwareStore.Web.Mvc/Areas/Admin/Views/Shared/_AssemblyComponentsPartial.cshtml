@@ -6,11 +6,10 @@
     <h2 class="h6 fw-semibold mt-4 mb-2">Assembly (bundle / PC)</h2>
     <p class="form-text small mb-2">
         Standard slots include CPU, GPU, RAM, PSU, motherboard, case, internal drives, and cooler.
-        For each part type, the product list shows only products in a matching <strong>category</strong> (e.g. Motherboard → categories &ldquo;Motherboard&rdquo;, &ldquo;Motherboards&rdquo;, etc.).
+        For each part type, the list shows only products whose <strong>category</strong> has the matching assembly slot (configured on the category in the database).
         <strong>Custom…</strong> shows all products. Use <strong>Add component</strong> / <strong>Remove</strong> to change row count.
     </p>
     <script type="application/json" id="assembly-product-catalog-json">@Html.Raw(ViewBag.AssemblyProductCatalogJson ?? "[]")</script>
-    <script type="application/json" id="assembly-role-filters-json">@Html.Raw(ViewBag.AssemblyRoleCategoryFiltersJson ?? "{}")</script>
     <div class="table-responsive border rounded">
         <table class="table table-sm align-middle mb-0">
             <thead>
@@ -89,13 +88,10 @@
     const template = document.getElementById('assembly-component-row-template');
     const addBtn = document.getElementById('assembly-add-row');
     const catalogEl = document.getElementById('assembly-product-catalog-json');
-    const filtersEl = document.getElementById('assembly-role-filters-json');
-    if (!tbody || !template || !addBtn || !catalogEl || !filtersEl) return;
+    if (!tbody || !template || !addBtn || !catalogEl) return;
 
     let catalog = [];
-    let roleFilters = {};
     try { catalog = JSON.parse(catalogEl.textContent || '[]'); } catch (e) { catalog = []; }
-    try { roleFilters = JSON.parse(filtersEl.textContent || '{}'); } catch (e) { roleFilters = {}; }
 
     const customKind = @customKind;
 
@@ -103,17 +99,9 @@
         return roleKindInt === 0 || roleKindInt === customKind;
     }
 
-    function categoryMatchesProduct(category, names) {
-        if (!names || !names.length) return true;
-        const c = (category || '').trim().toLowerCase();
-        return names.some(function (n) { return c === (n || '').trim().toLowerCase(); });
-    }
-
     function optionsForRole(roleKindInt) {
         if (showAllProducts(roleKindInt)) return catalog.slice();
-        const names = roleFilters[String(roleKindInt)];
-        if (!names || !names.length) return catalog.slice();
-        return catalog.filter(function (p) { return categoryMatchesProduct(p.category, names); });
+        return catalog.filter(function (p) { return p.slot === roleKindInt; });
     }
 
     function refillProductSelect(productSelect, roleSelect) {

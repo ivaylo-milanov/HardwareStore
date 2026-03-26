@@ -208,31 +208,14 @@ namespace HardwareStore.Web.Mvc.Areas.Admin.Controllers
                     p.Id,
                     p.Name,
                     p.ReferenceNumber,
-                    CategoryName = p.Category.Name,
+                    p.Category.AssemblySlot,
                 })
                 .ToListAsync();
 
             var catalog = productRows
-                .Select(p => new { id = p.Id, label = $"{p.Name} ({p.ReferenceNumber})", category = p.CategoryName })
+                .Select(p => new { id = p.Id, label = $"{p.Name} ({p.ReferenceNumber})", slot = (int)p.AssemblySlot })
                 .ToList();
             this.ViewBag.AssemblyProductCatalogJson = JsonSerializer.Serialize(catalog, AssemblyEditorJson);
-
-            var roleFilters = new Dictionary<string, string[]>();
-            foreach (AssemblyRoleKind k in Enum.GetValues<AssemblyRoleKind>())
-            {
-                if (k is AssemblyRoleKind.None or AssemblyRoleKind.Custom)
-                {
-                    continue;
-                }
-
-                var names = AssemblyRoleMapping.CategoryNamesForFilter(k);
-                if (names.Count > 0)
-                {
-                    roleFilters[((int)k).ToString()] = names.ToArray();
-                }
-            }
-
-            this.ViewBag.AssemblyRoleCategoryFiltersJson = JsonSerializer.Serialize(roleFilters, AssemblyEditorJson);
 
             this.ViewBag.AssemblyRoleKindList = new SelectList(
                 new[]
@@ -391,18 +374,17 @@ namespace HardwareStore.Web.Mvc.Areas.Admin.Controllers
 
                 if (r.RoleKind is not AssemblyRoleKind.None and not AssemblyRoleKind.Custom)
                 {
-                    var categoryName = await this.repository.AllReadonly<Product>()
+                    var categorySlot = await this.repository.AllReadonly<Product>()
                         .Where(p => p.Id == r.ComponentProductId)
-                        .Select(p => p.Category.Name)
+                        .Select(p => p.Category.AssemblySlot)
                         .FirstOrDefaultAsync()
                         .ConfigureAwait(false);
 
-                    if (!AssemblyRoleMapping.ProductCategoryMatchesRole(categoryName, r.RoleKind))
+                    if (!AssemblyRoleMapping.ProductCategoryMatchesRole(categorySlot, r.RoleKind))
                     {
-                        var expected = string.Join(", ", AssemblyRoleMapping.CategoryNamesForFilter(r.RoleKind));
                         this.ModelState.AddModelError(
                             $"AssemblyComponents[{i}].ComponentProductId",
-                            $"The product's category must match this part type. Use a category such as: {expected}.");
+                            "The product's category assembly slot does not match this part type (set Assembly slot on the category or pick another product).");
                     }
                 }
             }

@@ -42,9 +42,14 @@ namespace HardwareStore.Tests.Mocking
             var manufacturers = Enumerable.Range(1, 3)
                 .Select(i => new Manufacturer { Id = i, Name = $"Manufacturer{i}" }).ToList();
 
-            var categories = Enumerable.Range(1, 5)
-                .Select(i => new Category { Id = i, Name = $"Category{i}", Group = CategoryGroup.Hardware })
-                .ToList();
+            var categories = new List<Category>
+            {
+                new() { Id = 1, Name = "Category1", Group = CategoryGroup.Hardware, AssemblySlot = CategoryAssemblySlot.None },
+                new() { Id = 2, Name = "Category2", Group = CategoryGroup.Hardware, AssemblySlot = CategoryAssemblySlot.Cpu },
+                new() { Id = 3, Name = "Category3", Group = CategoryGroup.Hardware, AssemblySlot = CategoryAssemblySlot.Gpu },
+                new() { Id = 4, Name = "Category4", Group = CategoryGroup.Hardware, AssemblySlot = CategoryAssemblySlot.None },
+                new() { Id = 5, Name = "Category5", Group = CategoryGroup.Hardware, AssemblySlot = CategoryAssemblySlot.None },
+            };
 
             var products = Enumerable.Range(1, 12)
                 .Select(i => new Product

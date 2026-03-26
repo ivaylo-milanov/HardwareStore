@@ -1,8 +1,7 @@
 namespace HardwareStore.Core.ViewModels.Admin
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
+    using HardwareStore.Infrastructure.Models.Enums;
 
     public static class AssemblyRoleMapping
     {
@@ -58,37 +57,36 @@ namespace HardwareStore.Core.ViewModels.Admin
         }
 
         /// <summary>
-        /// Category names that qualify a product for this assembly slot (case-insensitive match on <see cref="HardwareStore.Infrastructure.Models.Category.Name"/>).
+        /// Maps a standard assembly role to the category assembly slot products must use (None if not a constrained role).
         /// </summary>
-        public static IReadOnlyList<string> CategoryNamesForFilter(AssemblyRoleKind kind) =>
+        public static CategoryAssemblySlot AssemblySlotForRole(AssemblyRoleKind kind) =>
             kind switch
             {
-                AssemblyRoleKind.Cpu => new[] { "CPU", "Processor", "Processors" },
-                AssemblyRoleKind.Gpu => new[] { "GPU", "Graphics", "Graphics card", "Graphics cards" },
-                AssemblyRoleKind.Ram => new[] { "RAM", "Memory" },
-                AssemblyRoleKind.Psu => new[] { "PSU", "Power supply", "Power supplies" },
-                AssemblyRoleKind.Motherboard => new[] { "Motherboard", "Motherboards", "Mainboard", "Mainboards" },
-                AssemblyRoleKind.Case => new[] { "Case", "Cases", "Chassis" },
-                AssemblyRoleKind.InternalDrives => new[] { "Internal drives", "InternalDrives", "SSD", "HDD", "Storage", "NVMe" },
-                AssemblyRoleKind.Cooler => new[] { "Cooler", "Coolers", "CPU Cooler", "CPU Coolers", "AIO" },
-                _ => Array.Empty<string>(),
+                AssemblyRoleKind.Cpu => CategoryAssemblySlot.Cpu,
+                AssemblyRoleKind.Gpu => CategoryAssemblySlot.Gpu,
+                AssemblyRoleKind.Ram => CategoryAssemblySlot.Ram,
+                AssemblyRoleKind.Psu => CategoryAssemblySlot.Psu,
+                AssemblyRoleKind.Motherboard => CategoryAssemblySlot.Motherboard,
+                AssemblyRoleKind.Case => CategoryAssemblySlot.Case,
+                AssemblyRoleKind.InternalDrives => CategoryAssemblySlot.InternalDrives,
+                AssemblyRoleKind.Cooler => CategoryAssemblySlot.Cooler,
+                _ => CategoryAssemblySlot.None,
             };
 
-        public static bool ProductCategoryMatchesRole(string? categoryName, AssemblyRoleKind roleKind)
+        public static bool ProductCategoryMatchesRole(CategoryAssemblySlot categorySlot, AssemblyRoleKind roleKind)
         {
-            if (roleKind == AssemblyRoleKind.None || roleKind == AssemblyRoleKind.Custom)
+            if (roleKind is AssemblyRoleKind.None or AssemblyRoleKind.Custom)
             {
                 return true;
             }
 
-            var names = CategoryNamesForFilter(roleKind);
-            if (names.Count == 0)
+            var expected = AssemblySlotForRole(roleKind);
+            if (expected == CategoryAssemblySlot.None)
             {
                 return true;
             }
 
-            var c = categoryName?.Trim() ?? string.Empty;
-            return names.Any(n => c.Equals(n, StringComparison.OrdinalIgnoreCase));
+            return categorySlot == expected;
         }
 
         /// <summary>
