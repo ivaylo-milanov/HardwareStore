@@ -88,3 +88,18 @@ The MVC app serves `wwwroot` (CSS, JS, images). Admin and catalog views referenc
 ## Migrations endpoint (Development)
 
 The MVC app calls `UseMigrationsEndPoint()` when `ASPNETCORE_ENVIRONMENT` is **Development**, which helps apply pending migrations during local development (see `Program.cs`).
+
+## Docker Compose (local SQL Server only)
+
+The repo includes **[`docker-compose.yml`](../docker-compose.yml)** at the repository root. It runs **SQL Server 2022** in a container; it does **not** start the MVC or API projects.
+
+**Requirements:**
+
+- Set environment variable **`MSSQL_SA_PASSWORD`** before `docker compose up` (compose file uses `${MSSQL_SA_PASSWORD:?…}` so startup fails if unset).
+- Optional **`SQL_PORT`** (defaults to **1433** on the host).
+
+**Details:** `linux/amd64` platform for Apple Silicon (emulation), named volume **`hardwarestore_sql_data`**, **healthcheck** via `sqlcmd`. Use the same SA password in your **connection string** / user secrets when pointing `DefaultConnection` at `localhost,<SQL_PORT>`.
+
+After the container is healthy, run **`dotnet ef database update`** from your machine against that server (see *Running locally* above).
+
+**See also:** [solution-inventory.md](solution-inventory.md) → *Repository root*.

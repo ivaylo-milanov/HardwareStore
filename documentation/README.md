@@ -4,10 +4,13 @@ This folder describes how the **HardwareStore** solution is hosted, how the code
 
 | Document | Contents |
 |----------|----------|
-| [Server and deployment](server-and-deployment.md) | Web hosts, ports, configuration, secrets, HTTPS, database connectivity |
-| [Architecture and codebase](architecture-and-codebase.md) | Solution layout, layers, dependency injection, cross-cutting concerns |
-| [Features and functionality](features-and-functionality.md) | Storefront, admin area, REST API, auth, cart, checkout, search, assembly products |
-| [Database and data model](database-and-data-model.md) | EF Core context, main entities, migrations, transactions, category assembly slots |
+| [Server and deployment](server-and-deployment.md) | Web hosts, ports, configuration, secrets, HTTPS, database connectivity, **Docker Compose** for SQL Server |
+| [Architecture and codebase](architecture-and-codebase.md) | Solution layout, layers, dependency injection, cross-cutting concerns, links to deeper inventories |
+| [Features and functionality](features-and-functionality.md) | Feature-by-feature behavior (MVC + API), flows, links to source and views |
+| [Database and data model](database-and-data-model.md) | EF Core context, ER overview, entities, migrations, transactions, search vs FTS |
+| [**Solution inventory**](solution-inventory.md) | **Verbose per-file catalog** of `src/` (excluding redundant EF Designer files) + migration summaries |
+| [**API endpoints**](api-endpoints.md) | **REST** reference: method, route, auth, request/response shapes |
+| [**UI and views**](ui-views.md) | **Every Razor** view/partial: model, controller, catalog pipeline diagram |
 
 **Solution file:** `src/HardwareStore.sln`
 

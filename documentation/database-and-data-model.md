@@ -1,58 +1,78 @@
 # Database and data model
 
+Further reference: per-entity notes and migration list in **[solution-inventory.md](solution-inventory.md)** → *HardwareStore.Infrastructure.Models* and *Migrations*.
+
 ## Technology
 
 - **SQL Server** via **Entity Framework Core 8**
-- **Context:** `HardwareStoreDbContext` (`HardwareStore.Infrastructure/Data/HardwareStoreDbContext.cs`)
-- **Identity:** `IdentityDbContext<Customer>` — users are **`Customer`** entities with ASP.NET Identity columns and relationships.
+- **Context:** [`HardwareStoreDbContext`](../src/Infrastructure/HardwareStore.Infrastructure/Data/HardwareStoreDbContext.cs) — **`IdentityDbContext<Customer>`**
+- **CLI factory:** [`HardwareStoreDbContextFactory`](../src/Infrastructure/HardwareStore.Infrastructure/Data/HardwareStoreDbContextFactory.cs) for `dotnet ef`
 
-## Main entities (DbSets)
+## Entity relationship overview
 
-| DbSet | Purpose |
+```mermaid
+erDiagram
+    Customer ||--o{ Order : places
+    Customer ||--o{ ShoppingCartItem : has
+    Customer ||--o{ Favorite : has
+    Category ||--o{ Product : classifies
+    Manufacturer ||--o{ Product : optional
+    Product ||--o{ ProductOrder : line
+    Order ||--o{ ProductOrder : contains
+    Product ||--o{ ProductAssemblyComponent : assemblyParent
+    Product ||--o{ ProductAssemblyComponent : componentChild
+```
+
+- **Identity** tables (`AspNetUsers`, roles, claims, etc.) back **`Customer`** (`AspNetUsers` row shape extended with profile columns).
+- **`Product`** is the hub: orders, cart, favorites, BOM parent (`AssemblyComponents`), BOM child (`UsedInAssemblies`).
+
+## DbSets (explicit on context)
+
+| DbSet | Maps to |
 |-------|---------|
-| **Products** | Sellable items: price, stock, category, manufacturer, `Options` JSON, etc. |
-| **Categories** | Product taxonomy; **`Group`** (Hardware / Peripherals); **`AssemblySlot`** (standard BOM slot filter). |
-| **Manufacturers** | Optional brand/manufacturer. |
-| **Orders** | Customer orders with status, payment, shipping fields. |
-| **ProductAssemblyComponent** | **Bill of materials:** parent **assembly product**, child **component product**, **Role** string, **Quantity**, **SortOrder**. |
+| `Products` | Sellable items + `Options` JSON |
+| `Categories` | `Name`, `CategoryGroup`, `AssemblySlot` |
+| `Manufacturers` | Brand |
+| `Orders` | Order header (`Guid` PK) |
+| *(via Identity)* | Users, roles |
+| `ProductAssemblyComponents` | BOM lines |
 
-Related collections are configured on **`Customer`** (favorites, cart items, orders) and **`Product`** (assembly lines, usages in other assemblies) through Fluent API in the `Configurations` folder.
+Join entity **`ProductOrder`** links **`Order`** and **`Product`** with line quantity (configured in [`ProductOrderConfiguration`](../src/Infrastructure/HardwareStore.Infrastructure/Configurations/ProductOrderConfiguration.cs)).
+
+## Notable delete behaviors (Fluent API)
+
+| Relationship | Configuration | Behavior |
+|--------------|---------------|----------|
+| Assembly → parent product | [`ProductAssemblyComponentConfiguration`](../src/Infrastructure/HardwareStore.Infrastructure/Configurations/ProductAssemblyComponentConfiguration.cs) | **Cascade** when assembly product is deleted (BOM rows removed). |
+| Assembly → component product | Same | **Restrict** — cannot delete a product that is still referenced as a **component** (aligns with admin “used in assembly” delete guard). |
+
+Other FK cascades/restrict rules follow the **Initial** migration and EF conventions for optional/required relationships; see snapshot if you need exact SQL Server `ON DELETE` for every FK.
+
+## Precision
+
+- [`ProductConfiguration`](../src/Infrastructure/HardwareStore.Infrastructure/Configurations/ProductConfiguration.cs) and [`OrderConfiguration`](../src/Infrastructure/HardwareStore.Infrastructure/Configurations/OrderConfiguration.cs) set **decimal(18,2)** on `Price` / `TotalAmount`.
 
 ## Category groups and navigation
 
-- **`CategoryGroup`:** `Hardware`, `Peripherals`.
-- The storefront **Products** dropdown is built from live **`Categories`** rows (see `CategoriesNavViewComponent`), ordered by name, skipping empty groups.
+- **`CategoryGroup`:** `Hardware`, `Peripherals` — drives navbar grouping ([`CategoriesNavViewComponent`](../src/Web/HardwareStore.Web.Mvc/ViewComponents/CategoriesNavViewComponent.cs)).
 
 ## Category assembly slots
 
-**`Category.AssemblySlot`** (`CategoryAssemblySlot` enum) tells the **admin assembly editor** and **server validation** which standard PC part type a product in that category satisfies:
+**`Category.AssemblySlot`** (`CategoryAssemblySlot`) drives admin BOM picker filtering and server validation (see [features-and-functionality.md](features-and-functionality.md)). Numeric values align with **`AssemblyRoleKind`** for standard slots (Cooler = 9; no “Custom” on category).
 
-| Slot (concept) | Typical use |
-|----------------|-------------|
-| None | Categories not used for standard slots (e.g. “Prebuilt systems”) or uncategorized assembly use. |
-| Cpu, Gpu, Ram, Psu, Motherboard, Case, InternalDrives, Cooler | Align with **`AssemblyRoleKind`** numeric values for filtering (Cooler uses value **9**; there is no “Custom” slot on categories—Custom parts allow any product). |
-
-Predefined hardware categories are **seeded** in migrations; a dedicated migration adds **`AssemblySlot`** and **UPDATE**s known category **names** to the correct slot values.
-
-**Note:** The admin **category** create/edit form may not yet expose **AssemblySlot** in the UI; new categories default to **None** until updated (SQL, migration, or a future admin field).
+Predefined hardware category **names** receive slots via migration **`AddCategoryAssemblySlot`** (SQL `UPDATE`s). Admin category forms may not edit **AssemblySlot** yet — new categories default to **None**.
 
 ## Migrations
 
-Migrations live in:
+All `Up` summaries are listed in **[solution-inventory.md](solution-inventory.md)** (*Migrations* table). Highlights:
 
-`src/Infrastructure/HardwareStore.Infrastructure/Data/Migrations/`
+- **Initial** — full schema + Identity.
+- **RemoveCharacteristicsTables** — `Products.Options` JSON replaces old characteristic tables.
+- **SeedAdminUserAndRole** — admin login.
+- **AddCategoryGroup**, **AddProductAssemblyComponents**, **SeedPredefinedHardwareCategories**, **AddCategoryAssemblySlot**.
+- **AddFullTextSearchCatalogAndIndexes** — optional FTS DDL when SQL Server supports it (app still uses **LIKE** in `ProductService`).
 
-Notable themes in migration history:
-
-- Initial schema and Identity
-- Removal of legacy “characteristics” tables in favor of JSON **Options**
-- **CategoryGroup** on categories
-- **ProductAssemblyComponent** table and relationships
-- Seed predefined hardware **categories**
-- **Category.AssemblySlot** column + data fixes for seeded names
-- Optional **full-text** catalog/indexes (if present in your branch)
-
-Apply with:
+Apply:
 
 ```bash
 dotnet ef database update --project src/Infrastructure/HardwareStore.Infrastructure --startup-project src/Web/HardwareStore.Web.Mvc
@@ -60,11 +80,15 @@ dotnet ef database update --project src/Infrastructure/HardwareStore.Infrastruct
 
 ## Transactions and consistency
 
-- **`OrderService`** (and similar flows that need atomic multi-step writes) should use **`IRepository.ExecuteInRetryableTransactionAsync`** so retries do not leave partial state.
-- Single **`SaveChangesAsync`** calls are used for simpler CRUD paths.
+- **`OrderService.OrderAsync`** uses **`IRepository.ExecuteInRetryableTransactionAsync`** so order placement is compatible with **`EnableRetryOnFailure`** (see [server-and-deployment.md](server-and-deployment.md)).
+- Simple CRUD uses **`SaveChangesAsync`** without an explicit transaction.
 
 ## Indexes and search
 
-**Default product keyword search** (storefront/API) uses **`EF.Functions.Like`** with escaped `%`/`_`/`[` patterns over product and manufacturer fields in **`ProductService`**.
+- **Runtime search:** **`EF.Functions.Like`** in [`ProductService.LoadSearchByKeywordAsync`](../src/Core/HardwareStore.Core/Services/ProductService.cs) with `[`, `%`, `_` escaped.
+- **Full-text:** Migration creates catalog/indexes **only if** `FULLTEXTSERVICEPROPERTY('IsFullTextInstalled') = 1`; application code does not call `CONTAINS`/`FREETEXT` in the current `ProductService` path.
 
-The solution may also include migrations for **SQL Server full-text** catalogs/indexes (`AddFullTextSearchCatalogAndIndexes` or similar); those are separate from the LIKE-based path unless code is wired to use `FREETEXT`/`CONTAINS`—check the current `ProductService` and migrations in your branch.
+## Snapshot and designers
+
+- **`HardwareStoreDbContextModelSnapshot.cs`** — single source of truth for the **current** EF model when adding migrations.
+- Each **`*.Designer.cs`** next to a migration — generated; do not hand-edit.

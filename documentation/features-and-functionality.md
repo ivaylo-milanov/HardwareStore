@@ -1,96 +1,180 @@
 # Features and functionality
 
-This document maps **user-visible behavior** to the main **controllers and services**. Paths are relative to the MVC project unless noted.
-
-## Storefront (anonymous and authenticated customers)
-
-### Home
-
-- **`HomeController`** — landing page.
-
-### Product catalog and details
-
-- **`ProductController`** — category browsing, product listing, product details.
-- **`ProductService`** — loads product data, options (JSON), and **assembly components** (BOM) for bundle/PC products via `ProductAssemblyComponent` rows.
-
-Products support a flexible **`Options`** JSON object for specifications (validated as JSON object on admin save).
-
-### Search
-
-- **`SearchController`** (MVC) and **`SearchController`** (API) — keyword search delegated to **`ProductService`**, which matches the term with **`EF.Functions.Like`** against name, description, model, and manufacturer name (see `LoadSearchByKeywordAsync` in `ProductService.cs`). A separate migration may add full-text catalog objects for other scenarios; the primary catalog search path is LIKE-based.
-
-### Favorites
-
-- **`FavoriteController`** + **`IFavoriteService`** — persist favorite products per logged-in user.
-
-### Shopping cart
-
-- **`CartController`** + **`IShoppingCartService`** — add/update/remove lines; cart is stored per **Customer** in the database (not session-only).
-
-### Checkout and orders
-
-- **`CheckoutController`** — checkout flow; typically requires sign-in (`[Authorize]`).
-- **`OrdersController`** — order history for the current user.
-- **`IOrderService`** — creates orders from cart; uses **`IRepository.ExecuteInRetryableTransactionAsync`** so order creation is atomic under SQL Server retry policy.
-
-### Profile
-
-- **`ProfileController`** — account/profile management views.
-
-### Authentication (MVC)
-
-- **`UserController`** — login/register flows (along with Identity Razor pages under `Areas/Identity` if enabled).
+Feature-oriented map of behavior with pointers to **[solution-inventory.md](solution-inventory.md)** (source files), **[ui-views.md](ui-views.md)** (Razor), and **[api-endpoints.md](api-endpoints.md)** (REST).
 
 ---
 
-## Administration (`/Admin` area)
+## Home
 
-All admin controllers inherit from **`AdminControllerBase`**, which enforces the **`Admin`** authorization policy.
+**Behavior:** Shows “most bought” and “newest” product strips (`ProductService.GetHomeViewModelAsync`).
 
-| Controller | Purpose |
-|------------|---------|
-| **`ProductsController`** | CRUD products, JSON **Options**, **assembly components** (part type, component product, quantity). Validates that component products’ **category assembly slot** matches the selected standard role (CPU, GPU, …) when not Custom. |
-| **`CategoriesController`** | CRUD categories; **Name** and **Group** (Hardware / Peripherals). *Assembly slot* is stored on `Category` but may require DB/migration updates or future admin fields—see [Database](database-and-data-model.md). |
-| **`ManufacturersController`** | CRUD manufacturers. |
-| **`CustomersController`** | Manage customer accounts (admin-facing). |
-| **`HomeController`** | Admin home/dashboard entry. |
+**MVC:** [`HomeController.Index`](../src/Web/HardwareStore.Web.Mvc/Controllers/HomeController.cs) → [`Views/Home/Index.cshtml`](../src/Web/HardwareStore.Web.Mvc/Views/Home/Index.cshtml) with [`_HomePartialView`](../src/Web/HardwareStore.Web.Mvc/Views/Shared/Catalog/_HomePartialView.cshtml).
+
+**API:** `GET api/Home` — same view model for JSON clients.
+
+**See also:** [ui-views.md](ui-views.md) (home flow), [solution-inventory.md](solution-inventory.md) → ProductService.
+
+---
+
+## Category catalog and filters
+
+**Behavior:**
+
+1. User opens **Products** menu → [`CategoriesNavViewComponent`](../src/Web/HardwareStore.Web.Mvc/ViewComponents/CategoriesNavViewComponent.cs) lists categories from DB by `CategoryGroup`.
+2. **`Product/Index?category=&title=`** checks category exists; loads `GetCategoryCatalogAsync` (builds filter facets from manufacturer + `Options` JSON keys).
+3. **POST `Product/Filter`** — [`CatalogFilterFormHelper.BuildFilterJson`](../src/Web/HardwareStore.Web.Mvc/Helpers/CatalogFilterFormHelper.cs) turns form fields into JSON; `FilterCategoryCatalogAsync` applies manufacturer + option filters and sort (`ProductOrdering` from hidden `Order`).
+
+**MVC:** [`ProductController`](../src/Web/HardwareStore.Web.Mvc/Controllers/ProductController.cs); view [`Product/Catalog.cshtml`](../src/Web/HardwareStore.Web.Mvc/Views/Product/Catalog.cshtml) (search branch uses same file — see Search).
+
+**API:** `GET/POST api/categories/{category}/catalog` — [`CategoryCatalogController`](../src/Web/HardwareStore.Web.Api/Controllers/CategoryCatalogController.cs).
+
+**See also:** [ui-views.md](ui-views.md) (catalog partial pipeline), [api-endpoints.md](api-endpoints.md).
+
+---
+
+## Product details and assembly (BOM)
+
+**Behavior:** Single product page: image placeholder, price, add-to-cart, **JSON attributes** (`Options`), **assembly table** for bundle/PC products (component name, ref, price, quantity per line).
+
+**Data:** [`ProductService.GetProductDetails`](../src/Core/HardwareStore.Core/Services/ProductService.cs) includes `AssemblyComponents` → `ComponentProduct`; maps to [`AssemblyComponentModel`](../src/Core/HardwareStore.Core.ViewModels/Details/AssemblyComponentModel.cs).
+
+**MVC:** [`ProductController.Details`](../src/Web/HardwareStore.Web.Mvc/Controllers/ProductController.cs) → [`Product/Details.cshtml`](../src/Web/HardwareStore.Web.Mvc/Views/Product/Details.cshtml); favorite partial when signed in.
+
+**API:** `GET api/products/{id}` — [`ProductDetailsController`](../src/Web/HardwareStore.Web.Api/Controllers/ProductDetailsController.cs); optional `IsFavorite` when JWT present.
+
+**See also:** [database-and-data-model.md](database-and-data-model.md) (BOM entity), [solution-inventory.md](solution-inventory.md) → ProductAssemblyComponent.
+
+---
+
+## Search
+
+**Behavior:** Keyword search uses **`EF.Functions.Like`** with pattern escaping on product name, description, model, manufacturer name (`LoadSearchByKeywordAsync`). Empty keyword loads all products for browsing in search UI.
+
+**MVC:** [`SearchController`](../src/Web/HardwareStore.Web.Mvc/Controllers/SearchController.cs) renders **`~/Views/Product/Catalog.cshtml`** with `SearchKeyword` set; POST **`FilterSearch`** reapplies filters on search result set.
+
+**API:** [`SearchController`](../src/Web/HardwareStore.Web.Api/Controllers/SearchController.cs) under `api/search`.
+
+**See also:** [database-and-data-model.md](database-and-data-model.md) (LIKE vs FTS), [api-endpoints.md](api-endpoints.md).
+
+---
+
+## Favorites
+
+**Behavior:** Logged-in users add/remove favorites; list page shows export models.
+
+**MVC:** [`FavoriteController`](../src/Web/HardwareStore.Web.Mvc/Controllers/FavoriteController.cs) (`[Authorize]`); [`FavoriteService`](../src/Core/HardwareStore.Core/Services/FavoriteService.cs).
+
+**API:** `api/Favorites` — [`FavoritesController`](../src/Web/HardwareStore.Web.Api/Controllers/FavoritesController.cs) (JWT).
+
+**See also:** [ui-views.md](ui-views.md) → Favorite/Index, `_FavoritePartialView`, `_ProductFavoritePartial`.
+
+---
+
+## Shopping cart
+
+**Behavior:** Persistent cart per **Customer** (not session-only). Add validates stock; quantity increase validates aggregate vs `Product.Quantity`.
+
+**MVC:** [`CartController`](../src/Web/HardwareStore.Web.Mvc/Controllers/CartController.cs) — index, add (POST), remove, inc/dec, update quantity form.
+
+**API:** [`CartController`](../src/Web/HardwareStore.Web.Api/Controllers/CartController.cs) — REST shape (JWT on class).
+
+**See also:** [solution-inventory.md](solution-inventory.md) → ShoppingCartService.
+
+---
+
+## Checkout and orders
+
+**Behavior:** Checkout pre-fills `OrderFormModel` from customer profile and computes **total from cart**. Placing order runs inside **`ExecuteInRetryableTransactionAsync`**: validate cart, decrement stock, create `Order` + `ProductOrder` rows, clear cart.
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant Checkout as CheckoutController
+    participant OrderSvc as OrderService
+    participant Repo as Repository
+
+    User->>Checkout: POST Place order
+    Checkout->>OrderSvc: OrderAsync
+    OrderSvc->>Repo: ExecuteInRetryableTransactionAsync
+    Repo->>Repo: BeginTransaction inside strategy
+    OrderSvc->>OrderSvc: PlaceOrderCoreAsync
+    OrderSvc->>Repo: SaveChanges
+    Repo-->>User: Commit
+```
+
+**MVC:** [`CheckoutController`](../src/Web/HardwareStore.Web.Mvc/Controllers/CheckoutController.cs), [`OrdersController`](../src/Web/HardwareStore.Web.Mvc/Controllers/OrdersController.cs).
+
+**API:** [`CheckoutController`](../src/Web/HardwareStore.Web.Api/Controllers/CheckoutController.cs), [`OrdersController`](../src/Web/HardwareStore.Web.Api/Controllers/OrdersController.cs).
+
+**See also:** [database-and-data-model.md](database-and-data-model.md) (transactions), [api-endpoints.md](api-endpoints.md).
+
+---
+
+## Profile
+
+**Behavior:** Display name, city, address, email (MVC). API supports full profile field update via **UserManager**.
+
+**MVC:** [`ProfileController`](../src/Web/HardwareStore.Web.Mvc/Controllers/ProfileController.cs) — read-only display in repo.
+
+**API:** [`ProfileController`](../src/Web/HardwareStore.Web.Api/Controllers/ProfileController.cs) GET/PUT.
+
+---
+
+## Authentication (MVC)
+
+**Behavior:** [`UserController`](../src/Web/HardwareStore.Web.Mvc/Controllers/UserController.cs) — register, login, logout; **EasyLogin** for streamlined dev login if present. Uses **SignInManager** / **UserManager** with cookie scheme.
+
+**Identity pages:** Only [`Areas/Identity/Pages/_ViewStart.cshtml`](../src/Web/HardwareStore.Web.Mvc/Areas/Identity/Pages/_ViewStart.cshtml) in tree — full Identity UI not scaffolded into repo beyond that hook.
+
+**API:** [`AuthController`](../src/Web/HardwareStore.Web.Api/Controllers/AuthController.cs) — JWT login/register; logout is client-side token discard.
+
+**See also:** [server-and-deployment.md](server-and-deployment.md) (JWT config), [api-endpoints.md](api-endpoints.md).
+
+---
+
+## Administration (`/Admin`)
+
+**Gate:** [`AdminControllerBase`](../src/Web/HardwareStore.Web.Mvc/Areas/Admin/Controllers/AdminControllerBase.cs) — `[Authorize(Roles = Admin)]`.
+
+| Feature | Controller | Views |
+|---------|------------|-------|
+| Dashboard | `Admin.HomeController` | `Areas/Admin/Views/Home/Index.cshtml` |
+| Products | [`ProductsController`](../src/Web/HardwareStore.Web.Mvc/Areas/Admin/Controllers/ProductsController.cs) | Index, Create, Edit + [`_AssemblyComponentsPartial`](../src/Web/HardwareStore.Web.Mvc/Areas/Admin/Views/Shared/_AssemblyComponentsPartial.cshtml) |
+| Categories | [`CategoriesController`](../src/Web/HardwareStore.Web.Mvc/Areas/Admin/Controllers/CategoriesController.cs) | CRUD (Name, Group; **AssemblySlot** not on form — see DB doc) |
+| Manufacturers | [`ManufacturersController`](../src/Web/HardwareStore.Web.Mvc/Areas/Admin/Controllers/ManufacturersController.cs) | CRUD + delete guard if products reference |
+| Customers | [`CustomersController`](../src/Web/HardwareStore.Web.Mvc/Areas/Admin/Controllers/CustomersController.cs) | Paged index, edit profile |
 
 ### Assembly (bundle / PC) editor
 
-- Admin product forms include **`_AssemblyComponentsPartial`**.
-- **Standard roles** map to persisted strings on `ProductAssemblyComponent.Role` (e.g. `CPU`, `GPU`, `Motherboard`, `InternalDrives`, `Cooler`, `Custom` label).
-- The UI loads a JSON catalog `{ id, label, slot }` where **`slot`** is the integer value of **`Category.AssemblySlot`**. JavaScript filters options per row by matching **`slot`** to the selected **`AssemblyRoleKind`** enum value (Custom / None show all products).
-- Server-side validation mirrors the same rules via **`AssemblyRoleMapping`** in **Core.ViewModels**.
+- **Persisted** as [`ProductAssemblyComponent`](../src/Infrastructure/HardwareStore.Infrastructure.Models/ProductAssemblyComponent.cs) rows (`Role`, `Quantity`, `SortOrder`).
+- **Admin UI:** JSON catalog `{ id, label, slot }` from server; client filters by **`slot` == `AssemblyRoleKind`**; **None** and **Custom** show all products.
+- **Validation:** [`AssemblyRoleMapping`](../src/Core/HardwareStore.Core.ViewModels/Admin/AssemblyRoleMapping.cs) + category **`AssemblySlot`**; **Options** on product must be valid JSON object on save.
+
+**Product delete:** Blocked if product appears in orders, carts, favorites, or as another product’s assembly component.
+
+**See also:** [ui-views.md](ui-views.md) (admin tables), [solution-inventory.md](solution-inventory.md).
 
 ---
 
-## REST API (`HardwareStore.Web.Api`)
+## REST API parity
 
-JWT-protected endpoints mirror many storefront operations:
-
-| Area | Controller (examples) |
-|------|------------------------|
-| Auth | **`AuthController`** — token issuance |
-| Catalog | **`CategoryCatalogController`**, **`ProductDetailsController`** |
-| Cart | **`CartController`** |
-| Checkout | **`CheckoutController`** |
-| Orders | **`OrdersController`** |
-| Favorites | **`FavoritesController`** |
-| Profile | **`ProfileController`** |
-| Search | **`SearchController`** |
-
-Swagger is configured with a **Bearer** security scheme for testing authenticated calls.
-
----
-
-## Cross-cutting rules
-
-- **Antiforgery:** Enabled by default on MVC controllers.
-- **Roles:** `Admin` role seeded via migrations (see migration `SeedAdminUserAndRole` in Infrastructure).
-- **Deletion guards:** Products cannot be deleted if referenced by orders, cart, favorites, or **another product’s assembly** (`ProductsController.Delete`).
+The API reuses **Core services** and **ViewModels** for payloads. Full route list: **[api-endpoints.md](api-endpoints.md)**. **CORS** is not enabled — browser SPAs on another origin need configuration or a proxy.
 
 ---
 
 ## Tests
 
-- **`HardwareStore.Tests`** — unit tests for services and mapping helpers; integration tests spin up the MVC host via **`WebApplicationFactory`** (cookie handling may be adjusted for host OS compatibility).
+| Type | Location | Notes |
+|------|----------|-------|
+| Unit | [`HardwareStore.Tests/Unit/`](../src/Tests/HardwareStore.Tests/Unit/) | Services, `AssemblyRoleMapping` |
+| Integration | [`Integration/`](../src/Tests/HardwareStore.Tests/Integration/) | `WebApplicationFactory` → MVC `Program`; production error page tests |
+
+**See:** [solution-inventory.md](solution-inventory.md) → HardwareStore.Tests.
+
+---
+
+## Cross-cutting rules
+
+- **Antiforgery:** Global on MVC controllers (`AutoValidateAntiforgeryToken`).
+- **Admin role:** Seeded in migration `SeedAdminUserAndRole`.
+- **Logging:** [`LogMessages`](../src/Common/HardwareStore.Common/LogMessages.cs) templates in controllers.

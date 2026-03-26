@@ -88,3 +88,11 @@ This separation keeps web-specific shapes out of the persistence model and avoid
 - **Categories navigation:** Implemented as a **`CategoriesNavViewComponent`** that queries `Category` rows grouped by `CategoryGroup` (Hardware vs Peripherals); empty groups are omitted.
 - **Product catalog:** Shared Razor partials under `Views/Shared/Catalog/` (configured via `AddSearchPaths`).
 - **Admin assembly editor:** Product create/edit includes a partial for **bundle / PC assembly** lines; client script filters a JSON catalog by each row’s **assembly slot** (see [Features](features-and-functionality.md)).
+
+## Further detail (file-level and API/UI)
+
+| Document | Contents |
+|----------|----------|
+| [solution-inventory.md](solution-inventory.md) | Verbose per-file catalog: Common, Models, Infrastructure, Core, MVC, API, Tests; migration `Up` summaries |
+| [api-endpoints.md](api-endpoints.md) | REST methods, routes, auth, bodies, responses |
+| [ui-views.md](ui-views.md) | Every Razor view/partial, model, controller action, catalog partial pipeline |
