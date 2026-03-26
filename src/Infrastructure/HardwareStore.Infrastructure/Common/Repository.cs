@@ -2,7 +2,6 @@ namespace HardwareStore.Infrastructure.Common
 {
     using HardwareStore.Infrastructure.Data;
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Storage;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -96,18 +95,6 @@ namespace HardwareStore.Infrastructure.Common
         #endregion
 
         #region Transactions
-
-        public Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default)
-        {
-            if (this.context.Database.ProviderName?.Contains("InMemory", StringComparison.Ordinal) == true)
-            {
-                return Task.FromResult<IDbContextTransaction>(new NoOpDbContextTransaction());
-            }
-
-            throw new NotSupportedException(
-                "Direct BeginTransactionAsync is not compatible with SqlServerRetryingExecutionStrategy (EnableRetryOnFailure). "
-                + "Use IRepository.ExecuteInRetryableTransactionAsync to run all operations in one retriable transaction.");
-        }
 
         public async Task ExecuteInRetryableTransactionAsync(Func<Task> action)
         {

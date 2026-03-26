@@ -2,7 +2,6 @@ namespace HardwareStore.Infrastructure.Common
 {
     using HardwareStore.Infrastructure.Models;
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Storage;
     using System;
     using System.Linq.Expressions;
 
@@ -39,12 +38,6 @@ namespace HardwareStore.Infrastructure.Common
         Task<ICollection<T>> FromSqlRawAsync<T>(string sql, params object[] parameters) where T : class;
 
         void RemoveRange<T>(ICollection<T> items) where T : class;
-
-        /// <summary>
-        /// In-memory provider only: returns a no-op transaction. On SQL Server, throws — use
-        /// <see cref="ExecuteInRetryableTransactionAsync"/> instead (required with retry-on-failure).
-        /// </summary>
-        Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
         /// Runs work inside a database transaction in a way that is compatible with
