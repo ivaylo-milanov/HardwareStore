@@ -1,0 +1,31 @@
+# Local SQL Server only. Create the database and apply migrations on your machine — see README.md.
+#
+# Before:  export MSSQL_SA_PASSWORD='...'   (same password as in User Secrets for sa)
+# Start:   docker compose up -d
+# Stop:    docker compose down
+# Reset:   docker compose down -v   (removes data volume; SA password is set only on first volume create)
+#
+# Apple Silicon (arm64): SQL Server image is amd64 — platform below enables emulation (Rosetta).
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    platform: linux/amd64
+    container_name: hardwarestore-sql
+    environment:
+      ACCEPT_EULA: "Y"
+      MSSQL_SA_PASSWORD: "${MSSQL_SA_PASSWORD:?Set MSSQL_SA_PASSWORD in your environment before docker compose}"
+    ports:
+      - "${SQL_PORT:-1433}:1433"
+    volumes:
+      - hardwarestore_sql_data:/var/opt/mssql
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P \"$$MSSQL_SA_PASSWORD\" -Q 'SELECT 1' -C || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
+
+volumes:
+  hardwarestore_sql_data:
