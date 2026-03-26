@@ -16,6 +16,7 @@ namespace HardwareStore.Tests.Integration
             var client = factory.CreateClient(new WebApplicationFactoryClientOptions
             {
                 AllowAutoRedirect = false,
+                HandleCookies = false,
             });
 
             var response = await client.GetAsync("/Home/Error?message=" + Uri.EscapeDataString(injected));

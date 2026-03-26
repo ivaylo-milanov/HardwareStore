@@ -7,7 +7,6 @@ namespace HardwareStore.Core.Services
     using HardwareStore.Infrastructure.Models;
     using HardwareStore.Infrastructure.Models.Enums;
     using Microsoft.EntityFrameworkCore;
-    using Microsoft.EntityFrameworkCore.Storage;
 
     public class OrderService : IOrderService
     {
@@ -63,76 +62,69 @@ namespace HardwareStore.Core.Services
                 .ToListAsync();
         }
 
-        public async Task OrderAsync(OrderFormModel model, string userId)
+        public Task OrderAsync(OrderFormModel model, string userId) =>
+            this.repository.ExecuteInRetryableTransactionAsync(() => this.PlaceOrderCoreAsync(model, userId));
+
+        private async Task PlaceOrderCoreAsync(OrderFormModel model, string userId)
         {
-            await using IDbContextTransaction transaction = await this.repository.BeginTransactionAsync();
-            try
+            var customer = await this.GetCustomerForCheckoutAsync(userId);
+            var cartItems = customer.ShoppingCartItems.ToList();
+            if (cartItems.Count == 0)
             {
-                var customer = await this.GetCustomerForCheckoutAsync(userId);
-                var cartItems = customer.ShoppingCartItems.ToList();
-                if (cartItems.Count == 0)
+                throw new InvalidOperationException(ExceptionMessages.EmptyShoppingCart);
+            }
+
+            var totalAmount = this.GetTotalAmount(cartItems);
+            var orderProducts = new List<ProductOrder>();
+
+            var productIds = cartItems.Select(c => c.ProductId).Distinct().ToList();
+            var products = await this.repository
+                .All<Product>()
+                .Where(p => productIds.Contains(p.Id))
+                .ToDictionaryAsync(p => p.Id);
+
+            foreach (var item in cartItems)
+            {
+                if (!products.TryGetValue(item.ProductId, out var product))
                 {
-                    throw new InvalidOperationException(ExceptionMessages.EmptyShoppingCart);
+                    throw new InvalidOperationException(ExceptionMessages.ProductNotFound);
                 }
 
-                var totalAmount = this.GetTotalAmount(cartItems);
-                var orderProducts = new List<ProductOrder>();
-
-                var productIds = cartItems.Select(c => c.ProductId).Distinct().ToList();
-                var products = await this.repository
-                    .All<Product>()
-                    .Where(p => productIds.Contains(p.Id))
-                    .ToDictionaryAsync(p => p.Id);
-
-                foreach (var item in cartItems)
+                if (item.Quantity > product.Quantity)
                 {
-                    if (!products.TryGetValue(item.ProductId, out var product))
-                    {
-                        throw new InvalidOperationException(ExceptionMessages.ProductNotFound);
-                    }
-
-                    if (item.Quantity > product.Quantity)
-                    {
-                        throw new InvalidOperationException(
-                            string.Format(ExceptionMessages.NotManyItemsLeftInStock, product.Quantity, product.Name));
-                    }
-
-                    orderProducts.Add(new ProductOrder
-                    {
-                        ProductId = item.ProductId,
-                        Quantity = item.Quantity
-                    });
-
-                    product.Quantity -= item.Quantity;
+                    throw new InvalidOperationException(
+                        string.Format(ExceptionMessages.NotManyItemsLeftInStock, product.Quantity, product.Name));
                 }
 
-                var order = new Order
+                orderProducts.Add(new ProductOrder
                 {
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    Phone = model.Phone,
-                    City = model.City,
-                    Area = model.Area,
-                    Address = model.Address,
-                    AdditionalNotes = model.AdditionalNotes,
-                    TotalAmount = totalAmount,
-                    CustomerId = userId,
-                    OrderStatus = OrderStatus.Pending,
-                    PaymentMethod = model.PaymentMethod,
-                    OrderDate = DateTime.UtcNow,
-                    ProductsOrders = orderProducts
-                };
+                    ProductId = item.ProductId,
+                    Quantity = item.Quantity
+                });
 
-                await this.repository.AddAsync(order);
-                this.repository.RemoveRange(cartItems);
-                await this.repository.SaveChangesAsync();
-                await transaction.CommitAsync();
+                product.Quantity -= item.Quantity;
             }
-            catch
+
+            var order = new Order
             {
-                await transaction.RollbackAsync();
-                throw;
-            }
+                FirstName = model.FirstName,
+                LastName = model.LastName,
+                Phone = model.Phone,
+                City = model.City,
+                Area = model.Area,
+                Address = model.Address,
+                AdditionalNotes = model.AdditionalNotes,
+                TotalAmount = totalAmount,
+                CustomerId = userId,
+                OrderStatus = OrderStatus.Pending,
+                PaymentMethod = model.PaymentMethod,
+                OrderDate = DateTime.UtcNow,
+                ProductsOrders = orderProducts
+            };
+
+            await this.repository.AddAsync(order);
+            this.repository.RemoveRange(cartItems);
+            await this.repository.SaveChangesAsync();
         }
 
         #endregion

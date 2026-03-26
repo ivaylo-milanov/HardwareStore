@@ -32,6 +32,7 @@ namespace HardwareStore.Tests.Integration
             var client = this.factory.CreateClient(new WebApplicationFactoryClientOptions
             {
                 AllowAutoRedirect = false,
+                HandleCookies = false,
             });
 
             var response = await client.GetAsync("/");
@@ -45,6 +46,7 @@ namespace HardwareStore.Tests.Integration
             var client = this.factory.CreateClient(new WebApplicationFactoryClientOptions
             {
                 AllowAutoRedirect = false,
+                HandleCookies = false,
             });
 
             var response = await client.GetAsync("/Cart");
@@ -59,6 +61,7 @@ namespace HardwareStore.Tests.Integration
             var client = this.factory.CreateClient(new WebApplicationFactoryClientOptions
             {
                 AllowAutoRedirect = false,
+                HandleCookies = false,
             });
 
             var response = await client.GetAsync("/Checkout");
@@ -73,6 +76,7 @@ namespace HardwareStore.Tests.Integration
             var client = this.factory.CreateClient(new WebApplicationFactoryClientOptions
             {
                 AllowAutoRedirect = false,
+                HandleCookies = false,
             });
 
             var response = await client.PostAsync("/Search/FilterSearch", content: null);

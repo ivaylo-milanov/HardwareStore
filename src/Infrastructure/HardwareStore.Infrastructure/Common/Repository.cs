@@ -7,6 +7,7 @@ namespace HardwareStore.Infrastructure.Common
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
+    using System.Threading;
     using System.Threading.Tasks;
 
     public class Repository : IRepository
@@ -103,7 +104,38 @@ namespace HardwareStore.Infrastructure.Common
                 return Task.FromResult<IDbContextTransaction>(new NoOpDbContextTransaction());
             }
 
-            return this.context.Database.BeginTransactionAsync(cancellationToken);
+            throw new NotSupportedException(
+                "Direct BeginTransactionAsync is not compatible with SqlServerRetryingExecutionStrategy (EnableRetryOnFailure). "
+                + "Use IRepository.ExecuteInRetryableTransactionAsync to run all operations in one retriable transaction.");
+        }
+
+        public async Task ExecuteInRetryableTransactionAsync(Func<Task> action)
+        {
+            if (this.context.Database.ProviderName?.Contains("InMemory", StringComparison.Ordinal) == true)
+            {
+                await action().ConfigureAwait(false);
+                return;
+            }
+
+            var strategy = this.context.Database.CreateExecutionStrategy();
+            await strategy.ExecuteAsync(
+                    async () =>
+                    {
+                        await using var transaction = await this.context.Database
+                            .BeginTransactionAsync(CancellationToken.None)
+                            .ConfigureAwait(false);
+                        try
+                        {
+                            await action().ConfigureAwait(false);
+                            await transaction.CommitAsync(CancellationToken.None).ConfigureAwait(false);
+                        }
+                        catch
+                        {
+                            await transaction.RollbackAsync(CancellationToken.None).ConfigureAwait(false);
+                            throw;
+                        }
+                    })
+                .ConfigureAwait(false);
         }
 
         #endregion

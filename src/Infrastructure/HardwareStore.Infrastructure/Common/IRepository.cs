@@ -3,6 +3,7 @@ namespace HardwareStore.Infrastructure.Common
     using HardwareStore.Infrastructure.Models;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore.Storage;
+    using System;
     using System.Linq.Expressions;
 
     public interface IRepository
@@ -39,6 +40,16 @@ namespace HardwareStore.Infrastructure.Common
 
         void RemoveRange<T>(ICollection<T> items) where T : class;
 
+        /// <summary>
+        /// In-memory provider only: returns a no-op transaction. On SQL Server, throws — use
+        /// <see cref="ExecuteInRetryableTransactionAsync"/> instead (required with retry-on-failure).
+        /// </summary>
         Task<IDbContextTransaction> BeginTransactionAsync(CancellationToken cancellationToken = default);
+
+        /// <summary>
+        /// Runs work inside a database transaction in a way that is compatible with
+        /// <see cref="Microsoft.EntityFrameworkCore.SqlServerDbContextOptionsBuilderExtensions.EnableRetryOnFailure"/>.
+        /// </summary>
+        Task ExecuteInRetryableTransactionAsync(Func<Task> action);
     }
 }
