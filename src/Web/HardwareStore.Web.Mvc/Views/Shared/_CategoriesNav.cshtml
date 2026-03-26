@@ -12,13 +12,18 @@
 
 @foreach (var group in new (string Title, NavCategoryItem[] Items)[] { ("Peripherals", nav.Peripherals), ("Hardware", nav.Hardware) })
 {
+    if (group.Items == null || group.Items.Length == 0)
+    {
+        continue;
+    }
+
     <li class="dropend">
         <a class="dropdown-item dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">@group.Title</a>
         <ul class="dropdown-menu">
             @foreach (var category in group.Items)
             {
                 <li>
-                    <a class="dropdown-item" href="/Product/Index?category=@category.Name&title=@category.Title">@category.Title</a>
+                    <a class="dropdown-item" asp-controller="Product" asp-action="Index" asp-route-category="@category.Name" asp-route-title="@category.Title">@category.Title</a>
                 </li>
             }
         </ul>

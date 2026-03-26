@@ -1,58 +1,41 @@
 {
-    "Peripherals": [
-        {
-            "title": "Monitors",
-            "name": "Monitor"
-        },
-        {
-            "title": "Keyboards",
-            "name": "Keyboard"
-        },
-        {
-            "title": "Mice",
-            "name": "Mouse"
-        },
-        {
-            "title": "Headsets",
-            "name": "Headset"
-        },
-        {
-            "title": "Mouse Pads",
-            "name": "MousePad"
-        }
-    ],
+    "Peripherals": [],
     "Hardware": [
         {
-            "title": "Cases",
-            "name": "Case"
-        },
-        {
-            "title": "Video Cards",
-            "name": "VideoCard"
-        },
-        {
             "title": "Processors",
-            "name": "Processor"
+            "name": "Processors"
+        },
+        {
+            "title": "Graphics cards",
+            "name": "Graphics"
+        },
+        {
+            "title": "Memory",
+            "name": "Memory"
+        },
+        {
+            "title": "Power supplies",
+            "name": "Power supplies"
         },
         {
             "title": "Motherboards",
             "name": "Motherboard"
         },
         {
-            "title": "Power Supplies",
-            "name": "PowerSupply"
+            "title": "Cases",
+            "name": "Cases"
         },
         {
-            "title": "RAM",
-            "name": "RAM"
+            "title": "Internal drives",
+            "name": "Internal drives"
         },
         {
-            "title": "Internal Drives",
-            "name": "InternalDrive"
+            "title": "CPU cooling",
+            "name": "CPU Cooler"
         },
         {
-            "title": "Coolers",
-            "name": "Cooler"
+            "title": "Prebuilt systems",
+            "name": "Prebuilt systems"
         }
     ]
 }
