@@ -13,6 +13,13 @@ html {
   min-height: 100%;
 }
 
+/* Sticky catalog filter (.sticky-lg-top) uses z-index 1020; .dropdown-menu uses 1000 — without this,
+   the filter card stacks above the navbar Products menu and hides it. */
+header {
+  position: relative;
+  z-index: 1030;
+}
+
 /* Stretched-link covers the card body; keep buttons/forms above it */
 .card-body.position-relative .btn,
 .card-body.position-relative form {
