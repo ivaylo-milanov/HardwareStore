@@ -43,11 +43,6 @@ namespace HardwareStore.Web.Mvc.Controllers
                 this.ModelState.AddModelError(string.Empty, this.TempData["ErrorMessage"]!.ToString()!);
             }
 
-            if (shoppingCart.TotalCartPrice == 0)
-            {
-                this.ModelState.AddModelError(string.Empty, "To make an order, it is necessary that cart total amount is worth more than $8");
-            }
-
             return this.View(shoppingCart);
         }
 

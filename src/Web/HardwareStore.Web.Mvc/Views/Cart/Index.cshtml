@@ -67,10 +67,7 @@
             <div class="card-body text-md-end">
                 <p class="mb-1 text-muted">Subtotal: <span class="text-dark fw-medium">$@Model.TotalCartPrice.ToString("F2")</span></p>
                 <p class="h5 mb-3">Total: <span class="text-success">$@Model.TotalCartPrice.ToString("F2")</span></p>
-                @if (Model.TotalCartPrice > 8)
-                {
-                    <a class="btn btn-success btn-lg" asp-action="Index" asp-controller="Checkout">Checkout</a>
-                }
+                <a class="btn btn-success btn-lg" asp-action="Index" asp-controller="Checkout">Checkout</a>
             </div>
         </div>
     </div>
