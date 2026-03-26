@@ -1,7 +1,8 @@
-﻿namespace HardwareStore.Infrastructure.Models
+namespace HardwareStore.Infrastructure.Models
 {
     using System.ComponentModel.DataAnnotations;
 
+    using HardwareStore.Infrastructure.Models.Enums;
     using Microsoft.EntityFrameworkCore;
 
     using Common;
@@ -22,6 +23,9 @@
         [Required]
         [MaxLength(GlobalConstants.CategoryNameMaxLength)]
         public string Name { get; set; } = null!;
+
+        [Comment("hardware vs peripherals segment")]
+        public CategoryGroup Group { get; set; }
 
         public ICollection<Product> Products { get; set; } = null!;
     }

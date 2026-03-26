@@ -11,7 +11,7 @@ namespace HardwareStore.Extensions
             var connectionString = configuration.GetConnectionString("DefaultConnection")
                 ?? throw new InvalidOperationException(ExceptionMessages.DefaultConnectionNotFound);
             services.AddDbContext<HardwareStoreDbContext>(options =>
-                options.UseSqlServer(connectionString));
+                options.UseHardwareStoreSqlServer(connectionString));
 
             return services;
         }
