@@ -40,7 +40,7 @@ namespace HardwareStore.Web.Mvc.Areas.Admin.Controllers
                 return this.View(model);
             }
 
-            await this.repository.AddAsync(new Category { Name = model.Name.Trim() });
+            await this.repository.AddAsync(new Category { Name = model.Name.Trim(), Group = model.Group });
             await this.repository.SaveChangesAsync();
             this.TempData["StatusMessage"] = "Category created.";
             return this.RedirectToAction(nameof(this.Index));
@@ -79,6 +79,7 @@ namespace HardwareStore.Web.Mvc.Areas.Admin.Controllers
             }
 
             entity.Name = model.Name.Trim();
+            entity.Group = model.Group;
             await this.repository.SaveChangesAsync();
             this.TempData["StatusMessage"] = "Category updated.";
             return this.RedirectToAction(nameof(this.Index));
