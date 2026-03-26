@@ -1,0 +1,15 @@
+@model IReadOnlyList<CategoryNavGroupViewModel>
+@foreach (var group in Model)
+{
+    <li class="dropend">
+        <a class="dropdown-item dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">@group.Title</a>
+        <ul class="dropdown-menu">
+            @foreach (var category in group.Items)
+            {
+                <li>
+                    <a class="dropdown-item" asp-controller="Product" asp-action="Index" asp-route-category="@category.Name" asp-route-title="@category.Title">@category.Title</a>
+                </li>
+            }
+        </ul>
+    </li>
+}

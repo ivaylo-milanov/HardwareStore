@@ -38,7 +38,6 @@
     <_ContentIncludedByDefault Remove="Views\Product\Details.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Profile\Index.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Product\Catalog.cshtml" />
-    <_ContentIncludedByDefault Remove="Views\Shared\_CategoriesNav.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Shared\_LoginFormPartial.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Shared\_ProductFavoritePartial.cshtml" />
     <_ContentIncludedByDefault Remove="Views\Shared\Catalog\_CatalogEmptyProductsMessage.cshtml" />
@@ -91,10 +90,6 @@
 
   <ItemGroup>
     <UpToDateCheckInput Remove="Views\Product\Catalog.cshtml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Views\Shared\_CategoriesNav.cshtml" />
   </ItemGroup>
 
   <ItemGroup>

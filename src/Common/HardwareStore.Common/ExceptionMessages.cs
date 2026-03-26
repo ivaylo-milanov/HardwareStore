@@ -12,6 +12,5 @@ namespace HardwareStore.Common
 
         public const string DefaultConnectionNotFound = "Connection string 'DefaultConnection' not found.";
 
-        public const string InvalidCategoriesNavigationJson = "Invalid categories navigation JSON.";
     }
 }
