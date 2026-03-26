@@ -30,6 +30,7 @@ namespace HardwareStore.Tests
             Assert.That(result.Description == null);
             Assert.That(result.Warranty == 1);
             Assert.That(result.Attributes.Count() == 2);
+            Assert.That(result.AssemblyComponents.Count, Is.EqualTo(0));
             Assert.That(result.IsFavorite == false);
             Assert.That(result.Price == 130);
         }
@@ -48,8 +49,22 @@ namespace HardwareStore.Tests
         {
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {
-                await this.productService.GetProductDetails(20);
+                await this.productService.GetProductDetails(999);
             }, ExceptionMessages.ProductNotFound);
+        }
+
+        [Test]
+        public async Task GetProductDetails_ReturnsAssemblyComponents_OrderedBySortOrder()
+        {
+            var result = await this.productService.GetProductDetails(16);
+
+            Assert.That(result.AssemblyComponents.Count, Is.EqualTo(2));
+            Assert.That(result.AssemblyComponents[0].Role, Is.EqualTo("CPU"));
+            Assert.That(result.AssemblyComponents[0].ProductId, Is.EqualTo(1));
+            Assert.That(result.AssemblyComponents[0].Name, Is.EqualTo("Product1"));
+            Assert.That(result.AssemblyComponents[0].Quantity, Is.EqualTo(1));
+            Assert.That(result.AssemblyComponents[1].Role, Is.EqualTo("GPU"));
+            Assert.That(result.AssemblyComponents[1].ProductId, Is.EqualTo(2));
         }
 
         #endregion
@@ -89,7 +104,7 @@ namespace HardwareStore.Tests
 
             Assert.ThrowsAsync<ArgumentNullException>(async () =>
             {
-                await this.productService.IsProductInDbFavorites(userId, 16);
+                await this.productService.IsProductInDbFavorites(userId, 999);
             });
         }
 

@@ -20,6 +20,8 @@ namespace HardwareStore.Infrastructure.Data
 
         public DbSet<Manufacturer> Manufacturers { get; set; } = null!;
 
+        public DbSet<ProductAssemblyComponent> ProductAssemblyComponents { get; set; } = null!;
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new ProductOrderConfiguration());
@@ -29,6 +31,7 @@ namespace HardwareStore.Infrastructure.Data
             builder.ApplyConfiguration(new CustomerConfiguration());
             builder.ApplyConfiguration(new ShoppingCartItemConfiguration());
             builder.ApplyConfiguration(new FavoriteConfiguration());
+            builder.ApplyConfiguration(new ProductAssemblyComponentConfiguration());
 
             base.OnModelCreating(builder);
         }

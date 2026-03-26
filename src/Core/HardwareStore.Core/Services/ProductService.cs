@@ -94,6 +94,9 @@ namespace HardwareStore.Core.Services
             var product = await this.repository
                 .All<Product>()
                 .Include(p => p.Manufacturer)
+                .Include(p => p.AssemblyComponents)
+                    .ThenInclude(ac => ac.ComponentProduct)
+                        .ThenInclude(c => c.Manufacturer)
                 .Where(p => p.Id == productId)
                 .FirstOrDefaultAsync()
                 .ConfigureAwait(false);
@@ -102,6 +105,20 @@ namespace HardwareStore.Core.Services
                 throw new ArgumentNullException(ExceptionMessages.ProductNotFound);
 
             var opts = ReadOptionsDictionary(product);
+            var assembly = product.AssemblyComponents
+                .OrderBy(ac => ac.SortOrder)
+                .ThenBy(ac => ac.Id)
+                .Select(ac => new AssemblyComponentModel
+                {
+                    Role = ac.Role,
+                    ProductId = ac.ComponentProductId,
+                    Name = ac.ComponentProduct.Name,
+                    ReferenceNumber = ac.ComponentProduct.ReferenceNumber,
+                    Price = ac.ComponentProduct.Price,
+                    Quantity = ac.Quantity,
+                })
+                .ToList();
+
             return new ProductDetailsModel
             {
                 Id = product.Id,
@@ -114,6 +131,7 @@ namespace HardwareStore.Core.Services
                 Warranty = product.Warranty,
                 ImageUrl = "/images/product-placeholder.svg",
                 Attributes = opts.Select(kv => new ProductAttributeExportModel { Name = kv.Key, Value = kv.Value }).ToList(),
+                AssemblyComponents = assembly,
             };
         }
 

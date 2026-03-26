@@ -44,5 +44,7 @@ namespace HardwareStore.Core.ViewModels.Admin
         public string Options { get; set; } = "{}";
 
         public DateTime? AddDate { get; set; }
+
+        public List<AssemblyComponentInputModel> AssemblyComponents { get; set; } = new();
     }
 }

@@ -15,6 +15,8 @@ namespace HardwareStore.Infrastructure.Models
             this.ProductsOrders = new HashSet<ProductOrder>();
             this.ShoppingCartItems = new HashSet<ShoppingCartItem>();
             this.Favorites = new HashSet<Favorite>();
+            this.AssemblyComponents = new HashSet<ProductAssemblyComponent>();
+            this.UsedInAssemblies = new HashSet<ProductAssemblyComponent>();
         }
 
         [Comment("product id")]
@@ -81,5 +83,9 @@ namespace HardwareStore.Infrastructure.Models
         public ICollection<ShoppingCartItem> ShoppingCartItems { get; set; } = null!;
 
         public ICollection<Favorite> Favorites { get; set; } = null!;
+
+        public ICollection<ProductAssemblyComponent> AssemblyComponents { get; set; } = null!;
+
+        public ICollection<ProductAssemblyComponent> UsedInAssemblies { get; set; } = null!;
     }
 }

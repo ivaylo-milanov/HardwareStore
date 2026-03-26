@@ -15,5 +15,7 @@ namespace HardwareStore.Core.ViewModels.Details
         public string ImageUrl { get; set; } = null!;
 
         public IEnumerable<ProductAttributeExportModel> Attributes { get; set; } = null!;
+
+        public IReadOnlyList<AssemblyComponentModel> AssemblyComponents { get; set; } = Array.Empty<AssemblyComponentModel>();
     }
 }

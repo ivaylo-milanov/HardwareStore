@@ -1,0 +1,214 @@
+@model ProductFormModel
+@{
+    var customKind = (int)AssemblyRoleKind.Custom;
+}
+<div class="col-12">
+    <h2 class="h6 fw-semibold mt-4 mb-2">Assembly (bundle / PC)</h2>
+    <p class="form-text small mb-2">
+        Standard slots include CPU, GPU, RAM, PSU, motherboard, case, internal drives, and cooler.
+        For each part type, the product list shows only products in a matching <strong>category</strong> (e.g. Motherboard → categories &ldquo;Motherboard&rdquo;, &ldquo;Motherboards&rdquo;, etc.).
+        <strong>Custom…</strong> shows all products. Use <strong>Add component</strong> / <strong>Remove</strong> to change row count.
+    </p>
+    <script type="application/json" id="assembly-product-catalog-json">@Html.Raw(ViewBag.AssemblyProductCatalogJson ?? "[]")</script>
+    <script type="application/json" id="assembly-role-filters-json">@Html.Raw(ViewBag.AssemblyRoleCategoryFiltersJson ?? "{}")</script>
+    <div class="table-responsive border rounded">
+        <table class="table table-sm align-middle mb-0">
+            <thead>
+                <tr>
+                    <th class="small text-muted" style="width:11rem;">Part type</th>
+                    <th class="small text-muted">Custom label</th>
+                    <th class="small text-muted">Component product</th>
+                    <th class="small text-muted" style="width:5rem;">Qty</th>
+                    <th class="small text-muted" style="width:4rem;"></th>
+                </tr>
+            </thead>
+            <tbody id="assembly-component-tbody">
+            @for (var i = 0; i < Model.AssemblyComponents.Count; i++)
+            {
+                var showCustom = Model.AssemblyComponents[i].RoleKind == AssemblyRoleKind.Custom;
+                <tr class="assembly-component-row">
+                    <td>
+                        <select asp-for="AssemblyComponents[i].RoleKind" asp-items="ViewBag.AssemblyRoleKindList" class="form-select form-select-sm assembly-role-kind" data-custom-kind="@customKind"></select>
+                        <span asp-validation-for="AssemblyComponents[i].RoleKind" class="text-danger small d-block"></span>
+                    </td>
+                    <td>
+                        <input asp-for="AssemblyComponents[i].CustomRole" maxlength="@GlobalConstants.AssemblyComponentRoleMaxLength" class="form-control form-control-sm assembly-custom-role @(showCustom ? string.Empty : "d-none")" placeholder="e.g. Wi‑Fi card" autocomplete="off" />
+                        <span asp-validation-for="AssemblyComponents[i].CustomRole" class="text-danger small d-block"></span>
+                    </td>
+                    <td>
+                        <select asp-for="AssemblyComponents[i].ComponentProductId" class="form-select form-select-sm assembly-product-select">
+                            <option value="0">— None —</option>
+                        </select>
+                        <span asp-validation-for="AssemblyComponents[i].ComponentProductId" class="text-danger small d-block"></span>
+                    </td>
+                    <td>
+                        <input asp-for="AssemblyComponents[i].Quantity" class="form-control form-control-sm" />
+                        <span asp-validation-for="AssemblyComponents[i].Quantity" class="text-danger small d-block"></span>
+                    </td>
+                    <td class="text-end">
+                        <button type="button" class="btn btn-sm btn-outline-danger assembly-remove-row" title="Remove this row">Remove</button>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+    <button type="button" class="btn btn-sm btn-outline-primary mt-2" id="assembly-add-row">Add component</button>
+</div>
+
+<template id="assembly-component-row-template">
+    <tr class="assembly-component-row">
+        <td>
+            <select class="form-select form-select-sm assembly-role-kind" data-custom-kind="@customKind" name="AssemblyComponents[__INDEX__].RoleKind">
+                @foreach (var opt in (IEnumerable<SelectListItem>)ViewBag.AssemblyRoleKindList!)
+                {
+                    <option value="@opt.Value">@opt.Text</option>
+                }
+            </select>
+        </td>
+        <td>
+            <input type="text" maxlength="@GlobalConstants.AssemblyComponentRoleMaxLength" class="form-control form-control-sm assembly-custom-role d-none" name="AssemblyComponents[__INDEX__].CustomRole" placeholder="e.g. Wi‑Fi card" autocomplete="off" value="" />
+        </td>
+        <td>
+            <select class="form-select form-select-sm assembly-product-select" name="AssemblyComponents[__INDEX__].ComponentProductId">
+                <option value="0" selected="selected">— None —</option>
+            </select>
+        </td>
+        <td>
+            <input type="number" class="form-control form-control-sm" name="AssemblyComponents[__INDEX__].Quantity" value="1" min="1" />
+        </td>
+        <td class="text-end">
+            <button type="button" class="btn btn-sm btn-outline-danger assembly-remove-row" title="Remove this row">Remove</button>
+        </td>
+    </tr>
+</template>
+
+<script>
+(function () {
+    const tbody = document.getElementById('assembly-component-tbody');
+    const template = document.getElementById('assembly-component-row-template');
+    const addBtn = document.getElementById('assembly-add-row');
+    const catalogEl = document.getElementById('assembly-product-catalog-json');
+    const filtersEl = document.getElementById('assembly-role-filters-json');
+    if (!tbody || !template || !addBtn || !catalogEl || !filtersEl) return;
+
+    let catalog = [];
+    let roleFilters = {};
+    try { catalog = JSON.parse(catalogEl.textContent || '[]'); } catch (e) { catalog = []; }
+    try { roleFilters = JSON.parse(filtersEl.textContent || '{}'); } catch (e) { roleFilters = {}; }
+
+    const customKind = @customKind;
+
+    function showAllProducts(roleKindInt) {
+        return roleKindInt === 0 || roleKindInt === customKind;
+    }
+
+    function categoryMatchesProduct(category, names) {
+        if (!names || !names.length) return true;
+        const c = (category || '').trim().toLowerCase();
+        return names.some(function (n) { return c === (n || '').trim().toLowerCase(); });
+    }
+
+    function optionsForRole(roleKindInt) {
+        if (showAllProducts(roleKindInt)) return catalog.slice();
+        const names = roleFilters[String(roleKindInt)];
+        if (!names || !names.length) return catalog.slice();
+        return catalog.filter(function (p) { return categoryMatchesProduct(p.category, names); });
+    }
+
+    function refillProductSelect(productSelect, roleSelect) {
+        const kind = parseInt(roleSelect.value, 10);
+        const prev = String(productSelect.value || '0');
+        const list = optionsForRole(kind);
+        const selectedId = prev && prev !== '0' ? prev : null;
+
+        while (productSelect.firstChild) productSelect.removeChild(productSelect.firstChild);
+
+        const none = document.createElement('option');
+        none.value = '0';
+        none.textContent = '— None —';
+        productSelect.appendChild(none);
+
+        list.forEach(function (p) {
+            const o = document.createElement('option');
+            o.value = String(p.id);
+            o.textContent = p.label;
+            productSelect.appendChild(o);
+        });
+
+        if (selectedId && !showAllProducts(kind)) {
+            const inList = list.some(function (p) { return String(p.id) === selectedId; });
+            if (!inList) {
+                const full = catalog.find(function (p) { return String(p.id) === selectedId; });
+                if (full) {
+                    const o = document.createElement('option');
+                    o.value = String(full.id);
+                    o.textContent = full.label + ' (other category)';
+                    productSelect.appendChild(o);
+                }
+            }
+        }
+
+        if (selectedId && Array.from(productSelect.options).some(function (o) { return o.value === selectedId; })) {
+            productSelect.value = selectedId;
+        } else {
+            productSelect.value = '0';
+        }
+    }
+
+    function toggleCustom(selectEl) {
+        const tr = selectEl.closest('tr');
+        if (!tr) return;
+        const custom = tr.querySelector('.assembly-custom-role');
+        if (!custom) return;
+        const ck = selectEl.getAttribute('data-custom-kind');
+        const show = ck && String(selectEl.value) === ck;
+        custom.classList.toggle('d-none', !show);
+        if (!show) custom.value = '';
+    }
+
+    function bindRow(tr) {
+        const roleSel = tr.querySelector('.assembly-role-kind');
+        const productSel = tr.querySelector('.assembly-product-select');
+        if (roleSel && productSel) {
+            refillProductSelect(productSel, roleSel);
+            roleSel.addEventListener('change', function () {
+                toggleCustom(roleSel);
+                refillProductSelect(productSel, roleSel);
+            });
+        }
+        if (roleSel) {
+            toggleCustom(roleSel);
+        }
+        const rm = tr.querySelector('.assembly-remove-row');
+        if (rm) {
+            rm.addEventListener('click', function () {
+                tr.remove();
+                reindexRows();
+            });
+        }
+    }
+
+    function reindexRows() {
+        const rows = tbody.querySelectorAll('tr.assembly-component-row');
+        rows.forEach(function (row, idx) {
+            row.querySelectorAll('[name^="AssemblyComponents"]').forEach(function (el) {
+                el.name = el.name.replace(/AssemblyComponents\[\d+\]/, 'AssemblyComponents[' + idx + ']');
+            });
+        });
+    }
+
+    tbody.querySelectorAll('tr.assembly-component-row').forEach(bindRow);
+
+    addBtn.addEventListener('click', function () {
+        const html = template.innerHTML.replace(/__INDEX__/g, String(tbody.querySelectorAll('tr.assembly-component-row').length));
+        const wrap = document.createElement('tbody');
+        wrap.innerHTML = html.trim();
+        const tr = wrap.querySelector('tr');
+        if (!tr) return;
+        tbody.appendChild(tr);
+        bindRow(tr);
+        reindexRows();
+    });
+})();
+</script>

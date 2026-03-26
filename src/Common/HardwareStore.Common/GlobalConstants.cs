@@ -23,6 +23,8 @@ namespace HardwareStore.Common
         public const int ProductReferenceNumberMinLength = 8;
         public const int ProductReferenceNumberMaxLength = 100;
 
+        public const int AssemblyComponentRoleMaxLength = 64;
+
         //Customer
         public const int CustomerUserNameMinLength = 3;
         public const int CustomerUserNameMaxLength = 30;

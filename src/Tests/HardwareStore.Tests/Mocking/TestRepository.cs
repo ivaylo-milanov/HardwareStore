@@ -119,6 +119,21 @@ namespace HardwareStore.Tests.Mocking
                 }),
             });
 
+            products.Add(new Product
+            {
+                Id = 16,
+                Name = "PreBuiltGamingPC",
+                Price = 1999,
+                Quantity = 5,
+                AddDate = DateTime.UtcNow,
+                Warranty = 24,
+                ManufacturerId = 1,
+                ReferenceNumber = "RefPC00016",
+                CategoryId = 1,
+                Model = "ModelPC16",
+                Options = OptionsJson(new Dictionary<string, string> { ["Form Factor"] = "Mid Tower" }),
+            });
+
             var users = new List<Customer>()
             {
                 new Customer
@@ -203,6 +218,23 @@ namespace HardwareStore.Tests.Mocking
             context.Manufacturers.AddRange(manufacturers);
             context.Categories.AddRange(categories);
             context.Products.AddRange(products);
+            context.ProductAssemblyComponents.AddRange(
+                new ProductAssemblyComponent
+                {
+                    AssemblyProductId = 16,
+                    ComponentProductId = 1,
+                    Role = "CPU",
+                    Quantity = 1,
+                    SortOrder = 0,
+                },
+                new ProductAssemblyComponent
+                {
+                    AssemblyProductId = 16,
+                    ComponentProductId = 2,
+                    Role = "GPU",
+                    Quantity = 1,
+                    SortOrder = 1,
+                });
             context.Users.AddRange(users);
 
             await context.SaveChangesAsync();
